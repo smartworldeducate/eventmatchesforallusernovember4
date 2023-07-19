@@ -23,8 +23,8 @@ const Splash = () => {
   };
 
   setTimeout(async () => {
-    handleNavigate('WelcomeScreen', true);
-  }, 5000);
+    handleNavigate('Skip1', true);
+  }, 3000);
 
   return (
     <SafeAreaView

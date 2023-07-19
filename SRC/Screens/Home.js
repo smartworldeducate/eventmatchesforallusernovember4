@@ -1,4 +1,6 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
+// import Left from 'react-native-vector-icons/AntDesign';
+
 import {
   ScrollView,
   RefreshControl,
@@ -22,6 +24,9 @@ import HeaderTop from '../Components/Headers/HeaderTop';
 import HeaderSecond from '../Components/Headers/HeaderSecond';
 import HomeList from '../Components/HomeList/HomeList';
 import HomeList2 from '../Components/HomeList/HomeList2';
+import MainHeader from '../Components/Headers/MainHeader';
+import TextInputCustom from '../Components/TextInput/TextInput';
+import Button from '../Components/Button/Button';
 
 const Home = () => {
   const navigation = useNavigation();
@@ -31,12 +36,28 @@ const Home = () => {
       console.log('Clear');
     }
   };
+  const [employeeId, setEmployeeId] = useState();
+  const [employeePassword, setEmployeePassword] = useState();
 
   // const [refreshing, setRefreshing] = useState(false);
   // const onRefresh = () => {
   //   setRefreshing(true);
   //   setRefreshing(false);
   // };
+
+  const onChangeEmpId = val => {
+    setEmployeeId(val);
+  };
+  const onChangeEmpPassword = val => {
+    setEmployeePassword(val);
+  };
+
+  const [isEnabled, setIsEnabled] = useState(true);
+  const toggleSwitch = () => setIsEnabled(previousState => !previousState);
+
+  const onPressLogin = () => {
+    handleNavigate("Login");
+  }
 
   return (
     <SafeAreaView
@@ -49,40 +70,105 @@ const Home = () => {
         barStyle={'dark-content'}
         backgroundColor={colors.yellowColor}
       />
-      
-      <HeaderTop
-        iconName1={'navicon'}
-        iconColor1={colors.loginIconColor}
-        text={'BEAMS'}
-        iconName2={'bell-o'}
-        iconColor2={colors.loginIconColor}
+
+      <MainHeader
+        // onPressIcon={() => navigation.openDrawer()}
+        iconName={'arrowleft'}
+        //   iconColor1={colors.loginIconColor}
+        text={'Change Password'}
+      //   iconName2={'bell-o'}
+      //   iconColor2={colors.loginIconColor}
+
       />
-      <View style={{marginTop: hp('-5')}}>
-        <HeaderSecond
-          timeInText={'Time In'}
-          timeIn={'08:59:00'}
-          empImg={'employee'}
-          empName={'Zeeshan Abdul Hafeez'}
-          empDesignation={'Senior Officer UX/UI Designer'}
-        />
+      <View style={{ width: wp(90), marginHorizontal: hp(2.5) ,marginTop:hp(2)}}>
+        <View style={styles.textInputView}>
+          <TextInputCustom
+            value={employeeId}
+            onChangeText={onChangeEmpId}
+            keyboardType={'numeric'}
+            maxLength={11}
+            returnKeyType={'done'}
+            iconName={'user'}
+            placeholder={'Current Password'}
+            placeholderColor={colors.loginTextColor}
+            iconColor={colors.loginIconColor}
+            style={styles.textInputCustomStyle}
+          />
+        </View>
       </View>
+      <View style={{ width: wp(90), marginHorizontal: hp(2.5) }}>
+        <View style={styles.textInputView}>
+          <TextInputCustom
+            value={employeeId}
+            onChangeText={onChangeEmpId}
+            keyboardType={'numeric'}
+            maxLength={11}
+            returnKeyType={'done'}
+            iconName={'user'}
+            placeholder={'New Password'}
+            placeholderColor={colors.loginTextColor}
+            iconColor={colors.loginIconColor}
+            style={styles.textInputCustomStyle}
+          />
+        </View>
+      </View>
+      <View style={{ width: wp(90), marginHorizontal: hp(2.5) }}>
+        <View style={styles.textInputView}>
+          <TextInputCustom
+            value={employeeId}
+            onChangeText={onChangeEmpId}
+            keyboardType={'numeric'}
+            maxLength={11}
+            returnKeyType={'done'}
+            iconName={'user'}
+            placeholder={'Confirm Password'}
+            placeholderColor={colors.loginTextColor}
+            iconColor={colors.loginIconColor}
+            style={styles.textInputCustomStyle}
+          />
+        </View>
+      </View>
+       <View
+                  style={{
+                    marginTop: hp('45'),
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}>
+                  <Button
+                    onPress={onPressLogin}
+                    height={hp('7')}
+                    width={wp('90')}
+                    text="SUBMIT"
+                    bgColor={colors.btnColore}
+                    textColor={colors.whiteColor}
+                    textSize={hp('2')}
+                    borderRadius={wp('10')}
+                    borderColor={'#BABABA33'}
+                    borderWidth={wp('0.3')}
+                    shadowColor={'#000'}
+                    shadowOffset={{ width: 0, height: 12 }}
+                    shadowOpacity={0.58}
+                    shadowRadius={16}
+                    elevation={7}
+                  />
+                </View>
 
       <ScrollView
         contentContainerStyle={{
           flexGrow: 1,
           backgroundColor: colors.white,
         }}
-        // refreshControl={
-        //   <RefreshControl
-        //     refreshing={refreshing}
-        //     onRefresh={onRefresh}
-        //     colors={[colors.loginIconColor, "green"]}
-        //     progressBackgroundColor={colors.lightSilver}
-        //     // tintColor={colors.whiteColor}
-        //   />
-        // }
+      // refreshControl={
+      //   <RefreshControl
+      //     refreshing={refreshing}
+      //     onRefresh={onRefresh}
+      //     colors={[colors.loginIconColor, "green"]}
+      //     progressBackgroundColor={colors.lightSilver}
+      //     // tintColor={colors.whiteColor}
+      //   />
+      // }
       >
-        <View style={{marginHorizontal: wp('5')}}>
+        {/* <View style={{marginHorizontal: wp('5')}}>
           <HomeList
             iconName={'atom'}
             text1={'Attendance'}
@@ -120,14 +206,45 @@ const Home = () => {
             text2={'Star 2022'}
             iconName2={'arrow-right'}
           />
-        </View>
+        </View> */}
 
-        <View style={{marginBottom: hp('5')}}></View>
+        <View style={{ marginBottom: hp('5') }}></View>
       </ScrollView>
     </SafeAreaView>
   );
 };
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  textInputView: {
+    
+    justifyContent: 'center',
+    backgroundColor: colors.whiteColor,
+    alignItems: 'center',
+    flexDirection: 'row',
+    height: hp('7'),
+    borderRadius: wp('10'),
+    borderColor: colors.grey,
+    borderWidth: wp('0.1'),
+    marginBottom: hp('2'),
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 8,
+    },
+    shadowOpacity: wp('10'),
+    shadowRadius: wp('10'),
+    elevation: 10,
+  },
+  textInputCustomStyle: {
+    fontSize: hp('1.65'),
+    height: hp('7'),
+    letterSpacing: -0.05,
+    paddingLeft: wp('6'),
+    color: colors.loginIconColor,
+  },
+  textView:{
+    marginTop:hp(2)
+  }
+});
 
 export default Home;

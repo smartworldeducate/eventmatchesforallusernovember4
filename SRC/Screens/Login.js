@@ -49,7 +49,7 @@ const Login = () => {
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
   const onPressLogin=()=>{
-    handleNavigate("Home");
+    handleNavigate("HomeScreen");
   }
 
   return (
