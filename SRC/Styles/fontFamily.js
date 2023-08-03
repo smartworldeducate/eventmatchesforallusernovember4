@@ -3,7 +3,7 @@ import { Platform } from 'react-native';
 const fontFamily = {
 
 
-  ceraBlack:
+    ceraBlack:
     Platform.OS === 'android' ? 'CeraBlack' : 'CeraBlack',
     ceraBold:
     Platform.OS === 'android' ? 'CeraBold' : 'CeraBold',
@@ -13,6 +13,12 @@ const fontFamily = {
 
     ceraMedium:
     Platform.OS === 'android' ? 'CeraMedium' : 'CeraMedium',
+
+    fontSomePro:
+    Platform.OS === 'android' ? 'FontSomePro' : 'FontSomePro',
+
+    fontLight:
+    Platform.OS === 'android' ? 'FontLight' : 'FontLight',
 
   
 

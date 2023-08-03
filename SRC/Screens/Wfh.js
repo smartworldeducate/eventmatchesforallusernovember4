@@ -1,4 +1,4 @@
-import {View, Text, StyleSheet, TextInput} from 'react-native';
+import {View, Text, StyleSheet, TextInput, TouchableOpacity} from 'react-native';
 import React from 'react';
 import MainHeader from '../Components/Headers/MainHeader';
 import Check from 'react-native-vector-icons/AntDesign';
@@ -15,33 +15,18 @@ import {
 } from 'react-native-responsive-screen';
 import ViewInput from '../Components/ViewInput';
 import Button from '../Components/Button/Button';
-const Wfh = (props) => {
+const Wfh = props => {
   return (
     <View>
-      <MainHeader text={'W.F.H Request'} iconName={'arrowleft'} onpressBtn={()=>props.navigation.goBack()}/>
-      {/* <View
-        style={{width: wp(90), marginHorizontal: hp(2.5), marginTop: hp(2)}}>
-        <ViewInput
-          //  value={employeeId}
-          //  onChangeText={onChangeEmpId}
-          //  keyboardType={'numeric'}
-          //  maxLength={11}
-          //  returnKeyType={'done'}
-          iconName={'arrowright'}
-          placeholder={'Tue, Jun 27, 2023'}
-          placeholderColor={colors.loginTextColor}
-          iconColor={colors.loginIconColor}
-          style={styles.textInputCustomStyle}
-        />
-      </View> */}
+      <MainHeader
+        text={'W.F.H Request'}
+        iconName={'arrowleft'}
+        onpressBtn={() => props.navigation.goBack()}
+      />
+
       <View
         style={{width: wp(90), marginHorizontal: hp(2.5), marginTop: hp(2)}}>
         <ViewInput
-          //  value={employeeId}
-          //  onChangeText={onChangeEmpId}
-          //  keyboardType={'numeric'}
-          //  maxLength={11}
-          //  returnKeyType={'done'}
           iconName={'arrowright'}
           placeholder={'Adjustment Date'}
           placeholderColor={colors.loginTextColor}
@@ -67,11 +52,6 @@ const Wfh = (props) => {
       <View
         style={{width: wp(90), marginHorizontal: hp(2.5), marginTop: hp(2)}}>
         <ViewInput
-          //  value={employeeId}
-          //  onChangeText={onChangeEmpId}
-          //  keyboardType={'numeric'}
-          //  maxLength={11}
-          //  returnKeyType={'done'}
           iconName={'calendar'}
           placeholder={'2 Days'}
           placeholderColor={colors.loginTextColor}
@@ -79,103 +59,6 @@ const Wfh = (props) => {
           style={styles.textInputCustomStyle}
         />
       </View>
-      {/* <View
-        style={{width: wp(90), marginHorizontal: hp(2.5), marginTop: hp(2)}}>
-        <ViewInput
-          //  value={employeeId}
-          //  onChangeText={onChangeEmpId}
-          //  keyboardType={'numeric'}
-          //  maxLength={11}
-          //  returnKeyType={'done'}
-          iconName={'calendar'}
-          placeholder={'Leave Type'}
-          placeholderColor={colors.loginTextColor}
-          iconColor={colors.loginIconColor}
-          style={styles.textInputCustomStyle}
-        />
-      </View> */}
-      {/* <View
-        style={{
-          width: wp(90),
-          marginHorizontal: hp(2.5),
-          marginTop: hp(2),
-          flexDirection: 'row',
-        }}>
-        <View style={{flexDirection: 'row'}}>
-          <View>
-            <Radio
-              checked={true}
-              activeColor={'green'}
-              inactiveColor={'#fff'}
-              fontSize={30}
-            />
-          </View>
-          <View style={{marginVertical: hp(0.5), paddingHorizontal: hp(0.5)}}>
-            <Text style={{color: '#363636'}}>Full Day</Text>
-          </View>
-        </View>
-        <View style={{flexDirection: 'row', marginLeft: hp(3.5)}}>
-          <View>
-            <Radio
-              checked={true}
-              activeColor={'gray'}
-              inactiveColor={'#fff'}
-              fontSize={30}
-            />
-          </View>
-          <View style={{marginVertical: hp(0.5), paddingHorizontal: hp(0.5)}}>
-            <Text style={{color: '#363636'}}>Half Day</Text>
-          </View>
-        </View>
-        <View style={{flexDirection: 'row', marginLeft: hp(3.5)}}>
-          <View>
-            <Radio
-              checked={true}
-              activeColor={'gray'}
-              inactiveColor={'#fff'}
-              fontSize={30}
-            />
-          </View>
-          <View style={{marginVertical: hp(0.5), paddingHorizontal: hp(0.5)}}>
-            <Text style={{color: '#363636'}}>Short Leave</Text>
-          </View>
-        </View>
-      </View> */}
-      {/* <View
-        style={{
-          width: wp(90),
-          marginHorizontal: hp(2.5),
-          marginTop: hp(3),
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-        }}>
-        <View style={{flexDirection: 'row'}}>
-          <View>
-            <Radio
-              checked={true}
-              activeColor={'gray'}
-              inactiveColor={'#fff'}
-              fontSize={30}
-            />
-          </View>
-          <View style={{marginVertical: hp(0.5), paddingHorizontal: hp(0.5)}}>
-            <Text style={{color: '#363636'}}>Full Day Toil</Text>
-          </View>
-        </View>
-        <View style={{flexDirection: 'row', marginLeft: hp(3.5)}}>
-          <View>
-            <Radio
-              checked={true}
-              activeColor={'green'}
-              inactiveColor={'#fff'}
-              fontSize={30}
-            />
-          </View>
-          <View style={{marginVertical: hp(0.5), paddingHorizontal: hp(0.5)}}>
-            <Text style={{color: '#363636'}}>Half Day Toil</Text>
-          </View>
-        </View>
-      </View> */}
 
       <View
         style={{
@@ -204,11 +87,6 @@ const Wfh = (props) => {
       <View
         style={{width: wp(90), marginHorizontal: hp(2.5), marginTop: hp(2)}}>
         <ViewInput
-          //  value={employeeId}
-          //  onChangeText={onChangeEmpId}
-          //  keyboardType={'numeric'}
-          //  maxLength={11}
-          //  returnKeyType={'done'}
           iconName={'adduser'}
           placeholder={'Muhammad Qasim Ali Khan'}
           placeholderColor={colors.loginTextColor}
@@ -216,7 +94,8 @@ const Wfh = (props) => {
           style={styles.textInputCustomStyle}
         />
       </View>
-      <View
+      <TouchableOpacity
+      onPress={()=>props.navigation.navigate('WorkFromHome')}
         style={{
           width: wp(90),
           marginHorizontal: hp(2.5),
@@ -230,7 +109,7 @@ const Wfh = (props) => {
         <View style={{alignItems: 'center'}}>
           <Text style={{color: '#fff'}}>SUBMIT REQUEST</Text>
         </View>
-      </View>
+      </TouchableOpacity>
     </View>
   );
 };

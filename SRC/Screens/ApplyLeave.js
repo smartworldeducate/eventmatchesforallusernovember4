@@ -1,11 +1,11 @@
-import {View, Text, StyleSheet, TextInput} from 'react-native';
-import React from 'react';
+import {View, Text, StyleSheet, TextInput,TouchableOpacity} from 'react-native';
+import React, {useEffect, useState} from 'react';
 import MainHeader from '../Components/Headers/MainHeader';
-import Check from 'react-native-vector-icons/AntDesign';
-import Wrench from 'react-native-vector-icons/FontAwesome';
-import User from 'react-native-vector-icons/AntDesign';
-import Gte from 'react-native-vector-icons/AntDesign';
-import Phone from 'react-native-vector-icons/Feather';
+// import Check from 'react-native-vector-icons/AntDesign';
+// import Wrench from 'react-native-vector-icons/FontAwesome';
+// import User from 'react-native-vector-icons/AntDesign';
+// import Gte from 'react-native-vector-icons/AntDesign';
+// import Phone from 'react-native-vector-icons/Feather';
 import colors from '../Styles/colors';
 import {Div, ThemeProvider, Radio} from 'react-native-magnus';
 
@@ -16,6 +16,27 @@ import {
 import ViewInput from '../Components/ViewInput';
 import Button from '../Components/Button/Button';
 const ApplyLeave = (props) => {
+  const [fullDay,setFullDay]=useState(false)
+  const [halfDay,setHalfDay]=useState(false)
+  const [shortLeave,setShortLeave]=useState(false)
+  const [withPay,setWithPay]=useState(false)
+  const [withOutPay,setWithOutPay]=useState(false)
+
+  const fulDayHandle=()=>{
+    fullDay == true ? setFullDay(false) : setFullDay(true)
+  }
+  const halfDayHandle=()=>{
+    halfDay == true ? setHalfDay(false) : setHalfDay(true)
+  }
+  const shortLeaveHandle=()=>{
+    shortLeave == true ? setShortLeave(false) : setShortLeave(true)
+  }
+  const withPayHandle=()=>{
+    withPay == true ? setWithPay(false) : setWithPay(true)
+  }
+  const withOutPayHandle=()=>{
+    withOutPay == true ? setWithOutPay(false) : setWithOutPay(true)
+  }
   return (
     <View>
       <MainHeader text={'Apply Leave'} iconName={'arrowleft'} onpressBtn={()=>props.navigation.goBack()}/>
@@ -81,44 +102,47 @@ const ApplyLeave = (props) => {
       </View>
       <View
         style={{
-          width: wp(90),
           marginHorizontal: hp(2.5),
           marginTop: hp(2),
           flexDirection: 'row',
+          justifyContent:'space-between'
         }}>
         <View style={{flexDirection: 'row'}}>
           <View>
             <Radio
-              checked={true}
-              activeColor={'green'}
-              inactiveColor={'#fff'}
+              checked={fullDay}
+              activeColor={'#0EAA24'}
+              inactiveColor={'#CDCDCD'}
               fontSize={30}
+              onChange={fulDayHandle}
             />
           </View>
           <View style={{marginVertical: hp(0.5), paddingHorizontal: hp(0.5)}}>
             <Text style={{color: '#363636'}}>Full Day</Text>
           </View>
         </View>
-        <View style={{flexDirection: 'row', marginLeft: hp(3.5)}}>
+        <View style={{flexDirection: 'row', marginLeft: hp(4)}}>
           <View>
             <Radio
-              checked={true}
-              activeColor={'gray'}
-              inactiveColor={'#fff'}
+              checked={halfDay}
+              activeColor={'#0EAA24'}
+              inactiveColor={'#CDCDCD'}
               fontSize={30}
+              onChange={halfDayHandle}
             />
           </View>
           <View style={{marginVertical: hp(0.5), paddingHorizontal: hp(0.5)}}>
             <Text style={{color: '#363636'}}>Half Day</Text>
           </View>
         </View>
-        <View style={{flexDirection: 'row', marginLeft: hp(3.5)}}>
+        <View style={{flexDirection: 'row', marginLeft: hp(3)}}>
           <View>
             <Radio
-              checked={true}
-              activeColor={'gray'}
-              inactiveColor={'#fff'}
-              fontSize={30}
+               checked={shortLeave}
+               activeColor={'#0EAA24'}
+               inactiveColor={'#CDCDCD'}
+               fontSize={30}
+               onChange={shortLeaveHandle}
             />
           </View>
           <View style={{marginVertical: hp(0.5), paddingHorizontal: hp(0.5)}}>
@@ -137,10 +161,11 @@ const ApplyLeave = (props) => {
         <View style={{flexDirection: 'row'}}>
           <View>
             <Radio
-              checked={true}
-              activeColor={'gray'}
-              inactiveColor={'#fff'}
-              fontSize={30}
+             checked={withPay}
+             activeColor={'#0EAA24'}
+             inactiveColor={'#CDCDCD'}
+             fontSize={30}
+             onChange={withPayHandle}
             />
           </View>
           <View style={{marginVertical: hp(0.5), paddingHorizontal: hp(0.5)}}>
@@ -150,10 +175,11 @@ const ApplyLeave = (props) => {
         <View style={{flexDirection: 'row', marginLeft: hp(3.5)}}>
           <View>
             <Radio
-              checked={true}
-              activeColor={'green'}
-              inactiveColor={'#fff'}
-              fontSize={30}
+             checked={withOutPay}
+             activeColor={'#0EAA24'}
+             inactiveColor={'#CDCDCD'}
+             fontSize={30}
+             onChange={withOutPayHandle}
             />
           </View>
           <View style={{marginVertical: hp(0.5), paddingHorizontal: hp(0.5)}}>
@@ -182,7 +208,10 @@ const ApplyLeave = (props) => {
             elevation: 8,
           }}>
           <View style={{marginHorizontal: hp(2), marginVertical: hp(1)}}>
-            <TextInput placeholder="type something here" multiline={true} />
+            <TextInput  placeholder={'Reason'}
+                  placeholderColor={'gray'}
+                  placeholderTextColor="gray"
+                  style={styles.textInputCustomStyle} />
           </View>
         </View>
       </View>
@@ -201,7 +230,7 @@ const ApplyLeave = (props) => {
           style={styles.textInputCustomStyle}
         />
       </View>
-      <View
+      <TouchableOpacity
         style={{
           width: wp(90),
           marginHorizontal: hp(2.5),
@@ -215,7 +244,7 @@ const ApplyLeave = (props) => {
         <View style={{alignItems: 'center'}}>
           <Text style={{color: '#fff'}}>SUBMIT REQUEST</Text>
         </View>
-      </View>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -269,5 +298,12 @@ const styles = StyleSheet.create({
     shadowOpacity: wp('10'),
     shadowRadius: wp('10'),
     elevation: 10,
+  },
+  textInputCustomStyle: {
+    fontSize: hp('1.65'),
+    height: hp('6'),
+    letterSpacing: -0.05,
+    paddingLeft: wp('3'),
+    color:'black',
   },
 });

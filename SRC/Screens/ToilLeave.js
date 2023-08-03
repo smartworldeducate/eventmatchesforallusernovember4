@@ -1,5 +1,5 @@
-import {View, Text, StyleSheet, TextInput} from 'react-native';
-import React from 'react';
+import {View, Text, StyleSheet, TextInput, TouchableOpacity} from 'react-native';
+import React, {useEffect, useState} from 'react';
 import MainHeader from '../Components/Headers/MainHeader';
 import Check from 'react-native-vector-icons/AntDesign';
 import Wrench from 'react-native-vector-icons/FontAwesome';
@@ -8,6 +8,7 @@ import Gte from 'react-native-vector-icons/AntDesign';
 import Phone from 'react-native-vector-icons/Feather';
 import colors from '../Styles/colors';
 import {Div, ThemeProvider, Radio} from 'react-native-magnus';
+import EStyleSheet from 'react-native-extended-stylesheet';
 
 import {
   widthPercentageToDP as wp,
@@ -15,7 +16,17 @@ import {
 } from 'react-native-responsive-screen';
 import ViewInput from '../Components/ViewInput';
 import Button from '../Components/Button/Button';
+import fontFamily from '../Styles/fontFamily';
 const ToilLeave = (props) => {
+  const [fullDay,setFullDay]=useState(false)
+  const [halfDay,setHalfDay]=useState(false)
+  const fulDayHandle=()=>{
+
+    fullDay == true ? setFullDay(false) : setFullDay(true)
+  }
+  const halfDayHandle=()=>{
+    halfDay == true ? setHalfDay(false) : setHalfDay(true)
+  }
   return (
     <View>
       <MainHeader text={'Toil Application'} iconName={'arrowleft'} onpressBtn={()=>props.navigation.goBack()}/>
@@ -137,27 +148,29 @@ const ToilLeave = (props) => {
         <View style={{flexDirection: 'row'}}>
           <View>
             <Radio
-              checked={true}
-              activeColor={'gray'}
-              inactiveColor={'#fff'}
-              fontSize={30}
+                checked={fullDay}
+                activeColor={'#0EAA24'}
+                inactiveColor={'#CDCDCD'}
+                fontSize={30}
+                onChange={fulDayHandle}
             />
           </View>
           <View style={{marginVertical: hp(0.5), paddingHorizontal: hp(0.5)}}>
-            <Text style={{color: '#363636'}}>Full Day Toil</Text>
+            <Text style={{color: '#363636',fontFamily:fontFamily.ceraBlack}}>Full Day Toil</Text>
           </View>
         </View>
         <View style={{flexDirection: 'row', marginLeft: hp(3.5)}}>
           <View>
             <Radio
-              checked={true}
-              activeColor={'green'}
-              inactiveColor={'#fff'}
-              fontSize={30}
+               checked={halfDay}
+               activeColor={'#0EAA24'}
+               inactiveColor={'#CDCDCD'}
+               fontSize={30}
+               onChange={halfDayHandle}
             />
           </View>
           <View style={{marginVertical: hp(0.5), paddingHorizontal: hp(0.5)}}>
-            <Text style={{color: '#363636'}}>Half Day Toil</Text>
+            <Text style={{color: '#363636',fontFamily:fontFamily.ceraBlack}}>Half Day Toil</Text>
           </View>
         </View>
       </View>
@@ -182,7 +195,10 @@ const ToilLeave = (props) => {
             elevation: 8,
           }}>
           <View style={{marginHorizontal: hp(2), marginVertical: hp(1)}}>
-            <TextInput placeholder="type something here" multiline={true} />
+          <TextInput  placeholder={'Reason'}
+                  placeholderColor={'gray'}
+                  placeholderTextColor="gray"
+                  style={styles.textInputCustomStyle} />
           </View>
         </View>
       </View>
@@ -201,7 +217,7 @@ const ToilLeave = (props) => {
           style={styles.textInputCustomStyle}
         />
       </View>
-      <View
+      <TouchableOpacity
         style={{
           width: wp(90),
           marginHorizontal: hp(2.5),
@@ -215,7 +231,7 @@ const ToilLeave = (props) => {
         <View style={{alignItems: 'center'}}>
           <Text style={{color: '#fff'}}>SUBMIT REQUEST</Text>
         </View>
-      </View>
+      </TouchableOpacity>
     </View>
   );
 };

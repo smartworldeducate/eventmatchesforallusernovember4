@@ -10,27 +10,10 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-// import Menu from 'react-native-vector-icons/AntDesign';
-// import Home from 'react-native-vector-icons/AntDesign';
-// import Chart from 'react-native-vector-icons/Feather';
-// import Hlap from 'react-native-vector-icons/FontAwesome5';
-// import Doc from 'react-native-vector-icons/Entypo';
-// import Clip from 'react-native-vector-icons/MaterialCommunityIcons';
-// import Star from 'react-native-vector-icons/Entypo';
 
-// import Event from 'react-native-vector-icons/MaterialCommunityIcons';
-// import Session from 'react-native-vector-icons/Ionicons';
-// import Hand from 'react-native-vector-icons/FontAwesome5';
-// import Notification from 'react-native-vector-icons/Feather';
-// import Icon from 'react-native-vector-icons/AntDesign';
-// import Contact from 'react-native-vector-icons/FontAwesome';
-// import Help from 'react-native-vector-icons/Feather';
-// import Out from 'react-native-vector-icons/FontAwesome';
 import {Image} from 'react-native';
-// import { useSelector } from 'react-redux';
 
 const CustomDrawer = ({navigation}) => {
-  const [user, setUser] = useState('');
 
   return (
     <>
@@ -45,6 +28,7 @@ const CustomDrawer = ({navigation}) => {
             height: hp(10),
             justifyContent: 'space-between',
             flexDirection: 'row',
+            marginTop:hp(3)
           }}>
           <View style={{width: wp(70), height: hp(10)}}>
             {/* <Text>fdgdgd</Text> */}
@@ -93,7 +77,7 @@ const CustomDrawer = ({navigation}) => {
                 resizeMode="cover"
               />
             </View>
-            <View style={{marginTop: hp(0.5)}}>
+            <View style={{marginLeft:hp(-2)}}>
               <View>
                 <Text
                   style={{
@@ -164,7 +148,7 @@ const CustomDrawer = ({navigation}) => {
             </TouchableOpacity>
           </View>
           <View style={{width: wp(50), height: hp(5), marginTop: wp(3)}}>
-            <TouchableOpacity onPress={()=>navigation.navigate('Profile')}>
+            <TouchableOpacity onPress={()=>navigation.navigate('TimeLine')}>
               <View style={{flexDirection: 'row', marginLeft: hp(3)}}>
                 {/* <View >
               <Icon name='home' size={25} color='#fff'/>
@@ -206,7 +190,7 @@ const CustomDrawer = ({navigation}) => {
             </TouchableOpacity>
           </View>
           <View style={{width: wp(50), height: hp(5), marginTop: wp(3)}}>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={()=>navigation.navigate('ChildBss')}>
               <View style={{flexDirection: 'row', marginLeft: hp(3)}}>
                 {/* <View >
               <Icon name='home' size={25} color='#fff'/>
@@ -220,7 +204,7 @@ const CustomDrawer = ({navigation}) => {
             </TouchableOpacity>
           </View>
           <View style={{width: wp(50), height: hp(5), marginTop: wp(3)}}>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={()=>navigation.navigate('Profile')}>
               <View style={{flexDirection: 'row', marginLeft: hp(3)}}>
                 {/* <View >
               <Icon name='home' size={25} color='#fff'/>
@@ -232,7 +216,7 @@ const CustomDrawer = ({navigation}) => {
             </TouchableOpacity>
           </View>
           <View style={{width: wp(50), height: hp(5), marginTop: wp(3)}}>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={()=>navigation.navigate('FeedBack')}>
               <View style={{flexDirection: 'row', marginLeft: hp(3)}}>
                 {/* <View >
               <Icon name='home' size={25} color='#fff'/>

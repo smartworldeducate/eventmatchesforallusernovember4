@@ -37,14 +37,14 @@ const Skip1 = () => {
   ])
   const [initVal,setInitVal]=useState(0)
 
-  const hendleSwiper=(data)=>{
-console.log("swiper data",data)
-    data.map((item,i)=>{
-      console.log("i data",i)
+//   const hendleSwiper=(data)=>{
+// console.log("swiper data",data)
+//     data.map((item,i)=>{
+//       console.log("i data",i)
 
-      // return()
-    })
-  }
+//       // return()
+//     })
+//   }
 
   const swiperRef = useRef(null);
   // const [employeeId, setEmployeeId] = useState();
@@ -83,7 +83,7 @@ console.log("swiper data",data)
   return (
     <View style={{flex: 1}}>
       <Swiper
-      onIndexChanged={(data)=>hendleSwiper(data)}
+      // onIndexChanged={(data)=>hendleSwiper(data)}
         style={styles.wrapper}
         showsButtons={false}
         loop={false}

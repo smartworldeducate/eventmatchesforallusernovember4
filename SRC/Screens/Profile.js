@@ -1,4 +1,11 @@
-import {View, Text, ImageBackground, Image} from 'react-native';
+import {
+  View,
+  Text,
+  ImageBackground,
+  Image,
+  ScrollView,
+  SafeAreaView,
+} from 'react-native';
 import React from 'react';
 import Bell from 'react-native-vector-icons/EvilIcons';
 import Menu from 'react-native-vector-icons/Entypo';
@@ -7,47 +14,68 @@ import Wrench from 'react-native-vector-icons/FontAwesome';
 import User from 'react-native-vector-icons/AntDesign';
 import Gte from 'react-native-vector-icons/AntDesign';
 import Phone from 'react-native-vector-icons/Feather';
-
+import EStyleSheet from 'react-native-extended-stylesheet';
+import Icon from 'react-native-fontawesome-pro';
+import fontFamily from '../Styles/fontFamily';
+import fontSize from '../Styles/fontSize';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-import { TouchableOpacity } from 'react-native-gesture-handler';
-const Profile = (props) => {
+import {TouchableOpacity} from 'react-native-gesture-handler';
+import ListProfile from '../Components/ListProfile';
+const Profile = props => {
+  const data = [
+    {iconName: 'user', textName: 'Personal Information'},
+    {iconName: 'user-gear', textName: 'Service Information'},
+    {iconName: 'money-bill-1-wave', textName: 'Financial Information'},
+    // {iconName:'Phone',textName:'Contact Information'},
+    {iconName: 'clipboard-check', textName: 'Movement Log'},
+    {iconName: 'child', textName: 'Children in Beaconhouse'},
+    {iconName: 'user', textName: 'Personal Information'},
+    // {iconName:'user-gear',textName:'Service Information'},
+    // {iconName:'money-bill-1-wave',textName:'Financial Information'},
+    // // {iconName:'Phone',textName:'Contact Information'},
+    // {iconName:'clipboard-check',textName:'Movement Log'},
+    // {iconName:'child',textName:'Children in Beaconhouse'},
+  ];
   return (
-    <>
-      <View style={{flex: 1, backgroundColor: '#1C37A4'}}>
+    <SafeAreaView style={{flex: 1, backgroundColor: '#1C37A4'}}>
+      <ScrollView style={{flex: 1}}>
         <View
           style={{
-            width: wp(90),
+            // width: wp(90),
+            flex: 1,
             marginHorizontal: hp(2.5),
-            height: hp(8),
+            // height: hp(8),
             flexDirection: 'row',
             justifyContent: 'space-between',
-            marginTop: hp(8),
+            marginTop: hp(6),
           }}>
           <View>
             <Bell name="bell" size={35} color="#fff" />
           </View>
           <View>{/* <Text>gdfgd</Text> */}</View>
-          <TouchableOpacity onPress={()=>props.navigation.openDrawer()}>
+          <TouchableOpacity onPress={() => props.navigation.openDrawer()}>
             <Menu name="menu" size={35} color="#fff" />
           </TouchableOpacity>
         </View>
         <View
           style={{
-            width: wp(90),
+            // width: wp(90),
+            flex: 1,
             marginHorizontal: hp(2.5),
-            position: 'relative',
+            marginTop: hp(6),
+            // position: 'relative',
             borderRadius: hp(2),
-            height: hp(22),
+            height: hp(20),
             shadowColor: '#000',
             shadowOpacity: 0.5,
             shadowRadius: 4,
             elevation: 4,
             backgroundColor: '#FFFFFF',
-            flexDirection: 'row',
-            justifyContent: 'space-between',
+            // flexDirection: 'row',
+            // justifyContent: 'space-between',
           }}>
           <View
             style={{
@@ -56,22 +84,25 @@ const Profile = (props) => {
               borderRadius: hp(50),
               backgroundColor: '#1C37A4',
               position: 'absolute',
-              top: hp(-21.5),
-              left: hp(10),
+              top: hp(-23.5),
+              left: hp(9),
+              justifyContent: 'center',
             }}>
             <View
               style={{
-                width: wp(26),
-                height: hp(13),
+                width: wp(21),
+                height: hp(10.5),
                 borderRadius: hp(50),
                 borderWidth: 3,
                 borderColor: 'gray',
                 position: 'absolute',
-                top: hp(11.5),
-                left: hp(5.8),
+                top: hp(14),
+                left: hp(7.5),
+                justifyContent: 'center',
+                alignItems: 'center',
               }}>
               <Image
-                style={{width: wp(25), height: hp(11.8), borderRadius: hp(50)}}
+                style={{width: wp(20), height: hp(10), borderRadius: hp(50)}}
                 source={{uri: 'artg'}}
                 resizeMode="contain"
               />
@@ -99,26 +130,25 @@ const Profile = (props) => {
               <View style={{marginTop: hp(0.5)}}>
                 <View style={{flexDirection: 'row'}}>
                   <View>
-                    <Text
-                      style={{
-                        color: '#6A6A6A',
-                        fontSize: hp(2),
-                        fontWeight: '600',
-                        marginTop: hp(1),
-                      }}>
-                      Zeeshan Abdual Hafeez
-                    </Text>
+                    <Text style={styles.zetext}>Zeeshan Abdual Hafeez</Text>
                   </View>
                   <View
                     style={{
                       width: wp(12),
                       height: hp(2),
-                      marginTop: 12,
+                      marginTop: 8,
                       marginLeft: 10,
                       borderRadius: 5,
                       backgroundColor: '#D4FFCC',
+                      justifyContent: 'center',
+                      alignItems: 'center',
                     }}>
-                    <Text style={{fontSize: 10, paddingHorizontal: 8}}>
+                    <Text
+                      style={{
+                        fontSize: hp(1),
+                        paddingHorizontal: 8,
+                        color: '#2D8E00',
+                      }}>
                       81090
                     </Text>
                   </View>
@@ -127,12 +157,7 @@ const Profile = (props) => {
                   <View style={{marginRight: hp(1)}}>
                     <View style={{flexDirection: 'row', marginTop: hp(0)}}>
                       <View style={{marginRight: hp(1)}}>
-                        <Text
-                          style={{
-                            color: 'gray',
-                            fontSize: hp(1.5),
-                            fontWeight: '600',
-                          }}>
+                        <Text style={styles.zetext1}>
                           Senior Officer UX/UI Designer
                         </Text>
                       </View>
@@ -146,9 +171,9 @@ const Profile = (props) => {
                 width: wp(90),
                 height: 1,
                 backgroundColor: '#DBDBDB',
-                marginTop: hp(2),
+                marginTop: hp(1),
               }}>
-              <Text>vxvdfbccfb</Text>
+              {/* <Text>vxvdfbccfb</Text> */}
             </View>
 
             {/* card bottom content */}
@@ -157,188 +182,105 @@ const Profile = (props) => {
               style={{
                 width: wp(90),
                 height: hp(7),
-                paddingHorizontal: hp(2),
+                // paddingHorizontal: hp(2),
                 flexDirection: 'row',
                 marginTop: hp(2),
+                justifyContent: 'center',
               }}>
               <View style={{flexDirection: 'row'}}>
-                <View>
-                  <Check name="checkcircleo" size={30} color="#D4FFCC" />
+                <View style={{alignItems: 'center', paddingVertical: hp(0.3)}}>
+                  <Check name="checkcircleo" size={hp(3.5)} color="#D4FFCC" />
                 </View>
-                <View style={{marginLeft: 10}}>
+                <View style={{marginLeft: hp(0.8)}}>
                   <View>
-                    <Text
-                      style={{
-                        fontSize: 12,
-                        color: '#353535',
-                        fontWeight: 'bold',
-                      }}>
-                      Regular
-                    </Text>
+                    <Text style={styles.smalltext}>Regular</Text>
                   </View>
                   <View>
-                    <Text style={{fontSize: 10}}>Status</Text>
+                    <Text style={styles.smalltext1}>STATUS</Text>
                   </View>
                 </View>
               </View>
               <View style={{flexDirection: 'row', marginLeft: hp(3.5)}}>
-                <View>
-                  <Wrench name="wrench" size={30} color="#BB8FCE" />
+                <View style={{alignItems: 'center', paddingVertical: hp(0.3)}}>
+                  <Icon name="wrench" size={hp(3.5)} color="#BB8FCE" />
                 </View>
-                <View style={{marginLeft: 10}}>
+                <View style={{marginLeft: hp(0.5)}}>
                   <View>
-                    <Text
-                      style={{
-                        fontSize: 12,
-                        color: '#353535',
-                        fontWeight: 'bold',
-                      }}>
-                      3.7 Years
-                    </Text>
+                    <Text style={styles.smalltext}>3.7 Years</Text>
                   </View>
                   <View>
-                    <Text style={{fontSize: 10}}>Service</Text>
+                    <Text style={styles.smalltext1}>SERVICE</Text>
                   </View>
                 </View>
               </View>
               <View style={{flexDirection: 'row', marginLeft: hp(3.5)}}>
-                <View>
-                  <Check name="checkcircleo" size={30} color="#CD6155" />
+                <View style={{alignItems: 'center', paddingVertical: hp(0.3)}}>
+                  <Check name="checkcircleo" size={hp(3.5)} color="#CD6155" />
                 </View>
-                <View style={{marginLeft: 10}}>
+                <View style={{marginLeft: hp(0.5)}}>
                   <View>
-                    <Text
-                      style={{
-                        fontSize: 12,
-                        color: '#353535',
-                        fontWeight: 'bold',
-                      }}>
-                      31 Years
-                    </Text>
+                    <Text style={styles.smalltext}>31 Years</Text>
                   </View>
                   <View>
-                    <Text style={{fontSize: 10}}>AGE</Text>
+                    <Text style={styles.smalltext1}>AGE</Text>
                   </View>
                 </View>
               </View>
             </View>
           </View>
         </View>
-        <View style={{width:wp(90),marginHorizontal:hp(2.5),height:hp(50),marginTop:hp(2)}}>
-            <View style={{width:wp(90),height:hp(6),borderRadius:hp(1),backgroundColor:'#FFFFFF',marginBottom:hp(2)}}>
-                     <View style={{flexDirection:'row',marginVertical:hp(1),marginHorizontal:hp(1)}}>
-                        <View>
-                        <User name="user" size={30} color="#363636" />
 
-                        </View>
-                        <View style={{paddingVertical:hp(0.5),paddingHorizontal:hp(0.5)}}>
-                            <Text  style={{fontSize:hp(2),color:'#363636'}}>Personal Information</Text>
-                        </View>
-                        <View style={{marginLeft:hp(15),paddingVertical:hp(0.8)}}>
-                        <Gte name="right" size={20} color="gray" />
-
-                        </View>
-                     </View>
-            </View>
-            <View style={{width:wp(90),height:hp(6),borderRadius:hp(1),backgroundColor:'#FFFFFF',marginBottom:hp(2)}}>
-                     <View style={{flexDirection:'row',marginVertical:hp(1),marginHorizontal:hp(1)}}>
-                        <View>
-                        <Phone name="phone" size={30} color="#363636" />
-
-                        </View>
-                        <View style={{paddingVertical:hp(0.5),paddingHorizontal:hp(0.5)}}>
-                            <Text  style={{fontSize:hp(2),color:'#363636'}}>Service Information</Text>
-                        </View>
-                        <View style={{marginLeft:hp(15),paddingVertical:hp(0.8)}}>
-                        <Gte name="right" size={20} color="gray" />
-
-                        </View>
-                     </View>
-            </View>
-            <View style={{width:wp(90),height:hp(6),borderRadius:hp(1),backgroundColor:'#FFFFFF',marginBottom:hp(2)}}>
-                     <View style={{flexDirection:'row',marginVertical:hp(1),marginHorizontal:hp(1)}}>
-                        <View>
-                        <User name="user" size={30} color="#363636" />
-
-                        </View>
-                        <View style={{paddingVertical:hp(0.5),paddingHorizontal:hp(0.5)}}>
-                            <Text  style={{fontSize:hp(2),color:'#363636'}}>Contact Information</Text>
-                        </View>
-                        <View style={{marginLeft:hp(15),paddingVertical:hp(0.8)}}>
-                        <Gte name="right" size={20} color="gray" />
-
-                        </View>
-                     </View>
-            </View>
-            <View style={{width:wp(90),height:hp(6),borderRadius:hp(1),backgroundColor:'#FFFFFF',marginBottom:hp(2)}}>
-                     <View style={{flexDirection:'row',marginVertical:hp(1),marginHorizontal:hp(1)}}>
-                        <View>
-                        <Phone name="phone" size={30} color="#363636" />
-
-                        </View>
-                        <View style={{paddingVertical:hp(0.5),paddingHorizontal:hp(0.5)}}>
-                            <Text  style={{fontSize:hp(2),color:'#363636'}}>Movement Log</Text>
-                        </View>
-                        <View style={{marginLeft:hp(15),paddingVertical:hp(0.8)}}>
-                        <Gte name="right" size={20} color="gray" />
-
-                        </View>
-                     </View>
-            </View>
-            <View style={{width:wp(90),height:hp(6),borderRadius:hp(1),backgroundColor:'#FFFFFF',marginBottom:hp(2)}}>
-                     <View style={{flexDirection:'row',marginVertical:hp(1),marginHorizontal:hp(1)}}>
-                        <View>
-                        <User name="user" size={30} color="#363636" />
-
-                        </View>
-                        <View style={{paddingVertical:hp(0.5),paddingHorizontal:hp(0.5)}}>
-                            <Text  style={{fontSize:hp(2),color:'#363636'}}>Children in Beaconhouse</Text>
-                        </View>
-                        <View style={{marginLeft:hp(15),paddingVertical:hp(0.8)}}>
-                        <Gte name="right" size={20} color="gray" />
-
-                        </View>
-                     </View>
-            </View>
-            <View style={{width:wp(90),height:hp(6),borderRadius:hp(1),backgroundColor:'#FFFFFF',marginBottom:hp(2)}}>
-                     <View style={{flexDirection:'row',marginVertical:hp(1),marginHorizontal:hp(1)}}>
-                        <View>
-                        <User name="user" size={30} color="#363636" />
-
-                        </View>
-                        <View style={{paddingVertical:hp(0.5),paddingHorizontal:hp(0.5)}}>
-                            <Text  style={{fontSize:hp(2),color:'#363636'}}>Personal Information</Text>
-                        </View>
-                        <View style={{marginLeft:hp(15),paddingVertical:hp(0.8)}}>
-                        <Gte name="right" size={20} color="gray" />
-
-                        </View>
-                     </View>
-            </View>
-            <View style={{width:wp(90),height:hp(6),borderRadius:hp(1),backgroundColor:'#FFFFFF',marginBottom:hp(2)}}>
-                     <View style={{flexDirection:'row',marginVertical:hp(1),marginHorizontal:hp(1)}}>
-                        <View>
-                        <Phone name="phone" size={30} color="#363636" />
-
-                        </View>
-                        <View style={{paddingVertical:hp(0.5),paddingHorizontal:hp(0.5)}}>
-                            <Text  style={{fontSize:hp(2),color:'#363636'}}>Personal Information</Text>
-                        </View>
-                        <View style={{marginLeft:hp(15),paddingVertical:hp(0.8)}}>
-                        <Gte name="right" size={20} color="gray" />
-
-                        </View>
-                     </View>
-            </View>
-            
-
+        <View
+          style={{
+            width: wp(90),
+            marginHorizontal: hp(2.5),
+            height: hp(50),
+            marginTop: hp(2),
+          }}>
+          {data.map((item, i) => {
+            return (
+              <ListProfile
+                IconName={item.iconName}
+                textName={item.textName}
+                key={i}
+              />
+            );
+          })}
         </View>
-        
-
-      </View>
-
-    </>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 
 export default Profile;
+
+const styles = EStyleSheet.create({
+  zetext: {
+    color: '#363636',
+    fontWeight: '700',
+    fontSize: '0.9rem',
+    fontFamily: fontFamily.ceraBlack,
+  },
+  zetext1: {
+    color: '#363636',
+    fontWeight: '500',
+    // marginTop: hp(1),
+    fontSize: '0.7rem',
+    fontFamily: fontFamily.ceraBlack,
+  },
+  smalltext: {
+    fontWeight: '700',
+    fontSize: '0.7375rem',
+    fontFamily: fontFamily.ceraBlack,
+    color: '#353535',
+    fontStyle: 'normal',
+  },
+  smalltext1: {
+    fontWeight: '500',
+    fontSize: '0.5rem',
+    fontFamily: fontFamily.ceraBlack,
+    color: '#353535',
+    fontStyle: 'normal',
+    alignItems: 'center',
+  },
+});

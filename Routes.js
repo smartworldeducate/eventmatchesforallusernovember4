@@ -26,6 +26,10 @@ import ToilLeave from './SRC/Screens/ToilLeave';
 import Notification from './SRC/Screens/Notification';
 import Wfh from './SRC/Screens/Wfh';
 import Financial from './SRC/Screens/Financial';
+import TimeLine from './SRC/Screens/TimeLine';
+import ChildBss from './SRC/Screens/ChildBss';
+import FeedBack from './SRC/Screens/FeedBack';
+import WorkFromHome from './SRC/Screens/WorkFromHome';
 
 const Drawer = createDrawerNavigator();
 
@@ -74,6 +78,10 @@ const Routes = () => {
         <Stack.Screen name="Notification" component={Notification} />
         <Stack.Screen name="Wfh" component={Wfh} />
         <Stack.Screen name="Financial" component={Financial} />
+        <Stack.Screen name="TimeLine" component={TimeLine} />
+        <Stack.Screen name="ChildBss" component={ChildBss} />
+        <Stack.Screen name="FeedBack" component={FeedBack} />
+        <Stack.Screen name="WorkFromHome" component={WorkFromHome} />
       </Stack.Navigator>
     </NavigationContainer>
   );

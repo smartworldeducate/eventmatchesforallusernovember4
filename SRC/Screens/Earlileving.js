@@ -1,4 +1,4 @@
-import {View, Text, StyleSheet, TextInput} from 'react-native';
+import {View, Text, StyleSheet, TextInput, TouchableOpacity} from 'react-native';
 import React from 'react';
 import MainHeader from '../Components/Headers/MainHeader';
 import Check from 'react-native-vector-icons/AntDesign';
@@ -67,11 +67,6 @@ const EarliLeaving = (props) => {
       <View
         style={{width: wp(90), marginHorizontal: hp(2.5), marginTop: hp(2)}}>
         <ViewInput
-          //  value={employeeId}
-          //  onChangeText={onChangeEmpId}
-          //  keyboardType={'numeric'}
-          //  maxLength={11}
-          //  returnKeyType={'done'}
           iconName={'clockcircleo'}
           placeholder={'Departure'}
           placeholderColor={colors.loginTextColor}
@@ -79,89 +74,7 @@ const EarliLeaving = (props) => {
           style={styles.textInputCustomStyle}
         />
       </View>
-      {/* <View
-        style={{
-          width: wp(90),
-          marginHorizontal: hp(2.5),
-          marginTop: hp(2),
-          flexDirection: 'row',
-        }}>
-        <View style={{flexDirection: 'row'}}>
-          <View>
-            <Radio
-              checked={true}
-              activeColor={'green'}
-              inactiveColor={'#fff'}
-              fontSize={30}
-            />
-          </View>
-          <View style={{marginVertical: hp(0.5), paddingHorizontal: hp(0.5)}}>
-            <Text style={{color: '#363636'}}>Full Day</Text>
-          </View>
-        </View>
-        <View style={{flexDirection: 'row', marginLeft: hp(3.5)}}>
-          <View>
-            <Radio
-              checked={true}
-              activeColor={'gray'}
-              inactiveColor={'#fff'}
-              fontSize={30}
-            />
-          </View>
-          <View style={{marginVertical: hp(0.5), paddingHorizontal: hp(0.5)}}>
-            <Text style={{color: '#363636'}}>Half Day</Text>
-          </View>
-        </View>
-        <View style={{flexDirection: 'row', marginLeft: hp(3.5)}}>
-          <View>
-            <Radio
-              checked={true}
-              activeColor={'gray'}
-              inactiveColor={'#fff'}
-              fontSize={30}
-            />
-          </View>
-          <View style={{marginVertical: hp(0.5), paddingHorizontal: hp(0.5)}}>
-            <Text style={{color: '#363636'}}>Short Leave</Text>
-          </View>
-        </View>
-      </View> */}
-      {/* <View
-        style={{
-          width: wp(90),
-          marginHorizontal: hp(2.5),
-          marginTop: hp(3),
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-        }}>
-        <View style={{flexDirection: 'row'}}>
-          <View>
-            <Radio
-              checked={true}
-              activeColor={'gray'}
-              inactiveColor={'#fff'}
-              fontSize={30}
-            />
-          </View>
-          <View style={{marginVertical: hp(0.5), paddingHorizontal: hp(0.5)}}>
-            <Text style={{color: '#363636'}}>With Pay</Text>
-          </View>
-        </View>
-        <View style={{flexDirection: 'row', marginLeft: hp(3.5)}}>
-          <View>
-            <Radio
-              checked={true}
-              activeColor={'green'}
-              inactiveColor={'#fff'}
-              fontSize={30}
-            />
-          </View>
-          <View style={{marginVertical: hp(0.5), paddingHorizontal: hp(0.5)}}>
-            <Text style={{color: '#363636'}}>Without Pay</Text>
-          </View>
-        </View>
-      </View> */}
-
+     
       <View
         style={{
           width: wp(90),
@@ -182,7 +95,10 @@ const EarliLeaving = (props) => {
             elevation: 8,
           }}>
           <View style={{marginHorizontal: hp(2), marginVertical: hp(1)}}>
-            <TextInput placeholder="type something here" multiline={true} />
+          <TextInput  placeholder={'Reason'}
+                  placeholderColor={'gray'}
+                  placeholderTextColor="gray"
+                  style={styles.textInputCustomStyle} />
           </View>
         </View>
       </View>
@@ -201,7 +117,7 @@ const EarliLeaving = (props) => {
           style={styles.textInputCustomStyle}
         />
       </View>
-      <View
+      <TouchableOpacity
         style={{
           width: wp(90),
           marginHorizontal: hp(2.5),
@@ -215,7 +131,7 @@ const EarliLeaving = (props) => {
         <View style={{alignItems: 'center'}}>
           <Text style={{color: '#fff'}}>SUBMIT REQUEST</Text>
         </View>
-      </View>
+      </TouchableOpacity>
     </View>
   );
 };

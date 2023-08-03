@@ -1,14 +1,14 @@
 import React from 'react';
 import {StyleSheet, TextInput, View, Image} from 'react-native';
 import {widthPercentageToDP} from 'react-native-responsive-screen';
-import colors from '../Styles/colors';
+import colors from '../../Styles/colors';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-import Icon from 'react-native-vector-icons/AntDesign';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
-const ViewInput = ({
+const Search = ({
   iconName,
   iconColor,
   style,
@@ -36,18 +36,17 @@ const ViewInput = ({
         borderColor: colors.borderLightGrey,
         borderWidth: 1,
         borderRadius: widthPercentageToDP('10'),
-        backgroundColor:'#fff'
       }}>
       <View
         style={{
           flex: 0.14,
           justifyContent: 'center',
           alignItems: 'center',
-          // paddingHorizontal: wp('1'),
+          paddingHorizontal: wp('1'),
           backgroundColor: '#FDEB13',
-          borderRadius: wp('10'),
+        //   borderRadius: wp('10'),
         }}>
-        <Icon name={iconName} color={iconColor} size={25} />
+        <Icon name={iconName} color={iconColor} size={30} />
       </View>
 
       <View style={{flex: 0.86, justifyContent: 'center'}}>
@@ -75,4 +74,4 @@ const ViewInput = ({
 };
 
 const styles = StyleSheet.create({});
-export default ViewInput;
+export default Search;

@@ -1,5 +1,5 @@
-import {View, Text, StyleSheet, TextInput} from 'react-native';
-import React from 'react';
+import {View, Text, StyleSheet, TextInput, TouchableOpacity} from 'react-native';
+import React, {useEffect, useState} from 'react';
 import MainHeader from '../Components/Headers/MainHeader';
 import Check from 'react-native-vector-icons/AntDesign';
 import Wrench from 'react-native-vector-icons/FontAwesome';
@@ -16,6 +16,26 @@ import {
 import ViewInput from '../Components/ViewInput';
 import Button from '../Components/Button/Button';
 const AttendenceMarked = (props) => {
+  const [fullDay,setFullDay]=useState(false)
+  const [halfDay,setHalfDay]=useState(false)
+  const [shortLeave,setShortLeave]=useState(false)
+  const [withPay,setWithPay]=useState(false)
+  const [withOutPay,setWithOutPay]=useState(false)
+  const fulDayHandle=()=>{
+    fullDay == true ? setFullDay(false) : setFullDay(true)
+  }
+  const halfDayHandle=()=>{
+    halfDay == true ? setHalfDay(false) : setHalfDay(true)
+  }
+  const shortLeaveHandle=()=>{
+    shortLeave == true ? setShortLeave(false) : setShortLeave(true)
+  }
+  const withPayHandle=()=>{
+    withPay == true ? setWithPay(false) : setWithPay(true)
+  }
+  const withOutPayHandle=()=>{
+    withOutPay == true ? setWithOutPay(false) : setWithOutPay(true)
+  }
   return (
     <View>
       <MainHeader text={'Attendance Not Marked'} iconName={'arrowleft'} onpressBtn={()=>props.navigation.goBack()}/>
@@ -81,18 +101,19 @@ const AttendenceMarked = (props) => {
       </View> */}
       <View
         style={{
-          width: wp(90),
           marginHorizontal: hp(2.5),
           marginTop: hp(2),
           flexDirection: 'row',
+          justifyContent:'space-between'
         }}>
         <View style={{flexDirection: 'row'}}>
           <View>
             <Radio
-              checked={true}
-              activeColor={'green'}
-              inactiveColor={'#fff'}
+              checked={fullDay}
+              activeColor={'#0EAA24'}
+              inactiveColor={'#CDCDCD'}
               fontSize={30}
+              onChange={fulDayHandle}
             />
           </View>
           <View style={{marginVertical: hp(0.5), paddingHorizontal: hp(0.5)}}>
@@ -102,10 +123,11 @@ const AttendenceMarked = (props) => {
         <View style={{flexDirection: 'row', marginLeft: hp(6.5)}}>
           <View>
             <Radio
-              checked={true}
-              activeColor={'gray'}
-              inactiveColor={'#fff'}
+              checked={halfDay}
+              activeColor={'#0EAA24'}
+              inactiveColor={'#CDCDCD'}
               fontSize={30}
+              onChange={halfDayHandle}
             />
           </View>
           <View style={{marginVertical: hp(0.5), paddingHorizontal: hp(0.5)}}>
@@ -115,10 +137,11 @@ const AttendenceMarked = (props) => {
         <View style={{flexDirection: 'row', marginLeft: hp(6.5)}}>
           <View>
             <Radio
-              checked={true}
-              activeColor={'gray'}
-              inactiveColor={'#fff'}
+              checked={shortLeave}
+              activeColor={'#0EAA24'}
+              inactiveColor={'#CDCDCD'}
               fontSize={30}
+              onChange={shortLeaveHandle}
             />
           </View>
           <View style={{marginVertical: hp(0.5), paddingHorizontal: hp(0.5)}}>
@@ -176,7 +199,10 @@ const AttendenceMarked = (props) => {
             elevation: 8,
           }}>
           <View style={{marginHorizontal: hp(2), marginVertical: hp(1)}}>
-            <TextInput placeholder="type something here" multiline={true} />
+          <TextInput  placeholder={'Reason'}
+                  placeholderColor={'gray'}
+                  placeholderTextColor="gray"
+                  style={styles.textInputCustomStyle} />
           </View>
         </View>
       </View>
@@ -195,7 +221,7 @@ const AttendenceMarked = (props) => {
           style={styles.textInputCustomStyle}
         />
       </View>
-      <View
+      <TouchableOpacity
         style={{
           width: wp(90),
           marginHorizontal: hp(2.5),
@@ -209,7 +235,7 @@ const AttendenceMarked = (props) => {
         <View style={{alignItems: 'center'}}>
           <Text style={{color: '#fff'}}>SUBMIT REQUEST</Text>
         </View>
-      </View>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -242,7 +268,7 @@ const styles = StyleSheet.create({
     height: hp('6.3'),
     letterSpacing: -0.05,
     paddingLeft: wp('6'),
-    color: colors.loginIconColor,
+    color:'black',
   },
   loginWithGoogle: {
     justifyContent: 'center',
