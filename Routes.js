@@ -30,6 +30,9 @@ import TimeLine from './SRC/Screens/TimeLine';
 import ChildBss from './SRC/Screens/ChildBss';
 import FeedBack from './SRC/Screens/FeedBack';
 import WorkFromHome from './SRC/Screens/WorkFromHome';
+import Approcial from './SRC/Screens/Approcial';
+import Attendance from './SRC/Screens/Attendance';
+import Reportee from './SRC/Screens/Reportee';
 
 const Drawer = createDrawerNavigator();
 
@@ -43,8 +46,11 @@ function DrawerStack() {
         drawerStyle: {width: wp('100'),backgroundColor:'#E6E6E6'},
       }}
       drawerContent={props => <CustomDrawer {...props} />}>
-      <Drawer.Screen name="HomeScreen" component={HomeScreen} />
+      <Drawer.Screen name="HomeScreenDrawer" component={HomeScreen} />
       <Drawer.Screen name="Profile" component={Profile} />
+      <Drawer.Screen name="Approcial" component={Approcial} />
+      <Drawer.Screen name="Attendance" component={Attendance} />
+      <Drawer.Screen name="Reportee" component={Reportee} />
      
     </Drawer.Navigator>
   );

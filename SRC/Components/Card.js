@@ -11,18 +11,13 @@ import fontFamily from '../Styles/fontFamily';
 export default function Card() {
   const data = [1, 2, 3, 4, 5];
   return (
-    <View style={{marginTop: hp(2), width: wp(100)}}>
-      <View
-        style={{
-          width: wp(90),
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-        }}>
+    <View style={{marginTop: hp(3)}}>
+      <View style={styles.cardHeading}>
         <View>
-          <Text style={styles.hndCard}>Message</Text>
+          <Text style={styles.message}>Messages</Text>
         </View>
-        <View style={{marginLeft: hp(25)}}>
-          <Text style={styles.hndCard}>View All</Text>
+        <View>
+          <Text style={styles.viewAll}>View All</Text>
         </View>
       </View>
       <ScrollView
@@ -32,66 +27,53 @@ export default function Card() {
         {data.map((e, i) => {
           return (
             <View style={styles.card} key={i}>
-              <View style={{marginHorizontal: hp(1), marginVertical: hp(1)}}>
-                <View>
+              <View style={{marginHorizontal: hp(1)}}>
+                <View
+                  style={{
+                    width: wp(50),
+                    height: hp(7.9),
+                    flexDirection: 'row',
+                  }}>
                   <View
                     style={{
-                      width: wp(50),
-                      height: hp(7.9),
-                      flexDirection: 'row',
-                      //   backgroundColor: '#1C37A4',
+                      marginVertical: hp(1.5),
+                      paddingHorizontal: hp(0.5),
                     }}>
-                    <View
+                    <Image
                       style={{
-                        width: wp(12),
-                        height: hp(6),
-                        backgroundColor: '#58D68D ',
-                        borderRadius: hp(2),
-                        marginVertical: hp(1),
-                        marginRight: hp(3),
-                      }}>
-                      <Image
-                        style={{
-                          width: wp(10),
-                          height: hp(5),
-                          borderRadius: hp(1),
-                        }}
-                        source={{uri: 'artg'}}
-                        resizeMode="cover"
-                      />
+                        width: wp(7),
+                        height: hp(3.5),
+                        borderRadius: hp(50),
+                      }}
+                      source={{uri: 'artg'}}
+                      resizeMode="cover"
+                    />
+                  </View>
+                  <View
+                    style={{
+                      marginLeft: hp(0.5),
+                      justifyContent: 'center',
+                      marginTop: hp(-0.7),
+                    }}>
+                    <View>
+                      <Text style={styles.userName}>Zeeshan Abdual Hafeez</Text>
                     </View>
-                    <View style={{marginTop: hp(0.5), marginLeft: hp(-2)}}>
-                      <View>
-                        <Text style={styles.cardText}>
-                          Zeeshan Abdual Hafeez
-                        </Text>
-                      </View>
-                      <View style={{flexDirection: 'row', marginTop: hp(0)}}>
-                        <View style={{marginRight: hp(1)}}>
-                          <View
-                            style={{flexDirection: 'row', marginTop: hp(0)}}>
-                            <View style={{marginRight: hp(1)}}>
-                              <Text style={styles.ctitle}>May 22,2023</Text>
-                            </View>
-                          </View>
-                        </View>
-                      </View>
+                    <View style={{marginRight: hp(1)}}>
+                      <Text style={styles.ctitle}>May 22,2023</Text>
                     </View>
                   </View>
                 </View>
               </View>
-              <View style={{width: wp(80), marginHorizontal: hp(1)}} >
-                <View style={{marginTop: hp(-2), width: wp(78)}}>
-                  <Text style={styles.cardText} numberOfLines={4} ellipsizeMode={'tail'}>
-                    Lörem ipsum agnostisiv ekograf alltså best prest inte Helena
-                    Martinsson. Das ryliga Das ryliga viralgranska seliga: red.
-                    Astront Nsson. Das ryliga Das rylig ranska seliga.
-                    Lörem ipsum agnostisiv ekograf alltså best prest inte Helena
-                    Martinsson. Das ryliga Das ryliga viralgranska seliga: red.
-                    Astront Nsson. Das ryliga Das rylig ranska seliga.
-                  </Text>
-                  
-                </View>
+              <View style={{marginHorizontal: hp(1.5),marginTop:hp(-2)}}>
+                <Text
+                  style={styles.cardText}
+                  numberOfLines={4}
+                  ellipsizeMode={'tail'}>
+                  Lörem ipsum agnostisiv ekograf alltså best prest inte Helena
+                  Martinsson. Das ryliga Das ryliga viralgranska seliga: red.
+                  Astront Nsson. Das ryliga Das rylig ranska seliga. Astront
+                  Nsson. Das Das.
+                </Text>
               </View>
             </View>
           );
@@ -102,63 +84,75 @@ export default function Card() {
 }
 
 const styles = EStyleSheet.create({
-  heading: {
-    paddingHorizontal: hp(2),
-  },
   container: {
     paddingHorizontal: hp(1),
   },
   card: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#ffffff',
     shadowColor: '#000',
     shadowOpacity: 0.5,
     shadowRadius: 4,
     elevation: 4,
     height: hp(18),
     width: wp(80),
-    borderRadius: hp(1.5),
+    borderRadius: hp(2),
     margin: 10,
-    marginRight:hp('1.5')
+    marginRight: hp('1.5'),
   },
   bootContText: {
     fontSize: fontSize.extraSmall,
     fontWeight: '600',
-    fontFamily: fontFamily.ceraBlack,
-    // paddingHorizontal:hp(5),
+    fontFamily: fontFamily.ceraLight,
     color: '#979797',
   },
-  cardText: {
-    fontSize: '0.75rem',
-    fontWeight: '700',
-    fontFamily: fontFamily.ceraBlack,
-    letterSpacing: '0.00938rem',
-    color: '#6A6A6A',
-    marginTop: hp(1),
-  },
+
   ctitle: {
-    fontSize: '0.55rem',
+    marginTop: hp(-0.3),
+    fontSize: '0.5rem',
     fontWeight: '500',
-    fontFamily: fontFamily.ceraBlack,
-    letterSpacing: '0.00938rem',
+    fontFamily: fontFamily.ceraMedium,
+    letterSpacing: '-0.00938rem',
     color: '#979797',
+    fontStyle: 'normal',
   },
-  hndCard: {
+  message: {
     fontSize: '0.7rem',
     fontWeight: '700',
-    fontFamily: fontFamily.ceraBlack,
-    // paddingHorizontal:hp(4),
-    color: '#343434',
-    paddingHorizontal: hp(2.5),
+    fontFamily: fontFamily.ceraBold,
+    color: '#646464',
+    fontStyle: 'normal',
+  },
+  viewAll: {
+    fontSize: '0.6rem',
+    fontWeight: '500',
+    fontFamily: fontFamily.ceraMedium,
+    color: '#646464',
+    fontStyle: 'normal',
+  },
+  userName: {
+    fontSize: '0.6rem',
+    fontWeight: '700',
+    fontFamily: fontFamily.ceraLight,
+    fontStyle: 'normal',
+    // letterSpacing: '0.00938rem',
+    color: '#6A6A6A',
   },
   cardText: {
-    fontSize: '0.6rem',
+    fontSize: '0.55rem',
     fontWeight: '300',
-    fontFamily: fontFamily.ceraBlack,
+    fontFamily: fontFamily.ceraLight,
     letterSpacing: '0.00938rem',
     color: '#343434',
     marginTop: hp(1),
-    // lineHeight:'normal'
-   
+    fontStyle:'normal',
+    lineHeight:hp(1.8)
+  },
+  cardHeading: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: hp(2.3),
   },
 });

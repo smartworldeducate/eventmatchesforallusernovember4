@@ -34,14 +34,12 @@ const FeedBack = props => {
       <View>
         <MainHeader
           text={'Feedback'}
-          iconName={'arrowleft'}
+          iconName={'arrow-left'}
           onpressBtn={() => props.navigation.goBack()}
         />
       </View>
-     {salary == true && (<>
-        <View
+      {/* <View
         style={{
-          //   flex: 1,
           height: hp(7),
           marginHorizontal: hp(2.5),
           borderRadius: hp(1),
@@ -63,7 +61,7 @@ const FeedBack = props => {
               backgroundColor: salary == true ? '#fff' : '#E7E7E7',
               paddingVertical: hp(1),
               borderRadius: hp(1),
-              paddingHorizontal: hp(5),
+              // paddingHorizontal: hp(5),
               justifyContent: 'center',
             }}>
             <Text
@@ -81,7 +79,7 @@ const FeedBack = props => {
               backgroundColor: history == true ? '#fff' : '#E7E7E7',
               paddingVertical: hp(1),
               borderRadius: hp(1),
-              paddingHorizontal: hp(5),
+              // paddingHorizontal: hp(5),
               justifyContent: 'center',
             }}>
             <Text
@@ -93,7 +91,57 @@ const FeedBack = props => {
             </Text>
           </TouchableOpacity>
         </View>
-      </View>
+      </View> */}
+      <View
+            style={{
+              height: hp(7),
+              marginHorizontal: hp(2.5),
+              borderRadius: hp(1),
+              backgroundColor: '#E7E7E7',
+              marginTop: hp(2),
+            }}>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                alignContent: 'center',
+                marginHorizontal: hp(1),
+                marginVertical: hp(0.7),
+              }}>
+              <TouchableOpacity
+                onPress={salaryHandler}
+                style={{
+                  height: hp(5.5),
+                  backgroundColor: salary == true ? '#fff' : '#E7E7E7',
+                  paddingVertical: hp(1),
+                  borderRadius: hp(1),
+                  paddingHorizontal: hp(6),
+                  justifyContent: 'center',
+                }}>
+                <Text
+                  style={styles.headertext}>
+                 Feedback
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={historyHandler}
+                style={{
+                  height: hp(5.5),
+                  backgroundColor: history == true ? '#fff' : '#E7E7E7',
+                  paddingVertical: hp(1),
+                  borderRadius: hp(1),
+                  paddingHorizontal: hp(5.5),
+                  justifyContent: 'center',
+                }}>
+                <Text
+                  style={styles.headertext}>
+                 Suggestion
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+     {salary == true && (<>
+       
       <View
         style={{
           marginHorizontal: hp(2.5),
@@ -150,7 +198,7 @@ const FeedBack = props => {
           ratingBackgroundColor={'#d9d9d9'}
         />
       </View>
-      <View
+      <TouchableOpacity
         style={{
           marginHorizontal: hp(2.5),
           height: hp(7),
@@ -164,88 +212,11 @@ const FeedBack = props => {
           shadowRadius: 4,
           elevation: 4,
         }}>
-        <Text style={{color: '#fff', fontSize: hp(2)}}>SUBMIT</Text>
-      </View>
+        <Text style={styles.submittext}>SUBMIT</Text>
+      </TouchableOpacity>
      </>)}
      {history == true && (<>
-        <View
-        style={{
-          //   flex: 1,
-          height: hp(7),
-          marginHorizontal: hp(2.5),
-          borderRadius: hp(1),
-          backgroundColor: '#E7E7E7',
-          marginTop: hp(2),
-        }}>
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignContent: 'center',
-            marginHorizontal: hp(1),
-            marginVertical: hp(0.7),
-          }}>
-          <TouchableOpacity
-            onPress={salaryHandler}
-            style={{
-              height: hp(5.5),
-              backgroundColor: salary == true ? '#fff' : '#E7E7E7',
-              paddingVertical: hp(1),
-              borderRadius: hp(1),
-              paddingHorizontal: hp(5),
-              justifyContent: 'center',
-            }}>
-            <Text
-              style={{
-                fontSize: hp(2.5),
-                color: '#363636',
-              }}>
-              Feedback
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={historyHandler}
-            style={{
-              height: hp(5.5),
-              backgroundColor: history == true ? '#fff' : '#E7E7E7',
-              paddingVertical: hp(1),
-              borderRadius: hp(1),
-              paddingHorizontal: hp(5),
-              justifyContent: 'center',
-            }}>
-            <Text
-              style={{
-                fontSize: hp(2.5),
-                color: '#363636',
-              }}>
-              Suggestion
-            </Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-      {/* <View
-        style={{
-          marginHorizontal: hp(2.5),
-          height: hp(7),
-          borderRadius: hp(2),
-          marginTop: hp(2),
-          backgroundColor: '#ffffff',
-          shadowColor: '#000',
-          shadowOpacity: 0.5,
-          shadowRadius: 4,
-          elevation: 4,
-        }}>
-        <TextInput
-          //   value={employeeId}
-          //   onChangeText={onChangeEmpId}
-          returnKeyType={'done'}
-          iconName={'user'}
-          placeholder={'Title'}
-          placeholderColor={'gray'}
-          //   iconColor={colors.loginIconColor}
-          placeholderTextColor="gray"
-          style={styles.textInputCustomStyle}></TextInput>
-      </View> */}
+       
 
       <View
         style={{
@@ -270,16 +241,8 @@ const FeedBack = props => {
           placeholderTextColor="gray"
           style={styles.textInputCustomStyle}></TextInput>
       </View>
-      {/* <View style={{marginHorizontal: hp(2.5), marginTop: hp(3)}}>
-        <Rating
-          type="custom"
-          onFinishRating={ratingCompleted}
-          tintColor={'#f2f2f2'}
-          startingValue={0}
-          ratingBackgroundColor={'#d9d9d9'}
-        />
-      </View> */}
-      <View
+      
+      <TouchableOpacity
         style={{
           marginHorizontal: hp(2.5),
           height: hp(7),
@@ -293,8 +256,8 @@ const FeedBack = props => {
           shadowRadius: 4,
           elevation: 4,
         }}>
-        <Text style={{color: '#fff', fontSize: hp(2)}}>SUBMIT</Text>
-      </View>
+        <Text style={styles.submittext}>SUBMIT</Text>
+      </TouchableOpacity>
      </>)}
     </>
   );
@@ -311,4 +274,19 @@ const styles = EStyleSheet.create({
     marginRight: hp(2),
     color: 'black',
   },
+  headertext:{
+    fontSize: '0.75rem',
+    fontFamily: fontFamily.ceraMedium,
+    fontStyle: 'normal',
+    color: '#363636',
+    fontWeight: '500',
+    
+  },
+  submittext:{
+    color: '#fff',
+    fontFamily:fontFamily.ceraMedium,
+    fontSize: '0.8rem',
+    // color:'#363636',
+      fontWait:'500',
+  }
 });

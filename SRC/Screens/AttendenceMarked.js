@@ -15,6 +15,8 @@ import {
 } from 'react-native-responsive-screen';
 import ViewInput from '../Components/ViewInput';
 import Button from '../Components/Button/Button';
+import EStyleSheet from 'react-native-extended-stylesheet';
+import fontFamily from '../Styles/fontFamily';
 const AttendenceMarked = (props) => {
   const [fullDay,setFullDay]=useState(false)
   const [halfDay,setHalfDay]=useState(false)
@@ -38,7 +40,7 @@ const AttendenceMarked = (props) => {
   }
   return (
     <View>
-      <MainHeader text={'Attendance Not Marked'} iconName={'arrowleft'} onpressBtn={()=>props.navigation.goBack()}/>
+      <MainHeader text={'Attendance Not Marked'} iconName={'arrow-left'} onpressBtn={()=>props.navigation.goBack()}/>
       {/* <View
         style={{width: wp(90), marginHorizontal: hp(2.5), marginTop: hp(2)}}>
         <ViewInput
@@ -117,10 +119,10 @@ const AttendenceMarked = (props) => {
             />
           </View>
           <View style={{marginVertical: hp(0.5), paddingHorizontal: hp(0.5)}}>
-            <Text style={{color: '#363636'}}>Time In</Text>
+            <Text style={styles.radiotext}>Time In</Text>
           </View>
         </View>
-        <View style={{flexDirection: 'row', marginLeft: hp(6.5)}}>
+        <View style={{flexDirection: 'row'}}>
           <View>
             <Radio
               checked={halfDay}
@@ -130,11 +132,11 @@ const AttendenceMarked = (props) => {
               onChange={halfDayHandle}
             />
           </View>
-          <View style={{marginVertical: hp(0.5), paddingHorizontal: hp(0.5)}}>
-            <Text style={{color: '#363636'}}>Time Out</Text>
+          <View style={{marginVertical: hp(0.8), paddingHorizontal: hp(0.5)}}>
+            <Text style={styles.radiotext}>Time Out</Text>
           </View>
         </View>
-        <View style={{flexDirection: 'row', marginLeft: hp(6.5)}}>
+        <View style={{flexDirection: 'row'}}>
           <View>
             <Radio
               checked={shortLeave}
@@ -144,8 +146,8 @@ const AttendenceMarked = (props) => {
               onChange={shortLeaveHandle}
             />
           </View>
-          <View style={{marginVertical: hp(0.5), paddingHorizontal: hp(0.5)}}>
-            <Text style={{color: '#363636'}}>Both</Text>
+          <View style={{marginVertical: hp(0.8), paddingHorizontal: hp(0.5)}}>
+            <Text style={styles.radiotext}>Both</Text>
           </View>
         </View>
       </View>
@@ -233,7 +235,7 @@ const AttendenceMarked = (props) => {
           borderRadius: hp(50),
         }}>
         <View style={{alignItems: 'center'}}>
-          <Text style={{color: '#fff'}}>SUBMIT REQUEST</Text>
+          <Text style={styles.submittext}>SUBMIT REQUEST</Text>
         </View>
       </TouchableOpacity>
     </View>
@@ -242,7 +244,7 @@ const AttendenceMarked = (props) => {
 
 export default AttendenceMarked;
 
-const styles = StyleSheet.create({
+const styles = EStyleSheet.create({
   textInputView: {
     marginTop: hp('2'),
     justifyContent: 'center',
@@ -290,4 +292,26 @@ const styles = StyleSheet.create({
     shadowRadius: wp('10'),
     elevation: 10,
   },
+  textInputCustomStyle: {
+    fontSize: '0.7rem',
+    height: hp('6'),
+    letterSpacing: -0.05,
+    paddingLeft: wp('3'),
+    color:'#363636',
+    fontWait:'500',
+    fontFamily: fontFamily.ceraMedium,
+  },
+  radiotext:{
+    fontSize: '0.62rem',
+    fontWaight:'500',
+    color: '#363636',
+    fontFamily:fontFamily.ceraMedium,
+},
+submittext:{
+  color: '#fff',
+  fontFamily:fontFamily.ceraMedium,
+  fontSize: '0.7rem',
+  // color:'#363636',
+    fontWait:'500',
+}
 });

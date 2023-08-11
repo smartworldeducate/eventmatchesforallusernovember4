@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, TextInput, View, Image} from 'react-native';
+import {StyleSheet, TextInput, View, Image, ScrollView} from 'react-native';
 import {widthPercentageToDP} from 'react-native-responsive-screen';
 import colors from '../Styles/colors';
 import {
@@ -7,6 +7,8 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import Icon from 'react-native-vector-icons/AntDesign';
+import EStyleSheet from 'react-native-extended-stylesheet';
+import fontFamily from '../Styles/fontFamily';
 
 const ViewInput = ({
   iconName,
@@ -30,7 +32,8 @@ const ViewInput = ({
   ref,
 }) => {
   return (
-    <View
+    <ScrollView>
+      <View
       style={{
         flexDirection: 'row',
         borderColor: colors.borderLightGrey,
@@ -71,8 +74,37 @@ const ViewInput = ({
           ref={ref}></TextInput>
       </View>
     </View>
+    </ScrollView>
   );
 };
-
-const styles = StyleSheet.create({});
 export default ViewInput;
+
+
+const styles = EStyleSheet.create({
+  zetext1: {
+    fontSize: '0.72rem',
+    fontWeight: '700',
+    fontFamily: fontFamily.ceraBold,
+    color: '#343434',
+    fontStyle: 'normal',
+  },
+  ztitle: {
+    fontSize: hp(1.5),
+    fontWeight: '600',
+    marginTop: hp(1),
+    fontFamily: fontFamily.ceraBlack,
+  },
+  textInputCustomStyle: {
+    fontSize: hp('1.65'),
+    height: hp('6'),
+    letterSpacing: -0.05,
+    paddingLeft: wp('3'),
+    color: colors.loginIconColor,
+  },
+  btc:{
+    paddingLeft:hp(0.5),
+    fontSize:hp(2),
+    fontWeight:'700',
+    fontFamily: fontFamily.ceraBlack,
+  }
+});

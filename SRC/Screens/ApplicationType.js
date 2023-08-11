@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import MainHeader from '../Components/Headers/MainHeader';
 import User from 'react-native-vector-icons/AntDesign';
 import Gte from 'react-native-vector-icons/AntDesign';
+// import Icon from 'react-native-fontawesome-pro';
 import Icon from 'react-native-fontawesome-pro';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import Menu from 'react-native-vector-icons/Entypo';import {
@@ -44,10 +45,10 @@ const ApplicationType = props => {
   return (
     <>
       <View>
-        <MainHeader text={'Application Type'} iconName={'arrowleft'} />
+        <MainHeader text={'Application Type'} iconName={'arrow-left'} />
         <View
           style={{
-            width: wp(90),
+            // width: wp(90),
             marginHorizontal: hp(2.5),
             height: hp(50),
             marginTop: hp(2),
@@ -55,38 +56,44 @@ const ApplicationType = props => {
           <TouchableOpacity
             onPress={() => props.navigation.navigate('ApplyLeave')}
             style={{
-              // width: wp(90),
               height: hp(10.5),
-              // shadowColor: '#000',
+              shadowColor: '#000',
               shadowOpacity: 0.5,
               shadowRadius: 4,
               elevation: 4,
               borderRadius: hp(1.5),
-              backgroundColor: '#FFFFFF',
+              backgroundColor: '#FFF',
               marginBottom: hp(2),
             }}>
             <View
               style={{
+                height: hp(10.5),
                 flexDirection: 'row',
-                marginVertical: hp(1),
+                // marginVertical: hp(1),
                 marginHorizontal: hp(1),
               }}>
-              <View style={{marginVertical: hp(1.5), paddingHorizontal: hp(3)}}>
-                <User name="calendar" size={hp(4)} color="#979797" />
+             <View style={{flexDirection: 'row',justifyContent:'center',alignItems:'center'}}>
+             <View style={{ paddingHorizontal: hp(3),justifyContent:'center',alignItems:'center'}}>
+                <Icon type='light' name="calendar-days" size={hp(3)} color="#979797" />
               </View>
-              <View style={{marginVertical: hp(2.5),marginLeft:hp(-1.5)}}>
-                <Text style={styles.zetext1}>Leave</Text>
+              <View style={{paddingVertical: hp(2.5),marginLeft:hp(-1.5)}}>
+                <Text style={styles.zetext1}>
+                Leave
+                </Text>
               </View>
+             </View>
               <View
                 style={{
-                  marginLeft: hp(10),
-                  paddingVertical: hp(2),
+                  marginLeft: hp(11),
+                  paddingVertical: hp(0.5),
+                 
                   position: 'absolute',
                   left: hp(30),
                   right: 0,
                   bottom: 0,
                 }}>
-                <Gte name="arrowright" size={20} color="#979797" />
+                <Icon  type="light"
+                name="arrow-right" size={hp(2.2)} color="#979797" />
               </View>
             </View>
           </TouchableOpacity>
@@ -99,34 +106,38 @@ const ApplicationType = props => {
               shadowRadius: 4,
               elevation: 4,
               borderRadius: hp(1.5),
-              backgroundColor: '#FFFFFF',
+              backgroundColor: '#FFF',
               marginBottom: hp(2),
             }}>
             <View
               style={{
                 height: hp(10.5),
                 flexDirection: 'row',
-                marginVertical: hp(1),
+                // marginVertical: hp(1),
                 marginHorizontal: hp(1),
               }}>
-              <View style={{marginVertical: hp(1.5), paddingHorizontal: hp(3)}}>
-                <Icon name="business-time" size={hp(5)} color="#979797" />
+             <View style={{flexDirection: 'row',justifyContent:'center',alignItems:'center'}}>
+             <View style={{ paddingHorizontal: hp(3),justifyContent:'center',alignItems:'center'}}>
+                <Icon type='light' name="business-time" size={hp(3.5)} color="#979797" />
               </View>
               <View style={{paddingVertical: hp(2.5),marginLeft:hp(-1.5)}}>
                 <Text style={styles.zetext1}>
-                  Outstation
+                Outstation
                 </Text>
               </View>
+             </View>
               <View
                 style={{
-                  marginLeft: hp(10),
-                  paddingVertical: hp(2),
+                  marginLeft: hp(11),
+                  paddingVertical: hp(0.5),
+                 
                   position: 'absolute',
                   left: hp(30),
                   right: 0,
                   bottom: 0,
                 }}>
-                <Gte name="arrowright" size={20} color="#979797" />
+                 <Icon  type="light"
+                name="arrow-right" size={hp(2.2)} color="#979797" />
               </View>
             </View>
           </TouchableOpacity>
@@ -139,34 +150,38 @@ const ApplicationType = props => {
               shadowRadius: 4,
               elevation: 4,
               borderRadius: hp(1.5),
-              backgroundColor: '#FFFFFF',
+              backgroundColor: '#FFF',
               marginBottom: hp(2),
             }}>
             <View
               style={{
                 height: hp(10.5),
                 flexDirection: 'row',
-                marginVertical: hp(1),
+                // marginVertical: hp(1),
                 marginHorizontal: hp(1),
               }}>
-              <View style={{marginVertical: hp(1.5), paddingHorizontal: hp(3)}}>
-                <Icon name="calendar-circle-exclamation" size={hp(5)} color="#979797" />
+             <View style={{flexDirection: 'row',justifyContent:'center',alignItems:'center'}}>
+             <View style={{ paddingHorizontal: hp(3),justifyContent:'center',alignItems:'center'}}>
+                <Icon type='light' name="calendar-circle-exclamation" size={hp(3.5)} color="#979797" />
               </View>
               <View style={{paddingVertical: hp(2.5),marginLeft:hp(-1.5)}}>
                 <Text style={styles.zetext1}>
-                  Attendance Not Marked
+                Attendance Not Marked
                 </Text>
               </View>
+             </View>
               <View
                 style={{
-                  marginLeft: hp(10),
-                  paddingVertical: hp(2),
+                  marginLeft: hp(11),
+                  paddingVertical: hp(0.5),
+                 
                   position: 'absolute',
                   left: hp(30),
                   right: 0,
                   bottom: 0,
                 }}>
-                <Gte name="arrowright" size={20} color="#979797" />
+                <Icon  type="light"
+                name="arrow-right" size={hp(2.2)} color="#979797" />
               </View>
             </View>
           </TouchableOpacity>
@@ -179,37 +194,42 @@ const ApplicationType = props => {
               shadowRadius: 4,
               elevation: 4,
               borderRadius: hp(1.5),
-              backgroundColor: '#FFFFFF',
+              backgroundColor: '#FFF',
               marginBottom: hp(2),
             }}>
             <View
               style={{
                 height: hp(10.5),
                 flexDirection: 'row',
-                marginVertical: hp(1),
+                // marginVertical: hp(1),
                 marginHorizontal: hp(1),
               }}>
-              <View style={{marginVertical: hp(1.5), paddingHorizontal: hp(3)}}>
-                <Icon name="clock-nine-thirty" size={hp(5)} color="#979797" />
+             <View style={{flexDirection: 'row',justifyContent:'center',alignItems:'center'}}>
+             <View style={{ paddingHorizontal: hp(3),justifyContent:'center',alignItems:'center'}}>
+                <Icon type='light' name="clock-nine-thirty" size={hp(3.5)} color="#979797" />
               </View>
               <View style={{paddingVertical: hp(2.5),marginLeft:hp(-1.5)}}>
                 <Text style={styles.zetext1}>
-                  Late Arrival
+                Late Arrival
                 </Text>
               </View>
+             </View>
               <View
                 style={{
-                  marginLeft: hp(10),
-                  paddingVertical: hp(2),
+                  marginLeft: hp(11),
+                  paddingVertical: hp(0.5),
+                 
                   position: 'absolute',
                   left: hp(30),
                   right: 0,
                   bottom: 0,
                 }}>
-                <Gte name="arrowright" size={20} color="#979797" />
+                <Icon  type="light"
+                name="arrow-right" size={hp(2.2)} color="#979797" />
               </View>
             </View>
           </TouchableOpacity>
+          
           <TouchableOpacity
             onPress={() => props.navigation.navigate('EarliLeaving')}
             style={{
@@ -219,34 +239,38 @@ const ApplicationType = props => {
               shadowRadius: 4,
               elevation: 4,
               borderRadius: hp(1.5),
-              backgroundColor: '#FFFFFF',
+              backgroundColor: '#FFF',
               marginBottom: hp(2),
             }}>
             <View
               style={{
                 height: hp(10.5),
                 flexDirection: 'row',
-                marginVertical: hp(1),
+                // marginVertical: hp(1),
                 marginHorizontal: hp(1),
               }}>
-              <View style={{marginVertical: hp(1.5), paddingHorizontal: hp(3)}}>
-                <Icon name="clock-three-thirty" size={hp(5)} color="#979797" />
+             <View style={{flexDirection: 'row',justifyContent:'center',alignItems:'center'}}>
+             <View style={{ paddingHorizontal: hp(3),justifyContent:'center',alignItems:'center'}}>
+                <Icon type='light' name="clock-three-thirty" size={hp(3.5)} color="#979797" />
               </View>
               <View style={{paddingVertical: hp(2.5),marginLeft:hp(-1.5)}}>
                 <Text style={styles.zetext1}>
                 Early Leaving
                 </Text>
               </View>
+             </View>
               <View
                 style={{
-                  marginLeft: hp(10),
-                  paddingVertical: hp(2),
+                  marginLeft: hp(11),
+                  paddingVertical: hp(0.5),
+                 
                   position: 'absolute',
                   left: hp(30),
                   right: 0,
                   bottom: 0,
                 }}>
-                <Gte name="arrowright" size={20} color="#979797" />
+                <Icon  type="light"
+                name="arrow-right" size={hp(2.2)} color="#979797" />
               </View>
             </View>
           </TouchableOpacity>
@@ -266,28 +290,35 @@ const ApplicationType = props => {
               style={{
                 height: hp(10.5),
                 flexDirection: 'row',
-                marginVertical: hp(1),
+                // marginVertical: hp(1),
                 marginHorizontal: hp(1),
               }}>
-              <View style={{marginVertical: hp(1.5), paddingHorizontal: hp(3)}}>
-                <Icon name="calendar-clock" size={hp(5)} color="#979797" />
+             <View style={{flexDirection: 'row',justifyContent:'center',alignItems:'center'}}>
+             <View style={{ paddingHorizontal: hp(3),justifyContent:'center',alignItems:'center'}}>
+                <Icon type='light' name="calendar-clock" size={hp(3.5)} color="#979797" />
               </View>
               <View style={{paddingVertical: hp(2.5),marginLeft:hp(-1.5)}}>
-                <Text style={styles.zetext1}>Toil</Text>
+                <Text style={styles.zetext1}>
+                Toil
+                </Text>
               </View>
+             </View>
               <View
                 style={{
-                  marginLeft: hp(10),
-                  paddingVertical: hp(2),
+                  marginLeft: hp(11),
+                  paddingVertical: hp(0.5),
+                 
                   position: 'absolute',
                   left: hp(30),
                   right: 0,
                   bottom: 0,
                 }}>
-                <Gte name="arrowright" size={20} color="#979797" />
+                <Icon  type="light"
+                name="arrow-right" size={hp(2.2)} color="#979797" />
               </View>
             </View>
           </TouchableOpacity>
+          
         </View>
       </View>
     
@@ -337,9 +368,9 @@ export default ApplicationType;
 
 const styles = EStyleSheet.create({
   zetext1: {
-    fontSize: '0.9rem',
-    fontWeight: 'bold',
-    fontFamily: fontFamily.ceraBlack,
+    fontSize: '0.72rem',
+    fontWeight: '700',
+    fontFamily: fontFamily.ceraBold,
     color: '#343434',
     fontStyle: 'normal',
   },

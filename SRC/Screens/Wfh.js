@@ -15,12 +15,14 @@ import {
 } from 'react-native-responsive-screen';
 import ViewInput from '../Components/ViewInput';
 import Button from '../Components/Button/Button';
+import EStyleSheet from 'react-native-extended-stylesheet';
+import fontFamily from '../Styles/fontFamily';
 const Wfh = props => {
   return (
     <View>
       <MainHeader
         text={'W.F.H Request'}
-        iconName={'arrowleft'}
+        iconName={'arrow-left'}
         onpressBtn={() => props.navigation.goBack()}
       />
 
@@ -80,7 +82,10 @@ const Wfh = props => {
             elevation: 8,
           }}>
           <View style={{marginHorizontal: hp(2), marginVertical: hp(1)}}>
-            <TextInput placeholder="type something here" multiline={true} />
+          <TextInput  placeholder={'Reason'}
+                  placeholderColor={'gray'}
+                  placeholderTextColor="gray"
+                  style={styles.textInputCustomStyle} />
           </View>
         </View>
       </View>
@@ -107,7 +112,7 @@ const Wfh = props => {
           borderRadius: hp(50),
         }}>
         <View style={{alignItems: 'center'}}>
-          <Text style={{color: '#fff'}}>SUBMIT REQUEST</Text>
+          <Text style={styles.submittext}>SUBMIT REQUEST</Text>
         </View>
       </TouchableOpacity>
     </View>
@@ -116,7 +121,7 @@ const Wfh = props => {
 
 export default Wfh;
 
-const styles = StyleSheet.create({
+const styles = EStyleSheet.create({
   textInputView: {
     marginTop: hp('2'),
     justifyContent: 'center',
@@ -137,13 +142,7 @@ const styles = StyleSheet.create({
     shadowRadius: wp('10'),
     elevation: 10,
   },
-  textInputCustomStyle: {
-    fontSize: hp('1.65'),
-    height: hp('6.3'),
-    letterSpacing: -0.05,
-    paddingLeft: wp('6'),
-    color: colors.loginIconColor,
-  },
+  
   loginWithGoogle: {
     justifyContent: 'center',
     backgroundColor: colors.whiteColor,
@@ -164,4 +163,26 @@ const styles = StyleSheet.create({
     shadowRadius: wp('10'),
     elevation: 10,
   },
+  textInputCustomStyle: {
+    fontSize: '0.7rem',
+    height: hp('6'),
+    letterSpacing: -0.05,
+    paddingLeft: wp('3'),
+    color:'#363636',
+    fontWait:'500',
+    fontFamily: fontFamily.ceraMedium,
+  },
+  radiotext:{
+    fontSize: '0.62rem',
+    fontWaight:'500',
+    color: '#363636',
+    fontFamily:fontFamily.ceraMedium,
+},
+submittext:{
+  color: '#fff',
+  fontFamily:fontFamily.ceraMedium,
+  fontSize: '0.7rem',
+  // color:'#363636',
+    fontWait:'500',
+}
 });

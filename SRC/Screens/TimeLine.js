@@ -73,11 +73,41 @@ const TimeLine = (props) => {
       bgclor: '#FFCCCC',
       colr: '#D80000',
     },
+    {
+      date: 'Dec 31, 2020',
+      status: 'Appraisal',
+      text: 'Hired as a',
+      centext: ' Senior Officer UX/UI Designer',
+      in: 'in',
+      endtext: 'IT Department.',
+      bgclor: '#FFFDCC',
+      colr: '#8E7700',
+    },
+    {
+      date: 'Jun 06, 2021',
+      status: 'Promoted',
+      text: 'Hired as a',
+      centext: 'Senior Officer UX/UI Designer',
+      in: 'in',
+      endtext: 'IT Department.',
+      bgclor: '#E0CCFF',
+      colr: '#69008E',
+    },
+    {
+      date: 'July 15, 2021',
+      status: 'Transfer',
+      text: 'Hired as a',
+      centext: 'Senior Officer UX/UI Designer',
+      in: 'in',
+      endtext: 'IT Department.',
+      bgclor: '#FFE5CC',
+      colr: '#D69A03',
+    },
   ];
   return (
     <>
       <View>
-        <MainHeader text={'Timeline'} iconName={'arrowleft'} onpressBtn={()=>props.navigation.goBack()}/>
+        <MainHeader text={'Timeline'} iconName={'arrow-left'} onpressBtn={()=>props.navigation.goBack()}/>
       </View>
       <View
         style={{
@@ -89,7 +119,7 @@ const TimeLine = (props) => {
         }}>
         <View style={{flexDirection: 'row'}}>
           <View style={{alignItems: 'center', paddingVertical: hp(0.3)}}>
-            <Check name="checkcircleo" size={hp(3.5)} color="#239B56" />
+            <Check name="checkcircleo" size={hp(3)} color="#239B56" />
           </View>
           <View style={{marginLeft: hp(0.8)}}>
             <View>
@@ -102,7 +132,7 @@ const TimeLine = (props) => {
         </View>
         <View style={{flexDirection: 'row', marginLeft: hp(3.5)}}>
           <View style={{alignItems: 'center', paddingVertical: hp(0.3)}}>
-            <Icon name="wrench" size={hp(3.5)} color="#BB8FCE" />
+            <Icon name="wrench" size={hp(3)} color="#BB8FCE" />
           </View>
           <View style={{marginLeft: hp(0.5)}}>
             <View>
@@ -115,7 +145,7 @@ const TimeLine = (props) => {
         </View>
         <View style={{flexDirection: 'row', marginLeft: hp(3.5)}}>
           <View style={{alignItems: 'center', paddingVertical: hp(0.3)}}>
-            <Check name="checkcircleo" size={hp(3.5)} color="#CD6155" />
+            <Check name="checkcircleo" size={hp(3)} color="#CD6155" />
           </View>
           <View style={{marginLeft: hp(0.5)}}>
             <View>
@@ -153,7 +183,7 @@ const TimeLine = (props) => {
                 </View>
                 <View
                   style={{
-                    height: hp(12),
+                    height: hp(9.8),
                     width: wp(0.5),
                     backgroundColor: '#1C37A4',
                     marginLeft: hp(1.2),
@@ -165,9 +195,9 @@ const TimeLine = (props) => {
                 style={{
                   flex: 1,
                   marginLeft: hp(1),
-                  height: hp(14),
+                  height: hp(12),
                   borderRadius: hp(2),
-                  backgroundColor: '#FFFFFF',
+                  backgroundColor: '#FFF',
                   shadowColor: '#000',
                   shadowOpacity: 0.8,
                   shadowRadius: 3,
@@ -209,10 +239,10 @@ const TimeLine = (props) => {
                     marginHorizontal: hp(2),
                   }}>
                   <Text style={styles.centertext}>
-                    {item.text}
-                    <Text style={{color: '#4E69DA'}}>{item.centext}</Text>{' '}
-                    {item.in}{' '}
-                    <Text style={{color: '#4E69DA'}}>{item.endtext}</Text>
+                    {item.text} 
+                      <Text style={styles.prev}> {item.centext}</Text>{' '}
+                       {item.in}
+                      <Text style={styles.endtext}>  {item.endtext}</Text>
                   </Text>
                 </View>
               </View>
@@ -242,39 +272,58 @@ const styles = EStyleSheet.create({
   },
   smalltext: {
     fontWeight: '700',
-    fontSize: '0.7375rem',
-    fontFamily: fontFamily.ceraBlack,
+    fontSize: '0.6rem',
+    fontFamily: fontFamily.ceraBold,
     color: '#353535',
     fontStyle: 'normal',
   },
   smalltext1: {
     fontWeight: '500',
     fontSize: '0.5rem',
-    fontFamily: fontFamily.ceraBlack,
-    color: '#353535',
+    fontFamily: fontFamily.ceraMedium,
+    color: '#979797',
     fontStyle: 'normal',
     alignItems: 'center',
+    textTransform:'uppercase'
   },
   dtext:{
     color: '#353535',
-    fontSize: '0.8rem',
+    fontSize: '0.65rem',
     fontWeight: '700',
     fontStyle:'normal',
     paddingVertical: hp(0.5),
-    fontFamily: fontFamily.ceraBlack,
+    fontFamily: fontFamily.ceraBold,
   },
   centertext:{
-    fontFamily: fontFamily.ceraBlack,
-    fontSize: '0.75rem',
-    fontWeight: '700',
+    fontFamily: fontFamily.ceraLight,
+    fontSize: '0.65rem',
+    fontWeight: '100',
     fontStyle:'normal',
-    color:'#363636'
+    color:'#979797',
+    lineHeight:hp(2)
   },
   ststext:{
-    fontFamily: fontFamily.ceraBlack,
+    fontSize:'0.5rem',
+    fontFamily: fontFamily.ceraBold,
     paddingHorizontal: hp(2.5),
     paddingVertical: hp(0.5),
-    textTransform: 'uppercase'
-  }
+    textTransform: 'uppercase',
+    fontWeight:'700',
+    fontStyle:'normal'
+  },
+  prev:{
+  color: '#4E69DA',
+  fontSize:'0.65rem',
+  fontFamily: fontFamily.ceraMedium,
+  fontWeight:'500',
+  fontStyle:'normal',
+},
+endtext:{
+  color: '#4E69DA',
+  fontSize:'0.65rem',
+  fontFamily: fontFamily.ceraMedium,
+  fontWeight:'500',
+  fontStyle:'normal',
+}
 
 });

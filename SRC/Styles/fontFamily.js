@@ -4,22 +4,18 @@ const fontFamily = {
 
 
     ceraBlack:
-    Platform.OS === 'android' ? 'CeraBlack' : 'CeraBlack',
+    Platform.OS === 'android' ? 'CeraProBlack' : 'CeraProBlack',
+
     ceraBold:
-    Platform.OS === 'android' ? 'CeraBold' : 'CeraBold',
+    Platform.OS === 'android' ? 'CeraProBold' : 'CeraProBold',
     
     ceraLight:
-    Platform.OS === 'android' ? 'CeraLight' : 'CeraLight',
+    Platform.OS === 'android' ? 'CeraProLight' : 'CeraProLight',
 
     ceraMedium:
-    Platform.OS === 'android' ? 'CeraMedium' : 'CeraMedium',
+    Platform.OS === 'android' ? 'CeraProMedium' : 'CeraProMedium',
 
-    fontSomePro:
-    Platform.OS === 'android' ? 'FontSomePro' : 'FontSomePro',
-
-    fontLight:
-    Platform.OS === 'android' ? 'FontLight' : 'FontLight',
-
+    
   
 
 };

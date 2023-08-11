@@ -9,7 +9,8 @@ const colors = {
   whiteColor: "#FFFFFF",
   lightSilver: "#E6E6E6",
   drakGrey: "#626161",
-  btnColore:'#1C37A4'
+  btnColore:'#1C37A4',
+  appBackGroundColor:'#F5F8FC'
   
 };
 

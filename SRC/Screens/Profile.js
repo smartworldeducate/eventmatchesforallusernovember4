@@ -7,75 +7,64 @@ import {
   SafeAreaView,
 } from 'react-native';
 import React from 'react';
-import Bell from 'react-native-vector-icons/EvilIcons';
-import Menu from 'react-native-vector-icons/Entypo';
 import Check from 'react-native-vector-icons/AntDesign';
-import Wrench from 'react-native-vector-icons/FontAwesome';
-import User from 'react-native-vector-icons/AntDesign';
-import Gte from 'react-native-vector-icons/AntDesign';
-import Phone from 'react-native-vector-icons/Feather';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import Icon from 'react-native-fontawesome-pro';
 import fontFamily from '../Styles/fontFamily';
-import fontSize from '../Styles/fontSize';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import ListProfile from '../Components/ListProfile';
+import ExpandList from '../Components/expandlist/ExpandableList';
+import ExpandableList from '../Components/expandlist/ExpandableList';
 const Profile = props => {
   const data = [
-    {iconName: 'user', textName: 'Personal Information'},
-    {iconName: 'user-gear', textName: 'Service Information'},
-    {iconName: 'money-bill-1-wave', textName: 'Financial Information'},
-    // {iconName:'Phone',textName:'Contact Information'},
-    {iconName: 'clipboard-check', textName: 'Movement Log'},
-    {iconName: 'child', textName: 'Children in Beaconhouse'},
-    {iconName: 'user', textName: 'Personal Information'},
-    // {iconName:'user-gear',textName:'Service Information'},
-    // {iconName:'money-bill-1-wave',textName:'Financial Information'},
-    // // {iconName:'Phone',textName:'Contact Information'},
-    // {iconName:'clipboard-check',textName:'Movement Log'},
-    // {iconName:'child',textName:'Children in Beaconhouse'},
+    {iconName: 'user', textName: 'Personal Information',fatherName:'Abdual Hafeez',gender:'Male',religin:'Islam',date:'08 oct 1991',cnic:'31101-8356254-5'},
+    {iconName: 'user-gear', textName: 'Service Information',fatherName:'Abdual Hafeez'},
+    {iconName: 'money-bill-1-wave', textName: 'Financial Information',fatherName:'Abdual Hafeez'},
+    {iconName: 'clipboard-check', textName: 'Movement Log',fatherName:'Abdual Hafeez'},
+    {iconName: 'child', textName: 'Children in Beaconhouse',fatherName:'Abdual Hafeez'},
+    {iconName: 'user', textName: 'Personal Information',fatherName:'Abdual Hafeez'},
+   
   ];
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: '#1C37A4'}}>
       <ScrollView style={{flex: 1}}>
         <View
           style={{
-            // width: wp(90),
             flex: 1,
             marginHorizontal: hp(2.5),
-            // height: hp(8),
             flexDirection: 'row',
             justifyContent: 'space-between',
-            marginTop: hp(6),
+            marginTop: hp(8),
           }}>
           <View>
-            <Bell name="bell" size={35} color="#fff" />
+            < Icon type='light' name="bell" size={hp(3)} color="#FFF" />
           </View>
           <View>{/* <Text>gdfgd</Text> */}</View>
           <TouchableOpacity onPress={() => props.navigation.openDrawer()}>
-            <Menu name="menu" size={35} color="#fff" />
+            {/* <Menu name="menu" size={35} color="#fff" /> */}
+            <Image
+                style={styles.menustyle}
+                source={{uri: 'menuicon'}}
+                resizeMode="cover"
+              />
           </TouchableOpacity>
         </View>
         <View
           style={{
-            // width: wp(90),
             flex: 1,
             marginHorizontal: hp(2.5),
             marginTop: hp(6),
-            // position: 'relative',
             borderRadius: hp(2),
             height: hp(20),
             shadowColor: '#000',
             shadowOpacity: 0.5,
             shadowRadius: 4,
             elevation: 4,
-            backgroundColor: '#FFFFFF',
-            // flexDirection: 'row',
-            // justifyContent: 'space-between',
+            backgroundColor: '#FFF',
           }}>
           <View
             style={{
@@ -134,9 +123,8 @@ const Profile = props => {
                   </View>
                   <View
                     style={{
-                      width: wp(12),
                       height: hp(2),
-                      marginTop: 8,
+                      marginTop: hp(0.8),
                       marginLeft: 10,
                       borderRadius: 5,
                       backgroundColor: '#D4FFCC',
@@ -144,11 +132,7 @@ const Profile = props => {
                       alignItems: 'center',
                     }}>
                     <Text
-                      style={{
-                        fontSize: hp(1),
-                        paddingHorizontal: 8,
-                        color: '#2D8E00',
-                      }}>
+                      style={styles.textnum}>
                       81090
                     </Text>
                   </View>
@@ -182,7 +166,6 @@ const Profile = props => {
               style={{
                 width: wp(90),
                 height: hp(7),
-                // paddingHorizontal: hp(2),
                 flexDirection: 'row',
                 marginTop: hp(2),
                 justifyContent: 'center',
@@ -202,7 +185,7 @@ const Profile = props => {
               </View>
               <View style={{flexDirection: 'row', marginLeft: hp(3.5)}}>
                 <View style={{alignItems: 'center', paddingVertical: hp(0.3)}}>
-                  <Icon name="wrench" size={hp(3.5)} color="#BB8FCE" />
+                  <Icon type='light' name="wrench" size={hp(3.5)} color="#BB8FCE" />
                 </View>
                 <View style={{marginLeft: hp(0.5)}}>
                   <View>
@@ -234,19 +217,24 @@ const Profile = props => {
           style={{
             width: wp(90),
             marginHorizontal: hp(2.5),
-            height: hp(50),
             marginTop: hp(2),
           }}>
           {data.map((item, i) => {
             return (
-              <ListProfile
+              <ExpandableList
                 IconName={item.iconName}
                 textName={item.textName}
+                fatherName={item.fatherName}
+                religin={item.religin}
+                date={item.date}
+                cnic={item.cnic}
+                gender={item.gender}
                 key={i}
               />
             );
           })}
         </View>
+       
       </ScrollView>
     </SafeAreaView>
   );
@@ -258,29 +246,42 @@ const styles = EStyleSheet.create({
   zetext: {
     color: '#363636',
     fontWeight: '700',
-    fontSize: '0.9rem',
-    fontFamily: fontFamily.ceraBlack,
+    fontSize: '0.7rem',
+    fontFamily: fontFamily.ceraBold,
+    fontStyle:'normal'
   },
   zetext1: {
     color: '#363636',
     fontWeight: '500',
-    // marginTop: hp(1),
-    fontSize: '0.7rem',
-    fontFamily: fontFamily.ceraBlack,
+    fontSize: '0.6rem',
+    fontFamily: fontFamily.ceraMedium,
   },
   smalltext: {
     fontWeight: '700',
-    fontSize: '0.7375rem',
-    fontFamily: fontFamily.ceraBlack,
+    fontSize: '0.6rem',
+    fontFamily: fontFamily.ceraBold,
     color: '#353535',
     fontStyle: 'normal',
   },
   smalltext1: {
     fontWeight: '500',
     fontSize: '0.5rem',
-    fontFamily: fontFamily.ceraBlack,
-    color: '#353535',
+    fontFamily: fontFamily.ceraMedium,
+    color: '#979797',
     fontStyle: 'normal',
     alignItems: 'center',
+    textTransform:'uppercase'
+  },
+  textnum:{
+    fontSize: '0.5rem',
+    paddingHorizontal: 8,
+    color: '#2D8E00',
+    fontStyle:'normal',
+    fontWeight:'700'
+  },
+  menustyle:{
+    width:'1.3rem',
+    height:'1rem',
+    
   },
 });

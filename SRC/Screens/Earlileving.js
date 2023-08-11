@@ -15,10 +15,12 @@ import {
 } from 'react-native-responsive-screen';
 import ViewInput from '../Components/ViewInput';
 import Button from '../Components/Button/Button';
+import EStyleSheet from 'react-native-extended-stylesheet';
+import fontFamily from '../Styles/fontFamily';
 const EarliLeaving = (props) => {
   return (
     <View>
-      <MainHeader text={'Early Leaving'} iconName={'arrowleft'} onpressBtn={()=>props.navigation.goBack()}/>
+      <MainHeader text={'Early Leaving'} iconName={'arrow-left'} onpressBtn={()=>props.navigation.goBack()}/>
       <View
         style={{width: wp(90), marginHorizontal: hp(2.5), marginTop: hp(2)}}>
         <ViewInput
@@ -129,7 +131,8 @@ const EarliLeaving = (props) => {
           borderRadius: hp(50),
         }}>
         <View style={{alignItems: 'center'}}>
-          <Text style={{color: '#fff'}}>SUBMIT REQUEST</Text>
+          <Text style={styles.submittext}>SUBMIT REQUEST</Text>
+
         </View>
       </TouchableOpacity>
     </View>
@@ -138,7 +141,7 @@ const EarliLeaving = (props) => {
 
 export default EarliLeaving;
 
-const styles = StyleSheet.create({
+const styles = EStyleSheet.create({
   textInputView: {
     marginTop: hp('2'),
     justifyContent: 'center',
@@ -186,4 +189,26 @@ const styles = StyleSheet.create({
     shadowRadius: wp('10'),
     elevation: 10,
   },
+  textInputCustomStyle: {
+    fontSize: '0.7rem',
+    height: hp('6'),
+    letterSpacing: -0.05,
+    paddingLeft: wp('3'),
+    color:'#363636',
+    fontWait:'500',
+    fontFamily: fontFamily.ceraMedium,
+  },
+  radiotext:{
+    fontSize: '0.62rem',
+    fontWaight:'500',
+    color: '#363636',
+    fontFamily:fontFamily.ceraMedium,
+},
+submittext:{
+  color: '#fff',
+  fontFamily:fontFamily.ceraMedium,
+  fontSize: '0.7rem',
+  // color:'#363636',
+    fontWait:'500',
+}
 });

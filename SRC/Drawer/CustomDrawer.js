@@ -6,21 +6,27 @@ import {
   ImageBackground,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
+import Icon from 'react-native-fontawesome-pro';
+
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 
 import {Image} from 'react-native';
+import fontFamily from '../Styles/fontFamily';
+import EStyleSheet from 'react-native-extended-stylesheet';
+// import fontSize from '../Styles/fontSize';
+import LinearGradient from 'react-native-linear-gradient';
 
 const CustomDrawer = ({navigation}) => {
-
   return (
     <>
-      <ImageBackground
-        source={{uri: 'drawer'}}
-        style={{flex: 1}}
-        resizeMode={'cover'}>
+      <LinearGradient
+        start={{x: 1, y: 0}}
+        end={{x: 0, y: 1}}
+        colors={['#1C37A5', '#4D69DC']}
+        style={{flex: 1}}>
         <View
           style={{
             width: wp(90),
@@ -28,25 +34,23 @@ const CustomDrawer = ({navigation}) => {
             height: hp(10),
             justifyContent: 'space-between',
             flexDirection: 'row',
-            marginTop:hp(3)
+            marginTop: hp(3),
           }}>
-          <View style={{width: wp(70), height: hp(10)}}>
-            {/* <Text>fdgdgd</Text> */}
-          </View>
+          <View style={{width: wp(70), height: hp(10)}}></View>
           <TouchableOpacity
             onPress={() => {
               navigation.closeDrawer();
             }}
             style={{width: wp(20), height: hp(10)}}>
-            <Text
+            <View
               style={{
                 color: '#fff',
                 paddingTop: hp(5),
-                paddingLeft: hp(5),
+                paddingLeft: hp(7),
                 fontSize: hp(3),
               }}>
-              X
-            </Text>
+              <Icon type="light" name="xmark" size={hp(3.5)} color="#fff" />
+            </View>
           </TouchableOpacity>
         </View>
         <View style={{flex: 1, marginHorizontal: hp(5)}}>
@@ -55,7 +59,8 @@ const CustomDrawer = ({navigation}) => {
               width: wp(50),
               height: hp(7.9),
               flexDirection: 'row',
-              marginHorizontal: hp(2),
+              marginHorizontal: hp(3),
+              marginTop: hp(1),
             }}>
             <View
               style={{
@@ -77,184 +82,154 @@ const CustomDrawer = ({navigation}) => {
                 resizeMode="cover"
               />
             </View>
-            <View style={{marginLeft:hp(-2)}}>
+            <View style={{marginLeft: hp(-2)}}>
               <View>
-                <Text
-                  style={{
-                    color: '#fff',
-                    fontSize: hp(2),
-                    fontWeight: '600',
-                    marginTop: hp(1),
-                  }}>
-                  Zeeshan Abdual Hafeez
-                </Text>
+                <Text style={styles.username}>Zeeshan Hafeez</Text>
               </View>
               <View style={{flexDirection: 'row', marginTop: hp(0)}}>
                 <View style={{marginRight: hp(1)}}>
                   <View style={{flexDirection: 'row', marginTop: hp(0)}}>
                     <View style={{marginRight: hp(1)}}>
-                      <Text
-                        style={{
-                          color: '#fff',
-                          fontSize: hp(1.5),
-                          fontWeight: '600',
-                        }}>
-                        View Profile
-                      </Text>
+                      <Text style={styles.viewProfile}>View Profile</Text>
                     </View>
                   </View>
                 </View>
               </View>
             </View>
           </View>
-          <View style={{width: wp(50), height: hp(5), marginTop: wp(5)}}>
-            <TouchableOpacity onPress={()=>navigation.navigate('HomeScreen')}>
+          <View style={[styles.listnameStyle, {marginTop: hp(4)}]}>
+            <TouchableOpacity
+              onPress={() => navigation.navigate('HomeScreenDrawer')}>
               <View style={{flexDirection: 'row', marginLeft: hp(3)}}>
                 {/* <View >
-              <Icon name='home' size={25} color='#fff'/>
-              </View> */}
-                <View style={{marginLeft: hp(2), marginTop: hp(0.3)}}>
-                  <Text style={{fontSize: hp(1.8), color: '#fff'}}>Home</Text>
+                <Icon name='home' size={25} color='#fff'/>
+                </View> */}
+                <View style={styles.homeleft}>
+                  <Text style={styles.textlistStyle}>Home</Text>
                 </View>
               </View>
             </TouchableOpacity>
           </View>
-          <View style={{width: wp(50), height: hp(5), marginTop: wp(3)}}>
-            <TouchableOpacity onPress={()=>navigation.navigate('ApplicationType')}>
+          <View style={styles.listnameStyle}>
+            <TouchableOpacity
+              onPress={() => navigation.navigate('Attendance')}>
               <View style={{flexDirection: 'row', marginLeft: hp(3)}}>
                 {/* <View >
-              <Icon name='home' size={25} color='#fff'/>
-              </View> */}
-                <View style={{marginLeft: hp(2), marginTop: hp(0.3)}}>
-                  <Text style={{fontSize: hp(1.8), color: '#fff'}}>
-                    Attendance
-                  </Text>
+                <Icon name='home' size={25} color='#fff'/>
+                </View> */}
+                <View style={styles.homeleft}>
+                  <Text style={styles.textlistStyle}>Attendance</Text>
                 </View>
               </View>
             </TouchableOpacity>
           </View>
-          <View style={{width: wp(50), height: hp(5), marginTop: wp(3)}}>
-            <TouchableOpacity  onPress={()=>navigation.navigate('Financial')}>
+          <View style={styles.listnameStyle}>
+            <TouchableOpacity onPress={() => navigation.navigate('Financial')}>
               <View style={{flexDirection: 'row', marginLeft: hp(3)}}>
                 {/* <View >
-              <Icon name='home' size={25} color='#fff'/>
-              </View> */}
-                <View style={{marginLeft: hp(2), marginTop: hp(0.3)}}>
-                  <Text style={{fontSize: hp(1.8), color: '#fff'}}>
-                    Financials
-                  </Text>
+                <Icon name='home' size={25} color='#fff'/>
+                </View> */}
+                <View style={styles.homeleft}>
+                  <Text style={styles.textlistStyle}>Financials</Text>
                 </View>
               </View>
             </TouchableOpacity>
           </View>
-          <View style={{width: wp(50), height: hp(5), marginTop: wp(3)}}>
-            <TouchableOpacity onPress={()=>navigation.navigate('TimeLine')}>
+          <View style={styles.listnameStyle}>
+            <TouchableOpacity onPress={() => navigation.navigate('TimeLine')}>
               <View style={{flexDirection: 'row', marginLeft: hp(3)}}>
                 {/* <View >
-              <Icon name='home' size={25} color='#fff'/>
-              </View> */}
-                <View style={{marginLeft: hp(2), marginTop: hp(0.3)}}>
-                  <Text style={{fontSize: hp(1.8), color: '#fff'}}>
-                    Timeline
-                  </Text>
+                <Icon name='home' size={25} color='#fff'/>
+                </View> */}
+                <View style={styles.homeleft}>
+                  <Text style={styles.textlistStyle}>Timeline</Text>
                 </View>
               </View>
             </TouchableOpacity>
           </View>
-          <View style={{width: wp(50), height: hp(5), marginTop: wp(3)}}>
-            <TouchableOpacity>
+          <View style={styles.listnameStyle}>
+            <TouchableOpacity onPress={() => navigation.navigate('Reportee')}>
               <View style={{flexDirection: 'row', marginLeft: hp(3)}}>
                 {/* <View >
-              <Icon name='home' size={25} color='#fff'/>
-              </View> */}
-                <View style={{marginLeft: hp(2), marginTop: hp(0.3)}}>
-                  <Text style={{fontSize: hp(1.8), color: '#fff'}}>
-                    Reportees
-                  </Text>
+                <Icon name='home' size={25} color='#fff'/>
+                </View> */}
+                <View style={styles.homeleft}>
+                  <Text style={styles.textlistStyle}>Reportees</Text>
                 </View>
               </View>
             </TouchableOpacity>
           </View>
-          <View style={{width: wp(50), height: hp(5), marginTop: wp(3)}}>
-            <TouchableOpacity onPress={()=>navigation.navigate('Wfh')}>
+          <View style={styles.listnameStyle}>
+            <TouchableOpacity onPress={() => navigation.navigate('Approcial')}>
               <View style={{flexDirection: 'row', marginLeft: hp(3)}}>
                 {/* <View >
-              <Icon name='home' size={25} color='#fff'/>
-              </View> */}
-                <View style={{marginLeft: hp(2), marginTop: hp(0.3)}}>
-                  <Text style={{fontSize: hp(1.8), color: '#fff'}}>
-                    Appraisal
-                  </Text>
+                <Icon name='home' size={25} color='#fff'/>
+                </View> */}
+                <View style={styles.homeleft}>
+                  <Text style={styles.textlistStyle}>Appraisal</Text>
                 </View>
               </View>
             </TouchableOpacity>
           </View>
-          <View style={{width: wp(50), height: hp(5), marginTop: wp(3)}}>
-            <TouchableOpacity onPress={()=>navigation.navigate('ChildBss')}>
+          <View style={styles.listnameStyle}>
+            <TouchableOpacity onPress={() => navigation.navigate('ChildBss')}>
               <View style={{flexDirection: 'row', marginLeft: hp(3)}}>
                 {/* <View >
-              <Icon name='home' size={25} color='#fff'/>
-              </View> */}
-                <View style={{marginLeft: hp(2), marginTop: hp(0.3)}}>
-                  <Text style={{fontSize: hp(1.8), color: '#fff'}}>
-                    Children in BSS
-                  </Text>
+                <Icon name='home' size={25} color='#fff'/>
+                </View> */}
+                <View style={styles.homeleft}>
+                  <Text style={styles.textlistStyle}>Children in BSS</Text>
                 </View>
               </View>
             </TouchableOpacity>
           </View>
-          <View style={{width: wp(50), height: hp(5), marginTop: wp(3)}}>
-            <TouchableOpacity onPress={()=>navigation.navigate('Profile')}>
+          <View style={styles.listnameStyle}>
+            <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
               <View style={{flexDirection: 'row', marginLeft: hp(3)}}>
                 {/* <View >
-              <Icon name='home' size={25} color='#fff'/>
-              </View> */}
-                <View style={{marginLeft: hp(2), marginTop: hp(0.3)}}>
-                  <Text style={{fontSize: hp(1.8), color: '#fff'}}>Index</Text>
+                <Icon name='home' size={25} color='#fff'/>
+                </View> */}
+                <View style={styles.homeleft}>
+                  <Text style={styles.textlistStyle}>Index</Text>
                 </View>
               </View>
             </TouchableOpacity>
           </View>
-          <View style={{width: wp(50), height: hp(5), marginTop: wp(3)}}>
-            <TouchableOpacity onPress={()=>navigation.navigate('FeedBack')}>
+          <View style={styles.listnameStyle}>
+            <TouchableOpacity onPress={() => navigation.navigate('FeedBack')}>
               <View style={{flexDirection: 'row', marginLeft: hp(3)}}>
                 {/* <View >
-              <Icon name='home' size={25} color='#fff'/>
-              </View> */}
-                <View style={{marginLeft: hp(2), marginTop: hp(0.3)}}>
-                  <Text style={{fontSize: hp(1.8), color: '#fff'}}>
-                    Feedback
-                  </Text>
+                <Icon name='home' size={25} color='#fff'/>
+                </View> */}
+                <View style={styles.homeleft}>
+                  <Text style={styles.textlistStyle}>Feedback</Text>
                 </View>
               </View>
             </TouchableOpacity>
           </View>
           <View style={{flexDirection: 'row'}}>
             <View>
-              <View style={{width: wp(50), height: hp(5), marginTop: wp(3)}}>
-                <TouchableOpacity onPress={()=>navigation.navigate('ForgotPassword')}>
+              <View style={styles.listnameStyle}>
+                <TouchableOpacity
+                  onPress={() => navigation.navigate('ForgotPassword')}>
                   <View style={{flexDirection: 'row', marginLeft: hp(3)}}>
                     {/* <View >
-              <Icon name='home' size={25} color='#fff'/>
-              </View> */}
-                    <View style={{marginLeft: hp(2), marginTop: hp(0.3)}}>
-                      <Text style={{fontSize: hp(1.8), color: '#fff'}}>
-                        Change Password
-                      </Text>
+                <Icon name='home' size={25} color='#fff'/>
+                </View> */}
+                    <View style={styles.homeleft}>
+                      <Text style={styles.textlistStyle}>Change Password</Text>
                     </View>
                   </View>
                 </TouchableOpacity>
               </View>
-              <View style={{width: wp(50), height: hp(5), marginTop: wp(3)}}>
+              <View style={styles.listnameStyle}>
                 <TouchableOpacity>
                   <View style={{flexDirection: 'row', marginLeft: hp(3)}}>
                     {/* <View >
-              <Icon name='home' size={25} color='#fff'/>
-              </View> */}
-                    <View style={{marginLeft: hp(2), marginTop: hp(0.3)}}>
-                      <Text style={{fontSize: hp(1.8), color: '#fff'}}>
-                        Logout
-                      </Text>
+                <Icon name='home' size={25} color='#fff'/>
+                </View> */}
+                    <View style={styles.homeleft}>
+                      <Text style={styles.textlistStyle}>Logout</Text>
                     </View>
                   </View>
                 </TouchableOpacity>
@@ -268,9 +243,37 @@ const CustomDrawer = ({navigation}) => {
             </View>
           </View>
         </View>
-      </ImageBackground>
+      </LinearGradient>
     </>
   );
 };
 
 export default CustomDrawer;
+
+const styles = EStyleSheet.create({
+  username: {
+    fontSize: '0.7rem',
+    color: '#fff',
+    fontWeight: '700',
+    marginTop: hp(1),
+    fontFamily: fontFamily.ceraBold,
+    fontStyle: 'normal',
+  },
+  viewProfile: {
+    fontSize: '0.5rem',
+    color: '#FFF',
+    fontSize: hp(1.5),
+    fontWeight: '500',
+    fontFamily: fontFamily.ceraMedium,
+    fontStyle: 'normal',
+  },
+  textlistStyle: {
+    fontSize: '0.7rem',
+    color: '#fff',
+    fontWeight: '500',
+    fontFamily: fontFamily.ceraMedium,
+    fontStyle: 'normal',
+  },
+  listnameStyle: {width: wp(50), height: hp(5), marginTop: hp(1)},
+  homeleft: {marginLeft: hp(0.5)},
+});

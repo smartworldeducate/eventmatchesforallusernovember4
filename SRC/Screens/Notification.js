@@ -11,6 +11,8 @@ import MainHeader from '../Components/Headers/MainHeader';
 import fontFamily from '../Styles/fontFamily';
 import fontSize from '../Styles/fontSize';
 import EStyleSheet from 'react-native-extended-stylesheet';
+import Icon from 'react-native-fontawesome-pro';
+
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -83,14 +85,15 @@ const Notification = props => {
       <View style={{marginBottom: hp(2)}}>
         <MainHeader
           text={'Notifications'}
-          iconName={'arrowleft'}
+          iconName={'arrow-left'}
           onpressBtn={() => props.navigation.goBack()}
+          rightIcon={'bars-progress'}
         />
       </View>
       <ScrollView style={{flex:1}}>
         {data.map((item, i) => {
           return (
-            <View style={{width: wp(100), marginTop: hp(-1.7)}} key={i}>
+            <View style={{width: wp(100), marginTop: hp(-1.7),marginBottom:hp(1)}} key={i}>
               <View style={styles.card}>
                 <View style={{marginHorizontal: hp(1), marginVertical: hp(1)}}>
                   <View>
@@ -108,12 +111,11 @@ const Notification = props => {
                           backgroundColor: '#58D68D ',
                           borderRadius: hp(2),
                           marginVertical: hp(0.5),
-                          //   marginRight: hp(3),
                         }}>
                         <Image
                           style={{
-                            width: wp(6),
-                            height: hp(3),
+                            width: wp(7),
+                            height: hp(3.5),
                             borderRadius: hp(1),
                           }}
                           source={{uri: item.image}}
@@ -127,11 +129,7 @@ const Notification = props => {
                         <View style={{}}>
                           <View style={{}}>
                             <Text
-                              style={{
-                                color: 'gray',
-                                fontSize: hp(1.1),
-                                fontWeight: '600',
-                              }}>
+                              style={styles.dateu}>
                               May 22,2023
                             </Text>
                           </View>
@@ -154,14 +152,17 @@ const Notification = props => {
                         borderRadius: hp(50),
                         justifyContent: 'center',
                         backgroundColor: '#F6CA45',
+                        marginTop:hp(1)
+
                       }}>
                       <View
                         style={{
                           alignContent: 'center',
                           alignItems: 'center',
                           fontSize: hp(1.2),
+                          paddingHorizontal:hp(1)
                         }}>
-                        <Text style={{fontSize: hp(1.2), color: '#343434'}}>
+                        <Text style={styles.approval}>
                           Approval Pending
                         </Text>
                       </View>
@@ -170,7 +171,7 @@ const Notification = props => {
                   {penDiv && (
                     <TouchableOpacity
                       onPress={handleApprove}
-                      style={{flexDirection: 'row'}}>
+                      style={{flexDirection: 'row',marginTop:hp(1.5)}}>
                       <View
                         style={{
                           width: wp(25.2),
@@ -185,7 +186,7 @@ const Notification = props => {
                             alignItems: 'center',
                             fontSize: hp(1.2),
                           }}>
-                          <Text style={{fontSize: hp(1.5), color: '#fff'}}>
+                          <Text style={styles.apvbtn}>
                             APPROVE
                           </Text>
                         </View>
@@ -205,7 +206,7 @@ const Notification = props => {
                             alignItems: 'center',
                             fontSize: hp(1.2),
                           }}>
-                          <Text style={{fontSize: hp(1.5), color: '#fff'}}>
+                          <Text style={styles.apvbtn}>
                             DECLINE
                           </Text>
                         </View>
@@ -249,17 +250,19 @@ const styles = EStyleSheet.create({
     marginHorizontal: hp(2.5),
   },
   zetext: {
-    color: '#363636',
-    fontWeight: '700',
-    fontSize: '0.5rem',
-    fontFamily: fontFamily.ceraBlack,
+    color: '#343434',
+    fontWeight: '500',
+    fontSize: '0.6rem',
+    fontFamily: fontFamily.ceraMedium,
+    fontStyle:'normal'
   },
   zetext1: {
-    color: '#363636',
+    color: '#343434',
     fontWeight: '500',
-    // marginTop: hp(1),
-    fontSize: '0.5rem',
-    fontFamily: fontFamily.ceraBlack,
+    marginTop: hp(1),
+    fontSize: '0.49rem',
+    fontFamily: fontFamily.ceraMedium,
+    lineHeight:hp(1.8)
   },
   smalltext: {
     fontWeight: '700',
@@ -276,4 +279,24 @@ const styles = EStyleSheet.create({
     fontStyle: 'normal',
     alignItems: 'center',
   },
+  dateu:{
+    color: '#979797',
+    fontWeight: '500',
+    fontSize: '0.49rem',
+    fontFamily: fontFamily.ceraMedium,
+  },
+  approval:{ 
+    color: '#343434',
+    fontWeight: '500',
+    fontSize: '0.4rem',
+    fontFamily: fontFamily.ceraMedium,
+    textTransform:'uppercase',
+    // paddingHorizontal:hp(2)
+  },
+  apvbtn:{color: '#fff',
+  fontWeight: '500',
+  fontSize: '0.5rem',
+  fontFamily: fontFamily.ceraMedium,
+  textTransform:'uppercase',
+}
 });
