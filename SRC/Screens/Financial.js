@@ -21,19 +21,24 @@ const Financial = props => {
     setHistory(true);
     setSalary(false);
   };
-  const months = [
-    'Jan',
-    'Feb',
-    'March',
-    'April',
-    'May',
-    'June',
-    'July',
-    'Aug',
-    'Sep',
-    'Oct',
-    'Nov',
-    'Dec',
+  const [clinder,setClinder]=useState(null);
+  const clinderHandler = item => {
+    setClinder(item);
+    console.log("my item  time out",item)
+  };
+  const data1 = [
+    {id: 1, text: '17-06-2023', number: 'Full Toil',month:'Jan'},
+    {id: 2, text: '08:40:33', number: '08:44:47',month:'Feb'},
+    {id: 3, text: '08:40:33', number: '08:17:03',month:'Mar'},
+    {id: 4, text: '17-06-2023', number: '08:17:03',month:'Apr'},
+    {id: 5, text: '17-06-2023', number: '08:17:03',month:'May'},
+    {id: 6, text: '08:40:33', number: '08:44:47',month:'Jun'},
+    {id: 7, text: '08:40:33', number: '5,000',month:'Jul'},
+    {id: 8, text: '17-06-2023', number: '08:17:03',month:'Aug'},
+    {id: 9, text: '17-06-2023', number: 'Weekend',month:'Sep'},
+    {id: 10, text: '08:40:33', number: 'Full Toil',month:'Oct'},
+    {id: 11, text: '17-06-2023', number: '08:44:47',month:'Nov'},
+    {id: 12, text: '17-06-2023', number: '08:17:03',month:'Dec'},
   ];
   const years = ['2020', '2021', '2022', '2023', '2024'];
 
@@ -161,17 +166,19 @@ const Financial = props => {
               justifyContent: 'center',
             }}
             showsHorizontalScrollIndicator={false}>
-            {years?.map((e, i) => {
+            {data1?.map((e, i) => {
               return (
-                <TouchableOpacity onPress={() => {}} key={i}>
+                <>
+                {clinder == e.id && ( <TouchableOpacity onPress={() => clinderHandler(e.id)} key={i}>
                   <View
                     style={{
                       height: hp(4),
-                      paddingHorizontal: hp(2.7),
+                      paddingHorizontal: hp(3.5),
+                      marginHorizontal:hp(2),
                       borderRadius: hp(20),
                       justifyContent: 'center',
                       alignItems: 'center',
-                      backgroundColor: i == 2 ? '#4D69DC' : ' ',
+                      backgroundColor:'#4D69DC',
                     }}>
                     <View
                       style={{
@@ -180,19 +187,44 @@ const Financial = props => {
                       }}>
                       <Text
                         style={{
-                          color: i == 2 ? '#FFF' : 'gray',
+                          color:'#FFF',
                           fontSize: hp(1.5),
                         }}>
-                        {e}
+                        {e.month}
                       </Text>
                     </View>
                   </View>
-                </TouchableOpacity>
+                </TouchableOpacity>)}
+                {clinder !== e.id && (<TouchableOpacity onPress={() => clinderHandler(e.id)} key={i}>
+                  <View
+                    style={{
+                      height: hp(4),
+                      paddingHorizontal: hp(2.7),
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                    }}>
+                    <View
+                      style={{
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                      }}>
+                      <Text
+                        style={{
+                          color:'gray',
+                          fontSize: hp(1.5),
+                        }}>
+                        {e.month}
+                      </Text>
+                    </View>
+                  </View>
+                </TouchableOpacity>)}
+                
+                </>
               );
             })}
           </ScrollView>
           <ScrollView style={{flex: 1, marginTop: hp(-77)}}>
-            {months.map((item, i) => {
+            {data1.map((item, i) => {
               return (
                 <View
                   style={{
@@ -228,7 +260,7 @@ const Financial = props => {
                                 justifyContent: 'center',
                                 alignItems: 'center',
                               }}>
-                              <Text style={styles.circularText}>{item}</Text>
+                              <Text style={styles.circularText}>{item.month}</Text>
                             </View>
                             {/* <View>
                       <Text style={styles.circularText1}>Leave Balance</Text>

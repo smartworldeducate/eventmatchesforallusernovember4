@@ -33,6 +33,7 @@ import WorkFromHome from './SRC/Screens/WorkFromHome';
 import Approcial from './SRC/Screens/Approcial';
 import Attendance from './SRC/Screens/Attendance';
 import Reportee from './SRC/Screens/Reportee';
+import TestScreen from './SRC/Screens/TestScreen';
 
 const Drawer = createDrawerNavigator();
 

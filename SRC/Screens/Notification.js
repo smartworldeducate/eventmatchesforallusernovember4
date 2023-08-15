@@ -18,6 +18,14 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 const Notification = props => {
+  const [approve, setApprove] = useState(null);
+  const [panding, setPanding] = useState(null);
+  const btnHandler = item => {
+    setApprove(item);
+  };
+  const panHandler = item => {
+    setPanding(item);
+  };
   const data = [
     {
       id: 1,
@@ -74,7 +82,7 @@ const Notification = props => {
       desc: 'Lörem ipsum agnostisiv ekograf alltså best prest inte Helena Marti nsson. Das ryliga Das ryliga vir og  gra nska seliga...',
     },
   ];
-  const [appDiv, setAppDiv] = useState(false);
+  const [appDiv, setAppDiv] = useState(true);
   const [penDiv, setPenDiv] = useState(true);
   const handleApprove = props => {
     setAppDiv(true);
@@ -90,10 +98,12 @@ const Notification = props => {
           rightIcon={'bars-progress'}
         />
       </View>
-      <ScrollView style={{flex:1}}>
+      <ScrollView style={{flex: 1}}>
         {data.map((item, i) => {
           return (
-            <View style={{width: wp(100), marginTop: hp(-1.7),marginBottom:hp(1)}} key={i}>
+            <View
+              style={{width: wp(100), marginTop: hp(-1.7), marginBottom: hp(1)}}
+              key={i}>
               <View style={styles.card}>
                 <View style={{marginHorizontal: hp(1), marginVertical: hp(1)}}>
                   <View>
@@ -102,7 +112,6 @@ const Notification = props => {
                         width: wp(50),
                         height: hp(7.9),
                         flexDirection: 'row',
-                        //   backgroundColor: '#1C37A4',
                       }}>
                       <View
                         style={{
@@ -128,10 +137,7 @@ const Notification = props => {
                         </View>
                         <View style={{}}>
                           <View style={{}}>
-                            <Text
-                              style={styles.dateu}>
-                              May 22,2023
-                            </Text>
+                            <Text style={styles.dateu}>May 22,2023</Text>
                           </View>
                         </View>
                       </View>
@@ -143,8 +149,9 @@ const Notification = props => {
                     <Text style={styles.zetext1}>{item.desc}</Text>
                   </View>
                 </View>
+
                 <View style={{width: wp(90), flexDirection: 'row'}}>
-                  {appDiv && (
+                  {panding == item.id && (
                     <View
                       style={{
                         width: wp(30.2),
@@ -152,27 +159,24 @@ const Notification = props => {
                         borderRadius: hp(50),
                         justifyContent: 'center',
                         backgroundColor: '#F6CA45',
-                        marginTop:hp(1)
-
+                        marginTop: hp(1),
                       }}>
                       <View
                         style={{
                           alignContent: 'center',
                           alignItems: 'center',
                           fontSize: hp(1.2),
-                          paddingHorizontal:hp(1)
+                          paddingHorizontal: hp(1),
                         }}>
-                        <Text style={styles.approval}>
-                          Approval Pending
-                        </Text>
+                        <Text style={styles.approval}>Approval Pending</Text>
                       </View>
                     </View>
                   )}
-                  {penDiv && (
+                  {panding !== item.id && (
                     <TouchableOpacity
-                      onPress={handleApprove}
-                      style={{flexDirection: 'row',marginTop:hp(1.5)}}>
-                      <View
+                      style={{flexDirection: 'row', marginTop: hp(1.5)}}>
+                      <TouchableOpacity
+                        onPress={() => panHandler(item.id)}
                         style={{
                           width: wp(25.2),
                           height: hp(3.8),
@@ -186,12 +190,12 @@ const Notification = props => {
                             alignItems: 'center',
                             fontSize: hp(1.2),
                           }}>
-                          <Text style={styles.apvbtn}>
-                            APPROVE
-                          </Text>
+                          <Text style={styles.apvbtn}>APPROVE</Text>
                         </View>
-                      </View>
-                      <View
+                      </TouchableOpacity>
+
+                      <TouchableOpacity
+                        onPress={() => {}}
                         style={{
                           width: wp(25.2),
                           marginLeft: hp(1),
@@ -206,14 +210,13 @@ const Notification = props => {
                             alignItems: 'center',
                             fontSize: hp(1.2),
                           }}>
-                          <Text style={styles.apvbtn}>
-                            DECLINE
-                          </Text>
+                          <Text style={styles.apvbtn}>DECLINE</Text>
                         </View>
-                      </View>
+                      </TouchableOpacity>
                     </TouchableOpacity>
                   )}
                 </View>
+
                 <View
                   style={{
                     width: wp(94),
@@ -226,7 +229,6 @@ const Notification = props => {
             </View>
           );
         })}
-      
       </ScrollView>
     </>
   );
@@ -254,7 +256,7 @@ const styles = EStyleSheet.create({
     fontWeight: '500',
     fontSize: '0.6rem',
     fontFamily: fontFamily.ceraMedium,
-    fontStyle:'normal'
+    fontStyle: 'normal',
   },
   zetext1: {
     color: '#343434',
@@ -262,7 +264,7 @@ const styles = EStyleSheet.create({
     marginTop: hp(1),
     fontSize: '0.49rem',
     fontFamily: fontFamily.ceraMedium,
-    lineHeight:hp(1.8)
+    lineHeight: hp(1.8),
   },
   smalltext: {
     fontWeight: '700',
@@ -279,24 +281,25 @@ const styles = EStyleSheet.create({
     fontStyle: 'normal',
     alignItems: 'center',
   },
-  dateu:{
+  dateu: {
     color: '#979797',
     fontWeight: '500',
     fontSize: '0.49rem',
     fontFamily: fontFamily.ceraMedium,
   },
-  approval:{ 
+  approval: {
     color: '#343434',
     fontWeight: '500',
     fontSize: '0.4rem',
     fontFamily: fontFamily.ceraMedium,
-    textTransform:'uppercase',
+    textTransform: 'uppercase',
     // paddingHorizontal:hp(2)
   },
-  apvbtn:{color: '#fff',
-  fontWeight: '500',
-  fontSize: '0.5rem',
-  fontFamily: fontFamily.ceraMedium,
-  textTransform:'uppercase',
-}
+  apvbtn: {
+    color: '#fff',
+    fontWeight: '500',
+    fontSize: '0.5rem',
+    fontFamily: fontFamily.ceraMedium,
+    textTransform: 'uppercase',
+  },
 });
