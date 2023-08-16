@@ -34,9 +34,11 @@ import Approcial from './SRC/Screens/Approcial';
 import Attendance from './SRC/Screens/Attendance';
 import Reportee from './SRC/Screens/Reportee';
 import TestScreen from './SRC/Screens/TestScreen';
-
+import LeaveBalance from './SRC/Screens/LeaveBalance';
+import LeaveHistory from './SRC/Screens/LeaveHistory';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 const Drawer = createDrawerNavigator();
-
+const Tab = createBottomTabNavigator();
 function DrawerStack() {
   return (
     <Drawer.Navigator
@@ -58,10 +60,20 @@ function DrawerStack() {
 }
 
 
+const BottomTab = () => {
+
+  return (
+    <Tab.Navigator>
+      <Tab.Screen name="HomeScreen" component={HomeScreen} />
+      <Tab.Screen name="Profile" component={Profile} />
+      <Tab.Screen name=""ApplicationType component={ApplicationType} />
+    </Tab.Navigator>
+  );
+};
+
+
 const Routes = () => {
   const Stack = createNativeStackNavigator();
-
-
 
   return (
     <NavigationContainer>
@@ -89,6 +101,8 @@ const Routes = () => {
         <Stack.Screen name="ChildBss" component={ChildBss} />
         <Stack.Screen name="FeedBack" component={FeedBack} />
         <Stack.Screen name="WorkFromHome" component={WorkFromHome} />
+        <Stack.Screen name="LeaveBalance" component={LeaveBalance} />
+        <Stack.Screen name="LeaveHistory" component={LeaveHistory} />
       </Stack.Navigator>
     </NavigationContainer>
   );

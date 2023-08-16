@@ -188,12 +188,12 @@ const Reportee = props => {
           </View>
         </View>
       </View>
-      <View
+      {/* <View
         style={{
           height: hp(0.05),
           backgroundColor: '#cdcdcd',
           marginTop: hp(1),
-        }}></View>
+        }}></View> */}
       <View style={{flex: 1, marginHorizontal: hp(2.5), marginTop: hp(1)}}>
         {data.map((item, i) => {
           return (

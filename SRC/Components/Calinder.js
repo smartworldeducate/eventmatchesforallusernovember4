@@ -76,8 +76,7 @@ const Calinder = () => {
                     marginRight: hp(1),
                     marginLeft: hp(1),
                   }}>
-                    {/* <FontAwesomeIcon icon="fat fa-temperature-half" /> */}
-                    {/* <FontAwesomeIcon type='thin' icon='masks-theater' size={hp(4)} color="#BB8FCE" /> */}
+                
                   <Icon type='light' name="masks-theater" size={hp(4)} color="#BB8FCE" />
                 </View>
                 <View style={{marginTop: hp(0.5)}}>
@@ -160,7 +159,7 @@ const Calinder = () => {
               height: hp(10),
               marginHorizontal: hp(2),
               flexDirection: 'row',
-              marginVertical:hp(1.8),
+              marginVertical:hp(2.4),
               justifyContent: 'space-between',
             }}>
             <TouchableOpacity

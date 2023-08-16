@@ -16,8 +16,6 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import {TouchableOpacity} from 'react-native-gesture-handler';
-import ListProfile from '../Components/ListProfile';
-import ExpandList from '../Components/expandlist/ExpandableList';
 import ExpandableList from '../Components/expandlist/ExpandableList';
 const Profile = props => {
   const data = [

@@ -28,18 +28,19 @@ import {
 
 import colors from '../Styles/colors';
 import HeaderTop from '../Components/Headers/HeaderTop';
-// import HeaderSecond from '../Components/Headers/HeaderSecond';
-// import HomeList from '../Components/HomeList/HomeList';
-// import HomeList2 from '../Components/HomeList/HomeList2';
-// import MainHeader from '../Components/Headers/MainHeader';
-// import TextInputCustom from '../Components/TextInput/TextInput';
-// import Button from '../Components/Button/Button';
+
 import Card from '../Components/Card';
 import Calinder from '../Components/Calinder';
 import fontSize from '../Styles/fontSize';
 import fontFamily from '../Styles/fontFamily';
 
 const HomeScreen = props => {
+  const [leave, setLeave] = useState(false);
+  const [clinder, setClinder] = useState(false);
+  const handleLeave = () => {
+    setLeave(true);
+    setClinder(false);
+  };
   const navigation = useNavigation();
   const handleNavigate = (routeName, clearStack, params) => {
     navigation.navigate(routeName, params);
@@ -148,10 +149,62 @@ const HomeScreen = props => {
             <Text style={[styles.bootContText2]}>Attendance</Text>
           </View>
         </View>
-
         <Card />
         <View>
           <Calinder />
+        </View>
+        <View style={{marginHorizontal:hp(2.2),marginTop:hp(2)}}>
+          <Text style={styles.clText1}>W.F.H</Text>
+        </View>
+        <View style={{marginHorizontal:hp(2),borderRadius:hp(2),height:hp(12),backgroundColor:'#FFFFFF',marginBottom:hp(5), shadowColor: '#000',
+              shadowOpacity: 0.5,
+              shadowRadius: 4,
+              elevation: 4,}}>
+        <View
+            style={{
+              height: hp(10),
+              marginHorizontal: hp(2),
+              flexDirection: 'row',
+              marginVertical:hp(3.7),
+              justifyContent: 'space-between',
+            }}>
+               <TouchableOpacity
+                onPress={()=>props.navigation.navigate('Wfh')}
+                style={{
+                  borderRadius: hp(50),
+                width:wp(38),
+                  height: hp(4.5),
+                  borderWidth: 1,
+                  borderColor: '#1C37A4' ,
+                  backgroundColor:'#1C37A4',
+                  justifyContent:'center',
+                  alignItems:'center'
+                }}>
+                <Text
+                  style={styles.viewClinderText}>
+                  Request W.F.H
+                </Text>
+              </TouchableOpacity>
+            <TouchableOpacity
+              onPress={()=>props.navigation.navigate('AttendenceMarked')}
+              style={{
+                width:wp(38),
+                justifyContent: 'center',
+                alignItems: 'center',
+                height: hp(4.5),
+                borderRadius: hp(50),
+                borderWidth: 1,
+                borderColor: '#1C37A4',
+                backgroundColor: '#fff',
+                // marginTop: hp(4),
+              }}>
+              <Text
+                style={styles.clbtnStyle}>
+               Mark Attendance
+              </Text>
+            </TouchableOpacity>
+           
+          </View>
         </View>
       </ScrollView>
 
@@ -176,6 +229,7 @@ const HomeScreen = props => {
             <Menu name="home" size={hp(3)} color="#1C37A4" style={{}} />
           </TouchableOpacity>
           <TouchableOpacity
+          onPress={()=>props.navigation.navigate('LeaveHistory')}
             style={{flex: 0.2, paddingTop: hp(0.5), alignItems: 'center'}}>
             <Ficon
               type="light"
@@ -203,7 +257,7 @@ const HomeScreen = props => {
               <Ficon style={{}} name="qrcode" size={hp(4)} color="#fff" />
             </View>
           </TouchableOpacity>
-          <TouchableOpacity style={{flex: 0.2, alignItems: 'center'}}>
+          <TouchableOpacity style={{flex: 0.2, alignItems: 'center'}} onPress={()=>props.navigation.navigate('LeaveBalance')}>
             <Ficon
               type="light"
               name="calendar-days"
@@ -325,6 +379,44 @@ const styles = EStyleSheet.create({
     fontSize: '1.5625rem',
     fontWeight: 300,
   },
+  clText1: {
+    fontSize: '0.7rem',
+    fontWeight: '700',
+    fontFamily: fontFamily.ceraBold,
+    paddingBottom: hp(0.5),
+    color: '#646464',
+    fontStyle: 'normal',
+  },
+  clbtnText: {
+    color: '#fff',
+    marginHorizontal: hp(3),
+    marginVertical: hp(1),
+  },
+  clbtnStyle:{
+    fontSize: '0.5rem',
+    color: '#061D7A',
+    paddingHorizontal: hp(3.5),
+    fontWeight: '500',
+    fontFamily: fontFamily.ceraMedium,
+    fontStyle: 'normal',
+  },
+  leaveSectionText:{
+    fontSize: '0.7rem',
+    color: '#353535',
+   marginTop: hp(1),
+    fontWeight: '700',
+    fontFamily: fontFamily.ceraBold,
+    fontStyle: 'normal',
+  },
+  viewClinderText:{
+    color:'#fff',
+    fontFamily: fontFamily.ceraMedium,
+    paddingHorizontal: hp(3.5),
+    fontWeight:'500',
+    fontStyle:'normal',
+    fontSize: '0.55rem',
+  }
+
 });
 
 export default HomeScreen;
