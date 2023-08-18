@@ -44,10 +44,9 @@ const ApplicationType = props => {
   return (
     <>
       <View>
-        <MainHeader text={'Application Type'} iconName={'arrow-left'} />
+        <MainHeader text={'Application Type'} iconName={'arrow-left'} onpressBtn={()=>props.navigation.goBack()}/>
         <View
           style={{
-            // width: wp(90),
             marginHorizontal: hp(2.5),
             height: hp(50),
             marginTop: hp(2),

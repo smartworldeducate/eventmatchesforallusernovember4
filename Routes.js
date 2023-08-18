@@ -37,6 +37,9 @@ import TestScreen from './SRC/Screens/TestScreen';
 import LeaveBalance from './SRC/Screens/LeaveBalance';
 import LeaveHistory from './SRC/Screens/LeaveHistory';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import Search from './SRC/Screens/Search';
+import Scanner from './SRC/Screens/Scanner';
+import Index from './SRC/Screens/Index';
 const Drawer = createDrawerNavigator();
 const Tab = createBottomTabNavigator();
 function DrawerStack() {
@@ -103,6 +106,9 @@ const Routes = () => {
         <Stack.Screen name="WorkFromHome" component={WorkFromHome} />
         <Stack.Screen name="LeaveBalance" component={LeaveBalance} />
         <Stack.Screen name="LeaveHistory" component={LeaveHistory} />
+        <Stack.Screen name="Search" component={Search} />
+        <Stack.Screen name="Scanner" component={Scanner} />
+        <Stack.Screen name="Index" component={Index} />
       </Stack.Navigator>
     </NavigationContainer>
   );

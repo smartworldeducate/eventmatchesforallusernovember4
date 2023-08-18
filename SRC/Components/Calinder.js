@@ -11,6 +11,7 @@ import {AnimatedCircularProgress} from 'react-native-circular-progress';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import Icon from 'react-native-fontawesome-pro';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
+import { useNavigation } from '@react-navigation/native';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -21,8 +22,10 @@ import Island from 'react-native-vector-icons/Fontisto';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import fontSize from '../Styles/fontSize';
 import fontFamily from '../Styles/fontFamily';
-
-const Calinder = () => {
+// import { useNavigation } from '@react-navigation/native';
+const Calinder = (props) => {
+  const navigation =useNavigation()
+  // const navigation=useNavigation()
   const [leave, setLeave] = useState(false);
   const [clinder, setClinder] = useState(false);
   const handleLeave = () => {
@@ -69,7 +72,7 @@ const Calinder = () => {
             </View>
 
             <View>
-              <View style={{flexDirection: 'row'}}>
+              <TouchableOpacity style={{flexDirection: 'row'}} onPress={()=>navigation.navigate('LeaveBalance')}>
                 <View
                   style={{
                     marginTop: hp(2),
@@ -96,8 +99,8 @@ const Calinder = () => {
                     </View>
                   </View>
                 </View>
-              </View>
-              <View style={{flexDirection: 'row'}}>
+              </TouchableOpacity>
+              <TouchableOpacity style={{flexDirection: 'row'}} onPress={()=>navigation.navigate('LeaveBalance')}>
                 <View
                   style={{
                     marginTop: hp(2),
@@ -123,8 +126,8 @@ const Calinder = () => {
                     </View>
                   </View>
                 </View>
-              </View>
-              <View style={{flexDirection: 'row',marginLeft:hp(1),marginTop:hp(1)}}>
+              </TouchableOpacity>
+              <TouchableOpacity style={{flexDirection: 'row',marginLeft:hp(1),marginTop:hp(1)}} onPress={()=>navigation.navigate('LeaveBalance')}>
                 <View
                   style={{
                     marginTop: hp(2),
@@ -150,7 +153,7 @@ const Calinder = () => {
                     </View>
                   </View>
                 </View>
-              </View>
+              </TouchableOpacity>
             </View>
           </View>
             <View style={{marginHorizontal:hp(2),height:hp(0.05),backgroundColor:'#D9D9D9',borderRadius:hp(50),marginTop:hp(-0.5),}}></View>
@@ -163,7 +166,7 @@ const Calinder = () => {
               justifyContent: 'space-between',
             }}>
             <TouchableOpacity
-              onPress={handleLeave}
+              onPress={()=>navigation.navigate('ApplyLeave')}
               style={{
                 width:wp(38),
                 justifyContent: 'center',
@@ -181,7 +184,7 @@ const Calinder = () => {
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
-                // onPress={handleClinder}
+               onPress={()=>navigation.navigate('Attendance')}
                 style={{
                   borderRadius: hp(50),
                 width:wp(38),

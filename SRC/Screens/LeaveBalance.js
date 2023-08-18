@@ -9,6 +9,7 @@ import fontFamily from '../Styles/fontFamily';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import Pie from 'react-native-pie';
 import Icon from 'react-native-fontawesome-pro';
+import GraphLeave from '../Components/GraphLeave';
 
 const LeaveBalance = props => {
   const data = [
@@ -84,44 +85,13 @@ const LeaveBalance = props => {
           justifyContent: 'center',
           alignItems: 'center',
         }}>
-        <Pie
-          radius={80}
-          innerRadius={67}
-          sections={[
-            {
-              percentage: 10,
-              color: '#41CEB5',
-            },
-            {
-              percentage: 15,
-              color: '#7151CE',
-            },
-            {
-              percentage: 20,
-              color: '#7151CE',
-            },
-            {
-              percentage: 25,
-              color: '#B241CE',
-            },
-            {
-              percentage: 20,
-              color: '#41CE68',
-            },
-            {
-              percentage: 10,
-              color: '#CE5241',
-            },
-            {
-              percentage: 10,
-              color: '#cdcdcd',
-            },
-          ]}
-          strokeCap={'butt'}
-        />
-        <View style={styles.gauge}>
-          <Text style={styles.gaugeText}>35.25</Text>
-          <Text style={styles.gaugeText1}>balance</Text>
+        <View
+          style={{
+            justifyContent: 'center',
+            alignItems: 'center',
+            marginTop: hp(2.5),
+          }}>
+          <GraphLeave />
         </View>
       </View>
       <View style={{flex: 1, marginHorizontal: hp(2.5), marginTop: hp(2)}}>

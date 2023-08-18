@@ -1,11 +1,13 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 // import Left from 'react-native-vector-icons/AntDesign';
 import Ficon from 'react-native-fontawesome-pro';
 import Menu from 'react-native-vector-icons/Entypo';
-import Clinder from 'react-native-vector-icons/AntDesign';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import LinearGradient from 'react-native-linear-gradient';
-import Svg, {Path} from 'react-native-svg';
+import QRCodeScanner from 'react-native-qrcode-scanner';
+import Modal from 'react-native-modal';
+import {Toast} from 'galio-framework';
+import {BottomSheet} from '@rneui/themed';
 import {
   ScrollView,
   RefreshControl,
@@ -15,6 +17,8 @@ import {
   View,
   Text,
   TouchableOpacity,
+  Linking,
+  ActivityIndicator,
 } from 'react-native';
 import {
   widthPercentageToDP as wp,
@@ -35,6 +39,80 @@ import fontSize from '../Styles/fontSize';
 import fontFamily from '../Styles/fontFamily';
 
 const HomeScreen = props => {
+  const [animodal, setAnimodal] = useState(false);
+  const [animation, setAnimation] = useState(true);
+  const [isShow, setShow] = useState(false);
+  const [visibleBtn, setVisibleBtn] = useState(false);
+  const [visible, setVisible] = useState(false);
+  const [state, setState] = useState({
+    scan: false,
+    ScanResult: false,
+    result: '',
+  });
+  const {scan, ScanResult, result} = state;
+
+  var ncode = result?.data;
+
+  var [barcode, setBarcode] = useState({
+    item: [],
+  });
+
+  const addCode = data => {
+    const newCode = barcode.item.concat(data);
+    setBarcode({item: newCode});
+  };
+  // console.log(barcode.item);
+
+  const scanner = useRef(null);
+
+  const scanData = result;
+
+  const onSuccess = async e => {
+    props.navigation.navigate('Scanner', e);
+    setInterval(() => {
+      setShow(false);
+    }, 4000);
+    const check = e.data.substring(0, 4);
+    setState({
+      result: e,
+      scan: false,
+      ScanResult: true,
+    });
+    if (check === 'http') {
+      Linking.openURL(e.data).catch(err =>
+        console.error('An error occured', err),
+      );
+    } else {
+      setState({
+        result: e,
+        scan: false,
+        ScanResult: true,
+      });
+      setVisible(false);
+      console.log('scan data', e.data);
+    }
+  };
+
+  const activeQR = e => {
+    setState({
+      scan: true,
+    });
+  };
+
+  const handleQrcode = () => {
+    // setShow(true)
+    setVisible(true);
+    activeQR('active qr');
+  };
+
+  const handleReset = () => {
+    // setShow(true)
+    setState({scan: false});
+    setVisible(false);
+    // setInterval(() => {
+    //   setShow(false)
+    // }, 2000);
+  };
   const [leave, setLeave] = useState(false);
   const [clinder, setClinder] = useState(false);
   const handleLeave = () => {
@@ -94,6 +172,88 @@ const HomeScreen = props => {
           // text={'Change Password'}
         />
       </View>
+      <Toast
+        isShow={isShow}
+        positionIndicator="top"
+        style={{
+          backgroundColor: '#F1948A',
+          width: wp(90),
+          marginHorizontal: hp(2.5),
+          borderRadius: 5,
+        }}>
+        <Text style={{color: '#fff'}}>please enter valid Qrcode</Text>
+      </Toast>
+
+      {animation && (
+        <View>
+          <Modal isVisible={animodal}>
+            <View
+              style={{
+                width: wp(30),
+                height: hp(15),
+                backgroundColor: '#EAFAF1',
+                borderRadius: hp(2),
+                justifyContent: 'center',
+                alignItems: 'center',
+                marginHorizontal: hp(15),
+              }}>
+              <View style={{}}>
+                <ActivityIndicator animating={animation} size={'large'} />
+              </View>
+            </View>
+          </Modal>
+        </View>
+      )}
+      <BottomSheet
+        isVisible={visible}
+        style={{
+          width: wp(100),
+          height: hp(100),
+          backgroundColor: '#fff',
+          flex: 1,
+        }}>
+        <TouchableOpacity
+          onPress={handleReset}
+          style={{
+            width: wp(100),
+            position: 'relative',
+            zIndex: 1,
+            marginBottom: hp(20),
+          }}>
+          <View
+            style={{
+              width: wp(10),
+              height: hp(5),
+              borderRadius: hp(50),
+              justifyContent: 'center',
+              alignItems: 'center',
+              backgroundColor: 'red',
+              position: 'absolute',
+              top: 20,
+              left: hp(45),
+            }}>
+            <Text style={{color: '#fff', fontSize: hp(2)}}>X</Text>
+          </View>
+        </TouchableOpacity>
+
+        {scan && (
+          <QRCodeScanner
+            cameraStyl={{height: hp(120)}}
+            reactivate={true}
+            showMarker={true}
+            ref={scanner}
+            onRead={onSuccess}
+            bottomContent={
+              <View
+                style={{
+                  paddingTop: hp(8),
+                  flexDirection: 'row',
+                  marginTop: hp(8),
+                }}></View>
+            }
+          />
+        )}
+      </BottomSheet>
       <ScrollView>
         <View style={styles.botContainer}>
           <View
@@ -153,42 +313,47 @@ const HomeScreen = props => {
         <View>
           <Calinder />
         </View>
-        <View style={{marginHorizontal:hp(2.2),marginTop:hp(2)}}>
+        <View style={{marginHorizontal: hp(2.2), marginTop: hp(2)}}>
           <Text style={styles.clText1}>W.F.H</Text>
         </View>
-        <View style={{marginHorizontal:hp(2),borderRadius:hp(2),height:hp(12),backgroundColor:'#FFFFFF',marginBottom:hp(5), shadowColor: '#000',
-              shadowOpacity: 0.5,
-              shadowRadius: 4,
-              elevation: 4,}}>
         <View
+          style={{
+            marginHorizontal: hp(2),
+            borderRadius: hp(2),
+            height: hp(12),
+            backgroundColor: '#FFFFFF',
+            marginBottom: hp(5),
+            shadowColor: '#000',
+            shadowOpacity: 0.5,
+            shadowRadius: 4,
+            elevation: 4,
+          }}>
+          <View
             style={{
               height: hp(10),
               marginHorizontal: hp(2),
               flexDirection: 'row',
-              marginVertical:hp(3.7),
+              marginVertical: hp(3.7),
               justifyContent: 'space-between',
             }}>
-               <TouchableOpacity
-                onPress={()=>props.navigation.navigate('Wfh')}
-                style={{
-                  borderRadius: hp(50),
-                width:wp(38),
-                  height: hp(4.5),
-                  borderWidth: 1,
-                  borderColor: '#1C37A4' ,
-                  backgroundColor:'#1C37A4',
-                  justifyContent:'center',
-                  alignItems:'center'
-                }}>
-                <Text
-                  style={styles.viewClinderText}>
-                  Request W.F.H
-                </Text>
-              </TouchableOpacity>
             <TouchableOpacity
-              onPress={()=>props.navigation.navigate('AttendenceMarked')}
+              onPress={() => props.navigation.navigate('Wfh')}
               style={{
-                width:wp(38),
+                borderRadius: hp(50),
+                width: wp(38),
+                height: hp(4.5),
+                borderWidth: 1,
+                borderColor: '#1C37A4',
+                backgroundColor: '#1C37A4',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}>
+              <Text style={styles.viewClinderText}>Request W.F.H</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => props.navigation.navigate('WorkFromHome')}
+              style={{
+                width: wp(38),
                 justifyContent: 'center',
                 alignItems: 'center',
                 height: hp(4.5),
@@ -198,12 +363,8 @@ const HomeScreen = props => {
                 backgroundColor: '#fff',
                 // marginTop: hp(4),
               }}>
-              <Text
-                style={styles.clbtnStyle}>
-               Mark Attendance
-              </Text>
+              <Text style={styles.clbtnStyle}>Mark Attendance</Text>
             </TouchableOpacity>
-           
           </View>
         </View>
       </ScrollView>
@@ -229,7 +390,7 @@ const HomeScreen = props => {
             <Menu name="home" size={hp(3)} color="#1C37A4" style={{}} />
           </TouchableOpacity>
           <TouchableOpacity
-          onPress={()=>props.navigation.navigate('LeaveHistory')}
+            onPress={() => props.navigation.navigate('Index')}
             style={{flex: 0.2, paddingTop: hp(0.5), alignItems: 'center'}}>
             <Ficon
               type="light"
@@ -239,6 +400,7 @@ const HomeScreen = props => {
             />
           </TouchableOpacity>
           <TouchableOpacity
+            onPress={handleQrcode}
             style={{
               flex: 0.2,
               alignItems: 'center',
@@ -257,15 +419,18 @@ const HomeScreen = props => {
               <Ficon style={{}} name="qrcode" size={hp(4)} color="#fff" />
             </View>
           </TouchableOpacity>
-          <TouchableOpacity style={{flex: 0.2, alignItems: 'center'}} onPress={()=>props.navigation.navigate('LeaveBalance')}>
+          <TouchableOpacity
+            style={{flex: 0.2, alignItems: 'center'}}
+            onPress={() => props.navigation.navigate('Scanner')}>
             <Ficon
               type="light"
-              name="calendar-days"
-              size={hp(3)}
+              name="user-tag"
+              size={hp(3.5)}
               color="#979797"
             />
           </TouchableOpacity>
           <TouchableOpacity
+            onPress={() => navigation.navigate('Profile')}
             style={{flex: 0.2, alignItems: 'center', paddingTop: hp(0)}}>
             <Ficon type="light" name="user-tie" size={hp(3)} color="#979797" />
           </TouchableOpacity>
@@ -392,7 +557,7 @@ const styles = EStyleSheet.create({
     marginHorizontal: hp(3),
     marginVertical: hp(1),
   },
-  clbtnStyle:{
+  clbtnStyle: {
     fontSize: '0.5rem',
     color: '#061D7A',
     paddingHorizontal: hp(3.5),
@@ -400,23 +565,22 @@ const styles = EStyleSheet.create({
     fontFamily: fontFamily.ceraMedium,
     fontStyle: 'normal',
   },
-  leaveSectionText:{
+  leaveSectionText: {
     fontSize: '0.7rem',
     color: '#353535',
-   marginTop: hp(1),
+    marginTop: hp(1),
     fontWeight: '700',
     fontFamily: fontFamily.ceraBold,
     fontStyle: 'normal',
   },
-  viewClinderText:{
-    color:'#fff',
+  viewClinderText: {
+    color: '#fff',
     fontFamily: fontFamily.ceraMedium,
     paddingHorizontal: hp(3.5),
-    fontWeight:'500',
-    fontStyle:'normal',
+    fontWeight: '500',
+    fontStyle: 'normal',
     fontSize: '0.55rem',
-  }
-
+  },
 });
 
 export default HomeScreen;

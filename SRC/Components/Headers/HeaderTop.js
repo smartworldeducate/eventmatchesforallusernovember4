@@ -1,11 +1,4 @@
 import React, {useEffect, useState} from 'react';
-// import Left from 'react-native-vector-icons/AntDesign';
-// import Bell from 'react-native-vector-icons/EvilIcons';
-// import Menu from 'react-native-vector-icons/Entypo';
-// import Serch from 'react-native-vector-icons/EvilIcons';
-// import Prograss from 'react-native-vector-icons/Entypo';
-// import Chart from 'react-native-vector-icons/FontAwesome5';
-// import Clinder from 'react-native-vector-icons/AntDesign';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import Icon from 'react-native-fontawesome-pro';
 
@@ -90,7 +83,7 @@ const HeaderTop = ({
         colors={['#1C37A5', '#4D69DC']}
         style={styles.mainHeader}>
         <View style={styles.headerChild}>
-          <View style={styles.firstRow}>
+          <TouchableOpacity style={styles.firstRow} onPress={()=>navigation.navigate('Profile')}>
             <View style={styles.firstRowView}>
               <Image
                 style={styles.userImage}
@@ -106,7 +99,7 @@ const HeaderTop = ({
                 <Text style={styles.userName}>Zeeshan Hafeez</Text>
               </View>
             </View>
-          </View>
+          </TouchableOpacity>
 
           <View style={styles.firstRowRightSection}>
             <TouchableOpacity
@@ -127,11 +120,11 @@ const HeaderTop = ({
 
         
           
-            <View style={styles.homeSearch}>
+            <TouchableOpacity style={styles.homeSearch} onPress={()=>navigation.navigate('Search')}>
               <View style={styles.homesearchView}>
                 <TextInput
                   value={employeeId}
-                  onChangeText={onChangeEmpId}
+                  onChangeText={()=>navigation.navigate('Search')}
                   returnKeyType={'done'}
                   iconName={'user'}
                   placeholder={'Search Employee'}
@@ -144,7 +137,7 @@ const HeaderTop = ({
               <TouchableOpacity style={styles.searchicon} onPress={()=>{}}>
                 <Icon type='light' name="magnifying-glass" size={hp(3)} color="#292D32" />
               </TouchableOpacity>
-            </View>
+            </TouchableOpacity>
           
         
 

@@ -9,23 +9,24 @@ import EStyleSheet from 'react-native-extended-stylesheet';
 import fontFamily from '../Styles/fontFamily';
 const Attendance = props => {
   const data = [
-    {id: 1, text: '17-06-2023', number: 'Full Toil',month:'Jan'},
-    {id: 2, text: '08:40:33', number: '08:44:47',month:'Feb'},
-    {id: 3, text: '08:40:33', number: '08:17:03',month:'Mar'},
-    {id: 4, text: '17-06-2023', number: '08:17:03',month:'Apr'},
-    {id: 5, text: '17-06-2023', number: '08:17:03',month:'May'},
-    {id: 6, text: '08:40:33', number: '08:44:47',month:'Jun'},
-    {id: 7, text: '08:40:33', number: '5,000',month:'Jul'},
-    {id: 8, text: '17-06-2023', number: '08:17:03',month:'Aug'},
-    {id: 9, text: '17-06-2023', number: 'Weekend',month:'Sep'},
-    {id: 10, text: '08:40:33', number: 'Full Toil',month:'Oct'},
-    {id: 11, text: '17-06-2023', number: '08:44:47',month:'Nov'},
-    {id: 12, text: '17-06-2023', number: '08:17:03',month:'Dec'},
+    {id: 1, text: '17-06-2023', number: 'Full Toil', month: 'Jan'},
+    {id: 2, text: '08:40:33', number: '08:44:47', month: 'Feb'},
+    {id: 3, text: '08:40:33', number: '08:17:03', month: 'Mar'},
+    {id: 4, text: '17-06-2023', number: '08:17:03', month: 'Apr'},
+    {id: 5, text: '17-06-2023', number: '08:17:03', month: 'May'},
+    {id: 6, text: '08:40:33', number: '08:44:47', month: 'Jun'},
+    {id: 7, text: '08:40:33', number: '5,000', month: 'Jul'},
+    {id: 8, text: '17-06-2023', number: '08:17:03', month: 'Aug'},
+    {id: 9, text: '17-06-2023', number: 'Weekend', month: 'Sep'},
+    {id: 10, text: '08:40:33', number: 'Full Toil', month: 'Oct'},
+    {id: 11, text: '17-06-2023', number: '08:44:47', month: 'Nov'},
+    {id: 12, text: '17-06-2023', number: '08:17:03', month: 'Dec'},
   ];
   const [btn, setBtn] = useState(null);
-  const [timein,setTimeIn]=useState(null);
-  const [timeout,setTimeOut]=useState(null);
-  const [clinder,setClinder]=useState(null);
+  const [timein, setTimeIn] = useState(null);
+  const [timeout, setTimeOut] = useState(null);
+  const [clinder, setClinder] = useState(null);
+  const [defalut, setDefalut] = useState(true);
   const months = [
     'Jan',
     'Feb',
@@ -43,19 +44,20 @@ const Attendance = props => {
 
   const btnHandler = item => {
     setBtn(item);
-    console.log("my item",item)
+    console.log('my item', item);
   };
   const timeInHandler = item => {
     setTimeIn(item);
-    console.log("my item time in",item)
+    console.log('my item time in', item);
   };
   const timeOutHandler = item => {
     setTimeOut(item);
-    console.log("my item  time out",item)
+    console.log('my item  time out', item);
   };
   const clinderHandler = item => {
     setClinder(item);
-    console.log("my item  time out",item)
+    setDefalut(false);
+    console.log('my item  time out', item);
   };
   return (
     <>
@@ -67,76 +69,128 @@ const Attendance = props => {
           yearText={'2023'}
         />
       </View>
+      {defalut == true && (
+        <View
+          style={{height: hp(7), marginTop: hp(2), marginHorizontal: hp(2.5)}}>
+          <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+            {data?.map((item, i) => {
+              return (
+                <TouchableOpacity
+                  onPress={() => clinderHandler(item.id)}
+                  key={i}>
+                  <View
+                    style={{
+                      height: hp(4),
+                      paddingHorizontal: hp(3),
+                      borderRadius: hp(20),
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      backgroundColor: i == 2 ? '#4D69DC' : ' ',
+                      marginHorizontal: hp(0.5),
+                    }}>
+                    <View
+                      style={{
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                      }}>
+                      <Text
+                        style={{
+                          color: i == 2 ? '#FFF' : 'gray',
+                          fontSize: hp(1.5),
+                        }}>
+                        {item.month}
+                      </Text>
+                    </View>
+                  </View>
+                </TouchableOpacity>
+              );
+            })}
+          </ScrollView>
+        </View>
+      )}
 
-      <View style={{marginHorizontal: hp(2.5)}}>
-        <ScrollView
-          horizontal={true}
-          contentContainerStyle={{
-            marginTop: hp(2.5),
-            marginHorizontal: hp(2.5),
-            justifyContent: 'center',
-          }}
-          showsHorizontalScrollIndicator={false}>
-          {data?.map((item, i) => {
-            return (
-              <>
-              {clinder == item.id && (<TouchableOpacity key={i}>
-                <View
-                  style={{
-                    height: hp(3.7),
-                    paddingHorizontal: hp(3),
-                    borderRadius: hp(20),
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    backgroundColor:'#4D69DC',
-                  }}>
-                  <View
-                    style={{
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                    }}>
-                    <Text
-                      style={{
-                        color:'#FFF',
-                        fontSize: hp(1.5),
-                        paddingHorizontal:hp(0.5)
-                      }}>
-                      {item.month}
-                    </Text>
-                  </View>
+      {defalut !== true && (
+        <View style={{marginHorizontal: hp(2.5)}}>
+          <ScrollView
+            horizontal={true}
+            contentContainerStyle={{
+              marginTop: hp(2.5),
+              marginHorizontal: hp(2.5),
+              justifyContent: 'center',
+            }}
+            showsHorizontalScrollIndicator={false}>
+            {data?.map((item, i) => {
+              return (
+                <View key={i}>
+                  {clinder == item.id && (
+                    <TouchableOpacity key={i}>
+                      <View
+                        style={{
+                          height: hp(3.7),
+                          paddingHorizontal: hp(3),
+                          borderRadius: hp(20),
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                          backgroundColor: '#4D69DC',
+                          marginHorizontal: hp(2),
+                        }}>
+                        <View
+                          style={{
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                          }}>
+                          <Text
+                            style={{
+                              color: '#FFF',
+                              fontSize: hp(1.5),
+                              paddingHorizontal: hp(0.5),
+                            }}>
+                            {item.month}
+                          </Text>
+                        </View>
+                      </View>
+                    </TouchableOpacity>
+                  )}
+                  {clinder !== item.id && (
+                    <TouchableOpacity
+                      onPress={() => clinderHandler(item.id)}
+                      key={i}>
+                      <View
+                        style={{
+                          height: hp(3.7),
+                          paddingHorizontal: hp(2.7),
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                        }}>
+                        <View
+                          style={{
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                          }}>
+                          <Text
+                            style={{
+                              color: 'gray',
+                              fontSize: hp(1.5),
+                            }}>
+                            {item.month}
+                          </Text>
+                        </View>
+                      </View>
+                    </TouchableOpacity>
+                  )}
                 </View>
-              </TouchableOpacity>)}
-              {clinder !== item.id && (<TouchableOpacity onPress={() => clinderHandler(item.id)} key={i}>
-                <View
-                  style={{
-                    height: hp(3.7),
-                    paddingHorizontal: hp(2.7),
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                   
-                  }}>
-                  <View
-                    style={{
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                    }}>
-                    <Text
-                      style={{
-                        color:'gray',
-                        fontSize: hp(1.5),
-                      }}>
-                      {item.month}
-                    </Text>
-                  </View>
-                </View>
-              </TouchableOpacity>)}
-              
-              </>
-            );
-          })}
-        </ScrollView>
-      </View>
-      <View style={{flex: 1, marginHorizontal: hp(2.5), marginTop: hp(1)}}>
+              );
+            })}
+          </ScrollView>
+        </View>
+      )}
+
+      <View
+        style={{
+          flex: 1,
+          marginHorizontal: hp(2.5),
+          marginTop: defalut ? hp(-1) : hp(1),
+        }}>
         <View
           style={{
             height: hp(4.5),
@@ -215,7 +269,7 @@ const Attendance = props => {
                     </View>
                   </View>
 
-                   {timein ==item.id && (
+                  {timein == item.id && (
                     <TouchableOpacity
                       style={{
                         justifyContent: 'center',
@@ -232,18 +286,20 @@ const Attendance = props => {
                       <Text style={styles.btncloor}>{item.text}</Text>
                     </TouchableOpacity>
                   )}
-                  {timein !==item.id && (<TouchableOpacity
-                  onPress={() => timeInHandler(item.id)}
-                    style={{
-                      marginVertical: hp(2),
-                      justifyContent: 'center',
-                      width: wp(20),
-                      position: 'absolute',
-                      left: hp(7),
-                    }}>
-                    <Text style={styles.testname}>{item.text}</Text>
-                  </TouchableOpacity>)}
-                  {timeout ==item.id && (
+                  {timein !== item.id && (
+                    <TouchableOpacity
+                      onPress={() => timeInHandler(item.id)}
+                      style={{
+                        marginVertical: hp(2),
+                        justifyContent: 'center',
+                        width: wp(20),
+                        position: 'absolute',
+                        left: hp(7),
+                      }}>
+                      <Text style={styles.testname}>{item.text}</Text>
+                    </TouchableOpacity>
+                  )}
+                  {timeout == item.id && (
                     <TouchableOpacity
                       style={{
                         justifyContent: 'center',
@@ -260,20 +316,25 @@ const Attendance = props => {
                       <Text style={styles.btncloor}>{item.text}</Text>
                     </TouchableOpacity>
                   )}
-                  {timeout !==item.id && (  <TouchableOpacity
-                   onPress={() => timeOutHandler(item.id)}
-                    style={{
-                      marginVertical: hp(2),
-                      justifyContent: 'center',
-                      position: 'absolute',
-                      left: hp(20),
-                      width: wp(20),
-                    }}>
-                    <Text style={styles.testname}>{item.text}</Text>
-                  </TouchableOpacity>)}
-                
-                  {btn ==item.id && (
+                  {timeout !== item.id && (
                     <TouchableOpacity
+                      onPress={() => timeOutHandler(item.id)}
+                      style={{
+                        marginVertical: hp(2),
+                        justifyContent: 'center',
+                        position: 'absolute',
+                        left: hp(20),
+                        width: wp(20),
+                      }}>
+                      <Text style={styles.testname}>{item.text}</Text>
+                    </TouchableOpacity>
+                  )}
+
+                  {btn == item.id && (
+                    <TouchableOpacity
+                      onPress={() =>
+                        props.navigation.navigate('ApplicationType')
+                      }
                       style={{
                         justifyContent: 'center',
                         borderRadius: hp(5),
@@ -289,7 +350,7 @@ const Attendance = props => {
                       <Text style={styles.apply}>Apply</Text>
                     </TouchableOpacity>
                   )}
-                  {btn !==item.id && (
+                  {btn !== item.id && (
                     <TouchableOpacity
                       onPress={() => btnHandler(item.id)}
                       style={{

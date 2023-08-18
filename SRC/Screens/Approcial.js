@@ -19,6 +19,7 @@ import {
 import EStyleSheet from 'react-native-extended-stylesheet';
 import fontFamily from '../Styles/fontFamily';
 import GraphChart from '../Components/LineChart';
+import GraphList from '../Components/GraphList';
 const Approcial = props => {
   const [salary, setSalary] = useState(true);
   const [history, setHistory] = useState(false);
@@ -128,7 +129,7 @@ const Approcial = props => {
           </View>
         </View>
         {salary == true && (
-          <>
+          <View>
             <View
               style={{
                 shadowColor: '#000',
@@ -142,7 +143,8 @@ const Approcial = props => {
               }}>
               <GraphChart />
             </View>
-            <View
+          {[1,2,3].map((item,i)=>{
+            return(  <View
               style={{
                 flexDirection: 'row',
                 justifyContent: 'space-between',
@@ -156,33 +158,10 @@ const Approcial = props => {
                 shadowOpacity: 0.5,
                 shadowRadius: 4,
                 elevation: 4,
-              }}>
+              }} key={i}>
               <View style={{flexDirection: 'row'}}>
-                <View>
-                  <AnimatedCircularProgress
-                    size={80}
-                    width={8}
-                    fill={1}
-                    tintColor="#cdcdcd"
-                    onAnimationComplete={() =>
-                      console.log('onAnimationComplete')
-                    }
-                    backgroundColor="#D4E9FF">
-                    {fill => (
-                      <View style={{justifyContent: 'center'}}>
-                        <View
-                          style={{
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                          }}>
-                          <Text style={styles.circularText}>2022</Text>
-                        </View>
-                        {/* <View>
-                      <Text style={styles.circularText1}>Leave Balance</Text>
-                    </View> */}
-                      </View>
-                    )}
-                  </AnimatedCircularProgress>
+                <View style={{justifyContent:'center',alignItems:'center',marginTop:hp(1.5)}}>
+                 <GraphList/>
                 </View>
                 <View
                   style={{
@@ -193,7 +172,7 @@ const Approcial = props => {
                   }}>
                   <View style={{flexDirection: 'row'}}>
                     <View style={{marginVertical: hp(0.5)}}>
-                      {renderDot('#D4E9FF')}
+                      {renderDot('#C1B7FD')}
                     </View>
                     <View>
                       <View>
@@ -216,7 +195,7 @@ const Approcial = props => {
                   }}>
                   <View style={{flexDirection: 'row'}}>
                     <View style={{marginVertical: hp(0.5)}}>
-                      {renderDot('#E7E7E7')}
+                      {renderDot('#FEBB5B')}
                     </View>
                     <View>
                       <View>
@@ -230,188 +209,11 @@ const Approcial = props => {
                 </View>
               </View>
               <View>{/* <Text>vfgdfgdf</Text> */}</View>
-            </View>
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                paddingHorizontal: hp(2),
-                marginHorizontal: hp(2.5),
-                height: hp(14),
-                borderRadius: hp(2),
-                backgroundColor: '#FFFFFF',
-                marginTop: hp(2),
-                shadowOpacity: 0.5,
-                // marginBottom: hp(8),
-                shadowRadius: 4,
-                elevation: 4,
-                // marginTop:hp(-6)
-              }}>
-              <View style={{flexDirection: 'row'}}>
-                <View>
-                  <AnimatedCircularProgress
-                    size={80}
-                    width={8}
-                    fill={10}
-                    tintColor="#cdcdcd"
-                    onAnimationComplete={() =>
-                      console.log('onAnimationComplete')
-                    }
-                    backgroundColor="#D4E9FF">
-                    {fill => (
-                      <View style={{justifyContent: 'center'}}>
-                        <View
-                          style={{
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                          }}>
-                          <Text style={styles.circularText}>2021</Text>
-                        </View>
-                        {/* <View>
-                      <Text style={styles.circularText1}>Leave Balance</Text>
-                    </View> */}
-                      </View>
-                    )}
-                  </AnimatedCircularProgress>
-                </View>
-                <View
-                  style={{
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    marginLeft: hp(2.5),
-                  }}>
-                  <View style={{flexDirection: 'row'}}>
-                    <View style={{marginVertical: hp(0.5)}}>
-                      {renderDot('#D4E9FF')}
-                    </View>
-                    <View>
-                      <View>
-                        <Text style={styles.numbertext}>82%</Text>
-                      </View>
-                      <View>
-                        <Text style={styles.basictext}>Achiever</Text>
-                      </View>
-                    </View>
-                  </View>
-                </View>
-              </View>
-
-              <View>
-                <View
-                  style={{
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    // marginLeft: hp(2.5),
-                  }}>
-                  <View style={{flexDirection: 'row'}}>
-                    <View style={{marginVertical: hp(0.5)}}>
-                      {renderDot('#E7E7E7')}
-                    </View>
-                    <View>
-                      <View>
-                        <Text style={styles.numbertext}>10,000</Text>
-                      </View>
-                      <View>
-                        <Text style={styles.basictext}>Increase</Text>
-                      </View>
-                    </View>
-                  </View>
-                </View>
-              </View>
-              <View>{/* <Text>vfgdfgdf</Text> */}</View>
-            </View>
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                paddingHorizontal: hp(2),
-                marginHorizontal: hp(2.5),
-                height: hp(14),
-                borderRadius: hp(2),
-                backgroundColor: '#FFFFFF',
-                marginTop: hp(2),
-                shadowOpacity: 0.5,
-                // marginBottom: hp(8),
-                shadowRadius: 4,
-                elevation: 4,
-                // marginTop:hp(-6)
-              }}>
-              <View style={{flexDirection: 'row'}}>
-                <View>
-                  <AnimatedCircularProgress
-                    size={80}
-                    width={8}
-                    fill={14}
-                    tintColor="#cdcdcd"
-                    onAnimationComplete={() =>
-                      console.log('onAnimationComplete')
-                    }
-                    backgroundColor="#D4E9FF">
-                    {fill => (
-                      <View style={{justifyContent: 'center'}}>
-                        <View
-                          style={{
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                          }}>
-                          <Text style={styles.circularText}>2020</Text>
-                        </View>
-                        {/* <View>
-                      <Text style={styles.circularText1}>Leave Balance</Text>
-                    </View> */}
-                      </View>
-                    )}
-                  </AnimatedCircularProgress>
-                </View>
-                <View
-                  style={{
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    marginLeft: hp(2.5),
-                  }}>
-                  <View style={{flexDirection: 'row'}}>
-                    <View style={{marginVertical: hp(0.5)}}>
-                      {renderDot('#D4E9FF')}
-                    </View>
-                    <View>
-                      <View>
-                        <Text style={styles.numbertext}>75%</Text>
-                      </View>
-                      <View>
-                        <Text style={styles.basictext}>performer</Text>
-                      </View>
-                    </View>
-                  </View>
-                </View>
-              </View>
-
-              <View>
-                <View
-                  style={{
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    // marginLeft: hp(2.5),
-                  }}>
-                  <View style={{flexDirection: 'row'}}>
-                    <View style={{marginVertical: hp(0.5)}}>
-                      {renderDot('#E7E7E7')}
-                    </View>
-                    <View>
-                      <View>
-                        <Text style={styles.numbertext}>6500</Text>
-                      </View>
-                      <View>
-                        <Text style={styles.basictext}>Increase</Text>
-                      </View>
-                    </View>
-                  </View>
-                </View>
-              </View>
-              <View>{/* <Text>vfgdfgdf</Text> */}</View>
-            </View>
-          </>
+            </View>)
+          })}
+          
+           
+          </View>
         )}
         {history == true && (
           <>

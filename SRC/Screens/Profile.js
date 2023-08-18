@@ -38,9 +38,9 @@ const Profile = props => {
             justifyContent: 'space-between',
             marginTop: hp(8),
           }}>
-          <View>
+          <TouchableOpacity onPress={()=>props.navigation.navigate('Notification')}>
             < Icon type='light' name="bell" size={hp(3)} color="#FFF" />
-          </View>
+          </TouchableOpacity>
           <View>{/* <Text>gdfgd</Text> */}</View>
           <TouchableOpacity onPress={() => props.navigation.openDrawer()}>
             {/* <Menu name="menu" size={35} color="#fff" /> */}
