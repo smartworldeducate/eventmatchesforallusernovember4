@@ -297,6 +297,7 @@ const styles = EStyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
+    marginRight:hp(0.6)
   },
   bell: {marginTop: hp(1), marginRight: hp(2)},
   menu: {marginTop: hp(1.3)},

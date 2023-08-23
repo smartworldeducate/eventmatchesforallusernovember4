@@ -40,6 +40,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Search from './SRC/Screens/Search';
 import Scanner from './SRC/Screens/Scanner';
 import Index from './SRC/Screens/Index';
+import ScannerDetail from './SRC/Screens/ScannerDetail';
 const Drawer = createDrawerNavigator();
 const Tab = createBottomTabNavigator();
 function DrawerStack() {
@@ -57,6 +58,7 @@ function DrawerStack() {
       <Drawer.Screen name="Approcial" component={Approcial} />
       <Drawer.Screen name="Attendance" component={Attendance} />
       <Drawer.Screen name="Reportee" component={Reportee} />
+      <Drawer.Screen name="Scanner" component={Scanner} />
      
     </Drawer.Navigator>
   );
@@ -70,6 +72,7 @@ const BottomTab = () => {
       <Tab.Screen name="HomeScreen" component={HomeScreen} />
       <Tab.Screen name="Profile" component={Profile} />
       <Tab.Screen name=""ApplicationType component={ApplicationType} />
+      
     </Tab.Navigator>
   );
 };
@@ -107,8 +110,9 @@ const Routes = () => {
         <Stack.Screen name="LeaveBalance" component={LeaveBalance} />
         <Stack.Screen name="LeaveHistory" component={LeaveHistory} />
         <Stack.Screen name="Search" component={Search} />
-        <Stack.Screen name="Scanner" component={Scanner} />
+        {/* <Stack.Screen name="Scanner" component={Scanner} /> */}
         <Stack.Screen name="Index" component={Index} />
+        <Stack.Screen name="ScannerDetail" component={ScannerDetail} />
       </Stack.Navigator>
     </NavigationContainer>
   );

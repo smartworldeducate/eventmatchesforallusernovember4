@@ -42,12 +42,12 @@ export default function Card() {
                   <View
                     style={{
                       justifyContent: 'center',
-                      marginVertical: hp(1.5),
+                      marginTop: hp(0),
                       height: hp(5),
                     }}>
-                    {/* <Text style={{color: '#fff', paddingBottom: hp(0.1)}}>
-                      Tax CERTIFICATE
-                    </Text> */}
+                    <Text style={{color: '#fff', paddingBottom: hp(0.1)}}>
+                      Massages
+                    </Text>
                   </View>
                   <View
                     style={{
@@ -75,7 +75,7 @@ export default function Card() {
                     </TouchableOpacity> */}
                     <TouchableOpacity
                       onPress={handleReset}
-                      style={{justifyContent: 'center', marginTop: hp(-2)}}>
+                      style={{justifyContent: 'center', marginTop: hp(0)}}>
                       <Icon
                         type="light"
                         name="xmark"
@@ -86,35 +86,8 @@ export default function Card() {
                   </View>
                 </View>
               </LinearGradient>
-              {/* <View style={{justifyContent:'center',height:hp(31),marginHorizontal:hp(17)}}>
-              <View
-              style={{
-                width: wp(31),
-                height: hp(15.5),
-                borderRadius: hp(50),
-                borderWidth: 6,
-                borderColor: '#CEAA52',
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}>
-              <Image
-                style={{width: wp(30), height: hp(15), borderRadius: hp(50)}}
-                source={{uri: 'artg'}}
-                resizeMode="contain"
-              />
-            </View>
-              </View>
-              <View style={{justifyContent:'center',marginHorizontal:hp(14.2),marginTop:hp(-7)}}>
-                <Text style={styles.zetext}>Zeeshan Hafeez</Text>
-                <View style={{justifyContent:'center',width:wp(40),marginHorizontal:hp(0),height:hp(0.120),backgroundColor:'#CEAA52'}}></View>
-              </View>
-              <View style={{marginHorizontal:hp(2.5),height:hp(30),marginVertical:hp(4),backgroundColor:'#FFFFFF',borderRadius:hp(2),elevation:1,borderWidth:1,borderColor:'#CEAA52'}}>
-              <View style={{justifyContent:'center',alignContent:'center',alignItems:'center'}}>
-              <Text style={styles.longdesc}>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</Text>
-
-              </View>
-              </View> */}
-               <TouchableOpacity onPress={()=>setVisible(true)} style={styles.detailcard} >
+            
+               <View  style={styles.detailcard} >
               <View style={{marginHorizontal: hp(1)}}>
                 <View
                   style={{
@@ -159,9 +132,18 @@ export default function Card() {
                   Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</Text>
               </View>
               <View style={{}}>
-                <Image style={{height:hp(100),borderRadius:hp(1)}} resizeMode='cover' source={{uri:'https://images.ctfassets.net/xmu5vdhtphau/6iYvUHa5loS3AIXjd2Jymf/0e341cb5a38a6ef9c1898e916262fb9a/social-bg-7.png'}}/>
+                <Image style={{height:hp(35),borderRadius:hp(1)}} resizeMode='contain' source={{uri:'https://images.ctfassets.net/xmu5vdhtphau/6iYvUHa5loS3AIXjd2Jymf/0e341cb5a38a6ef9c1898e916262fb9a/social-bg-7.png'}}/>
               </View>
+              <View style={{height:hp(0.1),backgroundColor:'#cdcdcd',borderRadius:hp(50),marginTop:hp(1)}}></View>
+           <View style={{flexDirection:'row',justifyContent:'space-between'}}>
+            <TouchableOpacity style={{width:wp(20),marginTop:hp(1),borderRadius:hp(1),height:hp(5),borderWidth:1,borderColor:'#05107D',justifyContent:'center',alignItems:'center'}}>
+              <Text style={styles.viewbtn}>View </Text>
             </TouchableOpacity>
+            <TouchableOpacity style={{width:wp(20),marginTop:hp(1),borderRadius:hp(1),height:hp(5),borderWidth:1,borderColor:'#05107D',justifyContent:'center',alignItems:'center'}}>
+              <Text style={styles.viewbtn}>Like </Text>
+            </TouchableOpacity>
+           </View>
+            </View>
             </BottomSheet>
     <View style={{marginTop: hp(3)}}>
       <View style={styles.cardHeading}>
@@ -356,8 +338,7 @@ const styles = EStyleSheet.create({
     textAlign: 'justify'
   },
   detailcard: {
-    flex: 1,
-    height: hp(50),
+    
     marginHorizontal:hp(2.5),
      marginTop:hp(2),
      borderRadius:hp(0.4)
@@ -379,5 +360,13 @@ const styles = EStyleSheet.create({
     letterSpacing: '-0.00938rem',
     color: '#979797',
     fontStyle: 'normal',
+  },
+  viewbtn: {
+    color: '#05107D',
+    fontWeight: '500',
+    fontSize: '0.8rem',
+    fontFamily: fontFamily.ceraLight,
+    fontStyle:'normal',
+    paddingLeft:hp(0.5)
   },
 });
