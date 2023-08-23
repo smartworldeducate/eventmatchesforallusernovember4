@@ -6,6 +6,8 @@ import {
   FlatList,
   TextInput,
   TouchableOpacity,
+  Animated,
+  Image
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import fontFamily from '../Styles/fontFamily';
@@ -20,6 +22,7 @@ import HeaderTop from '../Components/Headers/HeaderTop';
 import colors from '../Styles/colors';
 import Icon from 'react-native-fontawesome-pro';
 const Search = () => {
+  const data = [{id: 1}, {id: 2}, {id: 3}, {id: 4}, {id: 5}];
   const [search, setSearch] = useState('');
   const [filteredDataSource, setFilteredDataSource] = useState([]);
   const [masterDataSource, setMasterDataSource] = useState([]);
@@ -58,26 +61,235 @@ const Search = () => {
       setSearch(text);
     }
   };
+  const [expanded, setExpanded] = useState(false);
+  const [animation] = useState(new Animated.Value(0));
+  const [inheight, setInHeight] = useState(null);
+  const toggleExpansion = item => {
+    setInHeight(item);
+    setExpanded(!expanded);
+    
+    Animated.timing(animation, {
+      toValue: expanded ? 0 : 1,
+      duration: 300,
+      useNativeDriver: false,
+    }).start();
+  };
+
+  const height = animation.interpolate({
+    inputRange: [0, 1],
+    outputRange: [90, 250], // Change this value to control the expanded height
+  });
 
   const ItemView = ({item}) => {
     return (
       // Flat List Item
       <View
+      style={{ marginBottom: hp(1.5)}}
+      >
+      <TouchableOpacity
+        onPress={() => toggleExpansion(item.id)}
         style={{
-          height: hp(10),
           borderRadius: hp(2),
-          backgroundColor: '#FFFFFF',
-          shadowOpacity: 0.5,
-          justifyContent:'center',      
-          elevation: 1.5,
-          marginTop: hp(2),
+          backgroundColor: '#FFF',
+          shadowColor: '#000',
+          shadowOpacity: 0.4,
+          shadowRadius: 1,
+          elevation: 1,
         }}>
-        <Text style={styles.itemStyle} onPress={() => getItem(item)}>
-          {item.id}
-          {'.'}
-          {item.title.toUpperCase()}
-        </Text>
-      </View>
+        {inheight == item.id && (
+          <Animated.View
+            style={{
+              height,
+
+              overflow: 'hidden',
+            }}>
+            <View style={{flexDirection: 'row', flex: 1}}>
+              <View
+                style={{
+                  flex: 0.3,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  marginLeft: hp(-2),
+                  marginVertical:hp(0.3)
+                }}>
+                <Image
+                  style={{
+                    width: wp(18),
+                    height: hp(9),
+                    marginTop: hp('1.5'),
+                    position: 'absolute',
+                    top: hp(0),
+                  }}
+                  source={{uri: 'bss'}}
+                  resizeMode="contain"
+                />
+              </View>
+              <View style={{flex: 0.7, marginLeft: hp(-2.5)}}>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                  }}>
+                  <View style={{marginVertical: hp(1.5)}}>
+                    <Text style={styles.childname}>
+                      Muhammad Moeez Zeeshan
+                    </Text>
+                  </View>
+                  <View
+                    style={{
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      marginRight: hp(2),
+                    }}>
+                    <Text style={styles.number}>283831</Text>
+                  </View>
+                </View>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    marginTop: hp(-2),
+                  }}>
+                  <View style={{marginVertical: hp(1.5)}}>
+                    <Text style={styles.dob}>DOB :</Text>
+                  </View>
+                  <View
+                    style={{
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      marginRight: hp(2),
+                    }}>
+                    <Text style={styles.dobdata}>15 Oct, 2017</Text>
+                  </View>
+                </View>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    marginTop: hp(-2.5),
+                  }}>
+                  <View style={{marginVertical: hp(1.5)}}>
+                    <Text style={styles.dob}>Designation:</Text>
+                  </View>
+                  <View
+                    style={{
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      marginRight: hp(2),
+                    }}>
+                    <Text style={styles.dobdata}>One Violet</Text>
+                  </View>
+                </View>
+              </View>
+            </View>
+          </Animated.View>
+        )}
+        {inheight !== item.id && (
+          <Animated.View
+            style={{
+              height: hp(11),
+              overflow: 'hidden',
+            }}>
+            <View style={{flexDirection: 'row', flex: 1}}>
+              <View
+                style={{
+                  flex: 0.3,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  marginLeft: hp(-2),
+                  marginVertical:hp(0.3)
+                }}>
+                <Image
+                  style={{
+                    width: wp(18),
+                    height: hp(9),
+                    marginTop: hp('1.5'),
+                    position: 'absolute',
+                    top: hp(0),
+                  }}
+                  source={{uri: 'bss'}}
+                  resizeMode="contain"
+                />
+              </View>
+              <View style={{flex: 0.7, marginLeft: hp(-2.5)}}>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                  }}>
+                  <View style={{marginVertical: hp(1.5)}}>
+                    <Text style={styles.childname}>
+                      Muhammad Moeez Zeeshan
+                    </Text>
+                  </View>
+                  <View
+                    style={{
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      marginRight: hp(2),
+                    }}>
+                    <Text style={styles.number}>283831</Text>
+                  </View>
+                </View>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    marginTop: hp(-2),
+                  }}>
+                  <View style={{marginVertical: hp(1.5)}}>
+                    <Text style={styles.dob}>DOB :</Text>
+                  </View>
+                  <View
+                    style={{
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      marginRight: hp(2),
+                    }}>
+                    <Text style={styles.dobdata}>15 Oct, 2017</Text>
+                  </View>
+                </View>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    marginTop: hp(-2.5),
+                  }}>
+                  <View style={{marginVertical: hp(1.5)}}>
+                    <Text style={styles.dob}>Designation:</Text>
+                  </View>
+                  <View
+                    style={{
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      marginRight: hp(2),
+                    }}>
+                    <Text style={styles.dobdata}>One Violet</Text>
+                  </View>
+                </View>
+              </View>
+            </View>
+          </Animated.View>
+        )}
+     
+      </TouchableOpacity>
+    </View>
+      // <View
+      //   style={{
+      //     height: hp(10),
+      //     borderRadius: hp(2),
+      //     backgroundColor: '#FFFFFF',
+      //     shadowOpacity: 0.5,
+      //     justifyContent:'center',      
+      //     elevation: 1.5,
+      //     marginTop: hp(2),
+      //   }}>
+      //   <Text style={styles.itemStyle} onPress={() => getItem(item)}>
+      //     {item.id}
+      //     {'.'}
+      //     {item.title.toUpperCase()}
+      //   </Text>
+      // </View>
     );
   };
 
@@ -125,7 +337,7 @@ const Search = () => {
       </LinearGradient>
       <View style={{marginHorizontal: hp(2.5), marginTop: hp(2)}}>
         <FlatList
-          data={filteredDataSource}
+          data={data}
           keyExtractor={(item, index) => index.toString()}
           renderItem={ItemView}
         />
@@ -212,5 +424,39 @@ const styles = EStyleSheet.create({
     margin: 5,
     borderColor: '#009688',
     backgroundColor: '#FFFFFF',
+  },
+  childname: {
+    color: '#353535',
+    fontFamily: fontFamily.ceraBold,
+    fontSize: '0.6rem',
+    fontWeight: '700',
+    fontStyle: 'normal',
+  },
+  number: {
+    color: '#2D8E00',
+    backgroundColor: '#D4FFCC',
+    borderRadius: hp(50),
+    paddingHorizontal: hp(0.8),
+    fontFamily: fontFamily.ceraBold,
+    fontSize: '0.5rem',
+    fontWeight: '700',
+    fontStyle: 'normal',
+  },
+  dob: {
+    color: '#363636',
+    fontFamily: fontFamily.ceraMedium,
+    fontSize: '0.5rem',
+    fontWeight: '300',
+    fontStyle: 'normal',
+  },
+  dobdata: {
+    color: '#353535',
+    // backgroundColor: '#D4FFCC',
+    borderRadius: hp(50),
+    paddingHorizontal: hp(0.8),
+    fontFamily: fontFamily.ceraMedium,
+    fontSize: '0.55rem',
+    fontWeight: '300',
+    fontStyle: 'normal',
   },
 });

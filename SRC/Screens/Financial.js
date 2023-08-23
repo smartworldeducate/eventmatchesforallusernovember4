@@ -1,4 +1,14 @@
-import {View, Text, ScrollView, TouchableOpacity} from 'react-native';
+import {
+  View,
+  Text,
+  ScrollView,
+  TouchableOpacity,
+  Image,
+  Animated,
+  Dimensions,
+  Platform,
+  Linking,
+} from 'react-native';
 import React, {useState} from 'react';
 import MainHeader from '../Components/Headers/MainHeader';
 import EStyleSheet from 'react-native-extended-stylesheet';
@@ -7,7 +17,9 @@ import Menu from 'react-native-vector-icons/Entypo';
 import Icon from 'react-native-fontawesome-pro';
 import {BottomSheet} from '@rneui/themed';
 import LinearGradient from 'react-native-linear-gradient';
-
+import DropDownPicker from 'react-native-dropdown-picker';
+import DateTimePickerModal from 'react-native-modal-datetime-picker';
+import Pdf from 'react-native-pdf';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -15,7 +27,38 @@ import {
 import Graph from '../Components/Graph';
 import fontFamily from '../Styles/fontFamily';
 import GraphList from '../Components/GraphList';
+import {color} from '@rneui/themed/dist/config';
 const Financial = props => {
+  const [expanded, setExpanded] = useState(false);
+  const [animation] = useState(new Animated.Value(0));
+  const [inheight, setInHeight] = useState(null);
+  const toggleExpansion = item => {
+    setInHeight(item);
+    setExpanded(!expanded);
+
+    Animated.timing(animation, {
+      toValue: expanded ? 0 : 1,
+      duration: 300,
+      useNativeDriver: false,
+    }).start();
+  };
+  const expandData = [{id: 1}, {id: 2}, {id: 3}, {id: 4}, {id: 5}];
+
+  const height = animation.interpolate({
+    inputRange: [0, 1],
+    outputRange: [110, 310], // Change this value to control the expanded height
+  });
+  const [open, setOpen] = useState(false);
+  const [value, setValue] = useState(null);
+  const [items, setItems] = useState([
+    {label: 'Qasim Team', value: 'Y'},
+    {label: 'Asad Numan Shahid', value: 'N'},
+  ]);
+  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+  const [hide, setHide] = useState(true);
+
+  const [dateView, setDateView] = useState(true);
+  const [date, setDate] = useState('');
   const [visible, setVisible] = useState(false);
   const [pf, setPf] = useState(false);
   const [txt, setTxt] = useState(false);
@@ -24,6 +67,7 @@ const Financial = props => {
   const [btColor1, setBtColor1] = useState(false);
   const [btColor2, setBtColor2] = useState(false);
   const [btColor3, setBtColor3] = useState(false);
+
   const pfHandler = () => {
     setPf(true);
     setVisible(true);
@@ -45,31 +89,31 @@ const Financial = props => {
     setSlip(true);
     setVisible(true);
   };
-  const btColorHandler = () => {
-    setBtColor1(false);
-    setBtColor2(false);
-    setBtColor3(false);
-    setBtColor(true);
-  };
-  const btColorHandler1 = () => {
-    setBtColor(false);
-    setBtColor1(true);
-    setBtColor2(false);
-    setBtColor3(false);
-  };
-  const btColorHandler2 = () => {
-    setBtColor(false);
-    setBtColor1(false);
-    setBtColor2(true);
-    setBtColor3(false);
-    // setBtColor(true)
-  };
-  const btColorHandler3 = () => {
-    setBtColor(false);
-    setBtColor1(false);
-    setBtColor2(false);
-    setBtColor3(true);
-  };
+  // const btColorHandler = () => {
+  //   setBtColor1(false);
+  //   setBtColor2(false);
+  //   setBtColor3(false);
+  //   setBtColor(true);
+  // };
+  // const btColorHandler1 = () => {
+  //   setBtColor(false);
+  //   setBtColor1(true);
+  //   setBtColor2(false);
+  //   setBtColor3(false);
+  // };
+  // const btColorHandler2 = () => {
+  //   setBtColor(false);
+  //   setBtColor1(false);
+  //   setBtColor2(true);
+  //   setBtColor3(false);
+  //   // setBtColor(true)
+  // };
+  // const btColorHandler3 = () => {
+  //   setBtColor(false);
+  //   setBtColor1(false);
+  //   setBtColor2(false);
+  //   setBtColor3(true);
+  // };
   const [salary, setSalary] = useState(true);
   const [history, setHistory] = useState(false);
   const [defalut, setDefalut] = useState(true);
@@ -112,6 +156,26 @@ const Financial = props => {
     {text: 'Total Deduction', number: '1190'},
     {text: 'Net Salary', number: '88090'},
   ];
+
+  const showDatePicker = () => {
+    setDatePickerVisibility(true);
+    setDate('');
+  };
+
+  const hideDatePicker = () => {
+    setDatePickerVisibility(false);
+  };
+
+  const handleDateConfirm = date => {
+    console.log(date);
+    const dt =
+      date.getDate() + '-' + date.getMonth() + '-' + date.getFullYear();
+    setDate(dt);
+    hideDatePicker();
+    setDateView(false);
+    setHide(false);
+  };
+
   const renderDot = color => {
     return (
       <View
@@ -134,6 +198,12 @@ const Financial = props => {
           onpressBtn={() => props.navigation.goBack()}
         />
       </View>
+      <DateTimePickerModal
+        isVisible={isDatePickerVisible}
+        mode="date"
+        onConfirm={handleDateConfirm}
+        onCancel={hideDatePicker}
+      />
       <View
         style={{
           height: hp(7),
@@ -192,30 +262,151 @@ const Financial = props => {
                 end={{x: 1, y: 0}}
                 colors={['#1C37A5', '#4D69DC']}
                 style={styles.mainHeader}>
-                <TouchableOpacity
-                  onPress={handleReset}
+                <View
                   style={{
-                    width: wp(100),
-                    position: 'relative',
-                    zIndex: 1,
-                    marginBottom: hp(20),
+                    marginHorizontal: hp(2.5),
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
                   }}>
                   <View
                     style={{
-                      width: wp(20),
-                      height: hp(10),
-                      borderRadius: hp(50),
                       justifyContent: 'center',
-                      alignItems: 'center',
-                      // backgroundColor: 'red',
-                      position: 'absolute',
-                      top: hp(-1),
-                      left: hp(42),
+                      marginVertical: hp(1.5),
+                      height: hp(5),
                     }}>
-                    <Text style={{color: '#fff', fontSize: hp(2)}}>X</Text>
+                    <Text style={{color: '#fff', paddingBottom: hp(0.1)}}>
+                      PF CERTIFICATE
+                    </Text>
                   </View>
-                </TouchableOpacity>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      justifyContent: 'space-between',
+                    }}>
+                    <TouchableOpacity
+                      onPress={() =>
+                        Linking.openURL(
+                          'https://beams.beaconhouse.edu.pk/core/mobile_app/pdf/student_certificate_pdf.php?id=',
+                        )
+                      }
+                      style={{
+                        justifyContent: 'center',
+                        marginVertical: hp(1.5),
+                        height: hp(5),
+                        marginRight: hp(3),
+                      }}>
+                      <Icon
+                        type="light"
+                        name="download"
+                        size={hp(3)}
+                        color="#fff"
+                      />
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      onPress={handleReset}
+                      style={{justifyContent: 'center', marginTop: hp(0.3)}}>
+                      <Icon
+                        type="light"
+                        name="xmark"
+                        size={hp(3)}
+                        color="#fff"
+                      />
+                    </TouchableOpacity>
+                  </View>
+                </View>
               </LinearGradient>
+              {hide && (
+                <View>
+                  <TouchableOpacity
+                    onPress={showDatePicker}
+                    style={{
+                      marginHorizontal: hp(2.5),
+                      marginTop: hp(2),
+                    }}>
+                    <View
+                      style={{
+                        height: hp(6.5),
+                        flexDirection: 'row',
+                        borderColor: '#E4DFDF',
+                        justifyContent: 'space-between',
+                        borderWidth: 1,
+                        borderRadius: hp(1.2),
+                        backgroundColor: '#FFFFFF',
+                        paddingLeft: hp(1.5),
+                      }}>
+                      <View
+                        style={{
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                        }}>
+                        {date && <Text style={{color: 'gray'}}>{date}</Text>}
+                        {!date && (
+                          <Text style={{color: 'gray'}}>
+                            Select Financial year
+                          </Text>
+                        )}
+                      </View>
+                      <View
+                        style={{
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                          paddingRight: hp(1.5),
+                        }}>
+                        <Icon
+                          type="light"
+                          name="calendar-days"
+                          size={hp(2)}
+                          color="#cdcdcd"
+                        />
+                      </View>
+                    </View>
+                  </TouchableOpacity>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      justifyContent: 'space-between',
+                      marginHorizontal: hp(2.5),
+                    }}>
+                    <View></View>
+                    <TouchableOpacity
+                      style={{
+                        height: hp(4),
+                        marginTop: hp(1),
+                        width: wp(20),
+                        borderRadius: hp(1),
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        backgroundColor: '#4D69DC',
+                        elevation: 1,
+                      }}>
+                      <Text style={{color: '#FFF'}}>Print</Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              )}
+              {date && (
+                <View style={styles.container}>
+                  <Pdf
+                    trustAllCerts={false}
+                    source={{
+                      uri: 'https://beams.beaconhouse.edu.pk/core/mobile_app/pdf/student_certificate_pdf.php?id=',
+                    }}
+                    onLoadComplete={(numberOfPages, filePath) => {
+                      console.log(`Number of pages: ${numberOfPages}`);
+                    }}
+                    onPageChanged={(page, numberOfPages) => {
+                      console.log(`Current page: ${page}`);
+                    }}
+                    onError={error => {
+                      console.log(error);
+                    }}
+                    onPressLink={uri => {
+                      console.log(`Link pressed: ${uri}`);
+                    }}
+                    style={styles.pdf}
+                  />
+                </View>
+              )}
             </BottomSheet>
           )}
           {txt && (
@@ -232,30 +423,138 @@ const Financial = props => {
                 end={{x: 1, y: 0}}
                 colors={['#1C37A5', '#4D69DC']}
                 style={styles.mainHeader}>
-                <TouchableOpacity
-                  onPress={handleReset}
+                <View
                   style={{
-                    width: wp(100),
-                    position: 'relative',
-                    zIndex: 1,
-                    marginBottom: hp(20),
+                    marginHorizontal: hp(2.5),
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
                   }}>
                   <View
                     style={{
-                      width: wp(20),
-                      height: hp(10),
-                      borderRadius: hp(50),
                       justifyContent: 'center',
-                      alignItems: 'center',
-                      // backgroundColor: 'red',
-                      position: 'absolute',
-                      top: hp(-1),
-                      left: hp(42),
+                      marginVertical: hp(1.5),
+                      height: hp(5),
                     }}>
-                    <Text style={{color: '#fff', fontSize: hp(2)}}>X</Text>
+                    <Text style={{color: '#fff', paddingBottom: hp(0.1)}}>
+                      Tax CERTIFICATE
+                    </Text>
                   </View>
-                </TouchableOpacity>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      justifyContent: 'space-between',
+                    }}>
+                    <TouchableOpacity
+                      onPress={() =>
+                        Linking.openURL(
+                          'https://beams.beaconhouse.edu.pk/core/mobile_app/pdf/student_certificate_pdf.php?id=',
+                        )
+                      }
+                      style={{
+                        justifyContent: 'center',
+                        marginVertical: hp(1.5),
+                        height: hp(5),
+                        marginRight: hp(3),
+                      }}>
+                      <Icon
+                        type="light"
+                        name="download"
+                        size={hp(3)}
+                        color="#fff"
+                      />
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      onPress={handleReset}
+                      style={{justifyContent: 'center', marginTop: hp(0.3)}}>
+                      <Icon
+                        type="light"
+                        name="xmark"
+                        size={hp(3)}
+                        color="#fff"
+                      />
+                    </TouchableOpacity>
+                  </View>
+                </View>
               </LinearGradient>
+              {hide && (
+                <View>
+                  <TouchableOpacity
+                    onPress={showDatePicker}
+                    style={{
+                      marginHorizontal: hp(2.5),
+                      marginTop: hp(2),
+                      zIndex: 1,
+                    }}>
+                    <View
+                      style={{
+                        height: hp(6.5),
+
+                        borderRadius: hp(1.2),
+                        backgroundColor: '#FFFFFF',
+                      }}>
+                      <DropDownPicker
+                        placeholder="Select Tax Certificate"
+                        placeholderStyle={{color: '#cdcdcd'}}
+                        style={{
+                          borderColor: '#E4DFDF',
+                          borderWidth: 1,
+                          borderRadius: hp(1.2),
+                        }}
+                        open={open}
+                        value={value}
+                        items={items}
+                        setOpen={setOpen}
+                        setValue={setValue}
+                        setItems={setItems}
+                      />
+                    </View>
+                  </TouchableOpacity>
+
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      justifyContent: 'space-between',
+                      marginHorizontal: hp(2.5),
+                    }}>
+                    <View></View>
+                    <TouchableOpacity
+                      style={{
+                        height: hp(4),
+                        marginTop: hp(1),
+                        width: wp(20),
+                        borderRadius: hp(1),
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        backgroundColor: '#4D69DC',
+                      }}>
+                      <Text style={{color: '#FFF'}}>Print</Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              )}
+              {value && (
+                <View style={styles.container}>
+                  <Pdf
+                    trustAllCerts={false}
+                    source={{
+                      uri: 'https://beams.beaconhouse.edu.pk/core/mobile_app/pdf/student_certificate_pdf.php?id=',
+                    }}
+                    onLoadComplete={(numberOfPages, filePath) => {
+                      console.log(`Number of pages: ${numberOfPages}`);
+                    }}
+                    onPageChanged={(page, numberOfPages) => {
+                      console.log(`Current page: ${page}`);
+                    }}
+                    onError={error => {
+                      console.log(error);
+                    }}
+                    onPressLink={uri => {
+                      console.log(`Link pressed: ${uri}`);
+                    }}
+                    style={styles.pdf}
+                  />
+                </View>
+              )}
             </BottomSheet>
           )}
           {slip && (
@@ -272,30 +571,81 @@ const Financial = props => {
                 end={{x: 1, y: 0}}
                 colors={['#1C37A5', '#4D69DC']}
                 style={styles.mainHeader}>
-                <TouchableOpacity
-                  onPress={handleReset}
+                <View
                   style={{
-                    width: wp(100),
-                    position: 'relative',
-                    zIndex: 1,
-                    marginBottom: hp(20),
+                    marginHorizontal: hp(2.5),
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
                   }}>
                   <View
                     style={{
-                      width: wp(20),
-                      height: hp(10),
-                      borderRadius: hp(50),
                       justifyContent: 'center',
-                      alignItems: 'center',
-                      // backgroundColor: 'red',
-                      position: 'absolute',
-                      top: hp(-1),
-                      left: hp(42),
+                      marginVertical: hp(1.5),
+                      height: hp(5),
                     }}>
-                    <Text style={{color: '#fff', fontSize: hp(2)}}>X</Text>
+                    <Text style={{color: '#fff', paddingBottom: hp(0.1)}}>
+                      Tax CERTIFICATE
+                    </Text>
                   </View>
-                </TouchableOpacity>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      justifyContent: 'space-between',
+                    }}>
+                    <TouchableOpacity
+                      onPress={() =>
+                        Linking.openURL(
+                          'https://beams.beaconhouse.edu.pk/core/mobile_app/pdf/student_certificate_pdf.php?id=',
+                        )
+                      }
+                      style={{
+                        justifyContent: 'center',
+                        marginVertical: hp(1.5),
+                        height: hp(5),
+                        marginRight: hp(3),
+                      }}>
+                      <Icon
+                        type="light"
+                        name="download"
+                        size={hp(3)}
+                        color="#fff"
+                      />
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      onPress={handleReset}
+                      style={{justifyContent: 'center', marginTop: hp(0.3)}}>
+                      <Icon
+                        type="light"
+                        name="xmark"
+                        size={hp(3)}
+                        color="#fff"
+                      />
+                    </TouchableOpacity>
+                  </View>
+                </View>
               </LinearGradient>
+
+              <View style={styles.container}>
+                <Pdf
+                  trustAllCerts={false}
+                  source={{
+                    uri: 'https://beams.beaconhouse.edu.pk/core/mobile_app/pdf/student_certificate_pdf.php?id=',
+                  }}
+                  onLoadComplete={(numberOfPages, filePath) => {
+                    console.log(`Number of pages: ${numberOfPages}`);
+                  }}
+                  onPageChanged={(page, numberOfPages) => {
+                    console.log(`Current page: ${page}`);
+                  }}
+                  onError={error => {
+                    console.log(error);
+                  }}
+                  onPressLink={uri => {
+                    console.log(`Link pressed: ${uri}`);
+                  }}
+                  style={styles.pdf}
+                />
+              </View>
             </BottomSheet>
           )}
           <ScrollView>
@@ -371,8 +721,8 @@ const Financial = props => {
                 flexDirection: 'row',
                 paddingLeft: hp(1),
               }}>
-              <View>
-                <Text style={styles.ftbotom}>TEXT CERTIFICATE</Text>
+              <View style={{alignItems: 'center', marginHorizontal: hp(1.2)}}>
+                <Text style={styles.ftbotom}>TAX CERTIFICATE</Text>
               </View>
             </TouchableOpacity>
             <View
@@ -386,7 +736,7 @@ const Financial = props => {
             <TouchableOpacity
               style={{flex: 0.33, alignItems: 'center'}}
               onPress={slipHandler}>
-              <Text style={styles.ftbotom}>LAST SALLARY SLIP</Text>
+              <Text style={styles.ftbotom}>SALARY SLIP</Text>
             </TouchableOpacity>
           </View>
           {/* <View
@@ -563,98 +913,198 @@ const Financial = props => {
             <ScrollView>
               {data1.map((item, i) => {
                 return (
-                  <View
-                    style={{
-                      flexDirection: 'row',
-                      justifyContent: 'space-between',
-                      alignItems: 'center',
-                      paddingHorizontal: hp(2),
-                      height: hp(14),
-                      borderRadius: hp(2),
-                      backgroundColor: '#FFFFFF',
-                      marginTop: hp(2),
-                      shadowOpacity: 0.5,
-                      shadowRadius: 4,
-                      elevation: 1,
-                    }}
-                    key={i}>
-                    <View style={{flexDirection: 'row'}}>
-                      <View
-                        style={{
-                          justifyContent: 'center',
-                          alignItems: 'center',
-                          marginTop: hp(1.5),
-                        }}>
-                        <GraphList />
-                        {/* <AnimatedCircularProgress
-                        size={86}
-                        width={8}
-                        fill={50}
-                        tintColor="#D4E9FF"
-                        onAnimationComplete={() =>
-                          console.log('onAnimationComplete')
-                        }
-                        backgroundColor="#C1B7FD">
-                        {fill => (
-                          <View style={{justifyContent: 'center'}}>
+                  <View style={{marginBottom: hp(1.5)}}>
+                    <TouchableOpacity
+                      onPress={() => toggleExpansion(item.id)}
+                      style={{
+                        borderRadius: hp(2),
+                        backgroundColor: '#FFF',
+                        shadowColor: '#000',
+                        shadowOpacity: 0.4,
+                        shadowRadius: 1,
+                        elevation: 1,
+                      }}>
+                      {inheight == item.id && (
+                        <Animated.View
+                          style={{
+                            height,
+                            paddingHorizontal: hp(2.5),
+                            overflow: 'hidden',
+                            position: 'relative',
+                          }}>
+                          <View
+                            style={{
+                              flexDirection: 'row',
+                              position: 'absolute',
+                              top: 0,
+                              left: hp(2.5),
+                            }}>
                             <View
                               style={{
                                 justifyContent: 'center',
                                 alignItems: 'center',
+                                marginTop: hp(1.5),
                               }}>
-                              <Text style={styles.circularText}>{item.month}</Text>
+                              <GraphList />
                             </View>
-                           
+                            <View
+                              style={{
+                                justifyContent: 'center',
+                                marginHorizontal: hp(1.5),
+                              }}>
+                              <View style={{flexDirection: 'row'}}>
+                                <View style={{marginVertical: hp(0.5)}}>
+                                  {renderDot('#C1B7FD')}
+                                </View>
+                                <View>
+                                  <View>
+                                    <Text style={styles.numbertext}>
+                                      25,000
+                                    </Text>
+                                  </View>
+                                  <View>
+                                    <Text style={styles.basictext}>
+                                      Gross Salary
+                                    </Text>
+                                  </View>
+                                </View>
+                              </View>
+                            </View>
+                            <View
+                              style={{
+                                justifyContent: 'center',
+                                marginLeft: hp(2),
+                              }}>
+                              <View style={{flexDirection: 'row'}}>
+                                <View style={{marginVertical: hp(0.5)}}>
+                                  {renderDot('#FEBB5B')}
+                                </View>
+                                <View>
+                                  <View>
+                                    <Text style={styles.numbertext}>
+                                      25,000
+                                    </Text>
+                                  </View>
+                                  <View>
+                                    <Text style={styles.basictext}>
+                                      net Salary
+                                    </Text>
+                                  </View>
+                                </View>
+                              </View>
+                            </View>
                           </View>
-                        )}
-                      </AnimatedCircularProgress> */}
-                      </View>
-                      <View
-                        style={{
-                          justifyContent: 'center',
-                          alignItems: 'center',
-                          marginLeft: hp(2.5),
-                          // position:'absolute',left:hp(5)
-                        }}>
-                        <View style={{flexDirection: 'row'}}>
-                          <View style={{marginVertical: hp(0.5)}}>
-                            {renderDot('#C1B7FD')}
+                          <View
+                            style={{
+                              height: hp(0.1),
+                              backgroundColor: '#cdcdcd',
+                              marginTop: hp(13.5),
+                            }}></View>
+                          {data.map((item, i) => {
+                            return (
+                              <View
+                                style={{
+                                  flexDirection: 'row',
+                                  justifyContent: 'space-between',
+                                  marginVertical: hp(1.5),
+                                }}>
+                                <View style={{justifyContent: 'center'}}>
+                                  <Text style={styles.dob}>{item.text}</Text>
+                                </View>
+                                <View>
+                                  <Text style={styles.dob}>{item.number}</Text>
+                                </View>
+                              </View>
+                            );
+                          })}
+                        </Animated.View>
+                      )}
+                      {inheight !== item.id && (
+                        <Animated.View
+                          style={{
+                            height: hp(13.5),
+                            overflow: 'hidden',
+                            paddingHorizontal: hp(2.5),
+                          }}>
+                          <View
+                            style={{
+                              flexDirection: 'row',
+                              position: 'absolute',
+                              top: 0,
+                              left: hp(2.5),
+                            }}>
+                            <View
+                              style={{
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                marginTop: hp(1.5),
+                              }}>
+                              <GraphList />
+                            </View>
+                            <View
+                              style={{
+                                justifyContent: 'center',
+                                marginHorizontal: hp(1.5),
+                              }}>
+                              <View style={{flexDirection: 'row'}}>
+                                <View style={{marginVertical: hp(0.5)}}>
+                                  {renderDot('#C1B7FD')}
+                                </View>
+                                <View>
+                                  <View>
+                                    <Text style={styles.numbertext}>
+                                      25,000
+                                    </Text>
+                                  </View>
+                                  <View>
+                                    <Text style={styles.basictext}>
+                                      Gross Salary
+                                    </Text>
+                                  </View>
+                                </View>
+                              </View>
+                            </View>
+                            <View
+                              style={{
+                                justifyContent: 'center',
+                                marginLeft: hp(2),
+                              }}>
+                              <View style={{flexDirection: 'row'}}>
+                                <View style={{marginVertical: hp(0.5)}}>
+                                  {renderDot('#FEBB5B')}
+                                </View>
+                                <View>
+                                  <View>
+                                    <Text style={styles.numbertext}>
+                                      25,000
+                                    </Text>
+                                  </View>
+                                  <View>
+                                    <Text style={styles.basictext}>
+                                      net Salary
+                                    </Text>
+                                  </View>
+                                </View>
+                              </View>
+                            </View>
                           </View>
-                          <View>
+                          <View
+                            style={{
+                              flexDirection: 'row',
+                              position: 'absolute',
+                              top: hp(13.2),
+                              left: hp(2.5),
+                            }}>
+                            <View style={{justifyContent: 'center'}}>
+                              <Text style={styles.dob}>fgd</Text>
+                            </View>
                             <View>
-                              <Text style={styles.numbertext}>25,000</Text>
-                            </View>
-                            <View>
-                              <Text style={styles.basictext}>Gross Salary</Text>
+                              <Text style={styles.dob}>fgd</Text>
                             </View>
                           </View>
-                        </View>
-                      </View>
-                    </View>
-
-                    <View>
-                      <View
-                        style={{
-                          justifyContent: 'center',
-                          alignItems: 'center',
-                          marginLeft: hp(3),
-                        }}>
-                        <View style={{flexDirection: 'row'}}>
-                          <View style={{marginVertical: hp(0.5)}}>
-                            {renderDot('#FEBB5B')}
-                          </View>
-                          <View>
-                            <View>
-                              <Text style={styles.numbertext}>25,000</Text>
-                            </View>
-                            <View>
-                              <Text style={styles.basictext}>net Salary</Text>
-                            </View>
-                          </View>
-                        </View>
-                      </View>
-                    </View>
-                    <View>{/* <Text>vfgdfgdf</Text> */}</View>
+                        </Animated.View>
+                      )}
+                    </TouchableOpacity>
                   </View>
                 );
               })}
@@ -767,5 +1217,40 @@ const styles = EStyleSheet.create({
     backgroundColor: '#1C37A4',
     borderBottomRightRadius: hp(0),
     borderBottomLeftRadius: hp(0),
+  },
+  container: {
+    flex: 1,
+    marginTop: hp(0),
+  },
+  pdf: {
+    width: Dimensions.get('window').width,
+    height: Dimensions.get('window').height,
+  },
+  number: {
+    color: '#2D8E00',
+    backgroundColor: '#D4FFCC',
+    borderRadius: hp(50),
+    paddingHorizontal: hp(0.8),
+    fontFamily: fontFamily.ceraBold,
+    fontSize: '0.5rem',
+    fontWeight: '700',
+    fontStyle: 'normal',
+  },
+  dob: {
+    color: '#363636',
+    fontFamily: fontFamily.ceraMedium,
+    fontSize: '0.5rem',
+    fontWeight: '300',
+    fontStyle: 'normal',
+  },
+  dobdata: {
+    color: '#353535',
+    // backgroundColor: '#D4FFCC',
+    borderRadius: hp(50),
+    paddingHorizontal: hp(0.8),
+    fontFamily: fontFamily.ceraMedium,
+    fontSize: '0.55rem',
+    fontWeight: '300',
+    fontStyle: 'normal',
   },
 });

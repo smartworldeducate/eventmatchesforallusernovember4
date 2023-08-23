@@ -166,7 +166,7 @@ const Calinder = (props) => {
               justifyContent: 'space-between',
             }}>
             <TouchableOpacity
-              onPress={()=>navigation.navigate('ApplyLeave')}
+              onPress={()=>navigation.navigate('ApplicationType')}
               style={{
                 width:wp(38),
                 justifyContent: 'center',

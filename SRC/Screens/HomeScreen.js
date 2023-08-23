@@ -106,12 +106,9 @@ const HomeScreen = props => {
   };
 
   const handleReset = () => {
-    // setShow(true)
     setState({scan: false});
     setVisible(false);
-    // setInterval(() => {
-    //   setShow(false)
-    // }, 2000);
+   
   };
   const [leave, setLeave] = useState(false);
   const [clinder, setClinder] = useState(false);
@@ -212,29 +209,29 @@ const HomeScreen = props => {
           backgroundColor: '#fff',
           flex: 1,
         }}>
-        <TouchableOpacity
-          onPress={handleReset}
+        <View
+          
           style={{
             width: wp(100),
             position: 'relative',
             zIndex: 1,
             marginBottom: hp(20),
           }}>
-          <View
+          <TouchableOpacity
+          onPress={handleReset}
             style={{
               width: wp(10),
               height: hp(5),
-              borderRadius: hp(50),
+              // borderRadius: hp(50),
               justifyContent: 'center',
               alignItems: 'center',
-              backgroundColor: 'red',
               position: 'absolute',
               top: 20,
               left: hp(45),
             }}>
-            <Text style={{color: '#fff', fontSize: hp(2)}}>X</Text>
-          </View>
-        </TouchableOpacity>
+            <Text style={{color: 'gray', fontSize: hp(2)}}>X</Text>
+          </TouchableOpacity>
+        </View>
 
         {scan && (
           <QRCodeScanner

@@ -27,7 +27,7 @@ const Approcial = props => {
     setSalary(true);
     setHistory(false);
   };
-  const historyHandler = () => {
+  const objHandler = () => {
     setHistory(true);
     setSalary(false);
   };
@@ -106,7 +106,8 @@ const Approcial = props => {
               style={{
                 width: wp(42),
                 height: hp(5.5),
-                backgroundColor: salary ? '#fff' : '#E7E7E7',
+               backgroundColor: salary ? '#fff' : '#E7E7E7',
+                // backgroundColor:'yellow',
                 paddingVertical: hp(1),
                 borderRadius: hp(1),
                 alignItems: 'center',
@@ -115,11 +116,12 @@ const Approcial = props => {
               <Text style={styles.headertext}>Appraisal</Text>
             </TouchableOpacity>
             <TouchableOpacity
-              onPress={historyHandler}
+              onPress={objHandler}
               style={{
                 width: wp(42),
                 height: hp(5.5),
                 backgroundColor: history ? '#fff' : '#E7E7E7',
+                // backgroundColor:'red',
                 borderRadius: hp(1),
                 justifyContent: 'center',
                 alignItems: 'center',
