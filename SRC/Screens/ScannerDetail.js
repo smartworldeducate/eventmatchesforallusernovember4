@@ -338,11 +338,9 @@ const ScannerDetail = props => {
                   scan_time == null ? false : setup_id == 2 ? true : false
                 }
                 style={{
-                  marginHorizontal: hp(3.5),
                   backgroundColor: '#4D69DC',
-                  borderRadius: hp(5),
                   height: hp(7),
-                  marginTop: hp(20),
+                  position: 'absolute', left: 0, right: 0, bottom: 0,top:hp(100),
                   justifyContent: 'center',
                   alignItems: 'center',
                 }}>
