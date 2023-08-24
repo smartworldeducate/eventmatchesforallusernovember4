@@ -21,7 +21,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import HeaderTop from '../Components/Headers/HeaderTop';
 import colors from '../Styles/colors';
 import Icon from 'react-native-fontawesome-pro';
-const Search = () => {
+const Search = (props) => {
   const data = [{id: 1}, {id: 2}, {id: 3}, {id: 4}, {id: 5}];
   const [search, setSearch] = useState('');
   const [filteredDataSource, setFilteredDataSource] = useState([]);
@@ -77,7 +77,7 @@ const Search = () => {
 
   const height = animation.interpolate({
     inputRange: [0, 1],
-    outputRange: [90, 250], // Change this value to control the expanded height
+    outputRange: [94, 250], // Change this value to control the expanded height
   });
 
   const ItemView = ({item}) => {
@@ -114,13 +114,14 @@ const Search = () => {
                 }}>
                 <Image
                   style={{
-                    width: wp(18),
-                    height: hp(9),
+                    width: wp(16),
+                    height: hp(8),
                     marginTop: hp('1.5'),
                     position: 'absolute',
                     top: hp(0),
+                    borderRadius:hp(1)
                   }}
-                  source={{uri: 'bss'}}
+                  source={{uri: 'ayaz'}}
                   resizeMode="contain"
                 />
               </View>
@@ -132,7 +133,7 @@ const Search = () => {
                   }}>
                   <View style={{marginVertical: hp(1.5)}}>
                     <Text style={styles.childname}>
-                      Muhammad Moeez Zeeshan
+                      Muhammad Ayaz
                     </Text>
                   </View>
                   <View
@@ -151,7 +152,25 @@ const Search = () => {
                     marginTop: hp(-2),
                   }}>
                   <View style={{marginVertical: hp(1.5)}}>
-                    <Text style={styles.dob}>DOB :</Text>
+                    <Text style={styles.dob}>Designation:</Text>
+                  </View>
+                  <View
+                    style={{
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      marginRight: hp(2),
+                    }}>
+                    <Text style={styles.dobdata}>Software Developer</Text>
+                  </View>
+                </View>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    marginTop: hp(-2.5),
+                  }}>
+                  <View style={{marginVertical: hp(1.5)}}>
+                    <Text style={styles.dob}>Date:</Text>
                   </View>
                   <View
                     style={{
@@ -162,24 +181,6 @@ const Search = () => {
                     <Text style={styles.dobdata}>15 Oct, 2017</Text>
                   </View>
                 </View>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                    marginTop: hp(-2.5),
-                  }}>
-                  <View style={{marginVertical: hp(1.5)}}>
-                    <Text style={styles.dob}>Designation:</Text>
-                  </View>
-                  <View
-                    style={{
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      marginRight: hp(2),
-                    }}>
-                    <Text style={styles.dobdata}>One Violet</Text>
-                  </View>
-                </View>
               </View>
             </View>
           </Animated.View>
@@ -187,7 +188,7 @@ const Search = () => {
         {inheight !== item.id && (
           <Animated.View
             style={{
-              height: hp(11),
+              height: hp(11.5),
               overflow: 'hidden',
             }}>
             <View style={{flexDirection: 'row', flex: 1}}>
@@ -201,13 +202,14 @@ const Search = () => {
                 }}>
                 <Image
                   style={{
-                    width: wp(18),
-                    height: hp(9),
+                    width: wp(16),
+                    height: hp(8),
                     marginTop: hp('1.5'),
                     position: 'absolute',
                     top: hp(0),
+                    borderRadius:hp(1)
                   }}
-                  source={{uri: 'bss'}}
+                  source={{uri: 'ayaz'}}
                   resizeMode="contain"
                 />
               </View>
@@ -219,7 +221,7 @@ const Search = () => {
                   }}>
                   <View style={{marginVertical: hp(1.5)}}>
                     <Text style={styles.childname}>
-                      Muhammad Moeez Zeeshan
+                      Muhammad Ayaz
                     </Text>
                   </View>
                   <View
@@ -238,7 +240,7 @@ const Search = () => {
                     marginTop: hp(-2),
                   }}>
                   <View style={{marginVertical: hp(1.5)}}>
-                    <Text style={styles.dob}>DOB :</Text>
+                    <Text style={styles.dob}>Designation:</Text>
                   </View>
                   <View
                     style={{
@@ -246,7 +248,7 @@ const Search = () => {
                       alignItems: 'center',
                       marginRight: hp(2),
                     }}>
-                    <Text style={styles.dobdata}>15 Oct, 2017</Text>
+                    <Text style={styles.dobdata}>Software Developer</Text>
                   </View>
                 </View>
                 <View
@@ -256,7 +258,7 @@ const Search = () => {
                     marginTop: hp(-2.5),
                   }}>
                   <View style={{marginVertical: hp(1.5)}}>
-                    <Text style={styles.dob}>Designation:</Text>
+                    <Text style={styles.dob}>Date:</Text>
                   </View>
                   <View
                     style={{
@@ -264,7 +266,7 @@ const Search = () => {
                       alignItems: 'center',
                       marginRight: hp(2),
                     }}>
-                    <Text style={styles.dobdata}>One Violet</Text>
+                    <Text style={styles.dobdata}>15 Oct, 2017</Text>
                   </View>
                 </View>
               </View>
@@ -307,6 +309,9 @@ const Search = () => {
         style={styles.mainHeader}>
         <StatusBar translucent backgroundColor="transparent" />
         <View style={styles.headerChild}>
+          <TouchableOpacity onPress={()=>props.navigation.goBack()} style={{marginLeft:hp(2),marginTop:hp(1.5),justifyContent:'center',alignItems:'center'}}>
+            <Icon type='light' name='arrow-left' size={hp(3)} color='#FFF'/>
+          </TouchableOpacity>
           <View
             style={styles.homeSearch}
             onPress={() => navigation.navigate('Search')}>
@@ -333,6 +338,7 @@ const Search = () => {
               />
             </TouchableOpacity>
           </View>
+          
         </View>
       </LinearGradient>
       <View style={{marginHorizontal: hp(2.5), marginTop: hp(2)}}>
@@ -352,7 +358,8 @@ const styles = EStyleSheet.create({
   headerChild: {
     marginTop: hp(7),
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    // justifyContent: 'space-between',
+    
   },
   textstyle: {
     color: '#fff',
@@ -368,7 +375,7 @@ const styles = EStyleSheet.create({
     borderBottomLeftRadius: hp(2.5),
   },
   homesearchView: {
-    width: wp(80),
+    width: wp(71),
     height: hp(6),
     backgroundColor: '#58D68D ',
     borderRadius: hp(2),
@@ -399,6 +406,7 @@ const styles = EStyleSheet.create({
     shadowOpacity: 0.5,
     shadowRadius: 4,
     elevation: 4,
+    
   },
   searchicon: {marginTop: hp(1.5), marginRight: hp(2)},
   placeholderStyle: {

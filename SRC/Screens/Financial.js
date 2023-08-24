@@ -46,7 +46,7 @@ const Financial = props => {
 
   const height = animation.interpolate({
     inputRange: [0, 1],
-    outputRange: [110, 310], // Change this value to control the expanded height
+    outputRange: [100, 335], // Change this value to control the expanded height
   });
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(null);
@@ -190,7 +190,7 @@ const Financial = props => {
     );
   };
   return (
-    <>
+    <View style={{flex:1}}>
       <View>
         <MainHeader
           text={'Financials'}
@@ -994,24 +994,24 @@ const Financial = props => {
                               </View>
                             </View>
                           </View>
-                          <View
+                          {inheight==item.id && (<View
                             style={{
                               height: hp(0.1),
                               backgroundColor: '#cdcdcd',
                               marginTop: hp(13.5),
-                            }}></View>
+                            }}></View>)}
                           {data.map((item, i) => {
                             return (
                               <View
                                 style={{
                                   flexDirection: 'row',
                                   justifyContent: 'space-between',
-                                  marginVertical: hp(1.5),
+                                  marginVertical: hp(1),
                                 }}>
                                 <View style={{justifyContent: 'center'}}>
                                   <Text style={styles.dob}>{item.text}</Text>
                                 </View>
-                                <View>
+                                <View >
                                   <Text style={styles.dob}>{item.number}</Text>
                                 </View>
                               </View>
@@ -1022,7 +1022,7 @@ const Financial = props => {
                       {inheight !== item.id && (
                         <Animated.View
                           style={{
-                            height: hp(13.5),
+                            height: hp(12.8),
                             overflow: 'hidden',
                             paddingHorizontal: hp(2.5),
                           }}>
@@ -1112,7 +1112,7 @@ const Financial = props => {
           </View>
         </>
       )}
-    </>
+    </View>
   );
 };
 

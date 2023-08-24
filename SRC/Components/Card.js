@@ -303,7 +303,7 @@ const styles = EStyleSheet.create({
     color: '#6A6A6A',
   },
   cardText: {
-    fontSize: '0.55rem',
+    fontSize: '0.6rem',
     fontWeight: '300',
     fontFamily: fontFamily.ceraLight,
     letterSpacing: '0.00938rem',
@@ -311,6 +311,8 @@ const styles = EStyleSheet.create({
     marginTop: hp(1),
     fontStyle: 'normal',
     lineHeight: hp(1.8),
+    letterSpacing:hp(0.2),
+    textAlign:'justify'
   },
   cardHeading: {
     flex: 1,
@@ -356,15 +358,16 @@ const styles = EStyleSheet.create({
   },
   longdesc: {
     fontWeight: '100',
-    fontSize: '0.65rem',
+    fontSize: '0.7rem',
     fontFamily: fontFamily.ceraLight,
     color: '#979797',
     fontStyle: 'normal',
     alignItems: 'center',
     lineHeight: hp(1.8),
     padding: hp(1.5),
-    latterSpacing: hp(1),
-    textAlign: 'justify',
+    lineHeight: hp(1.8),
+    letterSpacing:hp(0.1),
+    textAlign:'justify'
   },
   detailcard: {
     marginHorizontal: hp(2.5),

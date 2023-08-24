@@ -10,8 +10,8 @@ import React, {useState} from 'react';
 import {AnimatedCircularProgress} from 'react-native-circular-progress';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import Icon from 'react-native-fontawesome-pro';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import { useNavigation } from '@react-navigation/native';
+import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
+import {useNavigation} from '@react-navigation/native';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -22,10 +22,8 @@ import Island from 'react-native-vector-icons/Fontisto';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import fontSize from '../Styles/fontSize';
 import fontFamily from '../Styles/fontFamily';
-// import { useNavigation } from '@react-navigation/native';
-const Calinder = (props) => {
-  const navigation =useNavigation()
-  // const navigation=useNavigation()
+const Calinder = props => {
+  const navigation = useNavigation();
   const [leave, setLeave] = useState(false);
   const [clinder, setClinder] = useState(false);
   const handleLeave = () => {
@@ -37,7 +35,7 @@ const Calinder = (props) => {
   //   setLeave(false);
   // };
   return (
-    <>
+    <View style={{flex: 1}}>
       <View style={styles.card}>
         <View>
           <Text style={styles.clText1}>Leaves</Text>
@@ -72,22 +70,25 @@ const Calinder = (props) => {
             </View>
 
             <View>
-              <TouchableOpacity style={{flexDirection: 'row'}} onPress={()=>navigation.navigate('LeaveBalance')}>
+              <TouchableOpacity
+                style={{flexDirection: 'row'}}
+                onPress={() => navigation.navigate('LeaveBalance')}>
                 <View
                   style={{
                     marginTop: hp(2),
                     marginRight: hp(1),
                     marginLeft: hp(1),
                   }}>
-                
-                  <Icon type='light' name="masks-theater" size={hp(4)} color="#BB8FCE" />
+                  <Icon
+                    type="light"
+                    name="masks-theater"
+                    size={hp(4)}
+                    color="#BB8FCE"
+                  />
                 </View>
                 <View style={{marginTop: hp(0.5)}}>
                   <View>
-                    <Text
-                      style={styles.leaveSectionText}>
-                      15
-                    </Text>
+                    <Text style={styles.leaveSectionText}>15</Text>
                   </View>
                   <View style={{flexDirection: 'row', marginTop: hp(-0.5)}}>
                     <View style={{marginRight: hp(1)}}>
@@ -100,21 +101,25 @@ const Calinder = (props) => {
                   </View>
                 </View>
               </TouchableOpacity>
-              <TouchableOpacity style={{flexDirection: 'row'}} onPress={()=>navigation.navigate('LeaveBalance')}>
+              <TouchableOpacity
+                style={{flexDirection: 'row'}}
+                onPress={() => navigation.navigate('LeaveBalance')}>
                 <View
                   style={{
                     marginTop: hp(2),
                     marginLeft: hp(1),
                     marginRight: hp(2),
                   }}>
-                  <Icon type='light' name="temperature-half" size={hp(4)} color="#DC7633" />
+                  <Icon
+                    type="light"
+                    name="temperature-half"
+                    size={hp(4)}
+                    color="#DC7633"
+                  />
                 </View>
-                <View style={{marginTop: hp(0.5),marginLeft:hp(-1)}}>
+                <View style={{marginTop: hp(0.5), marginLeft: hp(-1)}}>
                   <View>
-                    <Text
-                      style={styles.leaveSectionText}>
-                      10
-                    </Text>
+                    <Text style={styles.leaveSectionText}>10</Text>
                   </View>
                   <View style={{flexDirection: 'row', marginTop: hp(-0.5)}}>
                     <View style={{marginRight: hp(1)}}>
@@ -127,21 +132,29 @@ const Calinder = (props) => {
                   </View>
                 </View>
               </TouchableOpacity>
-              <TouchableOpacity style={{flexDirection: 'row',marginLeft:hp(1),marginTop:hp(1)}} onPress={()=>navigation.navigate('LeaveBalance')}>
+              <TouchableOpacity
+                style={{
+                  flexDirection: 'row',
+                  marginLeft: hp(1),
+                  marginTop: hp(1),
+                }}
+                onPress={() => navigation.navigate('LeaveBalance')}>
                 <View
                   style={{
                     marginTop: hp(2),
                     marginLeft: hp(1),
                     marginRight: hp(1),
                   }}>
-                  <Icon type='light' name="island-tropical" size={hp(3)} color="#58D68D" />
+                  <Icon
+                    type="light"
+                    name="island-tropical"
+                    size={hp(3)}
+                    color="#58D68D"
+                  />
                 </View>
                 <View style={{marginTop: hp(0.5)}}>
                   <View>
-                    <Text
-                      style={styles.leaveSectionText}>
-                      30
-                    </Text>
+                    <Text style={styles.leaveSectionText}>30</Text>
                   </View>
                   <View style={{flexDirection: 'row', marginTop: hp(-0.5)}}>
                     <View style={{marginRight: hp(1)}}>
@@ -156,19 +169,28 @@ const Calinder = (props) => {
               </TouchableOpacity>
             </View>
           </View>
-            <View style={{marginHorizontal:hp(2),height:hp(0.05),backgroundColor:'#D9D9D9',borderRadius:hp(50),marginTop:hp(-0.5),}}></View>
           <View
             style={{
-              height: hp(10),
+              marginHorizontal: hp(2),
+              height: hp(0.05),
+              backgroundColor: '#D9D9D9',
+              borderRadius: hp(50),
+              marginTop: hp(0),
+            }}></View>
+
+          <View
+            style={{
+              flex: hp(0.3),
+
               marginHorizontal: hp(2),
               flexDirection: 'row',
-              marginVertical:hp(2.4),
+              alignItems: 'center',
               justifyContent: 'space-between',
             }}>
             <TouchableOpacity
-              onPress={()=>navigation.navigate('ApplicationType')}
+              onPress={() => navigation.navigate('ApplicationType')}
               style={{
-                width:wp(38),
+                width: wp(38),
                 justifyContent: 'center',
                 alignItems: 'center',
                 height: hp(4.5),
@@ -178,32 +200,26 @@ const Calinder = (props) => {
                 backgroundColor: '#fff',
                 // marginTop: hp(4),
               }}>
-              <Text
-                style={styles.clbtnStyle}>
-                Apply Leave
-              </Text>
+              <Text style={styles.clbtnStyle}>Apply Leave</Text>
             </TouchableOpacity>
             <TouchableOpacity
-               onPress={()=>navigation.navigate('Attendance')}
-                style={{
-                  borderRadius: hp(50),
-                width:wp(38),
-                  height: hp(4.5),
-                  borderWidth: 1,
-                  borderColor: '#1C37A4' ,
-                  backgroundColor:'#1C37A4',
-                  justifyContent:'center',
-                  alignItems:'center'
-                }}>
-                <Text
-                  style={styles.viewClinderText}>
-                  View Calendar
-                </Text>
-              </TouchableOpacity>
+              onPress={() => navigation.navigate('Attendance')}
+              style={{
+                borderRadius: hp(50),
+                width: wp(38),
+                height: hp(4.5),
+                borderWidth: 1,
+                borderColor: '#1C37A4',
+                backgroundColor: '#1C37A4',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}>
+              <Text style={styles.viewClinderText}>View Calendar</Text>
+            </TouchableOpacity>
           </View>
         </View>
       </View>
-    </>
+    </View>
   );
 };
 
@@ -212,10 +228,11 @@ export default Calinder;
 const styles = EStyleSheet.create({
   card: {
     flex: 1,
-    height: hp(35),
+    height: hp(34),
     marginTop: hp(1.5),
   },
   cardContainer: {
+    flex: 1,
     height: hp(30),
     backgroundColor: '#ffffff',
     borderRadius: hp(2),
@@ -226,6 +243,7 @@ const styles = EStyleSheet.create({
     marginHorizontal: hp(2),
   },
   cardbody: {
+    flex: hp(0.7),
     flexDirection: 'row',
     marginHorizontal: hp(1.5),
   },
@@ -234,7 +252,7 @@ const styles = EStyleSheet.create({
     fontWeight: '500',
     fontFamily: fontFamily.ceraMedium,
     color: '#979797',
-    fontStyle:'normal'
+    fontStyle: 'normal',
   },
   clText1: {
     fontSize: '0.7rem',
@@ -265,9 +283,9 @@ const styles = EStyleSheet.create({
     fontFamily: fontFamily.ceraMedium,
     fontStyle: 'normal',
     marginHorizontal: hp(0.9),
-    textTransform:'uppercase'
+    textTransform: 'uppercase',
   },
-  clbtnStyle:{
+  clbtnStyle: {
     fontSize: '0.5rem',
     color: '#061D7A',
     paddingHorizontal: hp(3.5),
@@ -275,20 +293,20 @@ const styles = EStyleSheet.create({
     fontFamily: fontFamily.ceraMedium,
     fontStyle: 'normal',
   },
-  leaveSectionText:{
+  leaveSectionText: {
     fontSize: '0.7rem',
     color: '#353535',
-   marginTop: hp(1),
+    marginTop: hp(1),
     fontWeight: '700',
     fontFamily: fontFamily.ceraBold,
     fontStyle: 'normal',
   },
-  viewClinderText:{
-    color:'#fff',
+  viewClinderText: {
+    color: '#fff',
     fontFamily: fontFamily.ceraMedium,
     paddingHorizontal: hp(3.5),
-    fontWeight:'500',
-    fontStyle:'normal',
+    fontWeight: '500',
+    fontStyle: 'normal',
     fontSize: '0.5rem',
-  }
+  },
 });

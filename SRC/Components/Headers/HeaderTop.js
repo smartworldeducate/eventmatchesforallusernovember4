@@ -11,7 +11,7 @@ import {
   Text,
   TouchableOpacity,
   ImageBackground,
-  TextInput
+  TextInput,
 } from 'react-native';
 import {
   widthPercentageToDP as wp,
@@ -46,7 +46,6 @@ const HeaderTop = ({
     {id: 5, image: 'im'},
     {id: 6, image: 'ssl'},
     {id: 7, image: 'artg'},
-    
   ];
   const navigation = useNavigation();
   const handleNavigate = (routeName, clearStack, params) => {
@@ -62,7 +61,8 @@ const HeaderTop = ({
   const keyboardVerticalOffset = Platform.OS === 'ios' ? 60 : 20;
 
   const onChangeEmpId = val => {
-    setEmployeeId(val);
+    navigation.navigate('Search')
+    setEmployeeId('');
   };
   const onChangeEmpPassword = val => {
     setEmployeePassword(val);
@@ -83,7 +83,9 @@ const HeaderTop = ({
         colors={['#1C37A5', '#4D69DC']}
         style={styles.mainHeader}>
         <View style={styles.headerChild}>
-          <TouchableOpacity style={styles.firstRow} onPress={()=>navigation.navigate('Profile')}>
+          <TouchableOpacity
+            style={styles.firstRow}
+            onPress={() => navigation.navigate('Profile')}>
             <View style={styles.firstRowView}>
               <Image
                 style={styles.userImage}
@@ -105,10 +107,10 @@ const HeaderTop = ({
             <TouchableOpacity
               style={styles.bell}
               onPress={() => handleNavigate('Notification')}>
-              <Icon type='light' name="bell" size={hp(3)} color="#fff" />
+              <Icon type="light" name="bell" size={hp(3)} color="#fff" />
             </TouchableOpacity>
             <TouchableOpacity onPress={onPressIcon} style={styles.menu}>
-            <Image
+              <Image
                 style={styles.menustyle}
                 source={{uri: 'menuicon'}}
                 resizeMode="cover"
@@ -118,58 +120,66 @@ const HeaderTop = ({
           </View>
         </View>
 
-        
-          
-            <TouchableOpacity style={styles.homeSearch} onPress={()=>navigation.navigate('Search')}>
-              <View style={styles.homesearchView}>
-                <TextInput
-                  value={employeeId}
-                  onChangeText={()=>navigation.navigate('Search')}
-                  returnKeyType={'done'}
-                  iconName={'user'}
-                  placeholder={'Search Employee'}
-                  placeholderColor={'gray'}
-                  iconColor={colors.loginIconColor}
-                  placeholderTextColor="gray"
-                  placeholderStyle={styles.plaseholderStyle}
-                  style={styles.textInputCustomStyle}></TextInput>
-              </View>
-              <TouchableOpacity style={styles.searchicon} onPress={()=>{}}>
-                <Icon type='light' name="magnifying-glass" size={hp(3)} color="#292D32" />
-              </TouchableOpacity>
-            </TouchableOpacity>
-          
-        
+        <TouchableOpacity
+          style={styles.homeSearch}
+          onPress={() => navigation.navigate('Search')}>
+          <View style={styles.homesearchView}>
+            <TextInput
+              value={employeeId}
+              onChangeText={(text)=>onChangeEmpId(text)}
+              returnKeyType={'done'}
+              iconName={'user'}
+              placeholder={'Search Employee'}
+              placeholderColor={'gray'}
+              iconColor={colors.loginIconColor}
+              placeholderTextColor="gray"
+              placeholderStyle={styles.plaseholderStyle}
+              style={styles.textInputCustomStyle}></TextInput>
+          </View>
+          <TouchableOpacity style={styles.searchicon} onPress={() => {}}>
+            <Icon
+              type="light"
+              name="magnifying-glass"
+              size={hp(3)}
+              color="#292D32"
+            />
+          </TouchableOpacity>
+        </TouchableOpacity>
 
         <View style={styles.headerImageSection}>
           {data.slice(0, 7).map((item, i) => {
-           item.id == 6 ? console.log("lastitem of imagelist",item.id == 6) : console.log("lastitem id",item.id)
-          if(i<6){
-            return(<View style={styles.imageList} key={i}>
-              <Image
-                style={styles.imgStyle}
-                source={{uri: item.image}}
-                resizeMode="cover"
-              />
-            </View>)
-          }
-          else{
-           return(<View style={styles.imageList} key={i}> 
-           <ImageBackground style={styles.imgStyle}
-            source={{uri: item.image}}
-            resizeMode="cover">
-              <View style={styles.overlyImage}>
-              
-                <Icon type='regular' name="plus" size={hp(2.5)} color="#fff" />
-              </View>
-            </ImageBackground>
-            </View>);
-          
-            
-          }
-            
-           
-           
+            item.id == 6
+              ? console.log('lastitem of imagelist', item.id == 6)
+              : console.log('lastitem id', item.id);
+            if (i < 6) {
+              return (
+                <View style={styles.imageList} key={i}>
+                  <Image
+                    style={styles.imgStyle}
+                    source={{uri: item.image}}
+                    resizeMode="cover"
+                  />
+                </View>
+              );
+            } else {
+              return (
+                <View style={styles.imageList} key={i}>
+                  <ImageBackground
+                    style={styles.imgStyle}
+                    source={{uri: item.image}}
+                    resizeMode="cover">
+                    <View style={styles.overlyImage}>
+                      <Icon
+                        type="regular"
+                        name="plus"
+                        size={hp(2.5)}
+                        color="#fff"
+                      />
+                    </View>
+                  </ImageBackground>
+                </View>
+              );
+            }
           })}
         </View>
       </LinearGradient>
@@ -245,10 +255,10 @@ const styles = EStyleSheet.create({
     marginTop: hp(0.5),
     fontFamily: fontFamily.ceraLight,
     fontStyle: 'normal',
-    paddingBottom:hp(0.2)
+    paddingBottom: hp(0.2),
   },
   textInputCustomStyle: {
-    width:wp(80),
+    width: wp(80),
     // fontSize: hp('1.65'),
     height: hp('6'),
     letterSpacing: -0.05,
@@ -277,7 +287,13 @@ const styles = EStyleSheet.create({
     elevation: 4,
   },
   welcomTitle: {marginTop: hp(1), marginLeft: hp(-2)},
-  imageList: {width: wp(10.7), marginLeft: hp(-0.5),borderColor:'#fff',borderWidth:1,borderRadius:hp(50)},
+  imageList: {
+    width: wp(10.7),
+    marginLeft: hp(-0.5),
+    borderColor: '#fff',
+    borderWidth: 1,
+    borderRadius: hp(50),
+  },
   homesearchView: {
     width: wp(45),
     height: hp(6),
@@ -297,7 +313,7 @@ const styles = EStyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    marginRight:hp(0.6)
+    marginRight: hp(0.6),
   },
   bell: {marginTop: hp(1), marginRight: hp(2)},
   menu: {marginTop: hp(1.3)},
@@ -308,17 +324,20 @@ const styles = EStyleSheet.create({
     marginVertical: hp(2.5),
   },
   imgStyle: {width: wp(10), height: hp(5), borderRadius: hp(50)},
-  menustyle:{
-    width:'1.3rem',
-    height:'1rem',
-    
+  menustyle: {
+    width: '1.3rem',
+    height: '1rem',
   },
-  searchicon:{marginTop: hp(1.5), marginRight: hp(2)},
-  placeholderStyle:{
+  searchicon: {marginTop: hp(1.5), marginRight: hp(2)},
+  placeholderStyle: {
     fontSize: '0.575rem',
     fontWeight: '300',
     fontFamily: fontFamily.ceraLight,
     fontStyle: 'normal',
   },
-  overlyImage:{justifyContent:'center',alignItems:'center',marginTop:hp(1)}
+  overlyImage: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: hp(1),
+  },
 });

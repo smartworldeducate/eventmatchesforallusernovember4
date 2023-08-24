@@ -27,42 +27,42 @@ const LeaveHistory = props => {
       religin: 'Islam',
       date: '08 oct 1991',
       cnic: '31101-8356254-5',
-      month:'June  2023'
+      month: 'June  2023',
     },
     {
       id: 2,
       iconName: 'user-gear',
       textName: 'Service Information',
       fatherName: 'Abdual Hafeez',
-      month:'May  2023'
+      month: 'May  2023',
     },
     {
       id: 3,
       iconName: 'money-bill-1-wave',
       textName: 'Financial Information',
       fatherName: 'Abdual Hafeez',
-      month:'April  2023'
+      month: 'April  2023',
     },
     {
       id: 4,
       iconName: 'clipboard-check',
       textName: 'Movement Log',
       fatherName: 'Abdual Hafeez',
-      month:'March  2023'
+      month: 'March  2023',
     },
     {
       id: 5,
       iconName: 'child',
       textName: 'Children in Beaconhouse',
       fatherName: 'Abdual Hafeez',
-      month:'Feb  2023'
+      month: 'Feb  2023',
     },
     {
       id: 6,
       iconName: 'user',
       textName: 'Personal Information',
       fatherName: 'Abdual Hafeez',
-      month:'Jan  2023'
+      month: 'Jan  2023',
     },
   ];
   const [clinder, setClinder] = useState(null);
@@ -96,14 +96,14 @@ const LeaveHistory = props => {
     {id: 11, text: '17-06-2023', number: '08:44:47', month: '2030'},
     {id: 12, text: '17-06-2023', number: '08:17:03', month: '2031'},
   ];
-  const [def,setDef]=useState(true)
+  const [def, setDef] = useState(true);
   const clinderHandler = item => {
     setClinder(item);
-    setDef(false)
+    setDef(false);
     console.log('my item  time out', item);
   };
   return (
-    <>
+    <View style={{flex: 1}}>
       <View>
         <MainHeader
           text={'Leave History'}
@@ -121,34 +121,32 @@ const LeaveHistory = props => {
           }}
           showsHorizontalScrollIndicator={false}>
           {data?.map((item, i) => {
-            ( <TouchableOpacity onPress={() => {}} key={i}>
-                    
-            <View
-              style={{
-                height: hp(4.3),
-                paddingHorizontal: hp(2.7),
-                borderRadius: hp(20),
-                justifyContent: 'center',
-                alignItems: 'center',
-                backgroundColor: i == 2 ? '#4D69DC' : ' ',
-              }}>
+            <TouchableOpacity onPress={() => {}} key={i}>
               <View
                 style={{
+                  height: hp(4.3),
+                  paddingHorizontal: hp(2.7),
+                  borderRadius: hp(20),
                   justifyContent: 'center',
                   alignItems: 'center',
+                  backgroundColor: i == 2 ? '#4D69DC' : ' ',
                 }}>
-                <Text
+                <View
                   style={{
-                    color: i == 2 ? '#FFF' : 'gray',
-                    fontSize: hp(1.5),
+                    justifyContent: 'center',
+                    alignItems: 'center',
                   }}>
-                  {item.month}
-                </Text>
+                  <Text
+                    style={{
+                      color: i == 2 ? '#FFF' : 'gray',
+                      fontSize: hp(1.5),
+                    }}>
+                    {item.month}
+                  </Text>
+                </View>
               </View>
-            </View>
-           
-          </TouchableOpacity>)
-           return (
+            </TouchableOpacity>;
+            return (
               <>
                 {clinder == item.id && (
                   <TouchableOpacity key={i}>
@@ -160,7 +158,7 @@ const LeaveHistory = props => {
                         justifyContent: 'center',
                         alignItems: 'center',
                         backgroundColor: '#4D69DC',
-                        marginHorizontal:hp(1.5)
+                        marginHorizontal: hp(1.5),
                       }}>
                       <View
                         style={{
@@ -237,25 +235,24 @@ const LeaveHistory = props => {
                       flexDirection: 'row',
                       justifyContent: 'space-between',
                     }}>
-                  
-                      <View style={{paddingVertical: hp(1.5)}}>
-                        <View
-                          style={{
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            paddingHorizontal: hp(1.5),
-                            marginVertical:hp(0.7)
-                          }}>
-                          <Text style={styles.smalltext}>{item.month}</Text>
-                        </View>
+                    <View style={{paddingVertical: hp(1.5)}}>
+                      <View
+                        style={{
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                          paddingHorizontal: hp(1.5),
+                          marginVertical: hp(0.7),
+                        }}>
+                        <Text style={styles.smalltext}>{item.month}</Text>
                       </View>
-                      <View style={{paddingVertical: hp(1.5)}}>
+                    </View>
+                    <View style={{paddingVertical: hp(1.5)}}>
                       <View
                         style={{
                           justifyContent: 'center',
                           alignItems: 'center',
                           marginRight: hp(1.5),
-                          marginVertical:hp(1.5)
+                          marginVertical: hp(1.5),
                         }}>
                         <Icon
                           type="light"
@@ -265,7 +262,7 @@ const LeaveHistory = props => {
                           Size={hp(2)}
                         />
                       </View>
-                      </View>
+                    </View>
                   </Animated.View>
                 )}
                 {inheight !== item.id && (
@@ -276,24 +273,24 @@ const LeaveHistory = props => {
                       flexDirection: 'row',
                       justifyContent: 'space-between',
                     }}>
-                   <View style={{paddingVertical: hp(1.5)}}>
-                        <View
-                          style={{
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            paddingHorizontal: hp(1.5),
-                            marginVertical:hp(0.7)
-                          }}>
-                          <Text style={styles.smalltext}>{item.month}</Text>
-                        </View>
+                    <View style={{paddingVertical: hp(1.5)}}>
+                      <View
+                        style={{
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                          paddingHorizontal: hp(1.5),
+                          marginVertical: hp(0.7),
+                        }}>
+                        <Text style={styles.smalltext}>{item.month}</Text>
                       </View>
-                      <View style={{paddingVertical: hp(1.5)}}>
+                    </View>
+                    <View style={{paddingVertical: hp(1.5)}}>
                       <View
                         style={{
                           justifyContent: 'center',
                           alignItems: 'center',
                           marginRight: hp(1.5),
-                          marginVertical:hp(1.5)
+                          marginVertical: hp(1.5),
                         }}>
                         <Icon
                           type="light"
@@ -303,7 +300,7 @@ const LeaveHistory = props => {
                           Size={hp(2)}
                         />
                       </View>
-                      </View>
+                    </View>
                   </Animated.View>
                 )}
               </TouchableOpacity>
@@ -311,7 +308,7 @@ const LeaveHistory = props => {
           );
         })}
       </View>
-    </>
+    </View>
   );
 };
 

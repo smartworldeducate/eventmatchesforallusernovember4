@@ -21,6 +21,7 @@ const ApplicationType = props => {
     setBtColor2(false)
     setBtColor3(false)
     setBtColor(true)
+    props.navigation.navigate('Attendance')
   }
   const btColorHandler1=()=>{
     setBtColor(false)
@@ -33,17 +34,18 @@ const ApplicationType = props => {
     setBtColor1(false)
     setBtColor2(true)
     setBtColor3(false)
-    // setBtColor(true)
+    props.navigation.navigate('LeaveHistory')
   }
   const btColorHandler3=()=>{
     setBtColor(false)
     setBtColor1(false)
     setBtColor2(false)
     setBtColor3(true)
+    props.navigation.navigate('LeaveBalance')
   }
   return (
-    <>
-      <View>
+    <View style={{flex:1}}>
+      <View style={{flex:hp(0.8)}}>
         <MainHeader text={'Application Type'} iconName={'arrow-left'} onpressBtn={()=>props.navigation.goBack()}/>
         <View
           style={{
@@ -322,15 +324,14 @@ const ApplicationType = props => {
     
         <View
           style={{
-            flax:1,
+            flax:hp(0.2),
             height: hp(8),
             flexDirection: 'row',
             justifyContent: 'center',
             alignContent: 'center',
             alignItems: 'center',
             backgroundColor: '#fff',
-            position:'relative',
-            top:hp(34),bottom:hp(0)
+            
           }}>
           <TouchableOpacity
             onPress={btColorHandler}
@@ -358,7 +359,7 @@ const ApplicationType = props => {
           </TouchableOpacity>
         </View>
      
-    </>
+    </View>
   );
 };
 

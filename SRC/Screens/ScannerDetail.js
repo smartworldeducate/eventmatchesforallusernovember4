@@ -131,7 +131,7 @@ const ScannerDetail = props => {
   };
 
   return (
-    <>
+    <View style={{flex: 1}}>
       <Toast
         isShow={isShow}
         positionIndicator="top"
@@ -164,7 +164,7 @@ const ScannerDetail = props => {
           </Modal>
         </View>
       )}
-     
+
       <BottomSheet
         isVisible={visible}
         style={{
@@ -219,8 +219,8 @@ const ScannerDetail = props => {
           const {setup_id, scan_time} = e;
           console.log('map fdata', e);
           return (
-            <View style={{}} key={i}>
-              <View style={{}}>
+            <View>
+              <View style={{flex: hp(1)}} key={i}>
                 <ImageBackground
                   style={{height: hp(30)}}
                   source={{uri: e.tag_banner}}
@@ -240,117 +240,135 @@ const ScannerDetail = props => {
                     </View>
                   </TouchableOpacity>
                 </ImageBackground>
-              </View>
-              <View style={{width: wp(90), marginLeft: hp(3)}}>
-                <Text style={styles.desc}>{e.tag_desc}</Text>
-              </View>
-              <View
-                style={{
-                  width: wp(90),
-                  marginHorizontal: hp(3.5),
-                  marginTop: hp(5),
-                }}>
-                <Text style={styles.desc}>About</Text>
-              </View>
-              <View
-                style={{
-                  width: wp(90),
-                  marginHorizontal: hp(3.5),
-                  marginTop: hp(2),
-                }}>
-                <Text style={styles.longdesc}>{e.tag_text}</Text>
-              </View>
-              <View style={{flexDirection: 'row', marginTop: hp(5)}}>
-                {e.scan_time == null && (
-                  <View
-                    style={{
-                      flexDirection: 'row',
-                      width: wp(45),
-                      marginHorizontal: hp(3.5),
-                    }}>
+                <View style={{height: hp(5), marginHorizontal: hp(3.5)}}>
+                  <Text style={styles.desc}>{e.tag_desc}</Text>
+                </View>
+                <View
+                  style={{
+                    height: hp(5),
+                    marginHorizontal: hp(3.5),
+                    // marginTop: hp(5),
+                  }}>
+                  <Text style={styles.desc}>About</Text>
+                </View>
+                <View
+                  style={{
+                    height: hp(10),
+                    marginHorizontal: hp(3.5),
+                    marginTop: hp(2),
+                  }}>
+                  <Text style={styles.longdesc}>{e.tag_text}</Text>
+                </View>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    marginTop: hp(5),
+                    height: hp(10),
+                  }}>
+                  {e.scan_time == null && (
                     <View
                       style={{
-                        width: wp(14),
-                        height: hp(7),
-                        borderRadius: hp(2),
-                        backgroundColor: setup_id == 1 ? '#D6EAF8' : '#5DADE2',
+                        flexDirection: 'row',
+                        width: wp(45),
+                        marginHorizontal: hp(3.5),
                       }}>
-                      <Tin
+                      <View
                         style={{
-                          marginVertical: hp(1.5),
-                          marginHorizontal: hp(1.7),
-                        }}
-                        name="clock-time-nine"
-                        size={30}
-                        color={setup_id == 1 ? '#5DADE2' : '#D6EAF8'}
-                      />
-                    </View>
-                    <View style={{marginLeft: hp(1.5), marginTop: hp(0.5)}}>
-                      <View>
-                        <Text style={styles.times}>00:00</Text>
+                          width: wp(14),
+                          height: hp(7),
+                          borderRadius: hp(2),
+                          backgroundColor:
+                            setup_id == 1 ? '#D6EAF8' : '#5DADE2',
+                        }}>
+                        <Tin
+                          style={{
+                            marginVertical: hp(1.5),
+                            marginHorizontal: hp(1.7),
+                          }}
+                          name="clock-time-nine"
+                          size={30}
+                          color={setup_id == 1 ? '#5DADE2' : '#D6EAF8'}
+                        />
                       </View>
-                      <View style={{marginTop: hp(0.5)}}>
-                        <Text style={styles.texttime}> Time</Text>
+                      <View
+                        style={{
+                          height: hp(10),
+                          marginLeft: hp(1.5),
+                          marginTop: hp(0.5),
+                        }}>
+                        <View>
+                          <Text style={styles.times}>00:00</Text>
+                        </View>
+                        <View style={{marginTop: hp(0.5)}}>
+                          <Text style={styles.texttime}> Time</Text>
+                        </View>
                       </View>
                     </View>
-                  </View>
-                )}
-                {e.scan_time !== null && (
-                  <View
-                    style={{
-                      flexDirection: 'row',
-                      width: wp(45),
-                      marginHorizontal: hp(3.5),
-                    }}>
+                  )}
+                  {e.scan_time !== null && (
                     <View
                       style={{
-                        width: wp(14),
-                        height: hp(7),
-                        borderRadius: hp(2),
-                        backgroundColor: setup_id == 1 ? '#D6EAF8' : '#5DADE2',
+                        flexDirection: 'row',
+                        // width: wp(45),
+                        marginHorizontal: hp(3.5),
                       }}>
-                      <Tin
+                      <View
                         style={{
-                          marginVertical: hp(1.5),
-                          marginHorizontal: hp(1.7),
-                        }}
-                        name="clock-time-nine"
-                        size={30}
-                        color={setup_id == 1 ? '#5DADE2' : '#D6EAF8'}
-                      />
-                    </View>
-                    <View style={{marginLeft: hp(1.5), marginTop: hp(0.5)}}>
-                      <View>
-                        <Text style={styles.times}>{e.scan_time}</Text>
+                          width: wp(14),
+                          height: hp(7),
+                          borderRadius: hp(2),
+                          backgroundColor:
+                            setup_id == 1 ? '#D6EAF8' : '#5DADE2',
+                        }}>
+                        <Tin
+                          style={{
+                            marginVertical: hp(1.5),
+                            marginHorizontal: hp(1.7),
+                          }}
+                          name="clock-time-nine"
+                          size={30}
+                          color={setup_id == 1 ? '#5DADE2' : '#D6EAF8'}
+                        />
                       </View>
-                      <View style={{marginTop: hp(0.5)}}>
-                        <Text style={styles.texttime}>
-                          {setup_id == 1 ? 'IN' : 'OUT'} Time
-                        </Text>
+                      <View style={{marginLeft: hp(1.5), marginTop: hp(0.5)}}>
+                        <View>
+                          <Text style={styles.times}>{e.scan_time}</Text>
+                        </View>
+                        <View style={{marginTop: hp(0.5)}}>
+                          <Text style={styles.texttime}>
+                            {setup_id == 1 ? 'IN' : 'OUT'} Time
+                          </Text>
+                        </View>
                       </View>
                     </View>
-                  </View>
-                )}
+                  )}
+                </View>
               </View>
-              <TouchableOpacity
-                onPress={handleQrcode}
-                disabled={
-                  scan_time == null ? false : setup_id == 2 ? true : false
-                }
-                style={{
-                  backgroundColor: '#4D69DC',
-                  height: hp(7),
-                  position: 'absolute', left: 0, right: 0, bottom: 0,top:hp(100),
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}>
-                <Text style={{color: '#fff'}}>SCAN NOW</Text>
-              </TouchableOpacity>
+              <View style={{flex: hp(0.3)}}>
+                <TouchableOpacity
+                  onPress={handleQrcode}
+                  disabled={
+                    scan_time == null ? false : setup_id == 2 ? true : false
+                  }
+                  style={{
+                    backgroundColor: '#4D69DC',
+                    height: hp(8),
+                    position: 'absolute',
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    top: hp(98.4),
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}>
+                  <Text style={{color: '#fff'}}>SCAN NOW</Text>
+                </TouchableOpacity>
+              </View>
             </View>
           );
         })}
       </View>
-    </>
+    </View>
   );
 };
 
@@ -373,41 +391,7 @@ const styles = EStyleSheet.create({
     fontSize: hp(2),
     marginTop: hp(0.5),
   },
-  botContainer: {
-    backgroundColor: '#F0F3F4',
-    marginTop: hp(2),
-    flexDirection: 'row',
-    marginHorizontal: hp(3.5),
-  },
-  zetext: {
-    color: '#fff',
-    fontSize: fontSize.small,
-    fontWeight: '100',
-    fontFamily: fontFamily.ceraLight,
-  },
-  bootContText: {
-    fontSize: '0.5rem',
-    fontWeight: '900',
-    fontFamily: fontFamily.ceraLight,
-    paddingHorizontal: hp(3),
-    color: '#979797',
-  },
-  bootContText2: {
-    fontSize: '0.5rem',
-    fontWeight: '500',
-    fontFamily: fontFamily.ceraLight,
-    paddingHorizontal: hp(2),
-    color: '#979797',
-    textTransform: 'uppercase',
-  },
-  bootContText1: {
-    fontSize: '0.7rem',
-    fontWeight: '700',
-    fontFamily: fontFamily.ceraLight,
-    fontStyle: 'normal',
-    paddingHorizontal: hp(2),
-    color: '#353535',
-  },
+
   userName: {
     color: '#fff',
     fontSize: '0.75rem',
@@ -416,97 +400,6 @@ const styles = EStyleSheet.create({
     fontStyle: 'normal',
   },
 
-  welCome: {
-    color: '#fff',
-    fontSize: '0.575rem',
-    fontWeight: '300',
-    marginTop: hp(0.5),
-    fontFamily: fontFamily.ceraLight,
-    fontStyle: 'normal',
-    paddingBottom: hp(0.2),
-  },
-  textInputCustomStyle: {
-    width: wp(80),
-    // fontSize: hp('1.65'),
-    height: hp('6'),
-    letterSpacing: -0.05,
-    paddingLeft: wp('3'),
-    color: '#292D32',
-    fontSize: '0.7rem',
-    fontWeight: '300',
-    fontFamily: fontFamily.ceraLight,
-  },
-  firstRow: {
-    width: wp(50),
-    height: hp(7.9),
-    flexDirection: 'row',
-    paddingTop: hp(1),
-  },
-  homeSearch: {
-    marginTop: hp(2.2),
-    flexDirection: 'row',
-    backgroundColor: '#fff',
-    justifyContent: 'space-between',
-    marginHorizontal: hp(2.5),
-    borderRadius: hp(1.5),
-    shadowColor: '#000',
-    shadowOpacity: 0.5,
-    shadowRadius: 4,
-    elevation: 4,
-  },
-  welcomTitle: {marginTop: hp(1), marginLeft: hp(-2)},
-  imageList: {
-    width: wp(10.7),
-    marginLeft: hp(-0.5),
-    borderColor: '#fff',
-    borderWidth: 1,
-    borderRadius: hp(50),
-  },
-  homesearchView: {
-    width: wp(45),
-    height: hp(6),
-    backgroundColor: '#58D68D ',
-    borderRadius: hp(2),
-    marginHorizontal: hp(1),
-  },
-  firstRowView: {
-    width: wp(12),
-    height: hp(6),
-    borderRadius: hp(2),
-    marginVertical: hp(1),
-    marginRight: hp(3),
-  },
-  userImage: {width: wp(12), height: hp(6), borderRadius: hp(1)},
-  firstRowRightSection: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  bell: {marginTop: hp(1), marginRight: hp(2)},
-  menu: {marginTop: hp(1.3)},
-  headerImageSection: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginVertical: hp(2.5),
-  },
-  imgStyle: {width: wp(10), height: hp(5), borderRadius: hp(50)},
-  menustyle: {
-    width: '1.3rem',
-    height: '1rem',
-  },
-  searchicon: {marginTop: hp(1.5), marginRight: hp(2)},
-  placeholderStyle: {
-    fontSize: '0.575rem',
-    fontWeight: '300',
-    fontFamily: fontFamily.ceraLight,
-    fontStyle: 'normal',
-  },
-  overlyImage: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: hp(1),
-  },
   catname: {
     color: '#fff',
     fontSize: '0.6rem',

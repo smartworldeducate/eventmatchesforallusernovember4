@@ -30,7 +30,7 @@ const ChildBss = props => {
     outputRange: [90, 250], // Change this value to control the expanded height
   });
   return (
-    <>
+    <View style={{flex:1}}>
       <View>
         <MainHeader
           text={'Child’s in BSS'}
@@ -145,7 +145,7 @@ const ChildBss = props => {
                 {inheight !== item.id && (
                   <Animated.View
                     style={{
-                      height: hp(12),
+                      height: hp(11),
                       overflow: 'hidden',
                     }}>
                     <View style={{flexDirection: 'row', flex: 1}}>
@@ -235,7 +235,7 @@ const ChildBss = props => {
         })}
      
       </ScrollView>
-    </>
+    </View>
   );
 };
 

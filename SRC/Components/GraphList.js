@@ -31,8 +31,8 @@ const GraphList = () => {
             donut
             showGradient
             sectionAutoFocus
-            radius={45}
-            innerRadius={30}
+            radius={38}
+            innerRadius={25}
             innerCircleColor={'#fff'}
             centerLabelComponent={() => {
               return (
@@ -41,9 +41,7 @@ const GraphList = () => {
                     style={styles.tousandlakh}>
                     25,000
                   </Text>
-                  {/* <Text style={styles.gross}>
-                    gross salary
-                  </Text> */}
+                 
                 </View>
               );
             }}
