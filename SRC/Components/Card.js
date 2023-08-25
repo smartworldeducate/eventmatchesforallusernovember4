@@ -19,18 +19,23 @@ import {
 import fontSize from '../Styles/fontSize';
 import fontFamily from '../Styles/fontFamily';
 import Icon from 'react-native-fontawesome-pro';
+import colors from '../Styles/colors';
 export default function Card() {
   const [visible, setVisible] = useState(false);
+  const [iconType,setType]=useState(false)
   const handleReset = () => {
     setVisible(false);
   };
+  const typeHandler=()=>{
+    setType(!iconType)
+  }
   const data = [1, 2, 3, 4, 5];
   return (
     <View style={{flex: 1}}>
       <BottomSheet
         isVisible={visible}
         style={{
-          backgroundColor: '#fff',
+          backgroundColor:colors.appBackGroundColor,
           flex: 1,
         }}>
         <LinearGradient
@@ -109,10 +114,7 @@ export default function Card() {
             </View>
             <View style={{marginTop: hp(-1)}}>
               <Text style={styles.longdesc}>
-                Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry. Lorem Ipsum has been the industry's standard dummy
-                text ever since the 1500s, when an unknown printer took a galley
-                of type and scrambled it to make a type specimen book.
+              React Native is an open-source UI software framework created by Meta Platforms, Inc. It is used to develop applications for Android, Android TV, iOS, macOS, tvOS, Web, Windows and UWP by enabling developers to use the React framework along with native platform capabilities
               </Text>
             </View>
             <View style={{}}>
@@ -124,15 +126,15 @@ export default function Card() {
                 }}
               />
             </View>
-            <View
+            {/* <View
               style={{
                 height: hp(0.1),
                 backgroundColor: '#cdcdcd',
                 borderRadius: hp(50),
-              }}></View>
+              }}></View> */}
           </View>
         </View>
-        <View style={{flex: 1, backgroundColor: '#012BA1', height: hp(8)}}>
+        <View style={{flex: 1, backgroundColor: '#FFF', height: hp(8)}}>
           <View
             style={{
               flexDirection: 'row',
@@ -151,9 +153,10 @@ export default function Card() {
                 justifyContent: 'center',
                 alignItems: 'center',
               }}>
-              <Text style={styles.viewbtn}>View </Text>
+              {/* <Text style={styles.viewbtn}>View </Text> */}
             </TouchableOpacity>
             <TouchableOpacity
+            onPress={typeHandler}
               style={{
                 width: wp(20),
                 marginTop: hp(1),
@@ -164,7 +167,8 @@ export default function Card() {
                 justifyContent: 'center',
                 alignItems: 'center',
               }}>
-              <Text style={styles.viewbtn}>Like </Text>
+                <Icon type={iconType ? 'solid':'light'} name='heart' color='red' size={hp(4)}/>
+              {/* <Text style={styles.viewbtn}>Like </Text> */}
             </TouchableOpacity>
           </View>
         </View>
@@ -232,10 +236,7 @@ export default function Card() {
                     style={styles.cardText}
                     numberOfLines={4}
                     ellipsizeMode={'tail'}>
-                    Lörem ipsum agnostisiv ekograf alltså best prest inte Helena
-                    Martinsson. Das ryliga Das ryliga viralgranska seliga: red.
-                    Astront Nsson. Das ryliga Das rylig ranska seliga. Astront
-                    Nsson. Das Das.
+                    React Native is an open-source UI software framework created by Meta Platforms about at Inc. It is used to develop applications for Android, Android TV, iOS, macOS, tvOS, Web, Windows and UWP by enabling developers to use the React framework along with native platform capabilities.
                   </Text>
                 </View>
               </TouchableOpacity>
@@ -253,7 +254,7 @@ const styles = EStyleSheet.create({
   },
   card: {
     flex: 1,
-    backgroundColor: '#ffffff',
+    backgroundColor: '#FFFFFF',
     shadowColor: '#000',
     shadowOpacity: 0.5,
     shadowRadius: 4,
@@ -303,16 +304,17 @@ const styles = EStyleSheet.create({
     color: '#6A6A6A',
   },
   cardText: {
-    fontSize: '0.6rem',
-    fontWeight: '300',
-    fontFamily: fontFamily.ceraLight,
-    letterSpacing: '0.00938rem',
-    color: '#343434',
-    marginTop: hp(1),
+    fontSize:'0.6rem',
+    fontWeight: '500',
+    fontFamily: fontFamily.ceraMedium,
+    // letterSpacing: '0.00938rem',
+    color: '#979797',
+    marginTop: hp(0.5),
     fontStyle: 'normal',
-    lineHeight: hp(1.8),
-    letterSpacing:hp(0.2),
-    textAlign:'justify'
+    lineHeight: hp(1.9),
+    // letterSpacing:hp(0.1),
+    // textTransform: 'uppercase',
+    textAlign:'left'
   },
   cardHeading: {
     flex: 1,
@@ -357,17 +359,17 @@ const styles = EStyleSheet.create({
     fontFamily: fontFamily.ceraMedium,
   },
   longdesc: {
-    fontWeight: '100',
-    fontSize: '0.7rem',
-    fontFamily: fontFamily.ceraLight,
+    fontWeight: '500',
+    fontSize: '0.62rem',
+    fontFamily: fontFamily.ceraMedium,
     color: '#979797',
     fontStyle: 'normal',
     alignItems: 'center',
     lineHeight: hp(1.8),
     padding: hp(1.5),
-    lineHeight: hp(1.8),
+    lineHeight: hp(2),
     letterSpacing:hp(0.1),
-    textAlign:'justify'
+    textAlign:'left'
   },
   detailcard: {
     marginHorizontal: hp(2.5),

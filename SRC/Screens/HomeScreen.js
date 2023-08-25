@@ -37,6 +37,7 @@ import Card from '../Components/Card';
 import Calinder from '../Components/Calinder';
 import fontSize from '../Styles/fontSize';
 import fontFamily from '../Styles/fontFamily';
+import Card1 from '../Components/Card1';
 
 const HomeScreen = props => {
   const [animodal, setAnimodal] = useState(false);
@@ -307,6 +308,7 @@ const HomeScreen = props => {
           </View>
         </View>
         <Card />
+        {/* <Card1 /> */}
         <View>
           <Calinder />
         </View>
@@ -500,7 +502,7 @@ const styles = EStyleSheet.create({
   bootContText2: {
     fontSize: '0.5rem',
     fontWeight: '500',
-    fontFamily: fontFamily.ceraMedium,
+    fontFamily: fontFamily.robotoMedium,
     fontStyle: 'normal',
     color: '#979797',
     textTransform: 'uppercase',
@@ -509,7 +511,7 @@ const styles = EStyleSheet.create({
   serviceSection: {
     fontSize: '0.7rem',
     fontWeight: '700',
-    fontFamily: fontFamily.ceraMedium,
+    fontFamily: fontFamily.robotoMedium,
     fontStyle: 'normal',
     paddingHorizontal: hp(2),
     color: '#353535',
@@ -555,9 +557,8 @@ const styles = EStyleSheet.create({
     marginVertical: hp(1),
   },
   clbtnStyle: {
-    fontSize: '0.5rem',
+    fontSize: '0.6rem',
     color: '#061D7A',
-    paddingHorizontal: hp(3.5),
     fontWeight: '500',
     fontFamily: fontFamily.ceraMedium,
     fontStyle: 'normal',
@@ -573,10 +574,9 @@ const styles = EStyleSheet.create({
   viewClinderText: {
     color: '#fff',
     fontFamily: fontFamily.ceraMedium,
-    paddingHorizontal: hp(3.5),
     fontWeight: '500',
     fontStyle: 'normal',
-    fontSize: '0.55rem',
+    fontSize: '0.6rem',
   },
 });
 

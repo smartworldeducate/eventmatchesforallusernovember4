@@ -6,8 +6,10 @@ import {
   TouchableOpacity,
   Linking,
   ActivityIndicator,
+  SafeAreaView,
 } from 'react-native';
 import React, {useEffect, useState, useRef} from 'react';
+import Menu from 'react-native-vector-icons/AntDesign';
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import Icon from 'react-native-fontawesome-pro';
 import {handleScaneer} from '../features/scan/scanSlice';
@@ -131,7 +133,7 @@ const ScannerDetail = props => {
   };
 
   return (
-    <View style={{flex: 1}}>
+    <SafeAreaView style={{flex: 1}}>
       <Toast
         isShow={isShow}
         positionIndicator="top"
@@ -253,7 +255,7 @@ const ScannerDetail = props => {
                 </View>
                 <View
                   style={{
-                    height: hp(10),
+                    height: hp(17),
                     marginHorizontal: hp(3.5),
                     marginTop: hp(2),
                   }}>
@@ -344,7 +346,7 @@ const ScannerDetail = props => {
                   )}
                 </View>
               </View>
-              <View style={{flex: hp(0.3)}}>
+              {/* <View style={{flex: hp(0.3)}}>
                 <TouchableOpacity
                   onPress={handleQrcode}
                   disabled={
@@ -363,12 +365,75 @@ const ScannerDetail = props => {
                   }}>
                   <Text style={{color: '#fff'}}>SCAN NOW</Text>
                 </TouchableOpacity>
-              </View>
+              </View> */}
             </View>
           );
         })}
       </View>
-    </View>
+      <View
+        style={{
+          backgroundColor: '#fff',
+          position: 'relative',
+          bottom: hp(0),
+        }}>
+        <View
+          style={{
+            height: hp(7),
+            flexDirection: 'row',
+            justifyContent: 'center',
+            alignContent: 'center',
+            alignItems: 'center',
+          }}>
+          {/* <View style={{flex:0.1}}></View> */}
+          <TouchableOpacity
+            onPress={() =>props.navigation.navigate('HomeScreenDrawer')}
+            style={{flex: 0.2, alignItems: 'center'}}>
+            <Menu name="home" size={hp(3)} color="#1C37A4" style={{}} />
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => props.navigation.navigate('Index')}
+            style={{flex: 0.2, paddingTop: hp(0.5), alignItems: 'center'}}>
+            <Icon
+              type="light"
+              name="book-bookmark"
+              size={hp(3)}
+              color="#979797"
+            />
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={handleQrcode}
+            style={{
+              flex: 0.2,
+              alignItems: 'center',
+            }}>
+            <View
+              style={{
+                height: hp('6'),
+                alignItems: 'center',
+                width: wp(12),
+                borderWidth: hp(0.5),
+                borderColor: 'gray',
+                borderRadius: hp(50),
+                backgroundColor: 'black',
+                justifyContent: 'center',
+              }}>
+              <Icon style={{}} name="qrcode" size={hp(4)} color="#fff" />
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={{flex: 0.2, alignItems: 'center'}}
+            onPress={() => props.navigation.navigate('Scanner')}>
+            <Icon type="light" name="user-tag" size={hp(3.5)} color="#979797" />
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('Profile')}
+            style={{flex: 0.2, alignItems: 'center', paddingTop: hp(0)}}>
+            <Icon type="light" name="user-tie" size={hp(3)} color="#979797" />
+          </TouchableOpacity>
+          {/* <View style={{flex:0.1}}></View> */}
+        </View>
+      </View>
+    </SafeAreaView>
   );
 };
 
@@ -416,31 +481,32 @@ const styles = EStyleSheet.create({
     fontFamily: fontFamily.ceraMedium,
     fontStyle: 'normal',
     marginTop: hp(1.5),
+    textTransform:'uppercase'
   },
   times: {
     color: '#5669FF',
     fontSize: '0.7rem',
-    fontWeight: '300',
-    fontFamily: fontFamily.ceraLight,
+    fontWeight: '700',
+    fontFamily: fontFamily.ceraBold,
     fontStyle: 'normal',
   },
   texttime: {
     color: '#807A7A',
     fontSize: '0.6rem',
-    fontWeight: '500',
-    fontFamily: fontFamily.ceraMedium,
+    fontWeight: '700',
+    fontFamily: fontFamily.ceraBold,
     fontStyle: 'normal',
   },
   longdesc: {
-    fontWeight: '100',
-    fontSize: '0.65rem',
-    fontFamily: fontFamily.ceraLight,
+    fontWeight: '500',
+    fontSize: '0.6rem',
+    fontFamily: fontFamily.ceraMedium,
     color: '#979797',
     fontStyle: 'normal',
     alignItems: 'center',
-    lineHeight: hp(1.8),
+    lineHeight: hp(2),
 
     latterSpacing: hp(1),
-    textAlign: 'justify',
+    textAlign: 'left',
   },
 });

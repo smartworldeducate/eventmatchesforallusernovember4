@@ -39,12 +39,12 @@ const HeaderTop = ({
   onPressIcon,
 }) => {
   const data = [
-    {id: 1, image: 'one'},
-    {id: 2, image: 'two'},
-    {id: 3, image: 'five'},
+    {id: 1, image: 'igt'},
+    {id: 2, image: 'salman'},
+    {id: 3, image: 'qasim'},
     {id: 4, image: 'imran'},
     {id: 5, image: 'im'},
-    {id: 6, image: 'ssl'},
+    {id: 6, image: 'asd'},
     {id: 7, image: 'artg'},
   ];
   const navigation = useNavigation();

@@ -1,6 +1,7 @@
-import React, {useEffect, useState, useCallback} from 'react';
+import React, {useEffect, useState, useCallback, useRef} from 'react';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import Icon from 'react-native-fontawesome-pro';
+import QRCodeScanner from 'react-native-qrcode-scanner';
 
 import {
   SafeAreaView,
@@ -14,17 +15,21 @@ import {
   TextInput,
   ScrollView,
   RefreshControl,
+  ActivityIndicator,
 } from 'react-native';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+import Modal from 'react-native-modal';
+
 import {
   useLinkProps,
   useNavigation,
   CommonActions,
 } from '@react-navigation/native';
-
+import {Toast} from 'galio-framework';
+import {BottomSheet} from '@rneui/themed';
 import LinearGradient from 'react-native-linear-gradient';
 import fontFamily from '../Styles/fontFamily';
 import fontSize from '../Styles/fontSize';
@@ -52,14 +57,83 @@ const Scanner = props => {
   // const [visible, setVisible] = useState(false)
   // const [success, setSuccess] = useState(false)
   const [refreshing, setRefreshing] = useState(false);
-  const [animodal, setAnimodal] = useState(false);
-  const [animation, setAnimation] = useState(true);
+  // const [animodal, setAnimodal] = useState(false);
+  // const [animation, setAnimation] = useState(true);
   const [tagData, setTagData] = useState([]);
   const [catgory, setCategory] = useState([]);
   const [search, setSearch] = useState('');
   const [filteredDataSource, setFilteredDataSource] = useState([]);
   const [masterDataSource, setMasterDataSource] = useState([]);
+  const [animodal, setAnimodal] = useState(false);
+  const [animation, setAnimation] = useState(true);
+  const [isShow, setShow] = useState(false);
+  const [visibleBtn, setVisibleBtn] = useState(false);
+  const [visible, setVisible] = useState(false);
+  const [state, setState] = useState({
+    scan: false,
+    ScanResult: false,
+    result: '',
+  });
+  const {scan, ScanResult, result} = state;
 
+  var ncode = result?.data;
+
+  var [barcode, setBarcode] = useState({
+    item: [],
+  });
+
+  const addCode = data => {
+    const newCode = barcode.item.concat(data);
+    setBarcode({item: newCode});
+  };
+  // console.log(barcode.item);
+
+  const scanner = useRef(null);
+
+  const scanData = result;
+
+  const onSuccess = async e => {
+    props.navigation.navigate('Scanner', e);
+    setInterval(() => {
+      setShow(false);
+    }, 4000);
+    const check = e.data.substring(0, 4);
+    setState({
+      result: e,
+      scan: false,
+      ScanResult: true,
+    });
+    if (check === 'http') {
+      Linking.openURL(e.data).catch(err =>
+        console.error('An error occured', err),
+      );
+    } else {
+      setState({
+        result: e,
+        scan: false,
+        ScanResult: true,
+      });
+      setVisible(false);
+      console.log('scan data', e.data);
+    }
+  };
+
+  const activeQR = e => {
+    setState({
+      scan: true,
+    });
+  };
+
+  const handleQrcode = () => {
+    // setShow(true)
+    setVisible(true);
+    activeQR('active qr');
+  };
+
+  const handleReset = () => {
+    setState({scan: false});
+    setVisible(false);
+  };
   // useEffect(() => {
   //   fetch('https://jsonplaceholder.typicode.com/posts')
   //     .then(response => response.json())
@@ -206,6 +280,87 @@ const Scanner = props => {
             ? colors.appBackGroundColor
             : colors.appBackGroundColor,
       }}>
+      <Toast
+        isShow={isShow}
+        positionIndicator="top"
+        style={{
+          backgroundColor: '#F1948A',
+          width: wp(90),
+          marginHorizontal: hp(2.5),
+          borderRadius: 5,
+        }}>
+        <Text style={{color: '#fff'}}>please enter valid Qrcode</Text>
+      </Toast>
+
+      {animation && (
+        <View>
+          <Modal isVisible={animodal}>
+            <View
+              style={{
+                width: wp(30),
+                height: hp(15),
+                backgroundColor: '#EAFAF1',
+                borderRadius: hp(2),
+                justifyContent: 'center',
+                alignItems: 'center',
+                marginHorizontal: hp(15),
+              }}>
+              <View style={{}}>
+                <ActivityIndicator animating={animation} size={'large'} />
+              </View>
+            </View>
+          </Modal>
+        </View>
+      )}
+      <BottomSheet
+        isVisible={visible}
+        style={{
+          width: wp(100),
+          height: hp(100),
+          backgroundColor: '#fff',
+          flex: 1,
+        }}>
+        <View
+          style={{
+            width: wp(100),
+            position: 'relative',
+            zIndex: 1,
+            marginBottom: hp(20),
+          }}>
+          <TouchableOpacity
+            onPress={handleReset}
+            style={{
+              width: wp(10),
+              height: hp(5),
+              // borderRadius: hp(50),
+              justifyContent: 'center',
+              alignItems: 'center',
+              position: 'absolute',
+              top: 20,
+              left: hp(45),
+            }}>
+            <Text style={{color: 'gray', fontSize: hp(2)}}>X</Text>
+          </TouchableOpacity>
+        </View>
+
+        {scan && (
+          <QRCodeScanner
+            cameraStyl={{height: hp(120)}}
+            reactivate={true}
+            showMarker={true}
+            ref={scanner}
+            onRead={onSuccess}
+            bottomContent={
+              <View
+                style={{
+                  paddingTop: hp(8),
+                  flexDirection: 'row',
+                  marginTop: hp(8),
+                }}></View>
+            }
+          />
+        )}
+      </BottomSheet>
       <LinearGradient
         start={{x: 0, y: 0}}
         end={{x: 1, y: 0}}
@@ -260,7 +415,7 @@ const Scanner = props => {
               onChangeText={text => searchFilterFunction(text)}
               returnKeyType={'done'}
               iconName={'user'}
-              placeholder={'Search Employee'}
+              placeholder={'Search Event'}
               placeholderColor={'gray'}
               iconColor={colors.loginIconColor}
               placeholderTextColor="gray"
@@ -357,7 +512,7 @@ const Scanner = props => {
                   flexDirection: 'row',
                   marginHorizontal: hp(2.5),
                   marginBottom: hp(2),
-                  backgroundColor: 'white',
+                  backgroundColor: '#FFFFFF',
                   borderRadius: hp(2),
                   shadowColor: '#000',
                   shadowOpacity: 0.5,
@@ -386,7 +541,7 @@ const Scanner = props => {
                   />
                 </View>
                 <View>
-                  <View>
+                  <View style={{marginVertical:hp(0.5)}}>
                     <Text style={styles.desc}>{tag_desc}</Text>
                   </View>
 
@@ -487,7 +642,7 @@ const Scanner = props => {
                   />
                 </View>
                 <View>
-                  <View>
+                  <View style={{marginVertical:hp(0.5)}}>
                     <Text style={styles.desc}>{tag_desc}</Text>
                   </View>
                   <View style={{flexDirection: 'row', marginTop: hp(0)}}>
@@ -532,6 +687,69 @@ const Scanner = props => {
           })}
         </View>
       )}
+      <View
+        style={{
+          backgroundColor: '#fff',
+          position: 'relative',
+          bottom: hp(0),
+        }}>
+        <View
+          style={{
+            height: hp(7),
+            flexDirection: 'row',
+            justifyContent: 'center',
+            alignContent: 'center',
+            alignItems: 'center',
+          }}>
+          {/* <View style={{flex:0.1}}></View> */}
+          <TouchableOpacity
+            onPress={() =>props.navigation.navigate('HomeScreenDrawer')}
+            style={{flex: 0.2, alignItems: 'center'}}>
+            <Menu name="home" size={hp(3)} color="#1C37A4" style={{}} />
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => props.navigation.navigate('Index')}
+            style={{flex: 0.2, paddingTop: hp(0.5), alignItems: 'center'}}>
+            <Icon
+              type="light"
+              name="book-bookmark"
+              size={hp(3)}
+              color="#979797"
+            />
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={handleQrcode}
+            style={{
+              flex: 0.2,
+              alignItems: 'center',
+            }}>
+            <View
+              style={{
+                height: hp('6'),
+                alignItems: 'center',
+                width: wp(12),
+                borderWidth: hp(0.5),
+                borderColor: 'gray',
+                borderRadius: hp(50),
+                backgroundColor: 'black',
+                justifyContent: 'center',
+              }}>
+              <Icon style={{}} name="qrcode" size={hp(4)} color="#fff" />
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={{flex: 0.2, alignItems: 'center'}}
+            onPress={() => props.navigation.navigate('Scanner')}>
+            <Icon type="light" name="user-tag" size={hp(3.5)} color="#979797" />
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('Profile')}
+            style={{flex: 0.2, alignItems: 'center', paddingTop: hp(0)}}>
+            <Icon type="light" name="user-tie" size={hp(3)} color="#979797" />
+          </TouchableOpacity>
+          {/* <View style={{flex:0.1}}></View> */}
+        </View>
+      </View>
     </SafeAreaView>
   );
 };
@@ -697,20 +915,22 @@ const styles = EStyleSheet.create({
     fontFamily: fontFamily.ceraMedium,
     fontStyle: 'normal',
     paddingBottom: hp(0.2),
+    textTransform:'uppercase'
   },
   desc: {
     color: '#1D1E29',
-    fontSize: '0.9rem',
+    fontSize: '0.7rem',
     fontWeight: '500',
     fontFamily: fontFamily.ceraMedium,
     fontStyle: 'normal',
     marginTop: hp(1.5),
+    textTransform:'uppercase'
   },
   times: {
     color: '#5669FF',
-    fontSize: '0.7rem',
-    fontWeight: '300',
-    fontFamily: fontFamily.ceraLight,
+    fontSize: '0.6rem',
+    fontWeight: '500',
+    fontFamily: fontFamily.ceraBold,
     fontStyle: 'normal',
   },
   texttime: {
