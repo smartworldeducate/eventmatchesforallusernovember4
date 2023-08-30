@@ -110,7 +110,7 @@ const Routes = () => {
         <Stack.Screen name="LeaveBalance" component={LeaveBalance} />
         <Stack.Screen name="LeaveHistory" component={LeaveHistory} />
         <Stack.Screen name="Search" component={Search} />
-        {/* <Stack.Screen name="Scanner" component={Scanner} /> */}
+        <Stack.Screen name="TestScreen" component={TestScreen} />
         <Stack.Screen name="Index" component={Index} />
         <Stack.Screen name="ScannerDetail" component={ScannerDetail} />
       </Stack.Navigator>

@@ -250,7 +250,7 @@ const styles = EStyleSheet.create({
     backgroundColor:'#FFFFFF',
   },
   clText: {
-    fontSize: '0.6rem',
+    fontSize: '0.55rem',
     fontWeight: '500',
     fontFamily: fontFamily.robotoMedium,
     color: '#979797',

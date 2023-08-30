@@ -167,7 +167,7 @@ export default function Card() {
                 justifyContent: 'center',
                 alignItems: 'center',
               }}>
-                <Icon type={iconType ? 'solid':'light'} name='heart' color='red' size={hp(4)}/>
+                <Icon type={iconType ? 'solid':'light'} name='thumbs-up' color='red' size={hp(4)}/>
               {/* <Text style={styles.viewbtn}>Like </Text> */}
             </TouchableOpacity>
           </View>

@@ -153,13 +153,13 @@ const HeaderTop = ({
               : console.log('lastitem id', item.id);
             if (i < 6) {
               return (
-                <View style={styles.imageList} key={i}>
+                <TouchableOpacity onPress={()=>navigation.navigate('Search')} style={styles.imageList} key={i}>
                   <Image
                     style={styles.imgStyle}
                     source={{uri: item.image}}
                     resizeMode="cover"
                   />
-                </View>
+                </TouchableOpacity>
               );
             } else {
               return (

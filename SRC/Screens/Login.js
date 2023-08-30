@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin'
 import {
   SafeAreaView,
   StatusBar,
@@ -25,10 +26,40 @@ import {
   CommonActions,
 } from '@react-navigation/native';
 const Login = () => {
+  const navigation = useNavigation();
+
   const [employeeId, setEmployeeId] = useState();
   const [employeePassword, setEmployeePassword] = useState();
+  useEffect(() => {
+    GoogleSignin.configure({
+      webClientId: '249159142983-3r1307q40tb9de7qctsm4ckk244etg9h.apps.googleusercontent.com',
+    });
+  }, [])
+  const signinWithGoogle = async () => {
+    // setAnimodal(true)
+    try {
+      await GoogleSignin.hasPlayServices();
+      const userInfo = await GoogleSignin.signIn();
+      console.log(userInfo?.user)
+      const { id, name, email, givenName, photo } = userInfo?.user
+      await storeData({ google_id: id, photo: photo })
+      const glData = await dispatch(loginUser({ email: email, google_id: id }))
+      // console.log("google data",glData.payload.data)
+      // glData.payload.data ? props.navigation.navigate('Home') : props.navigation.navigate('Register')
+      // setAnimodal(false)
 
-  const navigation = useNavigation();
+    } catch (error) {
+      if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+        // user cancelled the login flow
+      } else if (error.code === statusCodes.IN_PROGRESS) {
+        // operation (e.g. sign in) is in progress already
+      } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+        // play services not available or outdated
+      } else {
+        // some other error happened
+      }
+    }
+  }
   const handleNavigate = (routeName, clearStack, params) => {
     navigation.navigate(routeName, params);
     if (clearStack) {
@@ -192,7 +223,11 @@ const Login = () => {
               OR
             </Text>
 
-            <TouchableOpacity style={styles.loginWithGoogle}>
+            <TouchableOpacity style={styles.loginWithGoogle}onPress={() => signinWithGoogle().then(res => {
+                console.log("respo:", res)
+              }).catch(error => {
+                console.log(error)
+              })}>
               <View style={{flex: 0.15, backgroundColor: 'white'}}></View>
 
               <View

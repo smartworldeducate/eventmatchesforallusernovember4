@@ -223,7 +223,7 @@ const CustomDrawer = ({navigation}) => {
                 </TouchableOpacity>
               </View>
               <View style={styles.listnameStyle}>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => navigation.navigate('TestScreen')}>
                   <View style={{flexDirection: 'row', marginLeft: hp(3)}}>
                     {/* <View >
                 <Icon name='home' size={25} color='#fff'/>
