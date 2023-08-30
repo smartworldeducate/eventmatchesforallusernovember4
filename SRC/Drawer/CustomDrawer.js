@@ -207,6 +207,18 @@ const CustomDrawer = ({navigation}) => {
               </View>
             </TouchableOpacity>
           </View>
+          <View style={styles.listnameStyle}>
+            <TouchableOpacity onPress={() => navigation.navigate('Utility')}>
+              <View style={{flexDirection: 'row', marginLeft: hp(3)}}>
+                {/* <View >
+                <Icon name='home' size={25} color='#fff'/>
+                </View> */}
+                <View style={styles.homeleft}>
+                  <Text style={styles.textlistStyle}>Utility</Text>
+                </View>
+              </View>
+            </TouchableOpacity>
+          </View>
           <View style={{flexDirection: 'row'}}>
             <View>
               <View style={styles.listnameStyle}>

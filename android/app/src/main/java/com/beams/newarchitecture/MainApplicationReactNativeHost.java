@@ -1,4 +1,4 @@
-package com.beams.newarchitecture;
+package com.tagscanner.newarchitecture;
 
 import android.app.Application;
 import androidx.annotation.NonNull;
@@ -19,9 +19,9 @@ import com.facebook.react.fabric.CoreComponentsRegistry;
 import com.facebook.react.fabric.FabricJSIModuleProvider;
 import com.facebook.react.fabric.ReactNativeConfig;
 import com.facebook.react.uimanager.ViewManagerRegistry;
-import com.beams.BuildConfig;
-import com.beams.newarchitecture.components.MainComponentsRegistry;
-import com.beams.newarchitecture.modules.MainApplicationTurboModuleManagerDelegate;
+import com.tagscanner.BuildConfig;
+import com.tagscanner.newarchitecture.components.MainComponentsRegistry;
+import com.tagscanner.newarchitecture.modules.MainApplicationTurboModuleManagerDelegate;
 import java.util.ArrayList;
 import java.util.List;
 

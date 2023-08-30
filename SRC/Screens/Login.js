@@ -27,7 +27,12 @@ import {
 } from '@react-navigation/native';
 const Login = () => {
   const navigation = useNavigation();
-
+  const handleNavigate = (routeName, clearStack, params) => {
+    navigation.navigate(routeName, params);
+    if (clearStack) {
+      console.log('Clear');
+    }
+  };
   const [employeeId, setEmployeeId] = useState();
   const [employeePassword, setEmployeePassword] = useState();
   useEffect(() => {
@@ -41,6 +46,7 @@ const Login = () => {
       await GoogleSignin.hasPlayServices();
       const userInfo = await GoogleSignin.signIn();
       console.log(userInfo?.user)
+      handleNavigate("HomeScreen");
       const { id, name, email, givenName, photo } = userInfo?.user
       await storeData({ google_id: id, photo: photo })
       const glData = await dispatch(loginUser({ email: email, google_id: id }))
@@ -60,12 +66,7 @@ const Login = () => {
       }
     }
   }
-  const handleNavigate = (routeName, clearStack, params) => {
-    navigation.navigate(routeName, params);
-    if (clearStack) {
-      console.log('Clear');
-    }
-  };
+  
 
   const keyboardVerticalOffset = Platform.OS === 'ios' ? 60 : 20;
 

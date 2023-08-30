@@ -1,4 +1,4 @@
-package com.beams;
+package com.tagscanner;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;

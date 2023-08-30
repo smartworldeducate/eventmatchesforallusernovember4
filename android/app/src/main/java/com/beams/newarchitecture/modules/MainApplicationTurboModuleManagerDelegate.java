@@ -1,4 +1,4 @@
-package com.beams.newarchitecture.modules;
+package com.tagscanner.newarchitecture.modules;
 
 import com.facebook.jni.HybridData;
 import com.facebook.react.ReactPackage;

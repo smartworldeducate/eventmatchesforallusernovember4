@@ -69,7 +69,7 @@ const Calinder = props => {
               </AnimatedCircularProgress>
             </View>
 
-            <View>
+            <View style={{paddingLeft:hp(4)}}>
               <TouchableOpacity
                 style={{flexDirection: 'row'}}
                 onPress={() => navigation.navigate('LeaveBalance')}>
@@ -94,7 +94,7 @@ const Calinder = props => {
                     <View style={{marginRight: hp(1)}}>
                       <View style={{flexDirection: 'row', marginTop: hp(0)}}>
                         <View style={{marginRight: hp(1)}}>
-                          <Text style={styles.clText}>Casual Leaves</Text>
+                          <Text style={styles.clText}>Casual </Text>
                         </View>
                       </View>
                     </View>
@@ -125,7 +125,7 @@ const Calinder = props => {
                     <View style={{marginRight: hp(1)}}>
                       <View style={{flexDirection: 'row', marginTop: hp(0)}}>
                         <View style={{marginRight: hp(1)}}>
-                          <Text style={styles.clText}>Sick Leaves</Text>
+                          <Text style={styles.clText}>Sick </Text>
                         </View>
                       </View>
                     </View>
@@ -160,7 +160,7 @@ const Calinder = props => {
                     <View style={{marginRight: hp(1)}}>
                       <View style={{flexDirection: 'row', marginTop: hp(0)}}>
                         <View style={{marginRight: hp(1)}}>
-                          <Text style={styles.clText}>Annual Leaves</Text>
+                          <Text style={styles.clText}>Annual </Text>
                         </View>
                       </View>
                     </View>
@@ -250,7 +250,7 @@ const styles = EStyleSheet.create({
     backgroundColor:'#FFFFFF',
   },
   clText: {
-    fontSize: '0.55rem',
+    fontSize: '0.5rem',
     fontWeight: '500',
     fontFamily: fontFamily.robotoMedium,
     color: '#979797',
@@ -299,7 +299,7 @@ const styles = EStyleSheet.create({
   leaveSectionText: {
     fontSize: '0.7rem',
     color: '#353535',
-    marginTop: hp(1),
+    marginVertical: hp(0.5),
     fontWeight: '700',
     fontFamily: fontFamily.robotoBold,
     fontStyle: 'normal',
