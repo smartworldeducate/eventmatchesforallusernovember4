@@ -109,7 +109,6 @@ const HomeScreen = props => {
   const handleReset = () => {
     setState({scan: false});
     setVisible(false);
-   
   };
   const [leave, setLeave] = useState(false);
   const [clinder, setClinder] = useState(false);
@@ -170,15 +169,7 @@ const HomeScreen = props => {
           // text={'Change Password'}
         />
       </View>
-      <Toast
-        isShow={isShow}
-        positionIndicator="top"
-        style={{
-          backgroundColor: '#F1948A',
-          width: wp(90),
-          marginHorizontal: hp(2.5),
-          borderRadius: 5,
-        }}>
+      <Toast isShow={isShow} positionIndicator="top" style={styles.tost}>
         <Text style={{color: '#fff'}}>please enter valid Qrcode</Text>
       </Toast>
 
@@ -211,7 +202,6 @@ const HomeScreen = props => {
           flex: 1,
         }}>
         <View
-          
           style={{
             width: wp(100),
             position: 'relative',
@@ -219,7 +209,7 @@ const HomeScreen = props => {
             marginBottom: hp(20),
           }}>
           <TouchableOpacity
-          onPress={handleReset}
+            onPress={handleReset}
             style={{
               width: wp(10),
               height: hp(5),
@@ -270,12 +260,7 @@ const HomeScreen = props => {
 
             <Text style={[styles.bootContText2]}>Service Length</Text>
           </View>
-          <View
-            style={{
-              justifyContent: 'center',
-              alignItems: 'center',
-              paddingHorizontal: hp(2),
-            }}>
+          <View style={styles.monial}>
             <Ficon
               type="light"
               name="chart-area"
@@ -299,9 +284,6 @@ const HomeScreen = props => {
               size={hp(3.5)}
               color="#4D69DC"
             />
-            {/* <Svg width="50" height="30" viewBox="0 0 50 50">
-      <Path d="M10,10 L40,40" fill="none" stroke="black" />
-    </Svg> */}
 
             <Text style={styles.serviceSection}>08:59:05</Text>
             <Text style={[styles.bootContText2]}>Attendance</Text>
@@ -315,53 +297,16 @@ const HomeScreen = props => {
         <View style={{marginHorizontal: hp(2.2), marginTop: hp(2)}}>
           <Text style={styles.clText1}>W.F.H</Text>
         </View>
-        <View
-          style={{
-            marginHorizontal: hp(2),
-            borderRadius: hp(2),
-            height: hp(12),
-            backgroundColor: '#FFFFFF',
-            marginBottom: hp(5),
-            shadowColor: '#000',
-            shadowOpacity: 0.5,
-            shadowRadius: 4,
-            elevation: 4,
-          }}>
-          <View
-            style={{
-              height: hp(10),
-              marginHorizontal: hp(2),
-              flexDirection: 'row',
-              marginVertical: hp(3.7),
-              justifyContent: 'space-between',
-            }}>
+        <View style={styles.wfh}>
+          <View style={styles.inwfh}>
             <TouchableOpacity
               onPress={() => props.navigation.navigate('Wfh')}
-              style={{
-                borderRadius: hp(50),
-                width: wp(38),
-                height: hp(4.5),
-                borderWidth: 1,
-                borderColor: '#1C37A4',
-                backgroundColor: '#1C37A4',
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}>
+              style={styles.rfh}>
               <Text style={styles.viewClinderText}>Request W.F.H</Text>
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => props.navigation.navigate('WorkFromHome')}
-              style={{
-                width: wp(38),
-                justifyContent: 'center',
-                alignItems: 'center',
-                height: hp(4.5),
-                borderRadius: hp(50),
-                borderWidth: 1,
-                borderColor: '#1C37A4',
-                backgroundColor: '#fff',
-                // marginTop: hp(4),
-              }}>
+              style={styles.mrf}>
               <Text style={styles.clbtnStyle}>Mark Attendance</Text>
             </TouchableOpacity>
           </View>
@@ -577,6 +522,56 @@ const styles = EStyleSheet.create({
     fontWeight: '500',
     fontStyle: 'normal',
     fontSize: '0.6rem',
+  },
+  tost: {
+    backgroundColor: '#F1948A',
+    width: wp(90),
+    marginHorizontal: hp(2.5),
+    borderRadius: 5,
+  },
+  monial: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: hp(2),
+  },
+  wfh: {
+    marginHorizontal: hp(2),
+    borderRadius: hp(2),
+    height: hp(12),
+    backgroundColor: '#FFFFFF',
+    marginBottom: hp(5),
+    shadowColor: '#000',
+    shadowOpacity: 0.5,
+    shadowRadius: 4,
+    elevation: 4,
+  },
+  inwfh: {
+    height: hp(10),
+    marginHorizontal: hp(2),
+    flexDirection: 'row',
+    marginVertical: hp(3.7),
+    justifyContent: 'space-between',
+  },
+  rfh: {
+    borderRadius: hp(50),
+    width: wp(38),
+    height: hp(4.5),
+    borderWidth: 1,
+    borderColor: '#1C37A4',
+    backgroundColor: '#1C37A4',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  mrf: {
+    width: wp(38),
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: hp(4.5),
+    borderRadius: hp(50),
+    borderWidth: 1,
+    borderColor: '#1C37A4',
+    backgroundColor: '#fff',
+    // marginTop: hp(4),
   },
 });
 

@@ -1,6 +1,6 @@
 import React, {useEffect, useRef, useState} from 'react';
 import EStyleSheet from 'react-native-extended-stylesheet';
-
+import LottieView from 'lottie-react-native';
 import {
   SafeAreaView,
   StatusBar,
@@ -30,21 +30,39 @@ import {
 import fontSize from '../Styles/fontSize';
 import fontFamily from '../Styles/fontFamily';
 const Skip1 = () => {
-  const [data,setData]=useState([
-    {id:1,title1:'Welcome',title2:'to BEAMS!',disc:'Were so excited to have you on board.',image:'appbg'},
-    {id:1,title1:'We',title2:'Redesigned',disc:'The app to add new features that our users have been requesting',image:'appbg'},
-    {id:1,title1:'Explore',title2:' the app',disc:'Take some time to explore the app and learn how it works.',image:'appbg'},
-  ])
-  const [initVal,setInitVal]=useState(0)
+  const [data, setData] = useState([
+    {
+      id: 1,
+      title1: 'Welcome',
+      title2: 'to BEAMS!',
+      disc: 'Were so excited to have you on board.',
+      image: 'appbg',
+    },
+    {
+      id: 1,
+      title1: 'We',
+      title2: 'Redesigned',
+      disc: 'The app to add new features that our users have been requesting',
+      image: 'appbg',
+    },
+    {
+      id: 1,
+      title1: 'Explore',
+      title2: ' the app',
+      disc: 'Take some time to explore the app and learn how it works.',
+      image: 'appbg',
+    },
+  ]);
+  const [initVal, setInitVal] = useState(0);
 
-//   const hendleSwiper=(data)=>{
-// console.log("swiper data",data)
-//     data.map((item,i)=>{
-//       console.log("i data",i)
+  //   const hendleSwiper=(data)=>{
+  // console.log("swiper data",data)
+  //     data.map((item,i)=>{
+  //       console.log("i data",i)
 
-//       // return()
-//     })
-//   }
+  //       // return()
+  //     })
+  //   }
 
   const swiperRef = useRef(null);
   // const [employeeId, setEmployeeId] = useState();
@@ -83,7 +101,7 @@ const Skip1 = () => {
   return (
     <View style={{flex: 1}}>
       <Swiper
-      // onIndexChanged={(data)=>hendleSwiper(data)}
+        // onIndexChanged={(data)=>hendleSwiper(data)}
         style={styles.wrapper}
         showsButtons={false}
         loop={false}
@@ -106,7 +124,7 @@ const Skip1 = () => {
                 <TouchableOpacity
                   onPress={handleSkip}
                   style={{width: wp(50), marginLeft: hp(15)}}>
-                  <Text style={{fontSize: hp(2),color:'black'}}>SKIP</Text>
+                  <Text style={{fontSize: hp(2), color: 'black'}}>SKIP</Text>
                 </TouchableOpacity>
               </View>
               <View style={{width: wp(100), marginTop: hp(12)}}>
@@ -117,10 +135,8 @@ const Skip1 = () => {
                     marginBottom: hp(5),
                   }}>
                   <Text style={styles.textSkip}>
-                    Welcome to  
-                    <Text style={styles.skipbText}>
-                      BEAMS!
-                    </Text>
+                    Welcome to
+                    <Text style={styles.skipbText}> BEAMS!</Text>
                   </Text>
                 </View>
                 <View
@@ -128,10 +144,19 @@ const Skip1 = () => {
                     justifyContent: 'center',
                     alignItems: 'center',
                   }}>
-                  <Image
+                  {/* <Image
                     source={{uri: 'person'}}
                     style={{height: hp('30'), width: wp(100)}}
                     resizeMode={'contain'}
+                  /> */}
+                  <LottieView
+                    style={{
+                      width: wp(100),
+                      height: hp(30),
+                      // backgroundColor: '#eee',
+                    }}
+                    source={require('../assets/animation_lm0gzbbe.json')}
+                    autoPlay
                   />
                 </View>
                 <View
@@ -166,7 +191,7 @@ const Skip1 = () => {
                 <TouchableOpacity
                   onPress={handleSkip}
                   style={{width: wp(50), marginLeft: hp(15)}}>
-                  <Text style={{fontSize: hp(2),color:'black'}}>SKIP</Text>
+                  <Text style={{fontSize: hp(2), color: 'black'}}>SKIP</Text>
                 </TouchableOpacity>
               </View>
               <View style={{width: wp(100), marginTop: hp(12)}}>
@@ -178,9 +203,7 @@ const Skip1 = () => {
                   }}>
                   <Text style={styles.textSkip}>
                     We
-                       <Text style={styles.skipbText}>
-                         Redesigned!
-                    </Text>
+                    <Text style={styles.skipbText}> Redesigned!</Text>
                   </Text>
                 </View>
                 <View
@@ -188,10 +211,19 @@ const Skip1 = () => {
                     justifyContent: 'center',
                     alignItems: 'center',
                   }}>
-                  <Image
+                  {/* <Image
                     source={{uri: 'mobile'}}
                     style={{height: hp('30'), width: wp(100)}}
                     resizeMode={'contain'}
+                  /> */}
+                  <LottieView
+                    style={{
+                      width: wp(100),
+                      height: hp(30),
+                      // backgroundColor: '#eee',
+                    }}
+                    source={require('../assets/animation_lm0h8lv3.json')}
+                    autoPlay
                   />
                 </View>
                 <View
@@ -252,7 +284,7 @@ const Skip1 = () => {
                 <TouchableOpacity
                   onPress={onPressLogin}
                   style={{width: wp(50), marginLeft: hp(15)}}>
-                  <Text style={{fontSize: hp(2),color:'black'}}>SKIP</Text>
+                  <Text style={{fontSize: hp(2), color: 'black'}}>SKIP</Text>
                 </TouchableOpacity>
               </View>
               <View style={{width: wp(100), marginTop: hp(12)}}>
@@ -263,11 +295,8 @@ const Skip1 = () => {
                     marginBottom: hp(5),
                   }}>
                   <Text style={styles.textSkip}>
-                  Explore
-                    <Text style={styles.skipbText}>
-                    the app!
-                    </Text>
-                  
+                    Explore
+                    <Text style={styles.skipbText}> the app!</Text>
                   </Text>
                 </View>
                 <View
@@ -275,10 +304,19 @@ const Skip1 = () => {
                     justifyContent: 'center',
                     alignItems: 'center',
                   }}>
-                  <Image
+                  {/* <Image
                     source={{uri: 'hash'}}
                     style={{height: hp('30'), width: wp(100)}}
                     resizeMode={'contain'}
+                  /> */}
+                  <LottieView
+                    style={{
+                      width: wp(100),
+                      height: hp(30),
+                      // backgroundColor: '#fff',
+                    }}
+                    source={require('../assets/animation_lm0hbmk9.json')}
+                    autoPlay
                   />
                 </View>
                 <View
@@ -344,16 +382,17 @@ const styles = EStyleSheet.create({
   },
   textSkip: {
     color: '#626161',
-    fontSize:fontSize.small,
-    fontFamily: fontFamily.ceraBlack,
-    
+    fontSize: '0.7rem',
+    fontWeight: '500',
+    fontFamily: fontFamily.ceraMedium,
   },
-  skipbText:{
+  skipbText: {
     color: '#061D7A',
-    fontSize:fontSize.small,
-    fontFamily: fontFamily.ceraBlack,
-    marginLeft:hp(1)
-  }
+    fontSize: '0.7rem',
+    fontWeight: '500',
+    fontFamily: fontFamily.ceraMedium,
+    marginLeft: hp(1),
+  },
 });
 
 export default Skip1;

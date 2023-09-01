@@ -23,7 +23,7 @@ const Splash = () => {
   };
 
   setTimeout(async () => {
-    handleNavigate('Login', true);
+    handleNavigate('Skip1', true);
   }, 3000);
 
   return (
