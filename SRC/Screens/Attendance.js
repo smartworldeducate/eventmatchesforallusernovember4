@@ -1,6 +1,7 @@
 import {View, Text, ScrollView, TouchableOpacity} from 'react-native';
 import React, {useState} from 'react';
 import MainHeader from '../Components/Headers/MainHeader';
+import LinearGradient from 'react-native-linear-gradient';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -76,6 +77,7 @@ const Attendance = props => {
             {data?.map((item, i) => {
               return (
                 <TouchableOpacity
+                  activeOpacity={0.8}
                   onPress={() => clinderHandler(item.id)}
                   key={i}>
                   <View
@@ -123,8 +125,11 @@ const Attendance = props => {
               return (
                 <View key={i}>
                   {clinder == item.id && (
-                    <TouchableOpacity key={i}>
-                      <View
+                    <TouchableOpacity activeOpacity={0.8} key={i}>
+                      <LinearGradient
+                        start={{x: 0, y: 0}}
+                        end={{x: 1, y: 0}}
+                        colors={['#1C37A5', '#4D69DC']}
                         style={{
                           height: hp(3.7),
                           paddingHorizontal: hp(3),
@@ -148,7 +153,7 @@ const Attendance = props => {
                             {item.month}
                           </Text>
                         </View>
-                      </View>
+                      </LinearGradient>
                     </TouchableOpacity>
                   )}
                   {clinder !== item.id && (
@@ -271,6 +276,7 @@ const Attendance = props => {
 
                   {timein == item.id && (
                     <TouchableOpacity
+                      activeOpacity={0.8}
                       style={{
                         justifyContent: 'center',
                         borderRadius: hp(5),
@@ -288,6 +294,7 @@ const Attendance = props => {
                   )}
                   {timein !== item.id && (
                     <TouchableOpacity
+                      activeOpacity={0.8}
                       onPress={() => timeInHandler(item.id)}
                       style={{
                         marginVertical: hp(2),
@@ -301,6 +308,7 @@ const Attendance = props => {
                   )}
                   {timeout == item.id && (
                     <TouchableOpacity
+                      activeOpacity={0.8}
                       style={{
                         justifyContent: 'center',
                         borderRadius: hp(5),
@@ -318,6 +326,7 @@ const Attendance = props => {
                   )}
                   {timeout !== item.id && (
                     <TouchableOpacity
+                      activeOpacity={0.8}
                       onPress={() => timeOutHandler(item.id)}
                       style={{
                         marginVertical: hp(2),
@@ -332,6 +341,7 @@ const Attendance = props => {
 
                   {btn == item.id && (
                     <TouchableOpacity
+                      activeOpacity={0.8}
                       onPress={() =>
                         props.navigation.navigate('ApplicationType')
                       }
@@ -351,7 +361,7 @@ const Attendance = props => {
                     </TouchableOpacity>
                   )}
                   {btn !== item.id && (
-                    <TouchableOpacity
+                    <TouchableOpacity activeOpacity={0.8}
                       onPress={() => btnHandler(item.id)}
                       style={{
                         justifyContent: 'center',

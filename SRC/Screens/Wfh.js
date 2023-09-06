@@ -29,7 +29,7 @@ const Wfh = props => {
       <View
         style={{width: wp(90), marginHorizontal: hp(2.5), marginTop: hp(2)}}>
         <ViewInput
-          iconName={'arrowright'}
+          iconName={'arrow-right'}
           placeholder={'Adjustment Date'}
           placeholderColor={colors.loginTextColor}
           iconColor={colors.loginIconColor}
@@ -44,7 +44,7 @@ const Wfh = props => {
           //  keyboardType={'numeric'}
           //  maxLength={11}
           //  returnKeyType={'done'}
-          iconName={'calendar'}
+          iconName={'calendar-days'}
           placeholder={'Off Day Worked'}
           placeholderColor={colors.loginTextColor}
           iconColor={colors.loginIconColor}
@@ -54,7 +54,7 @@ const Wfh = props => {
       <View
         style={{width: wp(90), marginHorizontal: hp(2.5), marginTop: hp(2)}}>
         <ViewInput
-          iconName={'calendar'}
+          iconName={'calendar-days'}
           placeholder={'2 Days'}
           placeholderColor={colors.loginTextColor}
           iconColor={colors.loginIconColor}
@@ -92,7 +92,7 @@ const Wfh = props => {
       <View
         style={{width: wp(90), marginHorizontal: hp(2.5), marginTop: hp(2)}}>
         <ViewInput
-          iconName={'adduser'}
+          iconName={'user'}
           placeholder={'Muhammad Qasim Ali Khan'}
           placeholderColor={colors.loginTextColor}
           iconColor={colors.loginIconColor}
@@ -100,6 +100,7 @@ const Wfh = props => {
         />
       </View>
       <TouchableOpacity
+      activeOpacity={0.8}
       onPress={()=>props.navigation.navigate('WorkFromHome')}
         style={{
           width: wp(90),

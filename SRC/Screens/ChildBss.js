@@ -27,10 +27,10 @@ const ChildBss = props => {
 
   const height = animation.interpolate({
     inputRange: [0, 1],
-    outputRange: [90, 250], // Change this value to control the expanded height
+    outputRange: [90, 250],
   });
   return (
-    <View style={{flex:1}}>
+    <View style={{flex: 1}}>
       <View>
         <MainHeader
           text={'Child’s in BSS'}
@@ -45,6 +45,7 @@ const ChildBss = props => {
               style={{marginHorizontal: wp('5'), marginBottom: hp(1.5)}}
               key={i}>
               <TouchableOpacity
+                activeOpacity={0.8}
                 onPress={() => toggleExpansion(item.id)}
                 style={{
                   width: wp(90),
@@ -228,12 +229,10 @@ const ChildBss = props => {
                     </View>
                   </Animated.View>
                 )}
-             
               </TouchableOpacity>
             </View>
           );
         })}
-     
       </ScrollView>
     </View>
   );

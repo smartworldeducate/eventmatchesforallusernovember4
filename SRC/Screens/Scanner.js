@@ -328,6 +328,7 @@ const Scanner = props => {
             marginBottom: hp(20),
           }}>
           <TouchableOpacity
+            activeOpacity={0.8}
             onPress={handleReset}
             style={{
               width: wp(10),
@@ -369,6 +370,7 @@ const Scanner = props => {
         <StatusBar translucent backgroundColor="transparent" />
         <View style={styles.headerChild}>
           <TouchableOpacity
+            activeOpacity={0.8}
             style={styles.firstRow}
             onPress={() => navigation.navigate('Profile')}>
             <View style={styles.firstRowView}>
@@ -390,11 +392,13 @@ const Scanner = props => {
 
           <View style={styles.firstRowRightSection}>
             <TouchableOpacity
+              activeOpacity={0.8}
               style={styles.bell}
               onPress={() => handleNavigate('Notification')}>
               <Icon type="light" name="bell" size={hp(3)} color="#fff" />
             </TouchableOpacity>
             <TouchableOpacity
+              activeOpacity={0.8}
               onPress={() => props.navigation.openDrawer()}
               style={styles.menu}>
               <Image
@@ -407,6 +411,7 @@ const Scanner = props => {
         </View>
 
         <TouchableOpacity
+          activeOpacity={0.8}
           style={styles.homeSearch}
           onPress={() => navigation.navigate('Search')}>
           <View style={styles.homesearchView}>
@@ -422,7 +427,10 @@ const Scanner = props => {
               placeholderStyle={styles.plaseholderStyle}
               style={styles.textInputCustomStyle}></TextInput>
           </View>
-          <TouchableOpacity style={styles.searchicon} onPress={() => {}}>
+          <TouchableOpacity
+            activeOpacity={0.8}
+            style={styles.searchicon}
+            onPress={() => {}}>
             <Icon
               type="light"
               name="magnifying-glass"
@@ -432,69 +440,81 @@ const Scanner = props => {
           </TouchableOpacity>
         </TouchableOpacity>
       </LinearGradient>
-      <ScrollView
-        horizontal={true}
-        style={{height: hp(8), paddingLeft: hp(2.5), marginTop: hp(-3)}}
-        showsHorizontalScrollIndicator={false}
-        refreshControl={
-          <RefreshControl
-            refreshing={refreshing}
-            onRefresh={onRefresh}
-            colors={['#2A72B6', '#203B88']}
-            progressBackgroundColor={{color: 'blue'}}
-            tintColor={{color: 'blue'}}
-          />
-        }>
-        {catgory?.map((e, i) => {
-          const icon = [
-            'grid-view',
-            'pause-presentation',
-            'card-giftcard',
-            'flight-land',
-          ];
-          const bgcolor = [
-            '#46CDFB',
-            '#F0635A',
-            '#F19561',
-            '#29D697',
-            '#46CDFB',
-            '#F19561',
-            '#F19561',
-          ];
-          if (i == 4) {
-            i = 0;
-          }
-          const {category_id, category_name} = e;
-          return (
-            <View style={{marginRight: hp(1)}} key={category_id}>
-              <TouchableOpacity
-                onPress={() =>
-                  category_name == 'All'
-                    ? handleTags()
-                    : handleFilter(category_id)
-                }>
-                <View
-                  style={{
-                    height: hp(4.2),
-                    paddingHorizontal: hp(1.2),
-                    borderRadius: hp(2),
-                    backgroundColor: bgcolor[i],
-                    flexDirection: 'row',
-                  }}>
-                  <View style={{marginVertical: hp(0.9)}}>
-                    <Ball name={icon[i]} color="white" size={20} />
+      <View style={{zIndex: 1, position: 'absolute', top: hp(23)}}>
+        <ScrollView
+          horizontal={true}
+          contentContainerStyle={{
+            height: hp(7),
+            paddingLeft: hp(2.5),
+            paddingRight: hp(1),
+          }}
+          showsHorizontalScrollIndicator={false}>
+          {catgory?.map((e, i) => {
+            const icon = [
+              'grid-view',
+              'pause-presentation',
+              'card-giftcard',
+              'flight-land',
+            ];
+            const bgcolor = [
+              '#46CDFB',
+              '#F0635A',
+              '#F19561',
+              '#29D697',
+              '#46CDFB',
+              '#F19561',
+              '#F19561',
+            ];
+            if (i == 4) {
+              i = 0;
+            }
+            const {category_id, category_name} = e;
+            return (
+              <View
+                style={{marginRight: hp(1), justifyContent: 'center'}}
+                key={category_id}>
+                <TouchableOpacity
+                  activeOpacity={0.8}
+                  onPress={() =>
+                    category_name == 'All'
+                      ? handleTags()
+                      : handleFilter(category_id)
+                  }>
+                  <View
+                    style={{
+                      height: hp(4.3),
+                      paddingHorizontal: hp(1.2),
+                      borderRadius: hp(2),
+                      backgroundColor: bgcolor[i],
+                      flexDirection: 'row',
+                    }}>
+                    <View
+                      style={{
+                        marginVertical: hp(0.9),
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                      }}>
+                      <Ball name={icon[i]} color="white" size={20} />
+                    </View>
+                    <View
+                      style={{
+                        marginLeft: hp(0.5),
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        paddingRight: wp(0.75),
+                      }}>
+                      <Text style={styles.catname}>{category_name}</Text>
+                    </View>
                   </View>
-                  <View style={{marginVertical: hp(0.3), marginLeft: hp(0.5)}}>
-                    <Text style={styles.catname}>{category_name}</Text>
-                  </View>
-                </View>
-              </TouchableOpacity>
-            </View>
-          );
-        })}
-      </ScrollView>
+                </TouchableOpacity>
+              </View>
+            );
+          })}
+        </ScrollView>
+      </View>
+
       {tagData.length >= 6 ? (
-        <ScrollView style={{marginTop: hp(3)}}>
+        <ScrollView style={{paddingTop: hp(5)}}>
           {tagData?.map((e, i) => {
             const {
               tag_id,
@@ -507,6 +527,7 @@ const Scanner = props => {
             } = e;
             return (
               <TouchableOpacity
+                activeOpacity={0.8}
                 style={{
                   height: hp(10),
                   flexDirection: 'row',
@@ -541,7 +562,7 @@ const Scanner = props => {
                   />
                 </View>
                 <View>
-                  <View style={{marginVertical:hp(0.5)}}>
+                  <View style={{marginVertical: hp(0.5)}}>
                     <Text style={styles.desc}>{tag_desc}</Text>
                   </View>
 
@@ -611,6 +632,7 @@ const Scanner = props => {
             } = e;
             return (
               <TouchableOpacity
+                activeOpacity={0.8}
                 style={{
                   height: hp(10),
                   flexDirection: 'row',
@@ -642,7 +664,7 @@ const Scanner = props => {
                   />
                 </View>
                 <View>
-                  <View style={{marginVertical:hp(0.5)}}>
+                  <View style={{marginVertical: hp(0.5)}}>
                     <Text style={styles.desc}>{tag_desc}</Text>
                   </View>
                   <View style={{flexDirection: 'row', marginTop: hp(0)}}>
@@ -687,7 +709,7 @@ const Scanner = props => {
           })}
         </View>
       )}
-      <View
+      {tagData.length >= 6 && ( <View
         style={{
           backgroundColor: '#fff',
           position: 'relative',
@@ -703,11 +725,13 @@ const Scanner = props => {
           }}>
           {/* <View style={{flex:0.1}}></View> */}
           <TouchableOpacity
-            onPress={() =>props.navigation.navigate('HomeScreenDrawer')}
+            activeOpacity={0.8}
+            onPress={() => props.navigation.navigate('HomeScreenDrawer')}
             style={{flex: 0.2, alignItems: 'center'}}>
             <Menu name="home" size={hp(3)} color="#1C37A4" style={{}} />
           </TouchableOpacity>
           <TouchableOpacity
+            activeOpacity={0.8}
             onPress={() => props.navigation.navigate('Index')}
             style={{flex: 0.2, paddingTop: hp(0.5), alignItems: 'center'}}>
             <Icon
@@ -718,6 +742,7 @@ const Scanner = props => {
             />
           </TouchableOpacity>
           <TouchableOpacity
+            activeOpacity={0.8}
             onPress={handleQrcode}
             style={{
               flex: 0.2,
@@ -738,18 +763,21 @@ const Scanner = props => {
             </View>
           </TouchableOpacity>
           <TouchableOpacity
+            activeOpacity={0.8}
             style={{flex: 0.2, alignItems: 'center'}}
             onPress={() => props.navigation.navigate('Scanner')}>
             <Icon type="light" name="user-tag" size={hp(3.5)} color="#979797" />
           </TouchableOpacity>
           <TouchableOpacity
+            activeOpacity={0.8}
             onPress={() => navigation.navigate('Profile')}
             style={{flex: 0.2, alignItems: 'center', paddingTop: hp(0)}}>
             <Icon type="light" name="user-tie" size={hp(3)} color="#979797" />
           </TouchableOpacity>
           {/* <View style={{flex:0.1}}></View> */}
         </View>
-      </View>
+      </View>)}
+     
     </SafeAreaView>
   );
 };
@@ -915,7 +943,7 @@ const styles = EStyleSheet.create({
     fontFamily: fontFamily.ceraMedium,
     fontStyle: 'normal',
     paddingBottom: hp(0.2),
-    textTransform:'uppercase'
+    textTransform: 'uppercase',
   },
   desc: {
     color: '#1D1E29',
@@ -924,7 +952,7 @@ const styles = EStyleSheet.create({
     fontFamily: fontFamily.ceraMedium,
     fontStyle: 'normal',
     marginTop: hp(1.5),
-    textTransform:'uppercase'
+    textTransform: 'uppercase',
   },
   times: {
     color: '#5669FF',

@@ -78,7 +78,7 @@ const ForgotPassword = () => {
             <View style={{marginTop: hp('3'), marginBottom: hp('2')}}>
               <Text
                 style={{fontSize: hp('2.75'), color: colors.loginTextColor}}>
-                Forgot Password
+                Reset Password
               </Text>
             </View>
 
@@ -104,8 +104,8 @@ const ForgotPassword = () => {
                 keyboardType={'default'}
                 maxLength={11}
                 returnKeyType={'done'}
-                iconName={'key'}
-                placeholder={'Mobile Number'}
+                iconName={'address-card'}
+                placeholder={'CNIC '}
                 placeholderColor={colors.loginTextColor}
                 iconColor={colors.loginIconColor}
                 style={styles.textInputCustomStyle}
@@ -118,27 +118,31 @@ const ForgotPassword = () => {
                 justifyContent: 'center',
                 alignItems: 'center',
               }}>
-              <Button
-                height={hp('7')}
-                width={wp('90')}
-                text="Reset Password"
-                bgColor={colors.whiteColor}
-                textColor={colors.loginIconColor}
-                textSize={hp('2')}
-                borderRadius={wp('10')}
-                borderColor={'#BABABA33'}
-                borderWidth={wp('0.3')}
-                shadowColor={'#000'}
-                shadowOffset={{width: 0, height: 12}}
-                shadowOpacity={0.58}
-                shadowRadius={16}
-                elevation={7}
-              />
+            
+              <TouchableOpacity
+                activeOpacity={0.8}
+                onPress={()=>{}}
+                style={{
+                  height: hp('7'),
+                  width: wp('90'),
+                  backgroundColor: '#FFFFFF',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  borderRadius: wp(10),
+                  shadowColor: '#000',
+                  shadowOffset: {width: 0, height: 12},
+                  shadowOpacity: 0.58,
+                  shadowRadius: 16,
+                  elevation: 7,
+                }}>
+                <Text style={{color: '#000'}}>Reset Password</Text>
+              </TouchableOpacity>
             </View>
 
             <View style={{flexDirection: 'row', marginTop: hp('18')}}>
               <View style={{flex: 0.3}}></View>
               <TouchableOpacity
+              activeOpacity={0.8}
                 onPress={() => navigation.goBack()}
                 style={{
                   flex: 0.4,
@@ -173,8 +177,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     height: hp('7'),
     borderRadius: wp('10'),
-    borderColor: colors.grey,
-    borderWidth: wp('0.1'),
+    // borderColor: colors.grey,
+    // borderWidth: wp('0.1'),
     marginBottom: hp('2'),
     shadowColor: '#000',
     shadowOffset: {

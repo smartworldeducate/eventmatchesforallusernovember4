@@ -6,7 +6,7 @@ import {
   Animated,
   Image,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import MainHeader from '../Components/Headers/MainHeader';
 import Icon from 'react-native-fontawesome-pro';
 import {
@@ -82,18 +82,18 @@ const Utility = props => {
     outputRange: [60, 200], // Change this value to control the expanded height
   });
   const data = [
-    {id: 1, text: '17-06-2023', number: 'Full Toil', month: '2020'},
-    {id: 2, text: '08:40:33', number: '08:44:47', month: '2021'},
-    {id: 3, text: '08:40:33', number: '08:17:03', month: '2022'},
-    {id: 4, text: '17-06-2023', number: '08:17:03', month: '2023'},
-    {id: 5, text: '17-06-2023', number: '08:17:03', month: '2024'},
-    {id: 6, text: '08:40:33', number: '08:44:47', month: '2025'},
-    {id: 7, text: '08:40:33', number: '5,000', month: '2026'},
-    {id: 8, text: '17-06-2023', number: '08:17:03', month: '2027'},
-    {id: 9, text: '17-06-2023', number: 'Weekend', month: '2028'},
-    {id: 10, text: '08:40:33', number: 'Full Toil', month: '2029'},
-    {id: 11, text: '17-06-2023', number: '08:44:47', month: '2030'},
-    {id: 12, text: '17-06-2023', number: '08:17:03', month: '2031'},
+    { id: 1, text: '17-06-2023', number: 'Full Toil', month: '2020' },
+    { id: 2, text: '08:40:33', number: '08:44:47', month: '2021' },
+    { id: 3, text: '08:40:33', number: '08:17:03', month: '2022' },
+    { id: 4, text: '17-06-2023', number: '08:17:03', month: '2023' },
+    { id: 5, text: '17-06-2023', number: '08:17:03', month: '2024' },
+    { id: 6, text: '08:40:33', number: '08:44:47', month: '2025' },
+    { id: 7, text: '08:40:33', number: '5,000', month: '2026' },
+    { id: 8, text: '17-06-2023', number: '08:17:03', month: '2027' },
+    { id: 9, text: '17-06-2023', number: 'Weekend', month: '2028' },
+    { id: 10, text: '08:40:33', number: 'Full Toil', month: '2029' },
+    { id: 11, text: '17-06-2023', number: '08:44:47', month: '2030' },
+    { id: 12, text: '17-06-2023', number: '08:17:03', month: '2031' },
   ];
   const [def, setDef] = useState(true);
   const clinderHandler = item => {
@@ -102,7 +102,7 @@ const Utility = props => {
     console.log('my item  time out', item);
   };
   return (
-    <View style={{flex: 1}}>
+    <View style={{ flex: 1 }}>
       <View>
         <MainHeader
           text={'Utility'}
@@ -110,9 +110,10 @@ const Utility = props => {
           onpressBtn={() => props.navigation.goBack()}
         />
       </View>
-      <View style={{marginHorizontal: hp(2.5), marginTop: hp(2)}}>
+      <View style={{ marginHorizontal: hp(2.5), marginTop: hp(2) }}>
         <View>
           <TouchableOpacity
+            activeOpacity={0.8}
             // onPress={() => toggleExpansion(item.id)}
             style={{
               width: wp(90),
@@ -132,22 +133,22 @@ const Utility = props => {
                 marginHorizontal: hp(1),
                 marginVertical: hp(1),
               }}>
-              <View style={{width: wp(15)}}>
+              <View style={{ width: wp(12), justifyContent: 'center' }}>
                 <Icon
                   type="light"
                   name="square-list"
-                  size={hp(7)}
+                  size={hp(5)}
                   color="#cdcdcd"
                 />
               </View>
-              <View style={{marginTop: hp(0.3)}}>
+              <View style={{ marginTop: hp(0.3), marginTop: hp(0.5) }}>
                 <View>
                   <Text style={styles.smalltext}>
                     {' '}
                     BeaconHouse School Event
                   </Text>
                 </View>
-                <View style={{width: wp(70)}}>
+                <View style={{ width: wp(70) }}>
                   <Text style={styles.smalltext1}>
                     React Native is an open-source UI software React Native is
                     an open-source UI software
@@ -158,9 +159,10 @@ const Utility = props => {
           </TouchableOpacity>
         </View>
       </View>
-      <View style={{marginHorizontal: hp(2.5)}}>
+      <View style={{ marginHorizontal: hp(2.5) }}>
         <View>
           <TouchableOpacity
+            activeOpacity={0.8}
             // onPress={() => toggleExpansion(item.id)}
             style={{
               width: wp(90),
@@ -180,19 +182,19 @@ const Utility = props => {
                 marginHorizontal: hp(1),
                 marginVertical: hp(1),
               }}>
-              <View style={{width: wp(15)}}>
+              <View style={{ width: wp(12), justifyContent: 'center' }}>
                 <Icon
                   type="light"
                   name="people-group"
-                  size={hp(7)}
+                  size={hp(5)}
                   color="#cdcdcd"
                 />
               </View>
-              <View style={{marginTop: hp(0.3)}}>
+              <View style={{ marginTop: hp(0.3), justifyContent: 'center' }}>
                 <View>
                   <Text style={styles.smalltext}> BeaconHouse Teams</Text>
                 </View>
-                <View style={{width: wp(70)}}>
+                <View style={{ width: wp(70) }}>
                   <Text style={styles.smalltext1}>
                     React Native is an open-source UI software React Native is
                     an open-source UI software
@@ -203,9 +205,10 @@ const Utility = props => {
           </TouchableOpacity>
         </View>
       </View>
-      <View style={{marginHorizontal: hp(2.5)}}>
+      <View style={{ marginHorizontal: hp(2.5) }}>
         <View>
           <TouchableOpacity
+            activeOpacity={0.8}
             // onPress={() => toggleExpansion(item.id)}
             style={{
               width: wp(90),
@@ -225,14 +228,14 @@ const Utility = props => {
                 marginHorizontal: hp(1),
                 marginVertical: hp(1),
               }}>
-              <View style={{width: wp(15)}}>
-                <Icon type="light" name="coins" size={hp(7)} color="#cdcdcd" />
+              <View style={{ width: wp(12), justifyContent: 'center' }}>
+                <Icon type="light" name="coins" size={hp(5)} color="#cdcdcd" />
               </View>
-              <View style={{marginTop: hp(0.3)}}>
+              <View style={{ marginTop: hp(0.3) }}>
                 <View>
                   <Text style={styles.smalltext}> BeaconHouse Finance</Text>
                 </View>
-                <View style={{width: wp(70)}}>
+                <View style={{ width: wp(70) }}>
                   <Text style={styles.smalltext1}>
                     React Native is an open-source UI software React Native is
                     an open-source UI software
@@ -243,9 +246,10 @@ const Utility = props => {
           </TouchableOpacity>
         </View>
       </View>
-      <View style={{marginHorizontal: hp(2.5)}}>
+      <View style={{ marginHorizontal: hp(2.5) }}>
         <View>
           <TouchableOpacity
+            activeOpacity={0.8}
             // onPress={() => toggleExpansion(item.id)}
             style={{
               width: wp(90),
@@ -265,14 +269,14 @@ const Utility = props => {
                 marginHorizontal: hp(1),
                 marginVertical: hp(1),
               }}>
-              <View style={{width: wp(15)}}>
-                <Icon type="light" name="play" size={hp(7)} color="#cdcdcd" />
+              <View style={{ width: wp(12), justifyContent: 'center' }}>
+                <Icon type="light" name="play" size={hp(5)} color="#cdcdcd" />
               </View>
-              <View style={{marginTop: hp(0.3)}}>
+              <View style={{ marginTop: hp(0.3) }}>
                 <View>
                   <Text style={styles.smalltext}> BeaconHouse Finance</Text>
                 </View>
-                <View style={{width: wp(70)}}>
+                <View style={{ width: wp(70) }}>
                   <Text style={styles.smalltext1}>
                     React Native is an open-source UI software React Native is
                     an open-source UI software
@@ -283,9 +287,10 @@ const Utility = props => {
           </TouchableOpacity>
         </View>
       </View>
-      <View style={{marginHorizontal: hp(2.5)}}>
+      <View style={{ marginHorizontal: hp(2.5) }}>
         <View>
           <TouchableOpacity
+            activeOpacity={0.8}
             // onPress={() => toggleExpansion(item.id)}
             style={{
               width: wp(90),
@@ -305,19 +310,19 @@ const Utility = props => {
                 marginHorizontal: hp(1),
                 marginVertical: hp(1),
               }}>
-              <View style={{width: wp(15)}}>
+              <View style={{ width: wp(12), justifyContent: 'center' }}>
                 <Icon
                   type="light"
                   name="people-group"
-                  size={hp(7)}
+                  size={hp(5)}
                   color="#cdcdcd"
                 />
               </View>
-              <View style={{marginTop: hp(0.3)}}>
+              <View style={{ marginTop: hp(0.3) }}>
                 <View>
                   <Text style={styles.smalltext}> BeaconHouse Teams</Text>
                 </View>
-                <View style={{width: wp(70)}}>
+                <View style={{ width: wp(70) }}>
                   <Text style={styles.smalltext1}>
                     React Native is an open-source UI software React Native is
                     an open-source UI software
@@ -328,9 +333,10 @@ const Utility = props => {
           </TouchableOpacity>
         </View>
       </View>
-      <View style={{marginHorizontal: hp(2.5)}}>
+      <View style={{ marginHorizontal: hp(2.5) }}>
         <View>
           <TouchableOpacity
+            activeOpacity={0.8}
             // onPress={() => toggleExpansion(item.id)}
             style={{
               width: wp(90),
@@ -350,14 +356,14 @@ const Utility = props => {
                 marginHorizontal: hp(1),
                 marginVertical: hp(1),
               }}>
-              <View style={{width: wp(15)}}>
-                <Icon type="light" name="coins" size={hp(7)} color="#cdcdcd" />
+              <View style={{ width: wp(12), justifyContent: 'center' }}>
+                <Icon type="light" name="coins" size={hp(5)} color="#cdcdcd" />
               </View>
-              <View style={{marginTop: hp(0.3)}}>
+              <View style={{ marginTop: hp(0.3) }}>
                 <View>
                   <Text style={styles.smalltext}> BeaconHouse Finance</Text>
                 </View>
-                <View style={{width: wp(70)}}>
+                <View style={{ width: wp(70) }}>
                   <Text style={styles.smalltext1}>
                     React Native is an open-source UI software React Native is
                     an open-source UI software
@@ -368,9 +374,10 @@ const Utility = props => {
           </TouchableOpacity>
         </View>
       </View>
-      <View style={{marginHorizontal: hp(2.5)}}>
+      <View style={{ marginHorizontal: hp(2.5) }}>
         <View>
           <TouchableOpacity
+            activeOpacity={0.8}
             // onPress={() => toggleExpansion(item.id)}
             style={{
               width: wp(90),
@@ -390,14 +397,14 @@ const Utility = props => {
                 marginHorizontal: hp(1),
                 marginVertical: hp(1),
               }}>
-              <View style={{width: wp(15)}}>
-                <Icon type="light" name="play" size={hp(7)} color="#cdcdcd" />
+              <View style={{ width: wp(12), justifyContent: 'center' }}>
+                <Icon type="light" name="play" size={hp(5)} color="#cdcdcd" />
               </View>
-              <View style={{marginTop: hp(0.3)}}>
+              <View style={{ marginTop: hp(0.3) }}>
                 <View>
                   <Text style={styles.smalltext}> BeaconHouse Finance</Text>
                 </View>
-                <View style={{width: wp(70)}}>
+                <View style={{ width: wp(70) }}>
                   <Text style={styles.smalltext1}>
                     React Native is an open-source UI software React Native is
                     an open-source UI software

@@ -11,11 +11,12 @@ import EStyleSheet from 'react-native-extended-stylesheet';
 import fontFamily from '../Styles/fontFamily';
 import Ficon from 'react-native-fontawesome-pro';
 
-const ViewInput = ({
+const ViewInputTwo = ({
   dateText,
   dateFun,
   iconName,
   iconColor,
+  style,
   onChange,
   onChangeText,
   placeholder,
@@ -38,10 +39,14 @@ const ViewInput = ({
       <View
         style={{
           flexDirection: 'row',
+          borderColor: colors.borderLightGrey,
+          borderWidth: 1,
+          borderRadius: widthPercentageToDP('10'),
+          backgroundColor: '#fff',
         }}>
         <View
           style={{
-            flex: 0.16,
+            flex: 0.14,
             justifyContent: 'center',
             alignItems: 'center',
             // paddingHorizontal: wp('1'),
@@ -51,9 +56,9 @@ const ViewInput = ({
           <Ficon type="light" name={iconName} color={iconColor} size={25} />
         </View>
 
-        <View style={{flex: 0.70, height:hp('7'), justifyContent: 'center',paddingLeft:wp(1)}}>
+        <View style={{flex: 0.72, justifyContent: 'center'}}>
           <TextInput
-           
+            style={style}
             onChangeText={onChangeText}
             onChange={onChange}
             placeholder={placeholder}
@@ -87,7 +92,7 @@ const ViewInput = ({
     </ScrollView>
   );
 };
-export default ViewInput;
+export default ViewInputTwo;
 
 const styles = EStyleSheet.create({
   zetext1: {

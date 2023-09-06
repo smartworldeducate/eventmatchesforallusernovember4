@@ -1,5 +1,8 @@
 import React, {useEffect, useState} from 'react';
-import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin'
+import {
+  GoogleSignin,
+  statusCodes,
+} from '@react-native-google-signin/google-signin';
 import {
   SafeAreaView,
   StatusBar,
@@ -37,23 +40,23 @@ const Login = () => {
   const [employeePassword, setEmployeePassword] = useState();
   useEffect(() => {
     GoogleSignin.configure({
-      webClientId: '249159142983-3r1307q40tb9de7qctsm4ckk244etg9h.apps.googleusercontent.com',
+      webClientId:
+        '249159142983-3r1307q40tb9de7qctsm4ckk244etg9h.apps.googleusercontent.com',
     });
-  }, [])
+  }, []);
   const signinWithGoogle = async () => {
     // setAnimodal(true)
     try {
       await GoogleSignin.hasPlayServices();
       const userInfo = await GoogleSignin.signIn();
-      console.log(userInfo?.user)
-      handleNavigate("HomeScreen");
-      const { id, name, email, givenName, photo } = userInfo?.user
-      await storeData({ google_id: id, photo: photo })
-      const glData = await dispatch(loginUser({ email: email, google_id: id }))
+      console.log(userInfo?.user);
+      handleNavigate('HomeScreen');
+      const {id, name, email, givenName, photo} = userInfo?.user;
+      await storeData({google_id: id, photo: photo});
+      const glData = await dispatch(loginUser({email: email, google_id: id}));
       // console.log("google data",glData.payload.data)
       // glData.payload.data ? props.navigation.navigate('Home') : props.navigation.navigate('Register')
       // setAnimodal(false)
-
     } catch (error) {
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
         // user cancelled the login flow
@@ -65,8 +68,7 @@ const Login = () => {
         // some other error happened
       }
     }
-  }
-  
+  };
 
   const keyboardVerticalOffset = Platform.OS === 'ios' ? 60 : 20;
 
@@ -80,10 +82,16 @@ const Login = () => {
   const [isEnabled, setIsEnabled] = useState(true);
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
-  const onPressLogin=()=>{
-    handleNavigate("HomeScreen");
-  }
+  const onPressLogin = () => {
+    handleNavigate('HomeScreen');
+  };
 
+  const [showPassword, setShowPassword] = useState(true);
+  const [eyeType, setEyeType] = useState(false);
+  const onPressShowPassword = () => {
+    setShowPassword(!showPassword);
+    setEyeType(!eyeType);
+  };
   return (
     <SafeAreaView
       style={{
@@ -130,7 +138,7 @@ const Login = () => {
                 iconName={'user'}
                 placeholder={'Employee ID'}
                 placeholderColor={colors.loginTextColor}
-                iconColor={colors.loginIconColor}
+                // iconColor={colors.loginIconColor}
                 style={styles.textInputCustomStyle}
               />
             </View>
@@ -143,73 +151,39 @@ const Login = () => {
                 maxLength={11}
                 returnKeyType={'done'}
                 iconName={'key'}
+                iconRight={eyeType == true ? 'eye' : 'eye-slash'}
                 placeholder={'Password'}
                 placeholderColor={colors.loginTextColor}
+                secureTextEntry={showPassword}
                 iconColor={colors.loginIconColor}
+                onPressIcon={onPressShowPassword}
                 style={styles.textInputCustomStyle}
               />
             </View>
-
-            <View style={{flexDirection: 'row', marginTop: hp('1')}}>
-              <View
-                style={{
-                  flex: 0.15,
-                  justifyContent: 'center',
-                  alignItems: 'flex-start',
-                }}>
-                <Switch
-                  trackColor={{false: '#767577', true: colors.loginIconColor}}
-                  thumbColor={isEnabled ? 'white' : 'silver'}
-                  ios_backgroundColor="#3e3e3e"
-                  onValueChange={toggleSwitch}
-                  value={isEnabled}
-                  // style={{transform: [{scaleX: 1.1}, {scaleY: 1.1}]}}
-                />
-              </View>
-              <View style={{flex: 0.45, justifyContent: 'center'}}>
-                <Text
-                  style={{color: colors.loginTextColor, fontSize: hp('1.75')}}>
-                  Remember Me
-                </Text>
-              </View>
-
-              <TouchableOpacity
-                onPress={() => handleNavigate('ForgotPassword')}
-                style={{
-                  flex: 0.4,
-                  justifyContent: 'center',
-                  alignItems: 'flex-end',
-                }}>
-                <Text
-                  style={{color: colors.loginTextColor, fontSize: hp('1.75')}}>
-                  Forgot Password?
-                </Text>
-              </TouchableOpacity>
-            </View>
-
             <View
               style={{
                 marginTop: hp('3'),
                 justifyContent: 'center',
                 alignItems: 'center',
               }}>
-              <Button
-              onPress={onPressLogin}
-                height={hp('7')}
-                width={wp('90')}
-                text="LOGIN"
-                bgColor={colors.whiteColor}
-                textColor={colors.loginIconColor}
-                textSize={hp('2')}
-                borderRadius={wp('10')}
-                borderColor={'#BABABA33'}
-                borderWidth={wp('0.3')}
-                shadowColor={'#000'}
-                shadowOffset={{width: 0, height: 12}}
-                shadowOpacity={0.58}
-                shadowRadius={16}
-                elevation={7}
-              />
+              <TouchableOpacity
+                activeOpacity={0.8}
+                onPress={onPressLogin}
+                style={{
+                  height: hp('7'),
+                  width: wp('90'),
+                  backgroundColor:colors.whiteColor,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  borderRadius: wp(10),
+                  shadowColor: '#000',
+                  shadowOffset: {width: 0, height: 12},
+                  shadowOpacity: 0.58,
+                  shadowRadius: 16,
+                  elevation: 7,
+                }}>
+                <Text style={{color: '#000'}}>LOGIN</Text>
+              </TouchableOpacity>
             </View>
 
             <Text
@@ -224,11 +198,18 @@ const Login = () => {
               OR
             </Text>
 
-            <TouchableOpacity style={styles.loginWithGoogle}onPress={() => signinWithGoogle().then(res => {
-                console.log("respo:", res)
-              }).catch(error => {
-                console.log(error)
-              })}>
+            <TouchableOpacity
+              activeOpacity={0.8}
+              style={styles.loginWithGoogle}
+              onPress={() =>
+                signinWithGoogle()
+                  .then(res => {
+                    console.log('respo:', res);
+                  })
+                  .catch(error => {
+                    console.log(error);
+                  })
+              }>
               <View style={{flex: 0.15, backgroundColor: 'white'}}></View>
 
               <View
@@ -256,6 +237,20 @@ const Login = () => {
               <View style={{flex: 0.1, backgroundColor: 'pink'}}></View>
             </TouchableOpacity>
           </View>
+          <View style={{justifyContent: 'center', marginTop: hp(5)}}>
+            <TouchableOpacity
+              activeOpacity={0.8}
+              onPress={() => handleNavigate('ForgotPassword')}
+              style={{
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}>
+              <Text
+                style={{color: colors.loginTextColor, fontSize: hp('1.75')}}>
+                Reset Password?
+              </Text>
+            </TouchableOpacity>
+          </View>
         </KeyboardAvoidingView>
       </ImageBackground>
     </SafeAreaView>
@@ -271,8 +266,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     height: hp('7'),
     borderRadius: wp('10'),
-    borderColor: colors.grey,
-    borderWidth: wp('0.1'),
+    // borderColor: colors.grey,
+    // borderWidth: wp('0.1'),
     marginBottom: hp('2'),
     shadowColor: '#000',
     shadowOffset: {
@@ -298,8 +293,8 @@ const styles = StyleSheet.create({
     height: hp('7'),
 
     borderRadius: wp('10'),
-    borderColor: colors.grey,
-    borderWidth: wp('0.1'),
+    // borderColor: colors.grey,
+    // borderWidth: wp('0.1'),
     marginBottom: hp('2'),
     shadowColor: '#000',
     shadowOffset: {

@@ -19,13 +19,40 @@ import {TouchableOpacity} from 'react-native-gesture-handler';
 import ExpandableList from '../Components/expandlist/ExpandableList';
 const Profile = props => {
   const data = [
-    {iconName: 'user', textName: 'Personal Information',fatherName:'Abdual Hafeez',gender:'Male',religin:'Islam',date:'08 oct 1991',cnic:'31101-8356254-5'},
-    {iconName: 'user-gear', textName: 'Service Information',fatherName:'Abdual Hafeez'},
-    {iconName: 'money-bill-1-wave', textName: 'Financial Information',fatherName:'Abdual Hafeez'},
-    {iconName: 'clipboard-check', textName: 'Movement Log',fatherName:'Abdual Hafeez'},
-    {iconName: 'child', textName: 'Children in Beaconhouse',fatherName:'Abdual Hafeez'},
-    {iconName: 'user', textName: 'Personal Information',fatherName:'Abdual Hafeez'},
-   
+    {
+      iconName: 'user',
+      textName: 'Personal Information',
+      fatherName: 'Abdual Hafeez',
+      gender: 'Male',
+      religin: 'Islam',
+      date: '08 oct 1991',
+      cnic: '31101-8356254-5',
+    },
+    {
+      iconName: 'user-gear',
+      textName: 'Service Information',
+      fatherName: 'Abdual Hafeez',
+    },
+    {
+      iconName: 'money-bill-1-wave',
+      textName: 'Financial Information',
+      fatherName: 'Abdual Hafeez',
+    },
+    {
+      iconName: 'clipboard-check',
+      textName: 'Movement Log',
+      fatherName: 'Abdual Hafeez',
+    },
+    {
+      iconName: 'child',
+      textName: 'Children in Beaconhouse',
+      fatherName: 'Abdual Hafeez',
+    },
+    {
+      iconName: 'user',
+      textName: 'Personal Information',
+      fatherName: 'Abdual Hafeez',
+    },
   ];
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: '#1C37A4'}}>
@@ -38,17 +65,19 @@ const Profile = props => {
             justifyContent: 'space-between',
             marginTop: hp(8),
           }}>
-          <TouchableOpacity onPress={()=>props.navigation.navigate('Notification')}>
-            < Icon type='light' name="bell" size={hp(3)} color="#FFF" />
+          <TouchableOpacity
+            activeOpacity={0.8}
+            onPress={() => props.navigation.navigate('Notification')}>
+            <Icon type="light" name="bell" size={hp(3)} color="#FFF" />
           </TouchableOpacity>
           <View>{/* <Text>gdfgd</Text> */}</View>
           <TouchableOpacity onPress={() => props.navigation.openDrawer()}>
             {/* <Menu name="menu" size={35} color="#fff" /> */}
             <Image
-                style={styles.menustyle}
-                source={{uri: 'menuicon'}}
-                resizeMode="cover"
-              />
+              style={styles.menustyle}
+              source={{uri: 'menuicon'}}
+              resizeMode="cover"
+            />
           </TouchableOpacity>
         </View>
         <View
@@ -129,10 +158,7 @@ const Profile = props => {
                       justifyContent: 'center',
                       alignItems: 'center',
                     }}>
-                    <Text
-                      style={styles.textnum}>
-                      81090
-                    </Text>
+                    <Text style={styles.textnum}>81090</Text>
                   </View>
                 </View>
                 <View style={{flexDirection: 'row', marginTop: hp(0)}}>
@@ -170,7 +196,12 @@ const Profile = props => {
               }}>
               <View style={{flexDirection: 'row'}}>
                 <View style={{alignItems: 'center', paddingVertical: hp(0.3)}}>
-                  <Check name="checkcircleo" size={hp(3.5)} color="#D4FFCC" />
+                  <Icon
+                    type="light"
+                    name="circle-check"
+                    size={hp(3.5)}
+                    color="green"
+                  />
                 </View>
                 <View style={{marginLeft: hp(0.8)}}>
                   <View>
@@ -183,7 +214,12 @@ const Profile = props => {
               </View>
               <View style={{flexDirection: 'row', marginLeft: hp(3.5)}}>
                 <View style={{alignItems: 'center', paddingVertical: hp(0.3)}}>
-                  <Icon type='light' name="wrench" size={hp(3.5)} color="#BB8FCE" />
+                  <Icon
+                    type="light"
+                    name="wrench"
+                    size={hp(3.5)}
+                    color="#BB8FCE"
+                  />
                 </View>
                 <View style={{marginLeft: hp(0.5)}}>
                   <View>
@@ -232,7 +268,6 @@ const Profile = props => {
             );
           })}
         </View>
-       
       </ScrollView>
     </SafeAreaView>
   );
@@ -246,7 +281,7 @@ const styles = EStyleSheet.create({
     fontWeight: '700',
     fontSize: '0.7rem',
     fontFamily: fontFamily.ceraBold,
-    fontStyle:'normal'
+    fontStyle: 'normal',
   },
   zetext1: {
     color: '#363636',
@@ -268,18 +303,17 @@ const styles = EStyleSheet.create({
     color: '#979797',
     fontStyle: 'normal',
     alignItems: 'center',
-    textTransform:'uppercase'
+    textTransform: 'uppercase',
   },
-  textnum:{
+  textnum: {
     fontSize: '0.5rem',
     paddingHorizontal: 8,
     color: '#2D8E00',
-    fontStyle:'normal',
-    fontWeight:'700'
+    fontStyle: 'normal',
+    fontWeight: '700',
   },
-  menustyle:{
-    width:'1.3rem',
-    height:'1rem',
-    
+  menustyle: {
+    width: '1.3rem',
+    height: '1rem',
   },
 });

@@ -41,66 +41,29 @@ const AttendenceMarked = (props) => {
   return (
     <View>
       <MainHeader text={'Attendance Not Marked'} iconName={'arrow-left'} onpressBtn={()=>props.navigation.goBack()}/>
-      {/* <View
-        style={{width: wp(90), marginHorizontal: hp(2.5), marginTop: hp(2)}}>
+      
+      <View
+        style={{
+          marginTop: hp(2),
+          marginHorizontal: wp('5'),
+          backgroundColor: '#fff',
+          borderRadius: wp(10),
+          shadowColor: '#000',
+          shadowOpacity: 1,
+          shadowRadius: wp('15'),
+          elevation: 10,
+        }}>
         <ViewInput
-          //  value={employeeId}
-          //  onChangeText={onChangeEmpId}
-          //  keyboardType={'numeric'}
-          //  maxLength={11}
-          //  returnKeyType={'done'}
-          iconName={'arrowright'}
+          // dateText={dateThree}
+          // dateFun={showDatePickerthree}
+          iconName={'calendar-days'}
           placeholder={'Tue, Jun 27, 2023'}
           placeholderColor={colors.loginTextColor}
           iconColor={colors.loginIconColor}
-          style={styles.textInputCustomStyle}
+          // style={styles.textInputCustomStyle}
         />
       </View>
-      <View
-        style={{width: wp(90), marginHorizontal: hp(2.5), marginTop: hp(2)}}>
-        <ViewInput
-          //  value={employeeId}
-          //  onChangeText={onChangeEmpId}
-          //  keyboardType={'numeric'}
-          //  maxLength={11}
-          //  returnKeyType={'done'}
-          iconName={'arrowright'}
-          placeholder={'Tue, Jun 27, 2023'}
-          placeholderColor={colors.loginTextColor}
-          iconColor={colors.loginIconColor}
-          style={styles.textInputCustomStyle}
-        />
-      </View> */}
-      <View
-        style={{width: wp(90), marginHorizontal: hp(2.5), marginTop: hp(2)}}>
-        <ViewInput
-          //  value={employeeId}
-          //  onChangeText={onChangeEmpId}
-          //  keyboardType={'numeric'}
-          //  maxLength={11}
-          //  returnKeyType={'done'}
-          iconName={'calendar'}
-          placeholder={'Tue, Jun 27, 2023'}
-          placeholderColor={colors.loginTextColor}
-          iconColor={colors.loginIconColor}
-          style={styles.textInputCustomStyle}
-        />
-      </View>
-      {/* <View
-        style={{width: wp(90), marginHorizontal: hp(2.5), marginTop: hp(2)}}>
-        <ViewInput
-          //  value={employeeId}
-          //  onChangeText={onChangeEmpId}
-          //  keyboardType={'numeric'}
-          //  maxLength={11}
-          //  returnKeyType={'done'}
-          iconName={'calendar'}
-          placeholder={'Leave Type'}
-          placeholderColor={colors.loginTextColor}
-          iconColor={colors.loginIconColor}
-          style={styles.textInputCustomStyle}
-        />
-      </View> */}
+     
       <View
         style={{
           marginHorizontal: hp(2.5),
@@ -108,7 +71,7 @@ const AttendenceMarked = (props) => {
           flexDirection: 'row',
           justifyContent:'space-between'
         }}>
-        <View style={{flexDirection: 'row'}}>
+        <TouchableOpacity activeOpacity={0.8} onPress={fulDayHandle} style={{flexDirection: 'row'}}>
           <View>
             <Radio
               checked={fullDay}
@@ -118,11 +81,11 @@ const AttendenceMarked = (props) => {
               onChange={fulDayHandle}
             />
           </View>
-          <View style={{marginVertical: hp(0.5), paddingHorizontal: hp(0.5)}}>
+          <View style={{marginVertical: hp(0.8), paddingHorizontal: hp(0.5)}}>
             <Text style={styles.radiotext}>Time In</Text>
           </View>
-        </View>
-        <View style={{flexDirection: 'row'}}>
+        </TouchableOpacity>
+        <TouchableOpacity activeOpacity={0.8} onPress={halfDayHandle} style={{flexDirection: 'row'}}>
           <View>
             <Radio
               checked={halfDay}
@@ -135,8 +98,8 @@ const AttendenceMarked = (props) => {
           <View style={{marginVertical: hp(0.8), paddingHorizontal: hp(0.5)}}>
             <Text style={styles.radiotext}>Time Out</Text>
           </View>
-        </View>
-        <View style={{flexDirection: 'row'}}>
+        </TouchableOpacity>
+        <TouchableOpacity activeOpacity={0.8} onPress={shortLeaveHandle} style={{flexDirection: 'row'}}>
           <View>
             <Radio
               checked={shortLeave}
@@ -146,81 +109,94 @@ const AttendenceMarked = (props) => {
               onChange={shortLeaveHandle}
             />
           </View>
-          <View style={{marginVertical: hp(0.8), paddingHorizontal: hp(0.5)}}>
+          <View style={{marginVertical: hp(0.9), paddingHorizontal: hp(0.5)}}>
             <Text style={styles.radiotext}>Both</Text>
           </View>
-        </View>
+        </TouchableOpacity>
       </View>
       <View
-        style={{width: wp(90), marginHorizontal: hp(2.5), marginTop: hp(2)}}>
+        style={{
+          marginTop: hp(2),
+          marginHorizontal: wp('5'),
+          backgroundColor: '#fff',
+          borderRadius: wp(10),
+          shadowColor: '#000',
+          shadowOpacity: 1,
+          shadowRadius: wp('15'),
+          elevation: 10,
+        }}>
         <ViewInput
-          //  value={employeeId}
-          //  onChangeText={onChangeEmpId}
-          //  keyboardType={'numeric'}
-          //  maxLength={11}
-          //  returnKeyType={'done'}
-          iconName={'clockcircleo'}
-          placeholder={'17:15 PM'}
-          placeholderColor={colors.loginTextColor}
-          iconColor={colors.loginIconColor}
-          style={styles.textInputCustomStyle}
-        />
-      </View>
-      <View
-        style={{width: wp(90), marginHorizontal: hp(2.5), marginTop: hp(2)}}>
-        <ViewInput
-          //  value={employeeId}
-          //  onChangeText={onChangeEmpId}
-          //  keyboardType={'numeric'}
-          //  maxLength={11}
-          //  returnKeyType={'done'}
-          iconName={'clockcircleo'}
+          // dateText={dateThree}
+          // dateFun={showDatePickerthree}
+          iconName={'clock'}
           placeholder={'09:00 AM'}
           placeholderColor={colors.loginTextColor}
           iconColor={colors.loginIconColor}
-          style={styles.textInputCustomStyle}
+          // style={styles.textInputCustomStyle}
         />
       </View>
       <View
         style={{
-          width: wp(90),
-          marginHorizontal: hp(2.5),
-          marginTop: hp(3),
-          flexDirection: 'row',
-          justifyContent: 'space-between',
+          marginTop: hp(2),
+          marginHorizontal: wp('5'),
+          backgroundColor: '#fff',
+          borderRadius: wp(10),
+          shadowColor: '#000',
+          shadowOpacity: 1,
+          shadowRadius: wp('15'),
+          elevation: 10,
         }}>
-        <View
-          style={{
-            width: wp(90),
-            height: hp(15),
-            backgroundColor: '#fff',
-            borderRadius: hp(1.5),
-            shadowColor: '#000',
-            shadowOpacity: 0.5,
-            shadowRadius: 4,
-            elevation: 8,
-          }}>
-          <View style={{marginHorizontal: hp(2), marginVertical: hp(1)}}>
-          <TextInput  placeholder={'Reason'}
-                  placeholderColor={'gray'}
-                  placeholderTextColor="gray"
-                  style={styles.textInputCustomStyle} />
-          </View>
-        </View>
+        <ViewInput
+          // dateText={dateThree}
+          // dateFun={showDatePickerthree}
+          iconName={'clock'}
+          placeholder={'17:15 PM'}
+          placeholderColor={colors.loginTextColor}
+          iconColor={colors.loginIconColor}
+          // style={styles.textInputCustomStyle}
+        />
       </View>
       <View
-        style={{width: wp(90), marginHorizontal: hp(2.5), marginTop: hp(2)}}>
+        style={{
+          backgroundColor: '#fff',
+          borderRadius: hp(1.5),
+          shadowColor: '#000',
+          shadowOpacity: 0.5,
+          shadowRadius: 4,
+          elevation: 8,
+          marginHorizontal: wp(5),
+          marginTop: hp('2'),
+        }}>
+        <TextInput
+          placeholder={'Reason'}
+          placeholderColor={'gray'}
+          placeholderTextColor="black"
+          style={{
+            height: hp(15),
+            textAlignVertical: 'top',
+            paddingLeft: wp('3'),
+          }}
+        />
+      </View>
+      <View
+        style={{
+          marginTop: hp(2),
+          marginHorizontal: wp('5'),
+          backgroundColor: '#fff',
+          borderRadius: wp(10),
+          shadowColor: '#000',
+          shadowOpacity: 1,
+          shadowRadius: wp('15'),
+          elevation: 10,
+        }}>
         <ViewInput
-          //  value={employeeId}
-          //  onChangeText={onChangeEmpId}
-          //  keyboardType={'numeric'}
-          //  maxLength={11}
-          //  returnKeyType={'done'}
-          iconName={'adduser'}
+          // dateText={dateThree}
+          // dateFun={showDatePickerthree}
+          iconName={'user'}
           placeholder={'Muhammad Qasim Ali Khan'}
           placeholderColor={colors.loginTextColor}
           iconColor={colors.loginIconColor}
-          style={styles.textInputCustomStyle}
+          // style={styles.textInputCustomStyle}
         />
       </View>
       <TouchableOpacity

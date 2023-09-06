@@ -54,6 +54,7 @@ const ApplicationType = props => {
             marginTop: hp(2),
           }}>
           <TouchableOpacity
+          activeOpacity={0.8}
             onPress={() => props.navigation.navigate('ApplyLeave')}
             style={{
               height: hp(10.5),
@@ -98,6 +99,7 @@ const ApplicationType = props => {
             </View>
           </TouchableOpacity>
           <TouchableOpacity
+          activeOpacity={0.8}
             onPress={() => props.navigation.navigate('Outstation')}
             style={{
               height: hp(10.5),
@@ -142,6 +144,7 @@ const ApplicationType = props => {
             </View>
           </TouchableOpacity>
           <TouchableOpacity
+          activeOpacity={0.8}
             onPress={() => props.navigation.navigate('AttendenceMarked')}
             style={{
               height: hp(10.5),
@@ -186,6 +189,7 @@ const ApplicationType = props => {
             </View>
           </TouchableOpacity>
           <TouchableOpacity
+          activeOpacity={0.8}
             onPress={() => props.navigation.navigate('LateArivel')}
             style={{
               height: hp(10.5),
@@ -231,6 +235,7 @@ const ApplicationType = props => {
           </TouchableOpacity>
           
           <TouchableOpacity
+          activeOpacity={0.8}
             onPress={() => props.navigation.navigate('EarliLeaving')}
             style={{
               height: hp(10.5),
@@ -275,6 +280,7 @@ const ApplicationType = props => {
             </View>
           </TouchableOpacity>
           <TouchableOpacity
+          activeOpacity={0.8}
             onPress={() => props.navigation.navigate('ToilLeave')}
             style={{
               height: hp(10.5),
@@ -334,11 +340,13 @@ const ApplicationType = props => {
             
           }}>
           <TouchableOpacity
+          activeOpacity={0.8}
             onPress={btColorHandler}
             style={{flex: 0.2, alignItems: 'center'}}>
             <Menu name="calendar" size={hp(2.5)} color={btColor ==true ? '#1C37A4':'#979797'}  style={{}} />
           </TouchableOpacity>
           <TouchableOpacity
+          activeOpacity={0.8}
           onPress={btColorHandler1}
             style={{flex: 0.2, paddingTop: hp(0.5), alignItems: 'center',flexDirection:'row',paddingLeft:hp(1)}}>
            <View>
@@ -349,10 +357,11 @@ const ApplicationType = props => {
            </View>
           
           </TouchableOpacity>
-          <TouchableOpacity style={{flex: 0.2, alignItems: 'center'}} onPress={btColorHandler2}>
+          <TouchableOpacity activeOpacity={0.8} style={{flex: 0.2, alignItems: 'center'}} onPress={btColorHandler2}>
             <Icon name="chart-simple" size={hp(2.5)} color={btColor2 ==true ? '#1C37A4':'#979797'} />
           </TouchableOpacity>
           <TouchableOpacity
+          activeOpacity={0.8}
           onPress={btColorHandler3}
             style={{flex: 0.2, alignItems: 'center', paddingTop: hp(0)}}>
             <Icon name="rectangle-history" size={hp(2.5)} color={btColor3 ==true ? '#1C37A4':'#979797'} />

@@ -32,7 +32,7 @@ const Accordion = ({IconName, textName,fatherName,religin,date,cnic,gender}) => 
 
   return (
     <>
-      <TouchableOpacity onPress={toggleExpansion} style={{marginBottom: hp(2)}}>
+      <TouchableOpacity activeOpacity={0.8} onPress={toggleExpansion} style={{marginBottom: hp(2)}}>
      
         <Animated.View
           style={{

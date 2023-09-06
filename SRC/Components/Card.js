@@ -6,9 +6,9 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import EStyleSheet from 'react-native-extended-stylesheet';
-import {BottomSheet} from '@rneui/themed';
+import { BottomSheet } from '@rneui/themed';
 import LinearGradient from 'react-native-linear-gradient';
 import Check from 'react-native-vector-icons/AntDesign';
 
@@ -22,25 +22,25 @@ import Icon from 'react-native-fontawesome-pro';
 import colors from '../Styles/colors';
 export default function Card() {
   const [visible, setVisible] = useState(false);
-  const [iconType,setType]=useState(false)
+  const [iconType, setType] = useState(false)
   const handleReset = () => {
     setVisible(false);
   };
-  const typeHandler=()=>{
+  const typeHandler = () => {
     setType(!iconType)
   }
   const data = [1, 2, 3, 4, 5];
   return (
-    <View style={{flex: 1}}>
+    <View style={{ flex: 1 }}>
       <BottomSheet
         isVisible={visible}
         style={{
-          backgroundColor:colors.appBackGroundColor,
+          backgroundColor: colors.appBackGroundColor,
           flex: 1,
         }}>
         <LinearGradient
-          start={{x: 0, y: 0}}
-          end={{x: 1, y: 0}}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 0 }}
           colors={['#1C37A5', '#4D69DC']}
           style={styles.mainHeader}>
           <View
@@ -56,7 +56,7 @@ export default function Card() {
                 marginTop: hp(0),
                 height: hp(5),
               }}>
-              <Text style={{color: '#fff', paddingBottom: hp(0.1)}}>
+              <Text style={{ color: '#fff', paddingBottom: hp(0.1) }}>
                 Massages
               </Text>
             </View>
@@ -66,16 +66,17 @@ export default function Card() {
                 justifyContent: 'space-between',
               }}>
               <TouchableOpacity
+                activeOpacity={0.8}
                 onPress={handleReset}
-                style={{justifyContent: 'center', marginTop: hp(0)}}>
+                style={{ justifyContent: 'center', marginTop: hp(0) }}>
                 <Icon type="light" name="xmark" size={hp(3)} color="#fff" />
               </TouchableOpacity>
             </View>
           </View>
         </LinearGradient>
-        <View style={{flex: 1, height: hp(84)}}>
+        <View style={{ flex: 1, height: hp(84) }}>
           <View style={styles.detailcard}>
-            <View style={{marginHorizontal: hp(1)}}>
+            <View style={{ marginHorizontal: hp(1) }}>
               <View
                 style={{
                   width: wp(50),
@@ -93,7 +94,7 @@ export default function Card() {
                       height: hp(6),
                       borderRadius: hp(50),
                     }}
-                    source={{uri: 'artg'}}
+                    source={{ uri: 'artg' }}
                     resizeMode="cover"
                   />
                 </View>
@@ -106,20 +107,20 @@ export default function Card() {
                   <View>
                     <Text style={styles.cduserName}>Zeeshan Abdual Hafeez</Text>
                   </View>
-                  <View style={{marginRight: hp(1)}}>
+                  <View style={{ marginRight: hp(1) }}>
                     <Text style={styles.cdctitle}>May 22,2023</Text>
                   </View>
                 </View>
               </View>
             </View>
-            <View style={{marginTop: hp(-1)}}>
+            <View style={{ marginTop: hp(-1) }}>
               <Text style={styles.longdesc}>
-              React Native is an open-source UI software framework created by Meta Platforms, Inc. It is used to develop applications for Android, Android TV, iOS, macOS, tvOS, Web, Windows and UWP by enabling developers to use the React framework along with native platform capabilities
+                React Native is an open-source UI software framework created by Meta Platforms, Inc. It is used to develop applications for Android, Android TV, iOS, macOS, tvOS, Web, Windows and UWP by enabling developers to use the React framework along with native platform capabilities
               </Text>
             </View>
             <View style={{}}>
               <Image
-                style={{height: hp(35), borderRadius: hp(1)}}
+                style={{ height: hp(35), borderRadius: hp(1) }}
                 resizeMode="contain"
                 source={{
                   uri: 'https://images.ctfassets.net/xmu5vdhtphau/6iYvUHa5loS3AIXjd2Jymf/0e341cb5a38a6ef9c1898e916262fb9a/social-bg-7.png',
@@ -134,7 +135,7 @@ export default function Card() {
               }}></View> */}
           </View>
         </View>
-        <View style={{flex: 1, backgroundColor: '#FFF', height: hp(8)}}>
+        <View style={{ flex: 1, backgroundColor: '#FFF', height: hp(8) }}>
           <View
             style={{
               flexDirection: 'row',
@@ -143,6 +144,7 @@ export default function Card() {
               marginVertical: hp(0.5),
             }}>
             <TouchableOpacity
+              activeOpacity={0.8}
               style={{
                 width: wp(20),
                 marginTop: hp(1),
@@ -156,7 +158,8 @@ export default function Card() {
               {/* <Text style={styles.viewbtn}>View </Text> */}
             </TouchableOpacity>
             <TouchableOpacity
-            onPress={typeHandler}
+              activeOpacity={0.8}
+              onPress={typeHandler}
               style={{
                 width: wp(20),
                 marginTop: hp(1),
@@ -167,13 +170,13 @@ export default function Card() {
                 justifyContent: 'center',
                 alignItems: 'center',
               }}>
-                <Icon type={iconType ? 'solid':'light'} name='thumbs-up' color='red' size={hp(4)}/>
+              <Icon type={iconType ? 'solid' : 'light'} name='thumbs-up' color='#1C37A4' size={hp(4)} />
               {/* <Text style={styles.viewbtn}>Like </Text> */}
             </TouchableOpacity>
           </View>
         </View>
       </BottomSheet>
-      <View style={{marginTop: hp(3)}}>
+      <View style={{ marginTop: hp(3) }}>
         <View style={styles.cardHeading}>
           <View>
             <Text style={styles.message}>Messages</Text>
@@ -189,10 +192,11 @@ export default function Card() {
           {data.map((e, i) => {
             return (
               <TouchableOpacity
+                activeOpacity={0.8}
                 onPress={() => setVisible(true)}
                 style={styles.card}
                 key={i}>
-                <View style={{marginHorizontal: hp(1)}}>
+                <View style={{ marginHorizontal: hp(1) }}>
                   <View
                     style={{
                       width: wp(50),
@@ -210,7 +214,7 @@ export default function Card() {
                           height: hp(3.5),
                           borderRadius: hp(50),
                         }}
-                        source={{uri: 'artg'}}
+                        source={{ uri: 'artg' }}
                         resizeMode="cover"
                       />
                     </View>
@@ -225,16 +229,16 @@ export default function Card() {
                           Zeeshan Abdual Hafeez
                         </Text>
                       </View>
-                      <View style={{marginRight: hp(1)}}>
+                      <View style={{ marginRight: hp(1) }}>
                         <Text style={styles.ctitle}>May 22,2023</Text>
                       </View>
                     </View>
                   </View>
                 </View>
-                <View style={{marginHorizontal: hp(1.5), marginTop: hp(-2)}}>
+                <View style={{ marginHorizontal: hp(1.5), marginTop: hp(-2) }}>
                   <Text
                     style={styles.cardText}
-                    numberOfLines={4}
+                    numberOfLines={5}
                     ellipsizeMode={'tail'}>
                     React Native is an open-source UI software framework created by Meta Platforms about at Inc. It is used to develop applications for Android, Android TV, iOS, macOS, tvOS, Web, Windows and UWP by enabling developers to use the React framework along with native platform capabilities.
                   </Text>
@@ -304,7 +308,7 @@ const styles = EStyleSheet.create({
     color: '#6A6A6A',
   },
   cardText: {
-    fontSize:'0.6rem',
+    fontSize: '0.6rem',
     fontWeight: '500',
     fontFamily: fontFamily.ceraMedium,
     // letterSpacing: '0.00938rem',
@@ -314,7 +318,7 @@ const styles = EStyleSheet.create({
     lineHeight: hp(1.9),
     // letterSpacing:hp(0.1),
     // textTransform: 'uppercase',
-    textAlign:'left'
+    textAlign: 'left'
   },
   cardHeading: {
     flex: 1,
@@ -368,8 +372,8 @@ const styles = EStyleSheet.create({
     lineHeight: hp(1.8),
     padding: hp(1.5),
     lineHeight: hp(2),
-    letterSpacing:hp(0.1),
-    textAlign:'left'
+    letterSpacing: hp(0.1),
+    textAlign: 'left'
   },
   detailcard: {
     marginHorizontal: hp(2.5),

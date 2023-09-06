@@ -55,19 +55,7 @@ const Skip1 = () => {
   ]);
   const [initVal, setInitVal] = useState(0);
 
-  //   const hendleSwiper=(data)=>{
-  // console.log("swiper data",data)
-  //     data.map((item,i)=>{
-  //       console.log("i data",i)
-
-  //       // return()
-  //     })
-  //   }
-
   const swiperRef = useRef(null);
-  // const [employeeId, setEmployeeId] = useState();
-  // const [employeePassword, setEmployeePassword] = useState();
-  // const [skipBtn, setSkipBtn] = useState(false);
 
   const navigation = useNavigation();
   const handleNavigate = (routeName, clearStack, params) => {
@@ -101,7 +89,6 @@ const Skip1 = () => {
   return (
     <View style={{flex: 1}}>
       <Swiper
-        // onIndexChanged={(data)=>hendleSwiper(data)}
         style={styles.wrapper}
         showsButtons={false}
         loop={false}
@@ -122,6 +109,8 @@ const Skip1 = () => {
                 }}>
                 <View style={{width: wp(50)}}></View>
                 <TouchableOpacity
+                activeOpacity={0.8}
+                // onPress={onPressLogin}
                   onPress={handleSkip}
                   style={{width: wp(50), marginLeft: hp(15)}}>
                   <Text style={{fontSize: hp(2), color: 'black'}}>SKIP</Text>
@@ -130,8 +119,8 @@ const Skip1 = () => {
               <View style={{width: wp(100), marginTop: hp(12)}}>
                 <View
                   style={{
-                    marginLeft: hp(14),
-                    width: wp(100),
+                    justifyContent: 'center',
+                    alignItems: 'center',
                     marginBottom: hp(5),
                   }}>
                   <Text style={styles.textSkip}>
@@ -144,26 +133,20 @@ const Skip1 = () => {
                     justifyContent: 'center',
                     alignItems: 'center',
                   }}>
-                  {/* <Image
-                    source={{uri: 'person'}}
-                    style={{height: hp('30'), width: wp(100)}}
-                    resizeMode={'contain'}
-                  /> */}
                   <LottieView
                     style={{
-                      width: wp(100),
-                      height: hp(30),
-                      // backgroundColor: '#eee',
+                      width: wp(80),
+                      height: hp(40),
                     }}
-                    source={require('../assets/animation_lm0gzbbe.json')}
+                    source={require('../assets/animation_lm0fv0a2.json')}
                     autoPlay
                   />
                 </View>
                 <View
                   style={{
-                    marginLeft: hp(5.5),
                     marginTop: hp(5),
-                    width: wp(100),
+                    justifyContent: 'center',
+                    alignItems: 'center',
                   }}>
                   <Text style={styles.textSkip}>
                     We're so excited to have you on board.
@@ -189,6 +172,7 @@ const Skip1 = () => {
                 }}>
                 <View style={{width: wp(50)}}></View>
                 <TouchableOpacity
+                activeOpacity={0.8}
                   onPress={handleSkip}
                   style={{width: wp(50), marginLeft: hp(15)}}>
                   <Text style={{fontSize: hp(2), color: 'black'}}>SKIP</Text>
@@ -197,8 +181,8 @@ const Skip1 = () => {
               <View style={{width: wp(100), marginTop: hp(12)}}>
                 <View
                   style={{
-                    marginLeft: hp(16),
-                    width: wp(100),
+                    justifyContent: 'center',
+                    alignItems: 'center',
                     marginBottom: hp(5),
                   }}>
                   <Text style={styles.textSkip}>
@@ -211,14 +195,9 @@ const Skip1 = () => {
                     justifyContent: 'center',
                     alignItems: 'center',
                   }}>
-                  {/* <Image
-                    source={{uri: 'mobile'}}
-                    style={{height: hp('30'), width: wp(100)}}
-                    resizeMode={'contain'}
-                  /> */}
                   <LottieView
                     style={{
-                      width: wp(100),
+                      width: wp(80),
                       height: hp(30),
                       // backgroundColor: '#eee',
                     }}
@@ -238,30 +217,6 @@ const Skip1 = () => {
                     requesting
                   </Text>
                 </View>
-                {/* <View
-                  style={{
-                    marginTop: hp('18'),
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                  }}>
-                  <Button
-                    onPress={onPressLogin}
-                    height={hp('7')}
-                    width={wp('90')}
-                    text="LOGIN"
-                    bgColor={colors.whiteColor}
-                    textColor={colors.loginIconColor}
-                    textSize={hp('2')}
-                    borderRadius={wp('10')}
-                    borderColor={'#BABABA33'}
-                    borderWidth={wp('0.3')}
-                    shadowColor={'#000'}
-                    shadowOffset={{ width: 0, height: 12 }}
-                    shadowOpacity={0.58}
-                    shadowRadius={16}
-                    elevation={7}
-                  />
-                </View> */}
               </View>
             </KeyboardAvoidingView>
           </ImageBackground>
@@ -282,6 +237,7 @@ const Skip1 = () => {
                 }}>
                 <View style={{width: wp(50)}}></View>
                 <TouchableOpacity
+                activeOpacity={1}
                   onPress={onPressLogin}
                   style={{width: wp(50), marginLeft: hp(15)}}>
                   <Text style={{fontSize: hp(2), color: 'black'}}>SKIP</Text>
@@ -304,14 +260,9 @@ const Skip1 = () => {
                     justifyContent: 'center',
                     alignItems: 'center',
                   }}>
-                  {/* <Image
-                    source={{uri: 'hash'}}
-                    style={{height: hp('30'), width: wp(100)}}
-                    resizeMode={'contain'}
-                  /> */}
                   <LottieView
                     style={{
-                      width: wp(100),
+                      width: wp(80),
                       height: hp(30),
                       // backgroundColor: '#fff',
                     }}
@@ -329,30 +280,6 @@ const Skip1 = () => {
                     Take some time to explore the app and learn how it works.
                   </Text>
                 </View>
-                {/* <View
-                  style={{
-                    marginTop: hp('18'),
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                  }}>
-                  <Button
-                    onPress={onPressLogin}
-                    height={hp('7')}
-                    width={wp('90')}
-                    text="LOGIN"
-                    bgColor={colors.whiteColor}
-                    textColor={colors.loginIconColor}
-                    textSize={hp('2')}
-                    borderRadius={wp('10')}
-                    borderColor={'#BABABA33'}
-                    borderWidth={wp('0.3')}
-                    shadowColor={'#000'}
-                    shadowOffset={{ width: 0, height: 12 }}
-                    shadowOpacity={0.58}
-                    shadowRadius={16}
-                    elevation={7}
-                  />
-                </View> */}
               </View>
             </KeyboardAvoidingView>
           </ImageBackground>
@@ -372,13 +299,11 @@ const styles = EStyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    // backgroundColor: '#97CAE5',
   },
   slide3: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    // backgroundColor: '#92BBD9',
   },
   textSkip: {
     color: '#626161',

@@ -121,7 +121,7 @@ const LeaveHistory = props => {
           }}
           showsHorizontalScrollIndicator={false}>
           {data?.map((item, i) => {
-            <TouchableOpacity onPress={() => {}} key={i}>
+            <TouchableOpacity activeOpacity={0.8} onPress={() => {}} key={i}>
               <View
                 style={{
                   height: hp(4.3),
@@ -149,7 +149,7 @@ const LeaveHistory = props => {
             return (
               <>
                 {clinder == item.id && (
-                  <TouchableOpacity key={i}>
+                  <TouchableOpacity activeOpacity={0.8} key={i}>
                     <View
                       style={{
                         height: hp(3.7),
@@ -179,6 +179,7 @@ const LeaveHistory = props => {
                 )}
                 {clinder !== item.id && (
                   <TouchableOpacity
+                  activeOpacity={0.8}
                     onPress={() => clinderHandler(item.id)}
                     key={i}>
                     <View
@@ -216,6 +217,7 @@ const LeaveHistory = props => {
           return (
             <View style={{}} key={i}>
               <TouchableOpacity
+              activeOpacity={0.8}
                 onPress={() => toggleExpansion(item.id)}
                 style={{
                   width: wp(90),

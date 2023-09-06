@@ -90,6 +90,7 @@ const WorkFromHome = props => {
       )}
       <View style={styles.botContainer}>
         <TouchableOpacity
+        activeOpacity={0.8}
           onPress={timeinHandler}
           style={{
             justifyContent: 'center',
@@ -105,6 +106,7 @@ const WorkFromHome = props => {
           <Text style={[styles.bootContText2]}>TIME IN</Text>
         </TouchableOpacity>
         <TouchableOpacity
+        activeOpacity={0.8}
           onPress={timeiOutHandler}
           style={{
             justifyContent: 'center',
@@ -122,6 +124,7 @@ const WorkFromHome = props => {
         </TouchableOpacity>
 
         <TouchableOpacity
+        activeOpacity={0.8}
           style={{
             justifyContent: 'center',
             alignItems: 'center',

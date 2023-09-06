@@ -183,6 +183,7 @@ const ScannerDetail = props => {
             marginBottom: hp(20),
           }}>
           <TouchableOpacity
+            activeOpacity={0.8}
             onPress={handleReset}
             style={{
               width: wp(10),
@@ -227,7 +228,9 @@ const ScannerDetail = props => {
                   style={{height: hp(30)}}
                   source={{uri: e.tag_banner}}
                   resizeMode="cover">
-                  <TouchableOpacity onPress={() => props.navigation.goBack()}>
+                  <TouchableOpacity
+                    activeOpacity={0.8}
+                    onPress={() => props.navigation.goBack()}>
                     <View
                       style={{
                         marginTop: hp(8),
@@ -346,26 +349,6 @@ const ScannerDetail = props => {
                   )}
                 </View>
               </View>
-              {/* <View style={{flex: hp(0.3)}}>
-                <TouchableOpacity
-                  onPress={handleQrcode}
-                  disabled={
-                    scan_time == null ? false : setup_id == 2 ? true : false
-                  }
-                  style={{
-                    backgroundColor: '#4D69DC',
-                    height: hp(8),
-                    position: 'absolute',
-                    left: 0,
-                    right: 0,
-                    bottom: 0,
-                    top: hp(98.4),
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                  }}>
-                  <Text style={{color: '#fff'}}>SCAN NOW</Text>
-                </TouchableOpacity>
-              </View> */}
             </View>
           );
         })}
@@ -386,7 +369,7 @@ const ScannerDetail = props => {
           }}>
           {/* <View style={{flex:0.1}}></View> */}
           <TouchableOpacity
-            onPress={() =>props.navigation.navigate('HomeScreenDrawer')}
+            onPress={() => props.navigation.navigate('HomeScreenDrawer')}
             style={{flex: 0.2, alignItems: 'center'}}>
             <Menu name="home" size={hp(3)} color="#1C37A4" style={{}} />
           </TouchableOpacity>
@@ -481,7 +464,7 @@ const styles = EStyleSheet.create({
     fontFamily: fontFamily.ceraMedium,
     fontStyle: 'normal',
     marginTop: hp(1.5),
-    textTransform:'uppercase'
+    textTransform: 'uppercase',
   },
   times: {
     color: '#5669FF',

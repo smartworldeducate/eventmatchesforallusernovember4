@@ -1,5 +1,5 @@
-import {View, Text} from 'react-native';
-import React from 'react';
+import {View, Text, TextInput} from 'react-native';
+import React, {useState} from 'react';
 import {PieChart} from 'react-native-gifted-charts';
 import {
   widthPercentageToDP as wp,
@@ -8,23 +8,47 @@ import {
 import EStyleSheet from 'react-native-extended-stylesheet';
 import fontFamily from '../Styles/fontFamily';
 const Graph = () => {
+  const [piData, setPiData] = useState(100000);
+  const [focus, setFocus] = useState(false);
   const pieData = [
-    {value: 25, color: '#FFB243', gradientCenterColor: '#FFB243'},
-    {value: 25, color: '#D4E9FF', gradientCenterColor: '#8F80F3'},
+    {
+      value: 20,
+      color: '#FFB243',
+      gradientCenterColor: '#FFB243',
+      namet: 'fsdf',
+      focused: true,
+    },
+    {value: 30, color: '#D4E9FF', gradientCenterColor: '#8F80F3'},
     {value: 25, color: '#76FFBD', gradientCenterColor: '#FF7F97'},
     {
       value: 25,
       color: '#C1B7FD',
       gradientCenterColor: '#C1B7FD',
-      focused: true,
     },
   ];
+
+  const [isFocused, setIsFocused] = useState(false);
+  const [text, setText] = useState('');
+
+  const onFocus = () => {
+    console.log('sfsdfsdf');
+    // setIsFocused(true);
+    // setText(e)
+  };
+
+  const onBlur = () => {
+    setIsFocused(false);
+  };
+
+  const onChangeText = inputText => {
+    setText(inputText);
+  };
 
   const renderDot = color => {
     return (
       <View
         style={{
-          height: hp(5),
+          height: hp(4),
           width: wp(3.5),
           borderRadius: 1,
           backgroundColor: color,
@@ -32,6 +56,11 @@ const Graph = () => {
         }}
       />
     );
+  };
+
+  const onPressHere = val => {
+    console.log('data', val);
+    setText(val.value);
   };
 
   return (
@@ -47,19 +76,19 @@ const Graph = () => {
             donut
             showGradient
             sectionAutoFocus
-            radius={90}
+            radius={100}
             innerRadius={60}
+            focusOnPress
+            showValuesAsLabels
+            onPress={onPressHere}
             innerCircleColor={'#fff'}
             centerLabelComponent={() => {
               return (
                 <View style={{justifyContent: 'center', alignItems: 'center'}}>
-                  <Text
-                    style={styles.tousandlakh}>
-                    100,000
-                  </Text>
-                  <Text style={styles.gross}>
-                    gross salary
-                  </Text>
+                  {text != '' && <Text style={styles.tousandlakh}>{text}</Text>}
+                  {text == '' && <Text style={styles.tousandlakh}>100000</Text>}
+
+                  <Text style={styles.gross}>gross salary</Text>
                 </View>
               );
             }}
@@ -148,48 +177,47 @@ const styles = EStyleSheet.create({
     fontStyle: 'normal',
     alignItems: 'center',
   },
-  iconSty:{
-    fontSize:hp(2.5),
-    color:"#A6ACAF",
-    fontWeight:100
+  iconSty: {
+    fontSize: hp(2.5),
+    color: '#A6ACAF',
+    fontWeight: 100,
   },
-  headertext:{
+  headertext: {
     fontSize: '0.75rem',
     fontFamily: fontFamily.ceraMedium,
     fontStyle: 'normal',
     color: '#363636',
     fontWeight: '500',
-    
   },
-  tousandlakh:{
+  tousandlakh: {
     fontSize: '1.1rem',
-    color: '#646464',
+    color: '#363636',
     fontWeight: '700',
     fontFamily: fontFamily.ceraBold,
     fontStyle: 'normal',
   },
-  gross:{
+  gross: {
     fontSize: '0.45rem',
     color: '#979797',
     fontWeight: '500',
     fontFamily: fontFamily.ceraMedium,
     fontStyle: 'normal',
-    textTransform:'uppercase'
+    textTransform: 'uppercase',
   },
-  numbertext:{
-  color: '#353535',
-  fontSize: '0.7rem',
-  fontWeight: '700',
-  fontFamily: fontFamily.ceraBold,
-  fontStyle: 'normal',
-  textTransform:'uppercase'
-},
-basictext:{color: '#979797',
-  fontSize: '0.5rem',
-  fontWeight: '500',
-  fontFamily: fontFamily.ceraMedium,
-  fontStyle: 'normal',
-  textTransform:'uppercase'
-
-}
+  numbertext: {
+    color: '#353535',
+    fontSize: '0.7rem',
+    fontWeight: '700',
+    fontFamily: fontFamily.ceraBold,
+    fontStyle: 'normal',
+    textTransform: 'uppercase',
+  },
+  basictext: {
+    color: '#979797',
+    fontSize: '0.5rem',
+    fontWeight: '500',
+    fontFamily: fontFamily.ceraMedium,
+    fontStyle: 'normal',
+    textTransform: 'uppercase',
+  },
 });

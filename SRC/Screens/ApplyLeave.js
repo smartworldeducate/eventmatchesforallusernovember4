@@ -1,14 +1,16 @@
-import {View, Text, StyleSheet, TextInput,TouchableOpacity} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TextInput,
+  TouchableOpacity,
+  ScrollView,
+} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import MainHeader from '../Components/Headers/MainHeader';
-// import Check from 'react-native-vector-icons/AntDesign';
-// import Wrench from 'react-native-vector-icons/FontAwesome';
-// import User from 'react-native-vector-icons/AntDesign';
-// import Gte from 'react-native-vector-icons/AntDesign';
-// import Phone from 'react-native-vector-icons/Feather';
 import colors from '../Styles/colors';
 import {Div, ThemeProvider, Radio} from 'react-native-magnus';
-
+import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -17,89 +19,204 @@ import ViewInput from '../Components/ViewInput';
 import Button from '../Components/Button/Button';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import fontFamily from '../Styles/fontFamily';
-const ApplyLeave = (props) => {
-  const [fullDay,setFullDay]=useState(false)
-  const [halfDay,setHalfDay]=useState(false)
-  const [shortLeave,setShortLeave]=useState(false)
-  const [withPay,setWithPay]=useState(false)
-  const [withOutPay,setWithOutPay]=useState(false)
+import ViewInputTwo from '../Components/ViewInputTwo';
+const ApplyLeave = props => {
+  const [fullDay, setFullDay] = useState(false);
+  const [halfDay, setHalfDay] = useState(false);
+  const [shortLeave, setShortLeave] = useState(false);
+  const [withPay, setWithPay] = useState(false);
+  const [withOutPay, setWithOutPay] = useState(false);
+  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+  const [date, setDate] = useState('');
+  const [dateTwo, setDateTwo] = useState('');
+  const [dateThree, setDateThree] = useState('');
+  //one
+  const showDatePicker = () => {
+    setDatePickerVisibility(true);
+    setDate('');
+  };
 
-  const fulDayHandle=()=>{
-    fullDay == true ? setFullDay(false) : setFullDay(true)
-  }
-  const halfDayHandle=()=>{
-    halfDay == true ? setHalfDay(false) : setHalfDay(true)
-  }
-  const shortLeaveHandle=()=>{
-    shortLeave == true ? setShortLeave(false) : setShortLeave(true)
-  }
-  const withPayHandle=()=>{
-    withPay == true ? setWithPay(false) : setWithPay(true)
-  }
-  const withOutPayHandle=()=>{
-    withOutPay == true ? setWithOutPay(false) : setWithOutPay(true)
-  }
+  const hideDatePicker = () => {
+    setDatePickerVisibility(false);
+  };
+
+  const handleDateConfirm = date => {
+    console.log(date);
+    const dt =
+      date.getDate() + '-' + date.getMonth() + '-' + date.getFullYear();
+    setDate(dt);
+    hideDatePicker();
+    setDateView(false);
+  };
+
+  //two
+
+  const showDatePickertwo = () => {
+    setDatePickerVisibility(true);
+    setDateTwo('');
+  };
+
+  const hideDatePickertwo = () => {
+    setDatePickerVisibility(false);
+  };
+
+  const handleDateConfirmtwo = date => {
+    console.log(date);
+    const dt =
+      date.getDate() + '-' + date.getMonth() + '-' + date.getFullYear();
+    setDateTwo(dt);
+    hideDatePickertwo();
+    setDateView(false);
+  };
+
+  //three
+
+  const showDatePickerthree = () => {
+    setDatePickerVisibility(true);
+    setDateThree('');
+  };
+
+  const hideDatePickerthree = () => {
+    setDatePickerVisibility(false);
+  };
+
+  const handleDateConfirmthree = date => {
+    console.log(date);
+    const dt =
+      date.getDate() + '-' + date.getMonth() + '-' + date.getFullYear();
+    setDateThree(dt);
+    hideDatePickertwo();
+    setDateView(false);
+  };
+
+  const fulDayHandle = () => {
+    setFullDay(!fullDay);
+  };
+  const halfDayHandle = () => {
+    setHalfDay(!halfDay);
+  };
+  const shortLeaveHandle = () => {
+    setShortLeave(!shortLeave);
+  };
+  const withPayHandle = () => {
+    setWithPay(!withPay);
+  };
+  const withOutPayHandle = () => {
+    setWithOutPay(!withOutPay);
+  };
   return (
-    <View>
-      <MainHeader text={'Apply Leave'} iconName={'arrow-left'} onpressBtn={()=>props.navigation.goBack()}/>
+    <ScrollView style={{flex: 1, backgroundColor: '#F5F8FC'}}>
+      <DateTimePickerModal
+        isVisible={isDatePickerVisible}
+        mode="date"
+        onConfirm={handleDateConfirm}
+        onCancel={hideDatePicker}
+      />
+      <DateTimePickerModal
+        isVisible={isDatePickerVisible}
+        mode="date"
+        onConfirm={handleDateConfirmtwo}
+        onCancel={hideDatePickertwo}
+      />
+      <DateTimePickerModal
+        isVisible={isDatePickerVisible}
+        mode="date"
+        onConfirm={handleDateConfirmthree}
+        onCancel={hideDatePickerthree}
+      />
+      <MainHeader
+        text={'Apply Leave'}
+        iconName={'arrow-left'}
+        onpressBtn={() => props.navigation.goBack()}
+      />
+      <View style={{}}>
+        <View
+          style={{
+            marginTop: hp(2),
+            marginHorizontal: wp('5'),
+            backgroundColor: '#fff',
+            borderRadius: wp(10),
+            shadowColor: '#000',
+            shadowOpacity: 1,
+            shadowRadius: wp('15'),
+            elevation: 10,
+          }}>
+          <ViewInput
+            dateText={date}
+            dateFun={showDatePicker}
+            iconName={'arrow-right'}
+            rIcon={'angles-up-down'}
+            placeholder={'Tue, Jun 27, 2023'}
+            placeholderColor={colors.loginTextColor}
+            iconColor={colors.loginIconColor}
+            // style={styles.textInputCustomStyle}
+          />
+        </View>
+      </View>
       <View
-        style={{width: wp(90), marginHorizontal: hp(2.5), marginTop: hp(2)}}>
+        style={{
+          marginTop: hp(2),
+          marginHorizontal: wp('5'),
+          backgroundColor: '#fff',
+          borderRadius: wp(10),
+          shadowColor: '#000',
+          shadowOpacity: 1,
+          shadowRadius: wp('15'),
+          elevation: 10,
+        }}>
         <ViewInput
-          //  value={employeeId}
-          //  onChangeText={onChangeEmpId}
-          //  keyboardType={'numeric'}
-          //  maxLength={11}
-          //  returnKeyType={'done'}
-          iconName={'arrowright'}
+          dateText={dateTwo}
+          dateFun={showDatePickertwo}
+          iconName={'arrow-right'}
           placeholder={'Tue, Jun 27, 2023'}
           placeholderColor={colors.loginTextColor}
           iconColor={colors.loginIconColor}
-          style={styles.textInputCustomStyle}
+          // style={styles.textInputCustomStyle}
         />
       </View>
       <View
-        style={{width: wp(90), marginHorizontal: hp(2.5), marginTop: hp(2)}}>
+        style={{
+          marginTop: hp(2),
+          marginHorizontal: wp('5'),
+          backgroundColor: '#fff',
+          borderRadius: wp(10),
+          shadowColor: '#000',
+          shadowOpacity: 1,
+          shadowRadius: wp('15'),
+          elevation: 10,
+        }}>
         <ViewInput
-          //  value={employeeId}
-          //  onChangeText={onChangeEmpId}
-          //  keyboardType={'numeric'}
-          //  maxLength={11}
-          //  returnKeyType={'done'}
-          iconName={'arrowright'}
-          placeholder={'Tue, Jun 27, 2023'}
-          placeholderColor={colors.loginTextColor}
-          iconColor={colors.loginIconColor}
-          style={styles.textInputCustomStyle}
-        />
-      </View>
-      <View
-        style={{width: wp(90), marginHorizontal: hp(2.5), marginTop: hp(2)}}>
-        <ViewInput
-          //  value={employeeId}
-          //  onChangeText={onChangeEmpId}
-          //  keyboardType={'numeric'}
-          //  maxLength={11}
-          //  returnKeyType={'done'}
-          iconName={'calendar'}
+          dateText={dateThree}
+          dateFun={showDatePickerthree}
+          iconName={'calendar-days'}
           placeholder={'8 Days'}
           placeholderColor={colors.loginTextColor}
           iconColor={colors.loginIconColor}
-          style={styles.textInputCustomStyle}
+          // style={styles.textInputCustomStyle}
         />
       </View>
       <View
-        style={{width: wp(90), marginHorizontal: hp(2.5), marginTop: hp(2)}}>
+        style={{
+          marginTop: hp(2),
+          marginHorizontal: wp('5'),
+          backgroundColor: '#fff',
+          borderRadius: wp(10),
+          shadowColor: '#000',
+          shadowOpacity: 1,
+          shadowRadius: wp('15'),
+          elevation: 10,
+        }}>
         <ViewInput
           //  value={employeeId}
           //  onChangeText={onChangeEmpId}
           //  keyboardType={'numeric'}
           //  maxLength={11}
           //  returnKeyType={'done'}
-          iconName={'calendar'}
+          iconName={'calendar-exclamation'}
           placeholder={'Leave Type'}
           placeholderColor={colors.loginTextColor}
           iconColor={colors.loginIconColor}
-          style={styles.textInputCustomStyle}
+          // style={styles.textInputCustomStyle}
         />
       </View>
       <View
@@ -107,9 +224,12 @@ const ApplyLeave = (props) => {
           marginHorizontal: hp(2.5),
           marginTop: hp(2),
           flexDirection: 'row',
-          justifyContent:'space-between'
+          justifyContent: 'space-between',
         }}>
-        <View style={{flexDirection: 'row'}}>
+        <TouchableOpacity
+          activeOpacity={0.8}
+          onPress={fulDayHandle}
+          style={{flexDirection: 'row'}}>
           <View>
             <Radio
               checked={fullDay}
@@ -122,8 +242,11 @@ const ApplyLeave = (props) => {
           <View style={{marginVertical: hp(0.8), paddingHorizontal: hp(0.5)}}>
             <Text style={styles.radiotext}>Full Day</Text>
           </View>
-        </View>
-        <View style={{flexDirection: 'row',}}>
+        </TouchableOpacity>
+        <TouchableOpacity
+          activeOpacity={0.8}
+          onPress={halfDayHandle}
+          style={{flexDirection: 'row'}}>
           <View>
             <Radio
               checked={halfDay}
@@ -136,23 +259,34 @@ const ApplyLeave = (props) => {
           <View style={{marginVertical: hp(0.8), paddingHorizontal: hp(0.5)}}>
             <Text style={styles.radiotext}>Half Day</Text>
           </View>
-        </View>
-        <View style={{flexDirection: 'row'}}>
+        </TouchableOpacity>
+        <TouchableOpacity
+          activeOpacity={0.8}
+          onPress={shortLeaveHandle}
+          style={{flexDirection: 'row'}}>
           <View>
             <Radio
-               checked={shortLeave}
-               activeColor={'#0EAA24'}
-               inactiveColor={'#CDCDCD'}
-               fontSize={30}
-               onChange={shortLeaveHandle}
+              checked={shortLeave}
+              activeColor={'#0EAA24'}
+              inactiveColor={'#CDCDCD'}
+              fontSize={30}
+              onChange={shortLeaveHandle}
             />
           </View>
-          <View style={{marginVertical: hp(0.8), paddingHorizontal: hp(0.5)}}>
+          <View style={{marginVertical: hp(0.8), paddingHorizontal: hp(0.7)}}>
             <Text style={styles.radiotext}>Short Leave</Text>
           </View>
-        </View>
+        </TouchableOpacity>
       </View>
-      <View style={{marginHorizontal:hp(2.5),height:hp(0.1),marginTop:hp(2),backgroundColor:'#DBDBDB',justifyContent:'center',alignItems:'center'}}></View>
+      <View
+        style={{
+          marginHorizontal: hp(2.5),
+          height: hp(0.1),
+          marginTop: hp(2),
+          backgroundColor: '#DBDBDB',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}></View>
       <View
         style={{
           width: wp(90),
@@ -161,95 +295,105 @@ const ApplyLeave = (props) => {
           flexDirection: 'row',
           justifyContent: 'space-between',
         }}>
-        <View style={{flexDirection: 'row'}}>
+        <TouchableOpacity
+          activeOpacity={0.8}
+          onPress={withPayHandle}
+          style={{flexDirection: 'row'}}>
           <View>
             <Radio
-            style={{}}
-             checked={withPay}
-             activeColor={'#0EAA24'}
-             inactiveColor={'#CDCDCD'}
-             fontSize={30}
-             onChange={withPayHandle}
+              style={{}}
+              checked={withPay}
+              activeColor={'#0EAA24'}
+              inactiveColor={'#CDCDCD'}
+              fontSize={30}
+              onChange={withPayHandle}
             />
           </View>
-          <View style={{marginVertical: hp(0.5), paddingHorizontal: hp(0.5)}}>
+          <View style={{marginVertical: hp(0.85), paddingHorizontal: hp(0.5)}}>
             <Text style={styles.radiotext}>With Pay</Text>
           </View>
-        </View>
-        <View style={{flexDirection: 'row'}}>
+        </TouchableOpacity>
+        <TouchableOpacity
+          activeOpacity={0.8}
+          onPress={withOutPayHandle}
+          style={{flexDirection: 'row'}}>
           <View>
             <Radio
-             checked={withOutPay}
-             activeColor={'#0EAA24'}
-             inactiveColor={'#CDCDCD'}
-             fontSize={30}
-             onChange={withOutPayHandle}
+              checked={withOutPay}
+              activeColor={'#0EAA24'}
+              inactiveColor={'#CDCDCD'}
+              fontSize={30}
+              onChange={withOutPayHandle}
             />
           </View>
-          <View style={{marginVertical: hp(0.5), paddingHorizontal: hp(0.5)}}>
+          <View style={{marginVertical: hp(0.85), paddingHorizontal: hp(0.5)}}>
             <Text style={styles.radiotext}>Without Pay</Text>
           </View>
-        </View>
+        </TouchableOpacity>
       </View>
 
       <View
         style={{
-          width: wp(90),
-          marginHorizontal: hp(2.5),
-          marginTop: hp(3),
-          flexDirection: 'row',
-          justifyContent: 'space-between',
+          backgroundColor: '#fff',
+          borderRadius: hp(1.5),
+          shadowColor: '#000',
+          shadowOpacity: 0.5,
+          shadowRadius: 4,
+          elevation: 8,
+          marginHorizontal: wp(5),
+          marginTop: hp('2'),
         }}>
-        <View
+        <TextInput
+          placeholder={'Reason'}
+          placeholderColor={'gray'}
+          placeholderTextColor="black"
           style={{
-            width: wp(90),
             height: hp(15),
-            backgroundColor: '#fff',
-            borderRadius: hp(1.5),
-            shadowColor: '#000',
-            shadowOpacity: 0.5,
-            shadowRadius: 4,
-            elevation: 8,
-          }}>
-          <View style={{marginHorizontal: hp(2), marginVertical: hp(1)}}>
-            <TextInput  placeholder={'Reason'}
-                  placeholderColor={'gray'}
-                  placeholderTextColor="gray"
-                  style={styles.textInputCustomStyle} />
-          </View>
-        </View>
+            textAlignVertical: 'top',
+            paddingLeft: wp('3'),
+          }}
+        />
       </View>
+
       <View
-        style={{width: wp(90), marginHorizontal: hp(2.5), marginTop: hp(2)}}>
+        style={{
+          marginTop: hp(2),
+          marginHorizontal: wp('5'),
+          backgroundColor: '#fff',
+          borderRadius: wp(10),
+          shadowColor: '#000',
+          shadowOpacity: 1,
+          shadowRadius: wp('15'),
+          elevation: 10,
+        }}>
         <ViewInput
           //  value={employeeId}
           //  onChangeText={onChangeEmpId}
           //  keyboardType={'numeric'}
           //  maxLength={11}
           //  returnKeyType={'done'}
-          iconName={'adduser'}
+          iconName={'user'}
           placeholder={'Muhammad Qasim Ali Khan'}
           placeholderColor={colors.loginTextColor}
           iconColor={colors.loginIconColor}
-          style={styles.textInputCustomStyle}
+          // style={styles.textInputCustomStyle}
         />
       </View>
       <TouchableOpacity
         style={{
-          width: wp(90),
+          marginTop: hp(6),
           marginHorizontal: hp(2.5),
           height: hp(6.5),
           justifyContent: 'center',
           backgroundColor: '#1C37A4',
-          position: 'absolute',
-          top: hp(95),
+
           borderRadius: hp(50),
         }}>
         <View style={{alignItems: 'center'}}>
           <Text style={styles.submittext}>SUBMIT REQUEST</Text>
         </View>
       </TouchableOpacity>
-    </View>
+    </ScrollView>
   );
 };
 
@@ -298,25 +442,26 @@ const styles = EStyleSheet.create({
     elevation: 10,
   },
   textInputCustomStyle: {
-    fontSize: '0.7rem',
-    height: hp('6'),
-    letterSpacing: -0.05,
-    paddingLeft: wp('3'),
-    color:'#363636',
-    fontWait:'500',
+    // fontSize: '0.7rem',
+    // height: hp('6'),
+    // letterSpacing: -0.05,
+    // paddingLeft: wp('3'),
+    // color: '#363636',
+    // fontWait: '500',
+    // fontFamily: fontFamily.ceraMedium,
+  },
+  radiotext: {
+    fontSize: '0.62rem',
+    fontWaight: '500',
+    color: '#363636',
     fontFamily: fontFamily.ceraMedium,
   },
-  radiotext:{
-    fontSize: '0.62rem',
-    fontWaight:'500',
-    color: '#363636',
-    fontFamily:fontFamily.ceraMedium,
-},
-submittext:{
-  color: '#fff',
-  fontFamily:fontFamily.ceraMedium,
-  fontSize: '0.7rem',
-  // color:'#363636',
-    fontWait:'500',
-}
+  submittext: {
+    color: '#fff',
+    fontFamily: fontFamily.ceraMedium,
+    fontSize: '0.7rem',
+    // color:'#363636',
+    fontWait: '500',
+  },
+ 
 });

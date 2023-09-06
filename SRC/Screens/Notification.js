@@ -174,6 +174,7 @@ const Notification = props => {
                   )}
                   {panding !== item.id && (
                     <TouchableOpacity
+                    activeOpacity={0.8}
                       style={{flexDirection: 'row', marginTop: hp(1.5)}}>
                       <TouchableOpacity
                         onPress={() => panHandler(item.id)}
@@ -195,6 +196,7 @@ const Notification = props => {
                       </TouchableOpacity>
 
                       <TouchableOpacity
+                      activeOpacity={0.8}
                         onPress={() => {}}
                         style={{
                           width: wp(25.2),

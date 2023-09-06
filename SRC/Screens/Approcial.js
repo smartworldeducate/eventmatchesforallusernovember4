@@ -9,7 +9,6 @@ import React, {useState} from 'react';
 import MainHeader from '../Components/Headers/MainHeader';
 import {AnimatedCircularProgress} from 'react-native-circular-progress';
 import ViewPager from '@react-native-community/viewpager';
-// import {Agenda} from 'react-native-calendars';
 import LinearGradient from 'react-native-linear-gradient';
 
 import {
@@ -62,19 +61,7 @@ const Approcial = props => {
       number: '30/12/23',
     },
   ];
-  const renderDot = color => {
-    return (
-      <View
-        style={{
-          height: hp(3.7),
-          width: wp(2.5),
-          borderRadius: 1,
-          backgroundColor: color,
-          marginRight: 10,
-        }}
-      />
-    );
-  };
+
   return (
     <>
       <View style={{flex: 1}}>
@@ -102,12 +89,12 @@ const Approcial = props => {
               marginVertical: hp(0.7),
             }}>
             <TouchableOpacity
+              activeOpacity={0.8}
               onPress={salaryHandler}
               style={{
                 width: wp(42),
                 height: hp(5.5),
-               backgroundColor: salary ? '#fff' : '#E7E7E7',
-                // backgroundColor:'yellow',
+                backgroundColor: salary ? '#fff' : '#E7E7E7',
                 paddingVertical: hp(1),
                 borderRadius: hp(1),
                 alignItems: 'center',
@@ -116,12 +103,13 @@ const Approcial = props => {
               <Text style={styles.headertext}>Appraisal</Text>
             </TouchableOpacity>
             <TouchableOpacity
+              activeOpacity={0.8}
               onPress={objHandler}
               style={{
                 width: wp(42),
                 height: hp(5.5),
                 backgroundColor: history ? '#fff' : '#E7E7E7',
-                // backgroundColor:'red',
+                // backgroundColor:'blue',
                 borderRadius: hp(1),
                 justifyContent: 'center',
                 alignItems: 'center',
@@ -145,76 +133,15 @@ const Approcial = props => {
               }}>
               <GraphChart />
             </View>
-          {[1,2,3].map((item,i)=>{
-            return(  <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                paddingHorizontal: hp(2),
-                marginHorizontal: hp(2.5),
-                height: hp(14),
-                borderRadius: hp(2),
-                backgroundColor: '#FFFFFF',
-                marginTop: hp(2),
-                shadowOpacity: 0.5,
-                shadowRadius: 4,
-                elevation: 4,
-              }} key={i}>
-              <View style={{flexDirection: 'row'}}>
-                <View style={{justifyContent:'center',alignItems:'center',marginTop:hp(1.5)}}>
-                 <GraphList/>
-                </View>
-                <View
-                  style={{
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    marginLeft: hp(2.5),
-                    // position:'absolute',left:hp(5)
-                  }}>
-                  <View style={{flexDirection: 'row'}}>
-                    <View style={{marginVertical: hp(0.5)}}>
-                      {renderDot('#C1B7FD')}
-                    </View>
-                    <View>
-                      <View>
-                        <Text style={styles.numbertext}>98%</Text>
-                      </View>
-                      <View>
-                        <Text style={styles.basictext}>STAR</Text>
-                      </View>
-                    </View>
+            <ScrollView style={{marginTop: hp(1)}}>
+              {[1, 2, 3, 4, 5].map((item, i) => {
+                return (
+                  <View style={{marginBottom: hp(0.5)}} key={i}>
+                    <CmpTest />
                   </View>
-                </View>
-              </View>
-
-              <View>
-                <View
-                  style={{
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    marginLeft: hp(3),
-                  }}>
-                  <View style={{flexDirection: 'row'}}>
-                    <View style={{marginVertical: hp(0.5)}}>
-                      {renderDot('#FEBB5B')}
-                    </View>
-                    <View>
-                      <View>
-                        <Text style={styles.numbertext}>9000</Text>
-                      </View>
-                      <View>
-                        <Text style={styles.basictext}>Increase</Text>
-                      </View>
-                    </View>
-                  </View>
-                </View>
-              </View>
-              <View>{/* <Text>vfgdfgdf</Text> */}</View>
-            </View>)
-          })}
-          
-           
+                );
+              })}
+            </ScrollView>
           </View>
         )}
         {history == true && (
@@ -230,8 +157,10 @@ const Approcial = props => {
               showsHorizontalScrollIndicator={false}>
               {years?.map((e, i) => {
                 return (
-                  <TouchableOpacity onPress={() => {}} key={i}>
-                    
+                  <TouchableOpacity
+                    activeOpacity={0.8}
+                    onPress={() => {}}
+                    key={i}>
                     <View
                       style={{
                         height: hp(4.3),
@@ -255,7 +184,6 @@ const Approcial = props => {
                         </Text>
                       </View>
                     </View>
-                   
                   </TouchableOpacity>
                 );
               })}
@@ -277,13 +205,13 @@ const Approcial = props => {
                     <View key={i}>
                       <View
                         style={{
-                          height: hp(9),
+                          paddingVertical: hp(1),
                           marginHorizontal: hp(1),
                         }}>
                         <View
                           style={{
                             justifyContent: 'center',
-                            paddingVertical: hp(1.3),
+                            paddingVertical: hp(1),
                           }}>
                           <Text style={styles.textobj}>{item.text}</Text>
                         </View>

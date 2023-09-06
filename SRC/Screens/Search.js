@@ -22,7 +22,9 @@ import LinearGradient from 'react-native-linear-gradient';
 import HeaderTop from '../Components/Headers/HeaderTop';
 import colors from '../Styles/colors';
 import Icon from 'react-native-fontawesome-pro';
+import SearchEmp from '../Components/SearchEmp';
 const Search = props => {
+
   const data = [
     {
       id: 283831,
@@ -147,459 +149,11 @@ const Search = props => {
       setSearch(text);
     }
   };
-  const [expanded, setExpanded] = useState(false);
-  const [animation] = useState(new Animated.Value(0));
-  const [inheight, setInHeight] = useState(null);
-  const toggleExpansion = item => {
-    setInHeight(item);
-    setExpanded(!expanded);
+  
 
-    Animated.timing(animation, {
-      toValue: expanded ? 0 : 1,
-      duration: 300,
-      useNativeDriver: false,
-    }).start();
-  };
+  
 
-  const height = animation.interpolate({
-    inputRange: [0, 1],
-    outputRange: [94, 250], // Change this value to control the expanded height
-  });
-
-  const ItemView = ({item}) => {
-    return (
-      // Flat List Item
-      <View style={{marginBottom: hp(1.5)}}>
-        <TouchableOpacity
-          onPress={() => toggleExpansion(item.id)}
-          style={{
-            borderRadius: hp(2),
-            backgroundColor: '#FFF',
-            shadowColor: '#000',
-            shadowOpacity: 0.4,
-            shadowRadius: 1,
-            elevation: 1,
-          }}>
-          {inheight == item.id && (
-            <Animated.View
-              style={{
-                height,
-
-                overflow: 'hidden',
-              }}>
-              <View style={{flex: 1}}>
-                <View style={{flexDirection: 'row'}}>
-                  <View
-                    style={{
-                      flex: 0.3,
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      marginLeft: hp(-2),
-                      marginVertical: hp(0.3),
-                    }}>
-                    <Image
-                      style={{
-                        width: wp(16),
-                        height: hp(8),
-                        marginTop: hp('1.5'),
-                        position: 'absolute',
-                        top: hp(0),
-                        borderRadius: hp(1),
-                      }}
-                      source={{uri: item.img}}
-                      resizeMode="contain"
-                    />
-                  </View>
-                  <View style={{flex: 0.7, marginLeft: hp(-2.5)}}>
-                    <View
-                      style={{
-                        flexDirection: 'row',
-                        justifyContent: 'space-between',
-                      }}>
-                      <View style={{marginVertical: hp(1.5)}}>
-                        <Text style={styles.childname}>{item.name}</Text>
-                      </View>
-                      <View
-                        style={{
-                          justifyContent: 'center',
-                          alignItems: 'center',
-                          marginRight: hp(2.5),
-                        }}>
-                        <Text style={styles.number}>{item.id}</Text>
-                      </View>
-                    </View>
-                    <View
-                      style={{
-                        flexDirection: 'row',
-                        justifyContent: 'space-between',
-                        marginTop: hp(-2),
-                      }}>
-                      <View style={{marginVertical: hp(1.5)}}>
-                        <Text style={styles.dob}>Designation:</Text>
-                      </View>
-                      <View
-                        style={{
-                          justifyContent: 'center',
-                          alignItems: 'center',
-                          marginRight: hp(2),
-                        }}>
-                        <Text style={styles.dobdata}>{item.desig}</Text>
-                      </View>
-                    </View>
-                    <View
-                      style={{
-                        flexDirection: 'row',
-                        justifyContent: 'space-between',
-                        marginTop: hp(-2.5),
-                      }}>
-                      <View style={{marginVertical: hp(1.5)}}>
-                        <Text style={styles.dob}>Date:</Text>
-                      </View>
-                      <View
-                        style={{
-                          justifyContent: 'center',
-                          alignItems: 'center',
-                          marginRight: hp(2),
-                        }}>
-                        <Text style={styles.dobdata}>{item.hdate}</Text>
-                      </View>
-                    </View>
-                    {/* <View
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                    marginTop: hp(0),
-                  }}>
-                  <View style={{marginVertical: hp(1.5)}}>
-                    <Text style={styles.dob}>Date:</Text>
-                  </View>
-                  <View
-                    style={{
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      marginRight: hp(2),
-                    }}>
-                    <Text style={styles.dobdata}>{item.hdate}</Text>
-                  </View>
-                </View> */}
-                  </View>
-                </View>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                    marginTop: hp(2),
-                  }}>
-                  <View style={{justifyContent: 'center', marginLeft: hp(2)}}>
-                    <Text style={styles.dob}>Branch:</Text>
-                  </View>
-                  <View
-                    style={{
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      marginRight: hp(2),
-                    }}>
-                    <Text style={styles.dobdata}>{item.brnch}</Text>
-                  </View>
-                </View>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                    marginTop: hp(1),
-                  }}>
-                  <View style={{justifyContent: 'center', marginLeft: hp(2)}}>
-                    <Text style={styles.dob}>Department:</Text>
-                  </View>
-                  <View
-                    style={{
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      marginRight: hp(2),
-                    }}>
-                    <Text style={styles.dobdata}>{item.dpt}</Text>
-                  </View>
-                </View>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                    marginTop: hp(1),
-                  }}>
-                  <View style={{justifyContent: 'center', marginLeft: hp(2)}}>
-                    <Text style={styles.dob}>Status:</Text>
-                  </View>
-                  <View
-                    style={{
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      marginRight: hp(2),
-                    }}>
-                    <Text style={styles.dobdata}>{item.status}</Text>
-                  </View>
-                </View>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                    marginTop: hp(1),
-                  }}>
-                  <View style={{justifyContent: 'center', marginLeft: hp(2)}}>
-                    <Text style={styles.dob}>Service Length:</Text>
-                  </View>
-                  <View
-                    style={{
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      marginRight: hp(2),
-                    }}>
-                    <Text style={styles.dobdata}>{item.slength}</Text>
-                  </View>
-                </View>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                    marginTop: hp(1),
-                  }}>
-                  <View style={{justifyContent: 'center', marginLeft: hp(2)}}>
-                    <Text style={styles.dob}>Cardre:</Text>
-                  </View>
-                  <View
-                    style={{
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      marginRight: hp(2),
-                    }}>
-                    <Text style={styles.dobdata}>{item.carde}</Text>
-                  </View>
-                </View>
-              </View>
-              {/* <View style={{flexDirection:'row'}}></View> */}
-              {/* <View
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                    // marginHorizontal: hp(2),
-                  }}>
-                  <View style={{marginVertical: hp(1.5)}}>
-                    <Text style={styles.dob}>Date:</Text>
-                  </View>
-                  <View
-                    style={{
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      marginRight: hp(2),
-                    }}>
-                    <Text style={styles.dobdata}>{item.hdate}</Text>
-                  </View>
-                </View> */}
-            </Animated.View>
-          )}
-          {inheight !== item.id && (
-            <Animated.View
-              style={{
-                height: hp(11.5),
-                overflow: 'hidden',
-              }}>
-              <View style={{flex: 1}}>
-                <View style={{flexDirection: 'row'}}>
-                  <View
-                    style={{
-                      flex: 0.3,
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      marginLeft: hp(-2),
-                      marginVertical: hp(0.3),
-                    }}>
-                    <Image
-                      style={{
-                        width: wp(16),
-                        height: hp(8),
-                        marginTop: hp('1.5'),
-                        position: 'absolute',
-                        top: hp(0),
-                        borderRadius: hp(1),
-                      }}
-                      source={{uri: item.img}}
-                      resizeMode="contain"
-                    />
-                  </View>
-                  <View style={{flex: 0.7, marginLeft: hp(-2.5)}}>
-                    <View
-                      style={{
-                        flexDirection: 'row',
-                        justifyContent: 'space-between',
-                      }}>
-                      <View style={{marginVertical: hp(1.5)}}>
-                        <Text style={styles.childname}>{item.name}</Text>
-                      </View>
-                      <View
-                        style={{
-                          justifyContent: 'center',
-                          alignItems: 'center',
-                          marginRight: hp(2),
-                        }}>
-                        <Text style={styles.number}>{item.id}</Text>
-                      </View>
-                    </View>
-                    <View
-                      style={{
-                        flexDirection: 'row',
-                        justifyContent: 'space-between',
-                        marginTop: hp(-2),
-                      }}>
-                      <View style={{marginVertical: hp(1.5)}}>
-                        <Text style={styles.dob}>Designation:</Text>
-                      </View>
-                      <View
-                        style={{
-                          justifyContent: 'center',
-                          alignItems: 'center',
-                          marginRight: hp(2),
-                        }}>
-                        <Text style={styles.dobdata}>{item.desig}</Text>
-                      </View>
-                    </View>
-                    <View
-                      style={{
-                        flexDirection: 'row',
-                        justifyContent: 'space-between',
-                        marginTop: hp(-2.5),
-                      }}>
-                      <View style={{marginVertical: hp(1.5)}}>
-                        <Text style={styles.dob}>Date:</Text>
-                      </View>
-                      <View
-                        style={{
-                          justifyContent: 'center',
-                          alignItems: 'center',
-                          marginRight: hp(2),
-                        }}>
-                        <Text style={styles.dobdata}>{item.hdate}</Text>
-                      </View>
-                    </View>
-                  </View>
-                </View>
-
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                    marginTop: hp(2),
-                  }}>
-                  <View style={{justifyContent: 'center', marginLeft: hp(2)}}>
-                    <Text style={styles.dob}>Branch:</Text>
-                  </View>
-                  <View
-                    style={{
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      marginRight: hp(2),
-                    }}>
-                    <Text style={styles.dobdata}>{item.brnch}</Text>
-                  </View>
-                </View>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                    marginTop: hp(1),
-                  }}>
-                  <View style={{justifyContent: 'center', marginLeft: hp(2)}}>
-                    <Text style={styles.dob}>Department:</Text>
-                  </View>
-                  <View
-                    style={{
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      marginRight: hp(2),
-                    }}>
-                    <Text style={styles.dobdata}>{item.dpt}</Text>
-                  </View>
-                </View>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                    marginTop: hp(1),
-                  }}>
-                  <View style={{justifyContent: 'center', marginLeft: hp(2)}}>
-                    <Text style={styles.dob}>Status:</Text>
-                  </View>
-                  <View
-                    style={{
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      marginRight: hp(2),
-                    }}>
-                    <Text style={styles.dobdata}>{item.status}</Text>
-                  </View>
-                </View>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                    marginTop: hp(1),
-                  }}>
-                  <View style={{justifyContent: 'center', marginLeft: hp(2)}}>
-                    <Text style={styles.dob}>Service Length:</Text>
-                  </View>
-                  <View
-                    style={{
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      marginRight: hp(2),
-                    }}>
-                    <Text style={styles.dobdata}>{item.slength}</Text>
-                  </View>
-                </View>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                    marginTop: hp(1),
-                  }}>
-                  <View style={{justifyContent: 'center', marginLeft: hp(2)}}>
-                    <Text style={styles.dob}>Cardre:</Text>
-                  </View>
-                  <View
-                    style={{
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      marginRight: hp(2),
-                    }}>
-                    <Text style={styles.dobdata}>{item.carde}</Text>
-                  </View>
-                </View>
-              </View>
-            </Animated.View>
-          )}
-        </TouchableOpacity>
-      </View>
-      // <View
-      //   style={{
-      //     height: hp(10),
-      //     borderRadius: hp(2),
-      //     backgroundColor: '#FFFFFF',
-      //     shadowOpacity: 0.5,
-      //     justifyContent:'center',
-      //     elevation: 1.5,
-      //     marginTop: hp(2),
-      //   }}>
-      //   <Text style={styles.itemStyle} onPress={() => getItem(item)}>
-      //     {item.id}
-      //     {'.'}
-      //     {item.title.toUpperCase()}
-      //   </Text>
-      // </View>
-    );
-  };
-
-  const getItem = item => {
-    // Function for click on an item
-    alert('Id : ' + item.id + ' Title : ' + item.title);
-  };
+ 
 
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: colors.appBackGroundColor}}>
@@ -611,6 +165,7 @@ const Search = props => {
         <StatusBar translucent backgroundColor="transparent" />
         <View style={styles.headerChild}>
           <TouchableOpacity
+          activeOpacity={0.8}
             onPress={() => props.navigation.goBack()}
             style={{
               marginLeft: hp(2),
@@ -637,7 +192,7 @@ const Search = props => {
                 underlineColorAndroid="transparent"
                 style={styles.textInputCustomStyle}></TextInput>
             </View>
-            <TouchableOpacity style={styles.searchicon} onPress={() => {}}>
+            <TouchableOpacity activeOpacity={0.8} style={styles.searchicon} onPress={() => {}}>
               <Icon
                 type="light"
                 name="magnifying-glass"
@@ -648,13 +203,13 @@ const Search = props => {
           </View>
         </View>
       </LinearGradient>
-      <ScrollView style={{marginHorizontal: hp(2.5), marginTop: hp(2)}}>
-        <FlatList
-          data={data}
-          keyExtractor={(item, index) => index.toString()}
-          renderItem={ItemView}
-        />
-      </ScrollView>
+      <View style={{flex:1,marginTop:hp(2)}}>
+            <ScrollView>
+              {data.map((item,i)=>{
+                return(<SearchEmp item={item} key={i}/>)
+              })}
+            </ScrollView>
+      </View>
     </SafeAreaView>
   );
 };

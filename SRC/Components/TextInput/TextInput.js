@@ -1,12 +1,12 @@
 import React from 'react';
-import {StyleSheet, TextInput, View, Image} from 'react-native';
-import {widthPercentageToDP} from 'react-native-responsive-screen';
+import { StyleSheet, TextInput, View, Image, TouchableOpacity } from 'react-native';
+import { widthPercentageToDP } from 'react-native-responsive-screen';
 import colors from '../../Styles/colors';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import Icon from 'react-native-fontawesome-pro';
 
 const TextInputCustom = ({
   iconName,
@@ -27,15 +27,17 @@ const TextInputCustom = ({
   secureTextEntry,
   returnKeyType,
   numberOfLines,
+  iconRight,
+  onPressIcon,
   ref,
 }) => {
   return (
     <View
       style={{
         flexDirection: 'row',
-        borderColor: colors.borderLightGrey,
-        borderWidth: 1,
-        borderRadius: widthPercentageToDP('10'),
+        // borderColor: colors.borderLightGrey,
+        // borderWidth: 1,
+        borderRadius: wp('10'),
       }}>
       <View
         style={{
@@ -46,10 +48,10 @@ const TextInputCustom = ({
           backgroundColor: '#FDEB13',
           borderRadius: wp('10'),
         }}>
-        <Icon name={iconName} color={iconColor} size={30} />
+        <Icon type='light' name={iconName} color={iconColor} size={25} />
       </View>
 
-      <View style={{flex: 0.86, justifyContent: 'center'}}>
+      <View style={{ flex: 0.72, justifyContent: 'center' }}>
         <TextInput
           style={style}
           onChangeText={onChangeText}
@@ -69,6 +71,18 @@ const TextInputCustom = ({
           numberOfLines={numberOfLines}
           ref={ref}></TextInput>
       </View>
+      <TouchableOpacity
+        onPress={onPressIcon}
+        style={{
+          flex: 0.14,
+          justifyContent: 'center',
+          alignItems: 'center',
+          paddingHorizontal: wp('1'),
+          // backgroundColor: '#FDEB13',
+          // borderRadius: wp('10'),
+        }}>
+        {iconRight && (<Icon type='light' name={iconRight} color={iconColor} size={25} />)}
+      </TouchableOpacity>
     </View>
   );
 };

@@ -9,13 +9,13 @@ import {
   Platform,
   Linking,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import MainHeader from '../Components/Headers/MainHeader';
 import EStyleSheet from 'react-native-extended-stylesheet';
-import {AnimatedCircularProgress} from 'react-native-circular-progress';
+import { AnimatedCircularProgress } from 'react-native-circular-progress';
 import Menu from 'react-native-vector-icons/Entypo';
 import Icon from 'react-native-fontawesome-pro';
-import {BottomSheet} from '@rneui/themed';
+import { BottomSheet } from '@rneui/themed';
 import LinearGradient from 'react-native-linear-gradient';
 import DropDownPicker from 'react-native-dropdown-picker';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
@@ -27,7 +27,8 @@ import {
 import Graph from '../Components/Graph';
 import fontFamily from '../Styles/fontFamily';
 import GraphList from '../Components/GraphList';
-import {color} from '@rneui/themed/dist/config';
+import { color } from '@rneui/themed/dist/config';
+import CmpTest from '../Components/CmpTest';
 const Financial = props => {
   const [expanded, setExpanded] = useState(false);
   const [animation] = useState(new Animated.Value(0));
@@ -42,7 +43,7 @@ const Financial = props => {
       useNativeDriver: false,
     }).start();
   };
-  const expandData = [{id: 1}, {id: 2}, {id: 3}, {id: 4}, {id: 5}];
+  const expandData = [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }, { id: 5 }];
 
   const height = animation.interpolate({
     inputRange: [0, 1],
@@ -51,8 +52,8 @@ const Financial = props => {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(null);
   const [items, setItems] = useState([
-    {label: 'Qasim Team', value: 'Y'},
-    {label: 'Asad Numan Shahid', value: 'N'},
+    { label: 'Qasim Team', value: 'Y' },
+    { label: 'Asad Numan Shahid', value: 'N' },
   ]);
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [hide, setHide] = useState(true);
@@ -89,31 +90,7 @@ const Financial = props => {
     setSlip(true);
     setVisible(true);
   };
-  // const btColorHandler = () => {
-  //   setBtColor1(false);
-  //   setBtColor2(false);
-  //   setBtColor3(false);
-  //   setBtColor(true);
-  // };
-  // const btColorHandler1 = () => {
-  //   setBtColor(false);
-  //   setBtColor1(true);
-  //   setBtColor2(false);
-  //   setBtColor3(false);
-  // };
-  // const btColorHandler2 = () => {
-  //   setBtColor(false);
-  //   setBtColor1(false);
-  //   setBtColor2(true);
-  //   setBtColor3(false);
-  //   // setBtColor(true)
-  // };
-  // const btColorHandler3 = () => {
-  //   setBtColor(false);
-  //   setBtColor1(false);
-  //   setBtColor2(false);
-  //   setBtColor3(true);
-  // };
+
   const [salary, setSalary] = useState(true);
   const [history, setHistory] = useState(false);
   const [defalut, setDefalut] = useState(true);
@@ -132,29 +109,29 @@ const Financial = props => {
     console.log('my item  time out', item);
   };
   const data1 = [
-    {id: 1, text: '17-06-2023', number: 'Full Toil', month: 'Jan'},
-    {id: 2, text: '08:40:33', number: '08:44:47', month: 'Feb'},
-    {id: 3, text: '08:40:33', number: '08:17:03', month: 'Mar'},
-    {id: 4, text: '17-06-2023', number: '08:17:03', month: 'Apr'},
-    {id: 5, text: '17-06-2023', number: '08:17:03', month: 'May'},
-    {id: 6, text: '08:40:33', number: '08:44:47', month: 'Jun'},
-    {id: 7, text: '08:40:33', number: '5,000', month: 'Jul'},
-    {id: 8, text: '17-06-2023', number: '08:17:03', month: 'Aug'},
-    {id: 9, text: '17-06-2023', number: 'Weekend', month: 'Sep'},
-    {id: 10, text: '08:40:33', number: 'Full Toil', month: 'Oct'},
-    {id: 11, text: '17-06-2023', number: '08:44:47', month: 'Nov'},
-    {id: 12, text: '17-06-2023', number: '08:17:03', month: 'Dec'},
+    { id: 1, text: '17-06-2023', number: 'Full Toil', month: 'Jan' },
+    { id: 2, text: '08:40:33', number: '08:44:47', month: 'Feb' },
+    { id: 3, text: '08:40:33', number: '08:17:03', month: 'Mar' },
+    { id: 4, text: '17-06-2023', number: '08:17:03', month: 'Apr' },
+    { id: 5, text: '17-06-2023', number: '08:17:03', month: 'May' },
+    { id: 6, text: '08:40:33', number: '08:44:47', month: 'Jun' },
+    { id: 7, text: '08:40:33', number: '5,000', month: 'Jul' },
+    { id: 8, text: '17-06-2023', number: '08:17:03', month: 'Aug' },
+    { id: 9, text: '17-06-2023', number: 'Weekend', month: 'Sep' },
+    { id: 10, text: '08:40:33', number: 'Full Toil', month: 'Oct' },
+    { id: 11, text: '17-06-2023', number: '08:44:47', month: 'Nov' },
+    { id: 12, text: '17-06-2023', number: '08:17:03', month: 'Dec' },
   ];
   const years = ['2020', '2021', '2022', '2023', '2024'];
 
   const data = [
-    {text: 'PF Own', number: '5,000'},
-    {text: 'EOBI Own', number: '250'},
-    {text: 'Income Tax', number: '5,000'},
-    {text: 'Absent Deduction (Absent days)', number: '0(0)'},
-    {text: 'Other Deduction', number: '840'},
-    {text: 'Total Deduction', number: '1190'},
-    {text: 'Net Salary', number: '88090'},
+    { text: 'PF Own', number: '5,000' },
+    { text: 'EOBI Own', number: '250' },
+    { text: 'Income Tax', number: '5,000' },
+    { text: 'Absent Deduction (Absent days)', number: '0(0)' },
+    { text: 'Other Deduction', number: '840' },
+    { text: 'Total Deduction', number: '1190' },
+    { text: 'Net Salary', number: '88090' },
   ];
 
   const showDatePicker = () => {
@@ -177,20 +154,10 @@ const Financial = props => {
   };
 
   const renderDot = color => {
-    return (
-      <View
-        style={{
-          height: hp(3.7),
-          width: wp(2.5),
-          borderRadius: 1,
-          backgroundColor: color,
-          marginRight: 10,
-        }}
-      />
-    );
+    return <View style={styles.renderdot} />;
   };
   return (
-    <View style={{flex:1}}>
+    <View style={{ flex: 1 }}>
       <View>
         <MainHeader
           text={'Financials'}
@@ -204,14 +171,7 @@ const Financial = props => {
         onConfirm={handleDateConfirm}
         onCancel={hideDatePicker}
       />
-      <View
-        style={{
-          height: hp(7),
-          marginHorizontal: hp(2.5),
-          borderRadius: hp(1),
-          backgroundColor: '#E7E7E7',
-          marginTop: hp(2),
-        }}>
+      <View style={styles.salaryMainView}>
         <View
           style={{
             flexDirection: 'row',
@@ -247,7 +207,7 @@ const Financial = props => {
         </View>
       </View>
       {salary == true && (
-        <View style={{flex: 1}}>
+        <View style={{ flex: 1 }}>
           {pf && (
             <BottomSheet
               isVisible={visible}
@@ -258,8 +218,8 @@ const Financial = props => {
                 flex: 1,
               }}>
               <LinearGradient
-                start={{x: 0, y: 0}}
-                end={{x: 1, y: 0}}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 0 }}
                 colors={['#1C37A5', '#4D69DC']}
                 style={styles.mainHeader}>
                 <View
@@ -274,7 +234,7 @@ const Financial = props => {
                       marginVertical: hp(1.5),
                       height: hp(5),
                     }}>
-                    <Text style={{color: '#fff', paddingBottom: hp(0.1)}}>
+                    <Text style={{ color: '#fff', paddingBottom: hp(0.1) }}>
                       PF CERTIFICATE
                     </Text>
                   </View>
@@ -304,7 +264,7 @@ const Financial = props => {
                     </TouchableOpacity>
                     <TouchableOpacity
                       onPress={handleReset}
-                      style={{justifyContent: 'center', marginTop: hp(0.3)}}>
+                      style={{ justifyContent: 'center', marginTop: hp(0.3) }}>
                       <Icon
                         type="light"
                         name="xmark"
@@ -339,9 +299,9 @@ const Financial = props => {
                           justifyContent: 'center',
                           alignItems: 'center',
                         }}>
-                        {date && <Text style={{color: 'gray'}}>{date}</Text>}
+                        {date && <Text style={{ color: 'gray' }}>{date}</Text>}
                         {!date && (
-                          <Text style={{color: 'gray'}}>
+                          <Text style={{ color: 'gray' }}>
                             Select Financial year
                           </Text>
                         )}
@@ -379,7 +339,7 @@ const Financial = props => {
                         backgroundColor: '#4D69DC',
                         elevation: 1,
                       }}>
-                      <Text style={{color: '#FFF'}}>Print</Text>
+                      <Text style={{ color: '#FFF' }}>Print</Text>
                     </TouchableOpacity>
                   </View>
                 </View>
@@ -419,8 +379,8 @@ const Financial = props => {
                 flex: 1,
               }}>
               <LinearGradient
-                start={{x: 0, y: 0}}
-                end={{x: 1, y: 0}}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 0 }}
                 colors={['#1C37A5', '#4D69DC']}
                 style={styles.mainHeader}>
                 <View
@@ -435,7 +395,7 @@ const Financial = props => {
                       marginVertical: hp(1.5),
                       height: hp(5),
                     }}>
-                    <Text style={{color: '#fff', paddingBottom: hp(0.1)}}>
+                    <Text style={{ color: '#fff', paddingBottom: hp(0.1) }}>
                       Tax CERTIFICATE
                     </Text>
                   </View>
@@ -465,7 +425,7 @@ const Financial = props => {
                     </TouchableOpacity>
                     <TouchableOpacity
                       onPress={handleReset}
-                      style={{justifyContent: 'center', marginTop: hp(0.3)}}>
+                      style={{ justifyContent: 'center', marginTop: hp(0.3) }}>
                       <Icon
                         type="light"
                         name="xmark"
@@ -494,7 +454,7 @@ const Financial = props => {
                       }}>
                       <DropDownPicker
                         placeholder="Select Tax Certificate"
-                        placeholderStyle={{color: '#cdcdcd'}}
+                        placeholderStyle={{ color: '#cdcdcd' }}
                         style={{
                           borderColor: '#E4DFDF',
                           borderWidth: 1,
@@ -527,7 +487,7 @@ const Financial = props => {
                         alignItems: 'center',
                         backgroundColor: '#4D69DC',
                       }}>
-                      <Text style={{color: '#FFF'}}>Print</Text>
+                      <Text style={{ color: '#FFF' }}>Print</Text>
                     </TouchableOpacity>
                   </View>
                 </View>
@@ -567,8 +527,8 @@ const Financial = props => {
                 flex: 1,
               }}>
               <LinearGradient
-                start={{x: 0, y: 0}}
-                end={{x: 1, y: 0}}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 0 }}
                 colors={['#1C37A5', '#4D69DC']}
                 style={styles.mainHeader}>
                 <View
@@ -583,7 +543,7 @@ const Financial = props => {
                       marginVertical: hp(1.5),
                       height: hp(5),
                     }}>
-                    <Text style={{color: '#fff', paddingBottom: hp(0.1)}}>
+                    <Text style={{ color: '#fff', paddingBottom: hp(0.1) }}>
                       Tax CERTIFICATE
                     </Text>
                   </View>
@@ -613,7 +573,7 @@ const Financial = props => {
                     </TouchableOpacity>
                     <TouchableOpacity
                       onPress={handleReset}
-                      style={{justifyContent: 'center', marginTop: hp(0.3)}}>
+                      style={{ justifyContent: 'center', marginTop: hp(0.3) }}>
                       <Icon
                         type="light"
                         name="xmark"
@@ -649,11 +609,11 @@ const Financial = props => {
             </BottomSheet>
           )}
           <ScrollView>
-            <View style={{flex: 1}}>
+            <View style={{ flex: 1 }}>
               <Graph />
             </View>
             <View
-              style={{flex: 1, marginHorizontal: hp(2.5), marginTop: hp(2)}}>
+              style={{ flex: 1, marginHorizontal: hp(2.5), marginTop: hp(2) }}>
               <View
                 style={{
                   height: hp(4.5),
@@ -673,15 +633,15 @@ const Financial = props => {
                         flexDirection: 'row',
                         justifyContent: 'space-between',
                       }}>
-                      <View style={{justifyContent: 'center'}}>
+                      <View style={{ justifyContent: 'center' }}>
                         <Text style={styles.testname}>{item.text}</Text>
                       </View>
-                      <View style={{justifyContent: 'center'}}>
+                      <View style={{ justifyContent: 'center' }}>
                         <Text style={styles.textnum}>{item.number}</Text>
                       </View>
                     </View>
                     <View
-                      style={{height: 1, backgroundColor: '#DBDBDB'}}></View>
+                      style={{ height: 1, backgroundColor: '#DBDBDB' }}></View>
                   </View>
                 );
               })}
@@ -702,7 +662,7 @@ const Financial = props => {
             }}>
             <TouchableOpacity
               onPress={pfHandler}
-              style={{flex: 0.33, alignItems: 'center'}}>
+              style={{ flex: 0.33, alignItems: 'center' }}>
               <Text style={styles.ftbotom}>PF CERTIFICATE</Text>
             </TouchableOpacity>
             <View
@@ -721,7 +681,7 @@ const Financial = props => {
                 flexDirection: 'row',
                 paddingLeft: hp(1),
               }}>
-              <View style={{alignItems: 'center', marginHorizontal: hp(1.2)}}>
+              <View style={{ alignItems: 'center', marginHorizontal: hp(1.2) }}>
                 <Text style={styles.ftbotom}>TAX CERTIFICATE</Text>
               </View>
             </TouchableOpacity>
@@ -734,7 +694,7 @@ const Financial = props => {
               }}></View>
 
             <TouchableOpacity
-              style={{flex: 0.33, alignItems: 'center'}}
+              style={{ flex: 0.33, alignItems: 'center' }}
               onPress={slipHandler}>
               <Text style={styles.ftbotom}>SALARY SLIP</Text>
             </TouchableOpacity>
@@ -837,7 +797,8 @@ const Financial = props => {
                   marginHorizontal: hp(2.5),
                   justifyContent: 'center',
                 }}
-                showsHorizontalScrollIndicator={false}>
+                showsHorizontalScrollIndicator={false}
+                showsVerticalScrollIndicator={false}>
                 {data1?.map((e, i) => {
                   return (
                     <View key={i}>
@@ -845,7 +806,10 @@ const Financial = props => {
                         <TouchableOpacity
                           onPress={() => clinderHandler(e.id)}
                           key={i}>
-                          <View
+                          <LinearGradient
+                            start={{ x: 0, y: 0 }}
+                            end={{ x: 1, y: 0 }}
+                            colors={['#1C37A5', '#4D69DC']}
                             style={{
                               height: hp(4),
                               paddingHorizontal: hp(3.5),
@@ -853,7 +817,7 @@ const Financial = props => {
                               borderRadius: hp(20),
                               justifyContent: 'center',
                               alignItems: 'center',
-                              backgroundColor: '#4D69DC',
+                              // backgroundColor: '#4D69DC',
                             }}>
                             <View
                               style={{
@@ -868,7 +832,7 @@ const Financial = props => {
                                 {e.month}
                               </Text>
                             </View>
-                          </View>
+                          </LinearGradient>
                         </TouchableOpacity>
                       )}
                       {clinder !== e.id && (
@@ -907,14 +871,14 @@ const Financial = props => {
 
           <View
             style={{
-              marginHorizontal: hp(2.5),
-              marginTop: defalut == true ? hp(-1) : hp(-3),
+
+              marginTop: defalut == true ? hp(-1) : hp(-1.5),
             }}>
             <ScrollView>
               {data1.map((item, i) => {
                 return (
-                  <View style={{marginBottom: hp(1.5)}}>
-                    <TouchableOpacity
+                  <View style={{ marginBottom: hp(0.5) }} key={i}>
+                    {/* <TouchableOpacity
                       onPress={() => toggleExpansion(item.id)}
                       style={{
                         borderRadius: hp(2),
@@ -952,8 +916,8 @@ const Financial = props => {
                                 justifyContent: 'center',
                                 marginHorizontal: hp(1.5),
                               }}>
-                              <View style={{flexDirection: 'row'}}>
-                                <View style={{marginVertical: hp(0.5)}}>
+                              <View style={{ flexDirection: 'row' }}>
+                                <View style={{ marginVertical: hp(0.5) }}>
                                   {renderDot('#C1B7FD')}
                                 </View>
                                 <View>
@@ -975,8 +939,8 @@ const Financial = props => {
                                 justifyContent: 'center',
                                 marginLeft: hp(2),
                               }}>
-                              <View style={{flexDirection: 'row'}}>
-                                <View style={{marginVertical: hp(0.5)}}>
+                              <View style={{ flexDirection: 'row' }}>
+                                <View style={{ marginVertical: hp(0.5) }}>
                                   {renderDot('#FEBB5B')}
                                 </View>
                                 <View>
@@ -994,12 +958,14 @@ const Financial = props => {
                               </View>
                             </View>
                           </View>
-                          {inheight==item.id && (<View
-                            style={{
-                              height: hp(0.1),
-                              backgroundColor: '#cdcdcd',
-                              marginTop: hp(13.5),
-                            }}></View>)}
+                          {inheight == item.id && (
+                            <View
+                              style={{
+                                height: hp(0.1),
+                                backgroundColor: '#cdcdcd',
+                                marginTop: hp(13.5),
+                              }}></View>
+                          )}
                           {data.map((item, i) => {
                             return (
                               <View
@@ -1008,10 +974,10 @@ const Financial = props => {
                                   justifyContent: 'space-between',
                                   marginVertical: hp(1),
                                 }}>
-                                <View style={{justifyContent: 'center'}}>
+                                <View style={{ justifyContent: 'center' }}>
                                   <Text style={styles.dob}>{item.text}</Text>
                                 </View>
-                                <View >
+                                <View>
                                   <Text style={styles.dob}>{item.number}</Text>
                                 </View>
                               </View>
@@ -1046,8 +1012,8 @@ const Financial = props => {
                                 justifyContent: 'center',
                                 marginHorizontal: hp(1.5),
                               }}>
-                              <View style={{flexDirection: 'row'}}>
-                                <View style={{marginVertical: hp(0.5)}}>
+                              <View style={{ flexDirection: 'row' }}>
+                                <View style={{ marginVertical: hp(0.5) }}>
                                   {renderDot('#C1B7FD')}
                                 </View>
                                 <View>
@@ -1069,8 +1035,8 @@ const Financial = props => {
                                 justifyContent: 'center',
                                 marginLeft: hp(2),
                               }}>
-                              <View style={{flexDirection: 'row'}}>
-                                <View style={{marginVertical: hp(0.5)}}>
+                              <View style={{ flexDirection: 'row' }}>
+                                <View style={{ marginVertical: hp(0.5) }}>
                                   {renderDot('#FEBB5B')}
                                 </View>
                                 <View>
@@ -1095,7 +1061,7 @@ const Financial = props => {
                               top: hp(13.2),
                               left: hp(2.5),
                             }}>
-                            <View style={{justifyContent: 'center'}}>
+                            <View style={{ justifyContent: 'center' }}>
                               <Text style={styles.dob}>fgd</Text>
                             </View>
                             <View>
@@ -1104,7 +1070,8 @@ const Financial = props => {
                           </View>
                         </Animated.View>
                       )}
-                    </TouchableOpacity>
+                    </TouchableOpacity> */}
+                    <CmpTest />
                   </View>
                 );
               })}
@@ -1245,12 +1212,25 @@ const styles = EStyleSheet.create({
   },
   dobdata: {
     color: '#353535',
-    // backgroundColor: '#D4FFCC',
     borderRadius: hp(50),
     paddingHorizontal: hp(0.8),
     fontFamily: fontFamily.ceraMedium,
     fontSize: '0.55rem',
     fontWeight: '300',
     fontStyle: 'normal',
+  },
+  renderdot: {
+    height: hp(3.7),
+    width: wp(2.5),
+    borderRadius: 1,
+    backgroundColor: color,
+    marginRight: 10,
+  },
+  salaryMainView: {
+    height: hp(7),
+    marginHorizontal: hp(2.5),
+    borderRadius: hp(1),
+    backgroundColor: '#E7E7E7',
+    marginTop: hp(2),
   },
 });

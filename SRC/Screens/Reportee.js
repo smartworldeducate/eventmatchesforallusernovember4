@@ -55,7 +55,6 @@ const Reportee = props => {
     {text: 'PF Own', number: '5,000'},
     {text: 'EOBI Own', number: '250'},
     {text: 'Income Tax', number: '5,000'},
-    
   ];
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(null);
@@ -106,6 +105,7 @@ const Reportee = props => {
         </View>
 
         <TouchableOpacity
+          activeOpacity={0.8}
           onPress={showDatePicker}
           style={{
             width: wp(43),
@@ -150,39 +150,49 @@ const Reportee = props => {
         }}>
         <View style={{flexDirection: 'row'}}>
           <View style={{alignItems: 'center', paddingVertical: hp(0.4)}}>
-            <Check name="checkcircleo" size={hp(3)} color="#239B56" />
+            <Icon
+              type="light"
+              name="circle-sterling"
+              size={hp(3)}
+              color="#8A2F9B"
+            />
           </View>
           <View style={{marginLeft: hp(0.8)}}>
             <View>
               <Text style={styles.smalltext}>15</Text>
             </View>
-            <View style={{marginTop:hp(-0.2)}}>
+            <View style={{marginTop: hp(-0.2)}}>
               <Text style={styles.smalltext1}>Total</Text>
             </View>
           </View>
         </View>
         <View style={{flexDirection: 'row', marginLeft: hp(3.5)}}>
           <View style={{alignItems: 'center', paddingVertical: hp(0.4)}}>
-            <Icon name="wrench" size={hp(3)} color="#BB8FCE" />
+            <Icon type="light" name="circle-check" size={hp(3)} color="green" />
           </View>
           <View style={{marginLeft: hp(0.5)}}>
             <View>
               <Text style={styles.smalltext}>06</Text>
             </View>
-            <View style={{marginTop:hp(-0.2)}}>
+            <View style={{marginTop: hp(-0.2)}}>
               <Text style={styles.smalltext1}>present</Text>
             </View>
           </View>
         </View>
         <View style={{flexDirection: 'row', marginLeft: hp(3.5)}}>
           <View style={{alignItems: 'center', paddingVertical: hp(0.4)}}>
-            <Check name="checkcircleo" size={hp(3)} color="#CD6155" />
+            <Icon
+              type="light"
+              name="circle-xmark"
+              size={hp(3)}
+              color="#CD6155"
+            />
           </View>
           <View style={{marginLeft: hp(0.5)}}>
             <View>
               <Text style={styles.smalltext}>09</Text>
             </View>
-            <View style={{marginTop:hp(-0.2)}}>
+            <View style={{marginTop: hp(-0.2)}}>
               <Text style={styles.smalltext1}>Absent</Text>
             </View>
           </View>
@@ -208,7 +218,12 @@ const Reportee = props => {
                     flexDirection: 'row',
                     justifyContent: 'space-between',
                   }}>
-                  <View style={{flexDirection: 'row',justifyContent:'center',marginVertical:hp(1)}}>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      justifyContent: 'center',
+                      marginVertical: hp(1),
+                    }}>
                     <View style={{}}>
                       <Image
                         style={{width: wp(6), height: hp(3)}}
@@ -227,24 +242,30 @@ const Reportee = props => {
                       </View>
                     </View>
                   </View>
-              
                 </View>
                 <View>
-                    <View style={{flexDirection: 'row',justifyContent:'center',marginVertical:hp(2),marginLeft:hp(-7)}}>
-                      <View style={{justifyContent:'center'}}>
-                        <Icon
-                          type="light"
-                          name="arrow-down-right"
-                          size={hp(2)}
-                          color="green"
-                        />
-                      </View>
-                      <View style={{justifyContent:'center',paddingLeft:hp(0.5)}}>
-                        <Text style={styles.timestyle}>08:57:25</Text>
-                      </View>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      justifyContent: 'center',
+                      marginVertical: hp(2),
+                      marginLeft: hp(-7),
+                    }}>
+                    <View style={{justifyContent: 'center'}}>
+                      <Icon
+                        type="light"
+                        name="arrow-down-right"
+                        size={hp(2)}
+                        color="green"
+                      />
+                    </View>
+                    <View
+                      style={{justifyContent: 'center', paddingLeft: hp(0.5)}}>
+                      <Text style={styles.timestyle}>08:57:25</Text>
                     </View>
                   </View>
-                <View style={{justifyContent:'center'}}>
+                </View>
+                <View style={{justifyContent: 'center'}}>
                   <Text style={styles.timestyle}>--:--:--</Text>
                 </View>
               </View>

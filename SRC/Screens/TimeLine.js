@@ -119,7 +119,7 @@ const TimeLine = (props) => {
         }}>
         <View style={{flexDirection: 'row'}}>
           <View style={{alignItems: 'center', paddingVertical: hp(0.3)}}>
-            <Check name="checkcircleo" size={hp(3)} color="#239B56" />
+            <Icon type='light' name="circle-check" size={hp(3)} color="#239B56" />
           </View>
           <View style={{marginLeft: hp(0.8)}}>
             <View>

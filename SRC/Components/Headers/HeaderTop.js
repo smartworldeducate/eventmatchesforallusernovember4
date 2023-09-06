@@ -84,6 +84,7 @@ const HeaderTop = ({
         style={styles.mainHeader}>
         <View style={styles.headerChild}>
           <TouchableOpacity
+           activeOpacity={0.8}
             style={styles.firstRow}
             onPress={() => navigation.navigate('Profile')}>
             <View style={styles.firstRowView}>
@@ -105,6 +106,7 @@ const HeaderTop = ({
 
           <View style={styles.firstRowRightSection}>
             <TouchableOpacity
+             activeOpacity={0.8}
               style={styles.bell}
               onPress={() => handleNavigate('Notification')}>
               <Icon type="light" name="bell" size={hp(3)} color="#fff" />
@@ -121,6 +123,7 @@ const HeaderTop = ({
         </View>
 
         <TouchableOpacity
+         activeOpacity={0.8}
           style={styles.homeSearch}
           onPress={() => navigation.navigate('Search')}>
           <View style={styles.homesearchView}>
@@ -136,7 +139,7 @@ const HeaderTop = ({
               placeholderStyle={styles.plaseholderStyle}
               style={styles.textInputCustomStyle}></TextInput>
           </View>
-          <TouchableOpacity style={styles.searchicon} onPress={() => {}}>
+          <TouchableOpacity  activeOpacity={0.8} style={styles.searchicon} onPress={() => {}}>
             <Icon
               type="light"
               name="magnifying-glass"
@@ -153,7 +156,7 @@ const HeaderTop = ({
               : console.log('lastitem id', item.id);
             if (i < 6) {
               return (
-                <TouchableOpacity onPress={()=>navigation.navigate('Search')} style={styles.imageList} key={i}>
+                <TouchableOpacity onPress={()=>navigation.navigate('Reportee')} style={styles.imageList} key={i}>
                   <Image
                     style={styles.imgStyle}
                     source={{uri: item.image}}

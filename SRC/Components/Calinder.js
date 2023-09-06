@@ -6,12 +6,12 @@ import {
   Button,
   SafeAreaView,
 } from 'react-native';
-import React, {useState} from 'react';
-import {AnimatedCircularProgress} from 'react-native-circular-progress';
+import React, { useState } from 'react';
+import { AnimatedCircularProgress } from 'react-native-circular-progress';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import Icon from 'react-native-fontawesome-pro';
-import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {useNavigation} from '@react-navigation/native';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { useNavigation } from '@react-navigation/native';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -19,7 +19,7 @@ import {
 import Face from 'react-native-vector-icons/AntDesign';
 import Therm from 'react-native-vector-icons/FontAwesome';
 import Island from 'react-native-vector-icons/Fontisto';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import fontSize from '../Styles/fontSize';
 import fontFamily from '../Styles/fontFamily';
 const Calinder = props => {
@@ -35,7 +35,7 @@ const Calinder = props => {
   //   setLeave(false);
   // };
   return (
-    <View style={{flex: 1}}>
+    <View style={{ flex: 1 }}>
       <View style={styles.card}>
         <View>
           <Text style={styles.clText1}>Leaves</Text>
@@ -56,9 +56,9 @@ const Calinder = props => {
                 onAnimationComplete={() => console.log('onAnimationComplete')}
                 backgroundColor="#E3E3E3">
                 {fill => (
-                  <View style={{justifyContent: 'center'}}>
+                  <View style={{ justifyContent: 'center' }}>
                     <View
-                      style={{justifyContent: 'center', alignItems: 'center'}}>
+                      style={{ justifyContent: 'center', alignItems: 'center' }}>
                       <Text style={styles.circularText}>12</Text>
                     </View>
                     <View>
@@ -69,9 +69,10 @@ const Calinder = props => {
               </AnimatedCircularProgress>
             </View>
 
-            <View style={{paddingLeft:hp(4)}}>
+            <View style={{ paddingLeft: hp(4) }}>
               <TouchableOpacity
-                style={{flexDirection: 'row'}}
+                activeOpacity={0.8}
+                style={{ flexDirection: 'row' }}
                 onPress={() => navigation.navigate('LeaveBalance')}>
                 <View
                   style={{
@@ -86,14 +87,14 @@ const Calinder = props => {
                     color="#BB8FCE"
                   />
                 </View>
-                <View style={{marginTop: hp(0.5)}}>
+                <View style={{ marginTop: hp(0.5) }}>
                   <View>
                     <Text style={styles.leaveSectionText}>15</Text>
                   </View>
-                  <View style={{flexDirection: 'row', marginTop: hp(-0.5)}}>
-                    <View style={{marginRight: hp(1)}}>
-                      <View style={{flexDirection: 'row', marginTop: hp(0)}}>
-                        <View style={{marginRight: hp(1)}}>
+                  <View style={{ flexDirection: 'row', marginTop: hp(-0.5) }}>
+                    <View style={{ marginRight: hp(1) }}>
+                      <View style={{ flexDirection: 'row', marginTop: hp(0) }}>
+                        <View style={{ marginRight: hp(1) }}>
                           <Text style={styles.clText}>Casual </Text>
                         </View>
                       </View>
@@ -102,7 +103,8 @@ const Calinder = props => {
                 </View>
               </TouchableOpacity>
               <TouchableOpacity
-                style={{flexDirection: 'row'}}
+                activeOpacity={0.8}
+                style={{ flexDirection: 'row' }}
                 onPress={() => navigation.navigate('LeaveBalance')}>
                 <View
                   style={{
@@ -117,14 +119,14 @@ const Calinder = props => {
                     color="#DC7633"
                   />
                 </View>
-                <View style={{marginTop: hp(0.5), marginLeft: hp(-1)}}>
+                <View style={{ marginTop: hp(0.5), marginLeft: hp(-1) }}>
                   <View>
                     <Text style={styles.leaveSectionText}>10</Text>
                   </View>
-                  <View style={{flexDirection: 'row', marginTop: hp(-0.5)}}>
-                    <View style={{marginRight: hp(1)}}>
-                      <View style={{flexDirection: 'row', marginTop: hp(0)}}>
-                        <View style={{marginRight: hp(1)}}>
+                  <View style={{ flexDirection: 'row', marginTop: hp(-0.5) }}>
+                    <View style={{ marginRight: hp(1) }}>
+                      <View style={{ flexDirection: 'row', marginTop: hp(0) }}>
+                        <View style={{ marginRight: hp(1) }}>
                           <Text style={styles.clText}>Sick </Text>
                         </View>
                       </View>
@@ -133,6 +135,7 @@ const Calinder = props => {
                 </View>
               </TouchableOpacity>
               <TouchableOpacity
+                activeOpacity={0.8}
                 style={{
                   flexDirection: 'row',
                   marginLeft: hp(1),
@@ -152,14 +155,14 @@ const Calinder = props => {
                     color="#58D68D"
                   />
                 </View>
-                <View style={{marginTop: hp(0.5)}}>
+                <View style={{ marginTop: hp(0.5) }}>
                   <View>
                     <Text style={styles.leaveSectionText}>30</Text>
                   </View>
-                  <View style={{flexDirection: 'row', marginTop: hp(-0.5)}}>
-                    <View style={{marginRight: hp(1)}}>
-                      <View style={{flexDirection: 'row', marginTop: hp(0)}}>
-                        <View style={{marginRight: hp(1)}}>
+                  <View style={{ flexDirection: 'row', marginTop: hp(-0.5) }}>
+                    <View style={{ marginRight: hp(1) }}>
+                      <View style={{ flexDirection: 'row', marginTop: hp(0) }}>
+                        <View style={{ marginRight: hp(1) }}>
                           <Text style={styles.clText}>Annual </Text>
                         </View>
                       </View>
@@ -188,6 +191,7 @@ const Calinder = props => {
               justifyContent: 'space-between',
             }}>
             <TouchableOpacity
+              activeOpacity={0.8}
               onPress={() => navigation.navigate('ApplicationType')}
               style={{
                 width: wp(38),
@@ -203,6 +207,7 @@ const Calinder = props => {
               <Text style={styles.clbtnStyle}>Apply Leave</Text>
             </TouchableOpacity>
             <TouchableOpacity
+              activeOpacity={0.8}
               onPress={() => navigation.navigate('Attendance')}
               style={{
                 borderRadius: hp(50),
@@ -230,12 +235,12 @@ const styles = EStyleSheet.create({
     flex: 1,
     height: hp(34),
     marginTop: hp(1.5),
-   
+
   },
   cardContainer: {
     flex: 1,
     height: hp(30),
-    backgroundColor:'#FFFFFF',
+    backgroundColor: '#FFFFFF',
     borderRadius: hp(2),
     shadowColor: '#000',
     shadowOpacity: 0.5,
@@ -247,7 +252,7 @@ const styles = EStyleSheet.create({
     flex: hp(0.7),
     flexDirection: 'row',
     marginHorizontal: hp(1.5),
-    backgroundColor:'#FFFFFF',
+    backgroundColor: '#FFFFFF',
   },
   clText: {
     fontSize: '0.5rem',
@@ -255,7 +260,7 @@ const styles = EStyleSheet.create({
     fontFamily: fontFamily.robotoMedium,
     color: '#979797',
     fontStyle: 'normal',
-    textTransform:'uppercase'
+    textTransform: 'uppercase'
   },
   clText1: {
     fontSize: '0.7rem',

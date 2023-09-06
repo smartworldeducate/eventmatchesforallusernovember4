@@ -16,7 +16,7 @@ const GraphList = () => {
       value: 25,
       color: '#C1B7FD',
       gradientCenterColor: '#C1B7FD',
-      focused: true,
+      // focused: true,
     },
   ];
 

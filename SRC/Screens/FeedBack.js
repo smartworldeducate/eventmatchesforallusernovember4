@@ -38,60 +38,7 @@ const FeedBack = props => {
           onpressBtn={() => props.navigation.goBack()}
         />
       </View>
-      {/* <View
-        style={{
-          height: hp(7),
-          marginHorizontal: hp(2.5),
-          borderRadius: hp(1),
-          backgroundColor: '#E7E7E7',
-          marginTop: hp(2),
-        }}>
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignContent: 'center',
-            marginHorizontal: hp(1),
-            marginVertical: hp(0.7),
-          }}>
-          <TouchableOpacity
-            onPress={salaryHandler}
-            style={{
-              height: hp(5.5),
-              backgroundColor: salary == true ? '#fff' : '#E7E7E7',
-              paddingVertical: hp(1),
-              borderRadius: hp(1),
-              // paddingHorizontal: hp(5),
-              justifyContent: 'center',
-            }}>
-            <Text
-              style={{
-                fontSize: hp(2.5),
-                color: '#363636',
-              }}>
-              Feedback
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={historyHandler}
-            style={{
-              height: hp(5.5),
-              backgroundColor: history == true ? '#fff' : '#E7E7E7',
-              paddingVertical: hp(1),
-              borderRadius: hp(1),
-              // paddingHorizontal: hp(5),
-              justifyContent: 'center',
-            }}>
-            <Text
-              style={{
-                fontSize: hp(2.5),
-                color: '#363636',
-              }}>
-              Suggestion
-            </Text>
-          </TouchableOpacity>
-        </View>
-      </View> */}
+   
       <View
             style={{
               height: hp(7),
@@ -109,6 +56,7 @@ const FeedBack = props => {
                 marginVertical: hp(0.7),
               }}>
               <TouchableOpacity
+              activeOpacity={0.8}
                 onPress={salaryHandler}
                 style={{
                   height: hp(5.5),
@@ -124,6 +72,7 @@ const FeedBack = props => {
                 </Text>
               </TouchableOpacity>
               <TouchableOpacity
+              activeOpacity={0.8}
                 onPress={historyHandler}
                 style={{
                   height: hp(5.5),

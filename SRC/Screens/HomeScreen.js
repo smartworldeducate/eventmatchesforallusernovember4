@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useRef} from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 // import Left from 'react-native-vector-icons/AntDesign';
 import Ficon from 'react-native-fontawesome-pro';
 import Menu from 'react-native-vector-icons/Entypo';
@@ -6,8 +6,8 @@ import EStyleSheet from 'react-native-extended-stylesheet';
 import LinearGradient from 'react-native-linear-gradient';
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import Modal from 'react-native-modal';
-import {Toast} from 'galio-framework';
-import {BottomSheet} from '@rneui/themed';
+import { Toast } from 'galio-framework';
+import { BottomSheet } from '@rneui/themed';
 import {
   ScrollView,
   RefreshControl,
@@ -50,7 +50,7 @@ const HomeScreen = props => {
     ScanResult: false,
     result: '',
   });
-  const {scan, ScanResult, result} = state;
+  const { scan, ScanResult, result } = state;
 
   var ncode = result?.data;
 
@@ -60,7 +60,7 @@ const HomeScreen = props => {
 
   const addCode = data => {
     const newCode = barcode.item.concat(data);
-    setBarcode({item: newCode});
+    setBarcode({ item: newCode });
   };
   // console.log(barcode.item);
 
@@ -107,7 +107,7 @@ const HomeScreen = props => {
   };
 
   const handleReset = () => {
-    setState({scan: false});
+    setState({ scan: false });
     setVisible(false);
   };
   const [leave, setLeave] = useState(false);
@@ -156,36 +156,27 @@ const HomeScreen = props => {
             : colors.appBackGroundColor,
       }}>
       <LinearGradient
-        start={{x: 0, y: 0}}
-        end={{x: 1, y: 0}}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 0 }}
         colors={['#1C37A5', '#4D69DC']}
-        style={{height: hp('5')}}>
+        style={{ height: hp('5') }}>
         <StatusBar translucent backgroundColor="transparent" />
       </LinearGradient>
       <View>
         <HeaderTop
           onPressIcon={() => navigation.openDrawer()}
           iconName={'arrowleft'}
-          // text={'Change Password'}
+        // text={'Change Password'}
         />
       </View>
       <Toast isShow={isShow} positionIndicator="top" style={styles.tost}>
-        <Text style={{color: '#fff'}}>please enter valid Qrcode</Text>
+        <Text style={{ color: '#fff' }}>please enter valid Qrcode</Text>
       </Toast>
 
       {animation && (
         <View>
           <Modal isVisible={animodal}>
-            <View
-              style={{
-                width: wp(30),
-                height: hp(15),
-                backgroundColor: '#EAFAF1',
-                borderRadius: hp(2),
-                justifyContent: 'center',
-                alignItems: 'center',
-                marginHorizontal: hp(15),
-              }}>
+            <View style={styles.actiindicator}>
               <View style={{}}>
                 <ActivityIndicator animating={animation} size={'large'} />
               </View>
@@ -220,13 +211,13 @@ const HomeScreen = props => {
               top: 20,
               left: hp(45),
             }}>
-            <Text style={{color: 'gray', fontSize: hp(2)}}>X</Text>
+            <Text style={{ color: 'gray', fontSize: hp(2) }}>X</Text>
           </TouchableOpacity>
         </View>
 
         {scan && (
           <QRCodeScanner
-            cameraStyl={{height: hp(120)}}
+            cameraStyl={{ height: hp(120) }}
             reactivate={true}
             showMarker={true}
             ref={scanner}
@@ -294,22 +285,19 @@ const HomeScreen = props => {
         <View>
           <Calinder />
         </View>
-        <View style={{marginHorizontal: hp(2.2), marginTop: hp(2)}}>
+        <View style={{ marginHorizontal: hp(2.2), marginTop: hp(2) }}>
           <Text style={styles.clText1}>W.F.H</Text>
         </View>
         <View style={styles.wfh}>
-          <View style={styles.inwfh}>
+          
+          
             <TouchableOpacity
-              onPress={() => props.navigation.navigate('Wfh')}
-              style={styles.rfh}>
-              <Text style={styles.viewClinderText}>Request W.F.H</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
+              activeOpacity={0.8}
               onPress={() => props.navigation.navigate('WorkFromHome')}
               style={styles.mrf}>
               <Text style={styles.clbtnStyle}>Mark Attendance</Text>
             </TouchableOpacity>
-          </View>
+          
         </View>
       </ScrollView>
 
@@ -329,13 +317,15 @@ const HomeScreen = props => {
           }}>
           {/* <View style={{flex:0.1}}></View> */}
           <TouchableOpacity
-            onPress={() => {}}
-            style={{flex: 0.2, alignItems: 'center'}}>
+            activeOpacity={0.8}
+            onPress={() => { }}
+            style={{ flex: 0.2, alignItems: 'center' }}>
             <Menu name="home" size={hp(3)} color="#1C37A4" style={{}} />
           </TouchableOpacity>
           <TouchableOpacity
+            activeOpacity={0.8}
             onPress={() => props.navigation.navigate('Index')}
-            style={{flex: 0.2, paddingTop: hp(0.5), alignItems: 'center'}}>
+            style={{ flex: 0.2, paddingTop: hp(0.5), alignItems: 'center' }}>
             <Ficon
               type="light"
               name="book-bookmark"
@@ -344,6 +334,7 @@ const HomeScreen = props => {
             />
           </TouchableOpacity>
           <TouchableOpacity
+            activeOpacity={0.8}
             onPress={handleQrcode}
             style={{
               flex: 0.2,
@@ -364,7 +355,8 @@ const HomeScreen = props => {
             </View>
           </TouchableOpacity>
           <TouchableOpacity
-            style={{flex: 0.2, alignItems: 'center'}}
+            activeOpacity={0.8}
+            style={{ flex: 0.2, alignItems: 'center' }}
             onPress={() => props.navigation.navigate('Scanner')}>
             <Ficon
               type="light"
@@ -374,11 +366,11 @@ const HomeScreen = props => {
             />
           </TouchableOpacity>
           <TouchableOpacity
+            activeOpacity={0.8}
             onPress={() => navigation.navigate('Profile')}
-            style={{flex: 0.2, alignItems: 'center', paddingTop: hp(0)}}>
+            style={{ flex: 0.2, alignItems: 'center', paddingTop: hp(0) }}>
             <Ficon type="light" name="user-tie" size={hp(3)} color="#979797" />
           </TouchableOpacity>
-          {/* <View style={{flex:0.1}}></View> */}
         </View>
       </View>
     </SafeAreaView>
@@ -502,8 +494,8 @@ const styles = EStyleSheet.create({
     marginVertical: hp(1),
   },
   clbtnStyle: {
-    fontSize: '0.6rem',
-    color: '#061D7A',
+    fontSize: '0.7rem',
+    color: '#1C37A4',
     fontWeight: '500',
     fontFamily: fontFamily.ceraMedium,
     fontStyle: 'normal',
@@ -544,17 +536,18 @@ const styles = EStyleSheet.create({
     shadowOpacity: 0.5,
     shadowRadius: 4,
     elevation: 4,
+   
   },
   inwfh: {
     height: hp(10),
     marginHorizontal: hp(2),
-    flexDirection: 'row',
+    // flexDirection: 'row',
     marginVertical: hp(3.7),
     justifyContent: 'space-between',
   },
   rfh: {
     borderRadius: hp(50),
-    width: wp(38),
+    // width: wp(38),
     height: hp(4.5),
     borderWidth: 1,
     borderColor: '#1C37A4',
@@ -563,15 +556,25 @@ const styles = EStyleSheet.create({
     alignItems: 'center',
   },
   mrf: {
-    width: wp(38),
+    // width: wp(38),
     justifyContent: 'center',
     alignItems: 'center',
-    height: hp(4.5),
+    height: hp(6),
     borderRadius: hp(50),
     borderWidth: 1,
     borderColor: '#1C37A4',
     backgroundColor: '#fff',
-    // marginTop: hp(4),
+    marginTop: hp(3),
+    marginHorizontal:hp(2)
+  },
+  actiindicator: {
+    width: wp(30),
+    height: hp(15),
+    backgroundColor: '#EAFAF1',
+    borderRadius: hp(2),
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginHorizontal: hp(15),
   },
 });
 
