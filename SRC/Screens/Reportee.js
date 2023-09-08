@@ -1,4 +1,11 @@
-import {View, Text, TouchableOpacity, TextInput, Image} from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  TextInput,
+  Image,
+  ScrollView,
+} from 'react-native';
 import React, {useState} from 'react';
 import MainHeader from '../Components/Headers/MainHeader';
 import Check from 'react-native-vector-icons/AntDesign';
@@ -43,6 +50,245 @@ const Reportee = props => {
     hideDatePicker();
     setDateView(false);
   };
+  const mainData = [
+    {
+      id: 22,
+      imag: 'artg',
+      text: 'Zeeshan A.Hafeez',
+      title: 'Senior Officer UX/UI Design',
+      timein: '08:44:47',
+      icondown: 'arrow-down-right',
+      timeout: '--:--:--',
+      number: '17-06-2023',
+      month: 'SUN',
+      backgroundColor: '#E5F7FF',
+      color: '#363636',
+      textInColor: '#10B727',
+      isWorking: 'working',
+      workingHours: 'Full Toil',
+      textoutcolor: '#363636',
+      day: 'sun',
+    },
+    {
+      id: 21,
+      imag: 'asd',
+      text: 'Yashfa Arslan',
+      title: 'Assistant Manager Software',
+      timein: '08:44:47',
+      icondown: 'arrow-down-right',
+      iconup: 'arrow-up-right',
+      timeout: '09:44:47',
+      number: '08:44:47',
+      month: 'MON',
+      color: '#363636',
+      textInColor: '#F64E60',
+      workingHours: '09:00',
+      day: 'mon',
+      textoutcolor: '#10B727',
+    },
+    {
+      id: 20,
+      imag: 'imran',
+      text: 'Maryam Ahmad',
+      title: 'Deputy Manager Software',
+      timein: '',
+      icondown: '',
+      icondown: '',
+      timeout: 'On Leave',
+      number: 'On Leave',
+      month: 'TUE',
+      color: '#363636',
+      textInColor: '#363636',
+      workingHours: '09:00',
+      textoutcolor: '#363636',
+    },
+    {
+      id: 19,
+      imag: 'salman',
+      text: 'Muhammad Moeez',
+      title: 'Deputy Manager Software',
+      timein: '',
+      icondown: '',
+      iconup: '',
+      timeout: 'Call for update',
+      number: '08:17:03',
+      month: 'TUE',
+      color: '#363636',
+      textInColor: '#363636',
+      workingHours: '09:00',
+      textoutcolor: '#363636',
+      borrds: '',
+    },
+    {
+      id: 22,
+      imag: 'artg',
+      text: 'Zeeshan A.Hafeez',
+      title: 'Senior Officer UX/UI Design',
+      timein: '08:44:47',
+      icondown: 'arrow-down-right',
+      timeout: '--:--:--',
+      number: '17-06-2023',
+      month: 'SUN',
+      backgroundColor: '#E5F7FF',
+      color: '#363636',
+      textInColor: '#10B727',
+      isWorking: 'working',
+      workingHours: 'Full Toil',
+      textoutcolor: '#363636',
+      day: 'sun',
+    },
+    {
+      id: 21,
+      imag: 'asd',
+      text: 'Yashfa Arslan',
+      title: 'Assistant Manager Software',
+      timein: '08:44:47',
+      icondown: 'arrow-down-right',
+      iconup: 'arrow-up-right',
+      timeout: '09:44:47',
+      number: '08:44:47',
+      month: 'MON',
+      color: '#363636',
+      textInColor: '#F64E60',
+      workingHours: '09:00',
+      day: 'mon',
+      textoutcolor: '#10B727',
+    },
+    {
+      id: 20,
+      imag: 'imran',
+      text: 'Maryam Ahmad',
+      title: 'Deputy Manager Software',
+      timein: '',
+      icondown: '',
+      icondown: '',
+      timeout: 'On Leave',
+      number: 'On Leave',
+      month: 'TUE',
+      color: '#363636',
+      textInColor: '#363636',
+      workingHours: '09:00',
+      textoutcolor: '#363636',
+    },
+    {
+      id: 19,
+      imag: 'salman',
+      text: 'Muhammad Moeez',
+      title: 'Deputy Manager Software',
+      timein: '',
+      icondown: '',
+      iconup: '',
+      timeout: 'Call for update',
+      number: '08:17:03',
+      month: 'TUE',
+      color: '#363636',
+      textInColor: '#363636',
+      workingHours: '09:00',
+      textoutcolor: '#363636',
+      borrds: '',
+    },
+    {
+      id: 22,
+      imag: 'artg',
+      text: 'Zeeshan A.Hafeez',
+      title: 'Senior Officer UX/UI Design',
+      timein: '08:44:47',
+      icondown: 'arrow-down-right',
+      timeout: '--:--:--',
+      number: '17-06-2023',
+      month: 'SUN',
+      backgroundColor: '#E5F7FF',
+      color: '#363636',
+      textInColor: '#10B727',
+      isWorking: 'working',
+      workingHours: 'Full Toil',
+      textoutcolor: '#363636',
+      day: 'sun',
+    },
+    {
+      id: 21,
+      imag: 'asd',
+      text: 'Yashfa Arslan',
+      title: 'Assistant Manager Software',
+      timein: '08:44:47',
+      icondown: 'arrow-down-right',
+      iconup: 'arrow-up-right',
+      timeout: '09:44:47',
+      number: '08:44:47',
+      month: 'MON',
+      color: '#363636',
+      textInColor: '#F64E60',
+      workingHours: '09:00',
+      day: 'mon',
+      textoutcolor: '#10B727',
+    },
+    {
+      id: 20,
+      imag: 'imran',
+      text: 'Maryam Ahmad',
+      title: 'Deputy Manager Software',
+      timein: '',
+      icondown: '',
+      icondown: '',
+      timeout: 'On Leave',
+      number: 'On Leave',
+      month: 'TUE',
+      color: '#363636',
+      textInColor: '#363636',
+      workingHours: '09:00',
+      textoutcolor: '#363636',
+    },
+    {
+      id: 19,
+      imag: 'salman',
+      text: 'Muhammad Moeez',
+      title: 'Deputy Manager Software',
+      timein: '',
+      icondown: '',
+      iconup: '',
+      timeout: 'Call for update',
+      number: '08:17:03',
+      month: 'TUE',
+      color: '#363636',
+      textInColor: '#363636',
+      workingHours: '09:00',
+      textoutcolor: '#363636',
+      borrds: '',
+    },
+    {
+      id: 20,
+      imag: 'imran',
+      text: 'Maryam Ahmad',
+      title: 'Deputy Manager Software',
+      timein: '',
+      icondown: '',
+      icondown: '',
+      timeout: 'On Leave',
+      number: 'On Leave',
+      month: 'TUE',
+      color: '#363636',
+      textInColor: '#363636',
+      workingHours: '09:00',
+      textoutcolor: '#363636',
+    },
+    {
+      id: 19,
+      imag: 'salman',
+      text: 'Muhammad Moeez',
+      title: 'Deputy Manager Software',
+      timein: '',
+      icondown: '',
+      iconup: '',
+      timeout: 'Call for update',
+      number: '08:17:03',
+      month: 'TUE',
+      color: '#363636',
+      textInColor: '#363636',
+      workingHours: '09:00',
+      textoutcolor: '#363636',
+      borrds: '',
+    },
+  ];
 
   const data = [
     {text: 'PF Own', number: '5,000'},
@@ -132,7 +378,7 @@ const Reportee = props => {
               }}>
               <Icon
                 type="light"
-                name="calendar-days"
+                name="angles-up-down"
                 size={hp(2)}
                 color="#cdcdcd"
               />
@@ -198,82 +444,144 @@ const Reportee = props => {
           </View>
         </View>
       </View>
-      {/* <View
+      <View
         style={{
           height: hp(0.05),
           backgroundColor: '#cdcdcd',
           marginTop: hp(1),
-        }}></View> */}
-      <View style={{marginHorizontal: hp(2.5), marginTop: hp(1)}}>
-        {data.map((item, i) => {
+        }}></View>
+
+      <ScrollView>
+        {mainData.map((item, i) => {
           return (
-            <>
+            <View
+              style={{
+                height: hp(6.5),
+                flexDirection: 'row',
+                // backgroundColor: 'red',
+                marginHorizontal: hp(2.5),
+                borderBottomColor: 'grey',
+                borderBottomWidth: wp('0.1'),
+              }}
+              key={i}>
               <View
-                style={{flexDirection: 'row', justifyContent: 'space-between'}}
-                key={i}>
-                <View
-                  style={{
-                    height: hp(6),
-                    // marginHorizontal: hp(1),
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                  }}>
+                style={{
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  flexDirection: 'row',
+                  justifyContent: 'center',
+                  flex: 0.5,
+                  justifyContent: 'center',
+                  // backgroundColor: 'green',
+                }}>
+                <View style={{}}>
+                  <Image
+                    style={{
+                      width: wp(7),
+                      height: hp(3.5),
+                      borderRadius: hp(50),
+                    }}
+                    source={{uri: item.imag}}
+                    resizeMode="cover"
+                  />
+                </View>
+                <View style={{paddingLeft: hp(1)}}>
+                  <View>
+                    <Text style={styles.testname}>{item.text}</Text>
+                  </View>
+                  <View>
+                    <Text style={styles.desig}>{item.title}</Text>
+                  </View>
+                </View>
+              </View>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  flex: 0.5,
+                  // backgroundColor: 'red',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}>
+                {item.id == 19 ? (
                   <View
                     style={{
-                      flexDirection: 'row',
+                      backgroundColor: '#1C37A4',
                       justifyContent: 'center',
-                      marginVertical: hp(1),
+                      alignItems: 'center',
+                      borderRadius: hp(5),
+                      height: hp(4.5),
+                      width: wp(40),
                     }}>
-                    <View style={{}}>
-                      <Image
-                        style={{width: wp(6), height: hp(3)}}
-                        source={{uri: 'asd'}}
-                        resizeMode="cover"
-                      />
-                    </View>
-                    <View style={{paddingLeft: hp(1)}}>
-                      <View>
-                        <Text style={styles.testname}>Zeeshan A.Hafeez</Text>
-                      </View>
-                      <View>
-                        <Text style={styles.desig}>
-                          Senior Officer UX/UI Design
+                    <Text style={{color: '#fff'}}>Call for update</Text>
+                  </View>
+                ) : (
+                  <>
+                    <View
+                      style={{
+                        flexDirection: 'row',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        flex: 0.5,
+                        // backgroundColor: 'blue',
+                      }}>
+                      {item.icondown && (
+                        <View style={{justifyContent: 'center'}}>
+                          <Icon
+                            type="light"
+                            name={item.icondown}
+                            size={hp(2)}
+                            color={item.textInColor}
+                          />
+                        </View>
+                      )}
+                      <View
+                        style={{
+                          justifyContent: 'center',
+                          paddingLeft: hp(0.5),
+                        }}>
+                        <Text
+                          style={[styles.timestyle, {color: item.textInColor}]}>
+                          {item.timein}
                         </Text>
                       </View>
                     </View>
-                  </View>
-                </View>
-                <View>
-                  <View
-                    style={{
-                      flexDirection: 'row',
-                      justifyContent: 'center',
-                      marginVertical: hp(2),
-                      marginLeft: hp(-7),
-                    }}>
-                    <View style={{justifyContent: 'center'}}>
-                      <Icon
-                        type="light"
-                        name="arrow-down-right"
-                        size={hp(2)}
-                        color="green"
-                      />
-                    </View>
                     <View
-                      style={{justifyContent: 'center', paddingLeft: hp(0.5)}}>
-                      <Text style={styles.timestyle}>08:57:25</Text>
+                      style={{
+                        flexDirection: 'row',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        flex: 0.5,
+                        // backgroundColor: 'pink',
+                      }}>
+                      {item.iconup && (
+                        <View style={{justifyContent: 'center'}}>
+                          <Icon
+                            type="light"
+                            name="arrow-up-right"
+                            size={hp(2)}
+                            color={item.textInColor}
+                          />
+                        </View>
+                      )}
+
+                      <View
+                        style={{
+                          justifyContent: 'center',
+                          paddingLeft: hp(0.5),
+                        }}>
+                        <Text
+                          style={[styles.timestyle, {color: item.textInColor}]}>
+                          {item.timeout}
+                        </Text>
+                      </View>
                     </View>
-                  </View>
-                </View>
-                <View style={{justifyContent: 'center'}}>
-                  <Text style={styles.timestyle}>--:--:--</Text>
-                </View>
+                  </>
+                )}
               </View>
-              <View style={{height: 1, backgroundColor: '#DBDBDB'}}></View>
-            </>
+            </View>
           );
         })}
-      </View>
+      </ScrollView>
     </>
   );
 };

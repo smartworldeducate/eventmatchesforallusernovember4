@@ -18,7 +18,7 @@ import {
 import EStyleSheet from 'react-native-extended-stylesheet';
 import fontFamily from '../Styles/fontFamily';
 import GraphChart from '../Components/LineChart';
-import GraphList from '../Components/GraphList';
+// import GraphList from '../Components/GraphList';
 const Approcial = props => {
   const [salary, setSalary] = useState(true);
   const [history, setHistory] = useState(false);
