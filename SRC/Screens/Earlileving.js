@@ -11,6 +11,7 @@ import MainHeader from '../Components/Headers/MainHeader';
 import colors from '../Styles/colors';
 import {Div, ThemeProvider, Radio} from 'react-native-magnus';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
+import SelectDropdown from 'react-native-select-dropdown';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -20,20 +21,27 @@ import Button from '../Components/Button/Button';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import fontFamily from '../Styles/fontFamily';
 import ViewInputTwo from '../Components/ViewInputTwo';
+import Icon from 'react-native-fontawesome-pro';
+
 const EarliLeaving = props => {
   const [fullDay, setFullDay] = useState(false);
   const [halfDay, setHalfDay] = useState(false);
   const [shortLeave, setShortLeave] = useState(false);
   const [withPay, setWithPay] = useState(false);
   const [withOutPay, setWithOutPay] = useState(false);
+  const [stime, setStime] = useState('');
+  const [isTimePickerVisible, setTimePickerVisibility] = useState(false);
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
-  const [date, setDate] = useState('');
+  const [isDatePickerVisibleTwo, setDatePickerVisibilityTwo] = useState(false);
+  const [isDatePickerVisibleThree, setDatePickerVisibilityThree] =
+    useState(false);
+  const [myDate, setMyDate] = useState('');
   const [dateTwo, setDateTwo] = useState('');
   const [dateThree, setDateThree] = useState('');
+  const reportee = ['Muhammad Qasim Ali Khan', 'Asad Numan Shahid'];
   //one
   const showDatePicker = () => {
     setDatePickerVisibility(true);
-    setDate('');
   };
 
   const hideDatePicker = () => {
@@ -41,52 +49,68 @@ const EarliLeaving = props => {
   };
 
   const handleDateConfirm = date => {
-    console.log(date);
-    const dt =
-      date.getDate() + '-' + date.getMonth() + '-' + date.getFullYear();
-    setDate(dt);
+    var day = date.getDate();
+    var month = date.getMonth() + 1;
+    var year = date.getFullYear();
+
+    const dt = day + '-' + month + '-' + year;
+
+    setMyDate(dt);
     hideDatePicker();
-    setDateView(false);
   };
 
-  //two
-
-  const showDatePickertwo = () => {
-    setDatePickerVisibility(true);
-    setDateTwo('');
+  //second datetime picker
+  const showDatePickerTwo = () => {
+    setDatePickerVisibilityTwo(true);
   };
 
-  const hideDatePickertwo = () => {
-    setDatePickerVisibility(false);
+  const hideDatePickerTwo = () => {
+    setDatePickerVisibilityTwo(false);
   };
 
-  const handleDateConfirmtwo = date => {
-    console.log(date);
-    const dt =
-      date.getDate() + '-' + date.getMonth() + '-' + date.getFullYear();
+  const handleDateConfirmTwo = date => {
+    var day = date.getDate();
+    var month = date.getMonth() + 1;
+    var year = date.getFullYear();
+
+    const dt = day + '-' + month + '-' + year;
+
     setDateTwo(dt);
-    hideDatePickertwo();
-    setDateView(false);
+    hideDatePickerTwo();
   };
 
-  //three
-
-  const showDatePickerthree = () => {
-    setDatePickerVisibility(true);
-    setDateThree('');
+  //third date time picker
+  const showDatePickerThree = () => {
+    setDatePickerVisibilityThree(true);
   };
 
-  const hideDatePickerthree = () => {
-    setDatePickerVisibility(false);
+  const hideDatePickerThree = () => {
+    setDatePickerVisibilityThree(false);
   };
 
-  const handleDateConfirmthree = date => {
-    console.log(date);
-    const dt =
-      date.getDate() + '-' + date.getMonth() + '-' + date.getFullYear();
+  const handleDateConfirmThree = date => {
+    var day = date.getDate();
+    var month = date.getMonth() + 1;
+    var year = date.getFullYear();
+
+    const dt = day + '-' + month + '-' + year;
+
     setDateThree(dt);
-    hideDatePickertwo();
-    setDateView(false);
+    hideDatePickerThree();
+  };
+
+  //timepicker
+  const showTimePicker = () => {
+    setTimePickerVisibility(true);
+  };
+  const hideTimePicker = () => {
+    setTimePickerVisibility(false);
+  };
+
+  const handleSconfirm = time => {
+    const x = time.toLocaleTimeString();
+    setStime(x);
+    hideTimePicker();
   };
 
   const fulDayHandle = () => {
@@ -107,22 +131,28 @@ const EarliLeaving = props => {
   return (
     <ScrollView style={{flex: 1, backgroundColor: '#F5F8FC'}}>
       <DateTimePickerModal
+        isVisible={isTimePickerVisible}
+        mode="time"
+        onConfirm={handleSconfirm}
+        onCancel={hideTimePicker}
+      />
+      <DateTimePickerModal
         isVisible={isDatePickerVisible}
         mode="date"
         onConfirm={handleDateConfirm}
         onCancel={hideDatePicker}
       />
       <DateTimePickerModal
-        isVisible={isDatePickerVisible}
         mode="date"
-        onConfirm={handleDateConfirmtwo}
-        onCancel={hideDatePickertwo}
+        isVisible={isDatePickerVisibleTwo}
+        onConfirm={handleDateConfirmTwo}
+        onCancel={hideDatePickerTwo}
       />
       <DateTimePickerModal
-        isVisible={isDatePickerVisible}
+        isVisible={isDatePickerVisibleThree}
+        onConfirm={handleDateConfirmThree}
+        onCancel={hideDatePickerThree}
         mode="date"
-        onConfirm={handleDateConfirmthree}
-        onCancel={hideDatePickerthree}
       />
       <MainHeader
         text={'EarliLeaving'}
@@ -142,7 +172,7 @@ const EarliLeaving = props => {
             elevation: 10,
           }}>
           <ViewInput
-            dateText={date}
+            dateText={myDate}
             dateFun={showDatePicker}
             iconName={'arrow-right'}
             rIcon={'angles-up-down'}
@@ -166,7 +196,7 @@ const EarliLeaving = props => {
         }}>
         <ViewInput
           dateText={dateTwo}
-          dateFun={showDatePickertwo}
+          dateFun={showDatePickerTwo}
           iconName={'arrow-right'}
           placeholder={'Tue, Jun 27, 2023'}
           placeholderColor={colors.loginTextColor}
@@ -187,7 +217,7 @@ const EarliLeaving = props => {
         }}>
         <ViewInput
           dateText={dateThree}
-          dateFun={showDatePickerthree}
+          dateFun={showDatePickerThree}
           iconName={'calendar-days'}
           placeholder={'8 Days'}
           placeholderColor={colors.loginTextColor}
@@ -207,11 +237,8 @@ const EarliLeaving = props => {
           elevation: 10,
         }}>
         <ViewInput
-          //  value={employeeId}
-          //  onChangeText={onChangeEmpId}
-          //  keyboardType={'numeric'}
-          //  maxLength={11}
-          //  returnKeyType={'done'}
+          dateText={stime}
+          dateFun={showTimePicker}
           iconName={'clock'}
           placeholder={'Departure'}
           placeholderColor={colors.loginTextColor}
@@ -219,7 +246,6 @@ const EarliLeaving = props => {
           // style={styles.textInputCustomStyle}
         />
       </View>
-      
 
       <View
         style={{
@@ -244,28 +270,42 @@ const EarliLeaving = props => {
         />
       </View>
 
-      <View
-        style={{
-          marginTop: hp(2),
-          marginHorizontal: wp('5'),
-          backgroundColor: '#fff',
-          borderRadius: wp(10),
-          shadowColor: '#000',
-          shadowOpacity: 1,
-          shadowRadius: wp('15'),
-          elevation: 10,
-        }}>
-        <ViewInput
-          //  value={employeeId}
-          //  onChangeText={onChangeEmpId}
-          //  keyboardType={'numeric'}
-          //  maxLength={11}
-          //  returnKeyType={'done'}
-          iconName={'user'}
-          placeholder={'Muhammad Qasim Ali Khan'}
-          placeholderColor={colors.loginTextColor}
-          iconColor={colors.loginIconColor}
-          // style={styles.textInputCustomStyle}
+      <View style={{marginHorizontal: hp(2.5), marginTop: hp(2)}}>
+        <SelectDropdown
+          data={reportee}
+          onSelect={(selectedItem, index) => {
+            console.log(selectedItem, index);
+          }}
+          defaultButtonText={'Muhammad Qasim Ali Khan'}
+          buttonTextAfterSelection={(selectedItem, index) => {
+            console.log(selectedItem);
+            return selectedItem;
+          }}
+          rowTextForSelection={(item, index) => {
+            return item;
+          }}
+          renderDropdownIcon={isOpened => {
+            return (
+              <View
+                style={{
+                  backgroundColor: '#FDEB13',
+                  height: hp(7),
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  width: 56,
+                  marginLeft: -8,
+                  borderRadius: 50,
+                }}>
+                <Icon type="light" name="user" color={'#444'} size={hp(3)} />
+              </View>
+            );
+          }}
+          buttonStyle={styles.dropdown1BtnStyle}
+          buttonTextStyle={styles.dropdown1BtnTxtStyle}
+          dropdownStyle={styles.dropdown1DropdownStyle}
+          rowStyle={styles.dropdown1RowStyle}
+          rowTextStyle={styles.dropdown1RowTxtStyle}
+          dropdownIconPosition={'left'}
         />
       </View>
       <TouchableOpacity
@@ -352,5 +392,34 @@ const styles = EStyleSheet.create({
     // color:'#363636',
     fontWait: '500',
   },
- 
+  dropdown1BtnStyle: {
+    width: '100%',
+    height: hp(7),
+    backgroundColor: '#FFF',
+    borderRadius: 50,
+
+    elevation: 8,
+  },
+  dropdown1BtnTxtStyle: {
+    color: '#363636',
+    fontSize: '0.7rem',
+    fontFamily: fontFamily.ceraMedium,
+    textAlign: 'left',
+  },
+  dropdown1DropdownStyle: {
+    backgroundColor: '#EFEFEF',
+    marginTop: hp(-3.85),
+    borderRadius: hp(1.5),
+  },
+  dropdown1RowStyle: {
+    backgroundColor: '#EFEFEF',
+    borderBottomColor: '#C5C5C5',
+    width: wp(100),
+  },
+  dropdown1RowTxtStyle: {
+    color: '#444',
+    textAlign: 'left',
+    color: '#363636',
+    fontSize: '0.7rem',
+    fontFamily: fontFamily.ceraMedium,}
 });

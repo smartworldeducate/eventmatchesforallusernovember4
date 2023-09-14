@@ -4,8 +4,9 @@ import {
   TouchableOpacity,
   ScrollView,
   SafeAreaView,
+  FlatList,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import MainHeader from '../Components/Headers/MainHeader';
 import {AnimatedCircularProgress} from 'react-native-circular-progress';
 import ViewPager from '@react-native-community/viewpager';
@@ -18,19 +19,35 @@ import {
 import EStyleSheet from 'react-native-extended-stylesheet';
 import fontFamily from '../Styles/fontFamily';
 import GraphChart from '../Components/LineChart';
-// import GraphList from '../Components/GraphList';
 const Approcial = props => {
-  const [salary, setSalary] = useState(true);
-  const [history, setHistory] = useState(false);
-  const salaryHandler = () => {
-    setSalary(true);
-    setHistory(false);
+  const [appraisal, setAppraisal] = useState(true);
+  const [objective, setObjective] = useState(false);
+  const [clinder, setClinder] = useState(null);
+  const [defalut, setDefalut] = useState(true);
+
+  const clinderHandler = item => {
+    setClinder(item);
+    setDefalut(false);
+    console.log('my item  time out', item);
   };
-  const objHandler = () => {
-    setHistory(true);
-    setSalary(false);
+
+  const onPressAppraisal = () => {
+    setAppraisal(true);
+    setObjective(false);
   };
-  const years = ['2020', '2021', '2022', '2023', '2024'];
+
+  const onPressObjective = () => {
+    setAppraisal(false);
+    setObjective(true);
+  };
+
+  const years = [
+    {id: 1, month: '2020'},
+    {id: 2, month: '2021'},
+    {id: 3, month: '2022'},
+    {id: 4, month: '2023'},
+    {id: 5, month: '2024'},
+  ];
   const data = [
     {
       text: 'BEAMS Design Inner Pages, Student and Employee Dashboards',
@@ -62,6 +79,114 @@ const Approcial = props => {
     },
   ];
 
+  const calenderItem = ({item, index}) => {
+    // console.log('index', index);
+    return (
+      <TouchableOpacity
+        activeOpacity={0.8}
+        onPress={() => clinderHandler(item.id)}
+        // key={i}
+        style={{}}>
+        <View
+          style={{
+            height: hp(4),
+            paddingHorizontal: hp(3),
+            borderRadius: hp(20),
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: index == 2 ? '#4D69DC' : ' ',
+            marginHorizontal: hp(0.5),
+          }}>
+          <View
+            style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+            <Text
+              style={{
+                color: index == 2 ? '#FFF' : 'gray',
+                fontSize: hp(1.5),
+              }}>
+              {item.month}
+            </Text>
+          </View>
+        </View>
+      </TouchableOpacity>
+    );
+  };
+  const renderItemGradient = ({item, index}) => {
+    // console.log('index', index);
+    return (
+      <View>
+        {clinder == item.id && (
+          <TouchableOpacity activeOpacity={0.8}>
+            <LinearGradient
+              start={{x: 0, y: 0}}
+              end={{x: 1, y: 0}}
+              colors={['#1C37A5', '#4D69DC']}
+              style={{
+                height: hp(3.7),
+                paddingHorizontal: hp(3),
+                borderRadius: hp(20),
+                justifyContent: 'center',
+                alignItems: 'center',
+                backgroundColor: '#4D69DC',
+                marginHorizontal: hp(2),
+              }}>
+              <View
+                style={{
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}>
+                <Text
+                  style={{
+                    color: '#FFF',
+                    fontSize: hp(1.5),
+                    paddingHorizontal: hp(0.5),
+                  }}>
+                  {item.month}
+                </Text>
+              </View>
+            </LinearGradient>
+          </TouchableOpacity>
+        )}
+        {clinder !== item.id && (
+          <TouchableOpacity onPress={() => clinderHandler(item.id)}>
+            <View
+              style={{
+                height: hp(3.7),
+                paddingHorizontal: hp(2.7),
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}>
+              <View
+                style={{
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}>
+                <Text
+                  style={{
+                    color: 'gray',
+                    fontSize: hp(1.5),
+                  }}>
+                  {item.month}
+                </Text>
+              </View>
+            </View>
+          </TouchableOpacity>
+        )}
+      </View>
+    );
+  };
+
+  const renderItem = () => {
+    return (
+      <View style={{marginBottom: hp(0.5)}}>
+        <CmpTest />
+      </View>
+    );
+  };
+
   return (
     <>
       <View style={{flex: 1}}>
@@ -72,54 +197,53 @@ const Approcial = props => {
             onpressBtn={() => props.navigation.goBack()}
           />
         </View>
+
         <View
           style={{
-            height: hp(7),
-            marginHorizontal: hp(2.5),
-            borderRadius: hp(1),
+            flexDirection: 'row',
+            alignContent: 'center',
+            marginHorizontal: hp(1),
+            justifyContent: 'center',
+            marginVertical: hp('2'),
             backgroundColor: '#E7E7E7',
-            marginTop: hp(2),
+            marginHorizontal: wp('5'),
+            borderRadius: wp('3'),
           }}>
-          <View
+          <TouchableOpacity
+            activeOpacity={0.8}
+            onPress={onPressAppraisal}
             style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              alignContent: 'center',
-              marginHorizontal: hp(1),
-              marginVertical: hp(0.7),
+              flex: 0.49,
+              height: hp('5'),
+              borderRadius: hp(1),
+              alignItems: 'center',
+              justifyContent: 'center',
+              backgroundColor: appraisal == true ? '#fff' : '#E7E7E7',
+              marginHorizontal: wp('2'),
+              marginVertical: hp('0.75'),
             }}>
-            <TouchableOpacity
-              activeOpacity={0.8}
-              onPress={salaryHandler}
-              style={{
-                width: wp(42),
-                height: hp(5.5),
-                backgroundColor: salary ? '#fff' : '#E7E7E7',
-                paddingVertical: hp(1),
-                borderRadius: hp(1),
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}>
-              <Text style={styles.headertext}>Appraisal</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              activeOpacity={0.8}
-              onPress={objHandler}
-              style={{
-                width: wp(42),
-                height: hp(5.5),
-                backgroundColor: history ? '#fff' : '#E7E7E7',
-                // backgroundColor:'blue',
-                borderRadius: hp(1),
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}>
-              <Text style={styles.headertext}>Objective</Text>
-            </TouchableOpacity>
-          </View>
+            <Text style={styles.headertext}>Appraisal</Text>
+          </TouchableOpacity>
+          <View style={{flex: 0.02}}></View>
+          <TouchableOpacity
+            activeOpacity={0.8}
+            onPress={onPressObjective}
+            style={{
+              flex: 0.49,
+              height: hp('5'),
+              borderRadius: hp(1),
+              justifyContent: 'center',
+              alignItems: 'center',
+              backgroundColor: objective == true ? '#fff' : '#E7E7E7',
+              marginHorizontal: wp('2'),
+              marginVertical: hp('0.75'),
+            }}>
+            <Text style={styles.headertext}>Objective</Text>
+          </TouchableOpacity>
         </View>
-        {salary == true && (
-          <View>
+
+        {appraisal && (
+          <>
             <View
               style={{
                 shadowColor: '#000',
@@ -133,63 +257,50 @@ const Approcial = props => {
               }}>
               <GraphChart />
             </View>
-            <ScrollView style={{marginTop: hp(1)}}>
-              {[1, 2, 3, 4, 5].map((item, i) => {
-                return (
-                  <View style={{marginBottom: hp(0.5)}} key={i}>
-                    <CmpTest />
-                  </View>
-                );
-              })}
-            </ScrollView>
-          </View>
+
+            <FlatList
+              data={[1, 2, 3, 4, 5]}
+              renderItem={renderItem}
+              keyExtractor={item => item.id}
+            />
+          </>
         )}
-        {history == true && (
+        {objective && (
           <>
-            <ScrollView
-              horizontal={true}
-              style={{
-                marginHorizontal: hp(2.5),
-                marginTop: hp(2),
-                marginBottom: hp(0),
-                paddingBottom: hp(0),
-              }}
-              showsHorizontalScrollIndicator={false}>
-              {years?.map((e, i) => {
-                return (
-                  <TouchableOpacity
-                    activeOpacity={0.8}
-                    onPress={() => {}}
-                    key={i}>
-                    <View
-                      style={{
-                        height: hp(4.3),
-                        paddingHorizontal: hp(2.7),
-                        borderRadius: hp(20),
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        backgroundColor: i == 2 ? '#4D69DC' : ' ',
-                      }}>
-                      <View
-                        style={{
-                          justifyContent: 'center',
-                          alignItems: 'center',
-                        }}>
-                        <Text
-                          style={{
-                            color: i == 2 ? '#FFF' : 'gray',
-                            fontSize: hp(1.5),
-                          }}>
-                          {e}
-                        </Text>
-                      </View>
-                    </View>
-                  </TouchableOpacity>
-                );
-              })}
-            </ScrollView>
-            <View
-              style={{flex: 1, marginHorizontal: hp(2.5), marginTop: hp(-75)}}>
+            {defalut == true && (
+              <View
+                style={{
+                  height: hp(7),
+                  marginTop: hp(2),
+                  marginHorizontal: hp(2.5),
+                }}>
+                <FlatList
+                  data={years}
+                  renderItem={calenderItem}
+                  horizontal={true}
+                  // inverted={true}
+                  keyExtractor={item => item.id}
+                />
+              </View>
+            )}
+            {defalut !== true && (
+              <View
+                style={{
+                  height: hp(7),
+                  marginTop: hp(2),
+                  marginHorizontal: hp(2.5),
+                }}>
+                <FlatList
+                  data={years}
+                  renderItem={renderItemGradient}
+                  horizontal={true}
+                  // inverted={true}
+                  keyExtractor={item => item.id}
+                />
+              </View>
+            )}
+
+            <View style={{marginHorizontal: hp(2.5)}}>
               <View
                 style={{
                   height: hp(4.5),

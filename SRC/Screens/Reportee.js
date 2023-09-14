@@ -466,13 +466,10 @@ const Reportee = props => {
               key={i}>
               <View
                 style={{
-                  justifyContent: 'center',
                   alignItems: 'center',
                   flexDirection: 'row',
-                  justifyContent: 'center',
                   flex: 0.5,
-                  justifyContent: 'center',
-                  // backgroundColor: 'green',
+                  marginLeft:wp(1)
                 }}>
                 <View style={{}}>
                   <Image

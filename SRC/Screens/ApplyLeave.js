@@ -8,9 +8,11 @@ import {
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import MainHeader from '../Components/Headers/MainHeader';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import colors from '../Styles/colors';
 import {Div, ThemeProvider, Radio} from 'react-native-magnus';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
+import SelectDropdown from 'react-native-select-dropdown';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -20,6 +22,8 @@ import Button from '../Components/Button/Button';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import fontFamily from '../Styles/fontFamily';
 import ViewInputTwo from '../Components/ViewInputTwo';
+import InputBackground from '../Components/InputBackground';
+import Icon from 'react-native-fontawesome-pro';
 const ApplyLeave = props => {
   const [fullDay, setFullDay] = useState(false);
   const [halfDay, setHalfDay] = useState(false);
@@ -27,13 +31,20 @@ const ApplyLeave = props => {
   const [withPay, setWithPay] = useState(false);
   const [withOutPay, setWithOutPay] = useState(false);
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
-  const [date, setDate] = useState('');
+  const [isDatePickerVisibleTwo, setDatePickerVisibilityTwo] = useState(false);
+  const [isDatePickerVisibleThree, setDatePickerVisibilityThree] =
+    useState(false);
+  const [myDate, setMyDate] = useState('');
   const [dateTwo, setDateTwo] = useState('');
   const [dateThree, setDateThree] = useState('');
+  const [selectLeave, setSelectLeave] = useState('');
+  const leaveType = ['Anuall Leave', 'Casual Leave', 'Sick Leave'];
+  const reportee = ['Muhammad Qasim Ali Khan', 'Asad Numan Shahid'];
+  useEffect(() => {}, [dateTwo, dateThree]);
+
   //one
   const showDatePicker = () => {
     setDatePickerVisibility(true);
-    setDate('');
   };
 
   const hideDatePicker = () => {
@@ -41,53 +52,61 @@ const ApplyLeave = props => {
   };
 
   const handleDateConfirm = date => {
-    console.log(date);
-    const dt =
-      date.getDate() + '-' + date.getMonth() + '-' + date.getFullYear();
-    setDate(dt);
+    var day = date.getDate();
+    var month = date.getMonth() + 1;
+    var year = date.getFullYear();
+
+    const dt = day + '-' + month + '-' + year;
+
+    setMyDate(dt);
     hideDatePicker();
-    setDateView(false);
   };
 
-  //two
-
-  const showDatePickertwo = () => {
-    setDatePickerVisibility(true);
-    setDateTwo('');
+  //second datetime picker
+  const showDatePickerTwo = () => {
+    setDatePickerVisibilityTwo(true);
   };
 
-  const hideDatePickertwo = () => {
-    setDatePickerVisibility(false);
+  const hideDatePickerTwo = () => {
+    setDatePickerVisibilityTwo(false);
   };
 
-  const handleDateConfirmtwo = date => {
-    console.log(date);
-    const dt =
-      date.getDate() + '-' + date.getMonth() + '-' + date.getFullYear();
+  const handleDateConfirmTwo = date => {
+    var day = date.getDate();
+    var month = date.getMonth() + 1;
+    var year = date.getFullYear();
+
+    const dt = day + '-' + month + '-' + year;
+
     setDateTwo(dt);
-    hideDatePickertwo();
-    setDateView(false);
+    hideDatePickerTwo();
   };
 
-  //three
-
-  const showDatePickerthree = () => {
-    setDatePickerVisibility(true);
-    setDateThree('');
+  //third date time picker
+  const showDatePickerThree = () => {
+    setDatePickerVisibilityThree(true);
   };
 
-  const hideDatePickerthree = () => {
-    setDatePickerVisibility(false);
+  const hideDatePickerThree = () => {
+    setDatePickerVisibilityThree(false);
   };
 
-  const handleDateConfirmthree = date => {
-    console.log(date);
-    const dt =
-      date.getDate() + '-' + date.getMonth() + '-' + date.getFullYear();
+  const handleDateConfirmThree = date => {
+    var day = date.getDate();
+    var month = date.getMonth() + 1;
+    var year = date.getFullYear();
+
+    const dt = day + '-' + month + '-' + year;
+
     setDateThree(dt);
-    hideDatePickertwo();
-    setDateView(false);
+    hideDatePickerThree();
   };
+
+  useEffect(() => {
+    console.log('myDateInUseEffect', myDate);
+  }, [myDate]);
+
+  console.log('dateOutside', myDate);
 
   const fulDayHandle = () => {
     setFullDay(!fullDay);
@@ -113,46 +132,46 @@ const ApplyLeave = props => {
         onCancel={hideDatePicker}
       />
       <DateTimePickerModal
-        isVisible={isDatePickerVisible}
         mode="date"
-        onConfirm={handleDateConfirmtwo}
-        onCancel={hideDatePickertwo}
+        isVisible={isDatePickerVisibleTwo}
+        onConfirm={handleDateConfirmTwo}
+        onCancel={hideDatePickerTwo}
       />
       <DateTimePickerModal
-        isVisible={isDatePickerVisible}
+        isVisible={isDatePickerVisibleThree}
+        onConfirm={handleDateConfirmThree}
+        onCancel={hideDatePickerThree}
         mode="date"
-        onConfirm={handleDateConfirmthree}
-        onCancel={hideDatePickerthree}
       />
       <MainHeader
         text={'Apply Leave'}
         iconName={'arrow-left'}
         onpressBtn={() => props.navigation.goBack()}
       />
-      <View style={{}}>
-        <View
-          style={{
-            marginTop: hp(2),
-            marginHorizontal: wp('5'),
-            backgroundColor: '#fff',
-            borderRadius: wp(10),
-            shadowColor: '#000',
-            shadowOpacity: 1,
-            shadowRadius: wp('15'),
-            elevation: 10,
-          }}>
-          <ViewInput
-            dateText={date}
-            dateFun={showDatePicker}
-            iconName={'arrow-right'}
-            rIcon={'angles-up-down'}
-            placeholder={'Tue, Jun 27, 2023'}
-            placeholderColor={colors.loginTextColor}
-            iconColor={colors.loginIconColor}
-            // style={styles.textInputCustomStyle}
-          />
-        </View>
+
+      <View
+        style={{
+          marginTop: hp(2),
+          marginHorizontal: wp('5'),
+          backgroundColor: '#fff',
+          borderRadius: wp(10),
+          shadowColor: '#000',
+          shadowOpacity: 1,
+          shadowRadius: wp('15'),
+          elevation: 10,
+        }}>
+        <ViewInput
+          dateText={myDate}
+          dateFun={showDatePicker}
+          iconName={'arrow-right'}
+          rIcon={'angles-up-down'}
+          placeholder={'Tue, Jun 27, 2023'}
+          placeholderColor={colors.loginTextColor}
+          iconColor={colors.loginIconColor}
+          style={styles.textInputCustomStyle}
+        />
       </View>
+
       <View
         style={{
           marginTop: hp(2),
@@ -166,19 +185,19 @@ const ApplyLeave = props => {
         }}>
         <ViewInput
           dateText={dateTwo}
-          dateFun={showDatePickertwo}
+          dateFun={showDatePickerTwo}
           iconName={'arrow-right'}
           placeholder={'Tue, Jun 27, 2023'}
           placeholderColor={colors.loginTextColor}
           iconColor={colors.loginIconColor}
-          // style={styles.textInputCustomStyle}
+          style={styles.textInputCustomStyle}
         />
       </View>
       <View
         style={{
           marginTop: hp(2),
           marginHorizontal: wp('5'),
-          backgroundColor: '#fff',
+          backgroundColor: '#FFF2CC',
           borderRadius: wp(10),
           shadowColor: '#000',
           shadowOpacity: 1,
@@ -187,96 +206,57 @@ const ApplyLeave = props => {
         }}>
         <ViewInput
           dateText={dateThree}
-          dateFun={showDatePickerthree}
+          dateFun={showDatePickerThree}
           iconName={'calendar-days'}
           placeholder={'8 Days'}
           placeholderColor={colors.loginTextColor}
           iconColor={colors.loginIconColor}
-          // style={styles.textInputCustomStyle}
+          style={styles.textInputCustomStyle}
         />
       </View>
-      <View
-        style={{
-          marginTop: hp(2),
-          marginHorizontal: wp('5'),
-          backgroundColor: '#fff',
-          borderRadius: wp(10),
-          shadowColor: '#000',
-          shadowOpacity: 1,
-          shadowRadius: wp('15'),
-          elevation: 10,
-        }}>
-        <ViewInput
-          //  value={employeeId}
-          //  onChangeText={onChangeEmpId}
-          //  keyboardType={'numeric'}
-          //  maxLength={11}
-          //  returnKeyType={'done'}
-          iconName={'calendar-exclamation'}
-          placeholder={'Leave Type'}
-          placeholderColor={colors.loginTextColor}
-          iconColor={colors.loginIconColor}
-          // style={styles.textInputCustomStyle}
+
+      <View style={{marginHorizontal: hp(2.5), marginTop: hp(2)}}>
+        <SelectDropdown
+          data={leaveType}
+          onSelect={(selectedItem, index) => {
+            console.log(selectedItem, index);
+          }}
+          defaultButtonText={'Leave Type'}
+          buttonTextAfterSelection={(selectedItem, index) => {
+            console.log(selectedItem);
+            return selectedItem;
+          }}
+          rowTextForSelection={(item, index) => {
+            return item;
+          }}
+          renderDropdownIcon={isOpened => {
+            return (
+              <View
+                style={{
+                  backgroundColor: '#FDEB13',
+                  height: hp(7),
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  width: 56,
+                  marginLeft: -8,
+                  borderRadius: 50,
+                }}>
+                <Icon
+                  type="light"
+                  name="calendar-exclamation"
+                  color={'#444'}
+                  size={hp(3)}
+                />
+              </View>
+            );
+          }}
+          buttonStyle={styles.dropdown1BtnStyle}
+          buttonTextStyle={styles.dropdown1BtnTxtStyle}
+          dropdownStyle={styles.dropdown1DropdownStyle}
+          rowStyle={styles.dropdown1RowStyle}
+          rowTextStyle={styles.dropdown1RowTxtStyle}
+          dropdownIconPosition={'left'}
         />
-      </View>
-      <View
-        style={{
-          marginHorizontal: hp(2.5),
-          marginTop: hp(2),
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-        }}>
-        <TouchableOpacity
-          activeOpacity={0.8}
-          onPress={fulDayHandle}
-          style={{flexDirection: 'row'}}>
-          <View>
-            <Radio
-              checked={fullDay}
-              activeColor={'#0EAA24'}
-              inactiveColor={'#CDCDCD'}
-              fontSize={30}
-              onChange={fulDayHandle}
-            />
-          </View>
-          <View style={{marginVertical: hp(0.8), paddingHorizontal: hp(0.5)}}>
-            <Text style={styles.radiotext}>Full Day</Text>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity
-          activeOpacity={0.8}
-          onPress={halfDayHandle}
-          style={{flexDirection: 'row'}}>
-          <View>
-            <Radio
-              checked={halfDay}
-              activeColor={'#0EAA24'}
-              inactiveColor={'#CDCDCD'}
-              fontSize={30}
-              onChange={halfDayHandle}
-            />
-          </View>
-          <View style={{marginVertical: hp(0.8), paddingHorizontal: hp(0.5)}}>
-            <Text style={styles.radiotext}>Half Day</Text>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity
-          activeOpacity={0.8}
-          onPress={shortLeaveHandle}
-          style={{flexDirection: 'row'}}>
-          <View>
-            <Radio
-              checked={shortLeave}
-              activeColor={'#0EAA24'}
-              inactiveColor={'#CDCDCD'}
-              fontSize={30}
-              onChange={shortLeaveHandle}
-            />
-          </View>
-          <View style={{marginVertical: hp(0.8), paddingHorizontal: hp(0.7)}}>
-            <Text style={styles.radiotext}>Short Leave</Text>
-          </View>
-        </TouchableOpacity>
       </View>
       <View
         style={{
@@ -355,31 +335,46 @@ const ApplyLeave = props => {
         />
       </View>
 
-      <View
-        style={{
-          marginTop: hp(2),
-          marginHorizontal: wp('5'),
-          backgroundColor: '#fff',
-          borderRadius: wp(10),
-          shadowColor: '#000',
-          shadowOpacity: 1,
-          shadowRadius: wp('15'),
-          elevation: 10,
-        }}>
-        <ViewInput
-          //  value={employeeId}
-          //  onChangeText={onChangeEmpId}
-          //  keyboardType={'numeric'}
-          //  maxLength={11}
-          //  returnKeyType={'done'}
-          iconName={'user'}
-          placeholder={'Muhammad Qasim Ali Khan'}
-          placeholderColor={colors.loginTextColor}
-          iconColor={colors.loginIconColor}
-          // style={styles.textInputCustomStyle}
+      <View style={{marginHorizontal: hp(2.5), marginTop: hp(2)}}>
+        <SelectDropdown
+          data={reportee}
+          onSelect={(selectedItem, index) => {
+            console.log(selectedItem, index);
+          }}
+          defaultButtonText={'Muhammad Qasim Ali Khan'}
+          buttonTextAfterSelection={(selectedItem, index) => {
+            console.log(selectedItem);
+            return selectedItem;
+          }}
+          rowTextForSelection={(item, index) => {
+            return item;
+          }}
+          renderDropdownIcon={isOpened => {
+            return (
+              <View
+                style={{
+                  backgroundColor: '#FDEB13',
+                  height: hp(7),
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  width: 56,
+                  marginLeft: -8,
+                  borderRadius: 50,
+                }}>
+                <Icon type="light" name="user" color={'#444'} size={hp(3)} />
+              </View>
+            );
+          }}
+          buttonStyle={styles.dropdown1BtnStyle}
+          buttonTextStyle={styles.dropdown1BtnTxtStyle}
+          dropdownStyle={styles.dropdown1DropdownStyle}
+          rowStyle={styles.dropdown1RowStyle}
+          rowTextStyle={styles.dropdown1RowTxtStyle}
+          dropdownIconPosition={'left'}
         />
       </View>
       <TouchableOpacity
+        activeOpacity={0.8}
         style={{
           marginTop: hp(6),
           marginHorizontal: hp(2.5),
@@ -441,14 +436,15 @@ const styles = EStyleSheet.create({
     shadowRadius: wp('10'),
     elevation: 10,
   },
+
   textInputCustomStyle: {
-    // fontSize: '0.7rem',
-    // height: hp('6'),
-    // letterSpacing: -0.05,
-    // paddingLeft: wp('3'),
-    // color: '#363636',
-    // fontWait: '500',
-    // fontFamily: fontFamily.ceraMedium,
+    fontSize: '0.7rem',
+    height: hp('6'),
+    letterSpacing: -0.05,
+    paddingLeft: wp('2'),
+    color: '#363636',
+    fontWait: '500',
+    fontFamily: fontFamily.ceraMedium,
   },
   radiotext: {
     fontSize: '0.62rem',
@@ -463,5 +459,36 @@ const styles = EStyleSheet.create({
     // color:'#363636',
     fontWait: '500',
   },
- 
+
+  dropdown1BtnStyle: {
+    width: '100%',
+    height: hp(7),
+    backgroundColor: '#FFF',
+    borderRadius: 50,
+
+    elevation: 8,
+  },
+  dropdown1BtnTxtStyle: {
+    color: '#363636',
+    fontSize: '0.7rem',
+    fontFamily: fontFamily.ceraMedium,
+    textAlign: 'left',
+  },
+  dropdown1DropdownStyle: {
+    backgroundColor: '#EFEFEF',
+    marginTop: hp(-3.85),
+    borderRadius: hp(1.5),
+  },
+  dropdown1RowStyle: {
+    backgroundColor: '#EFEFEF',
+    borderBottomColor: '#C5C5C5',
+    width: wp(100),
+  },
+  dropdown1RowTxtStyle: {
+    color: '#444',
+    textAlign: 'left',
+    color: '#363636',
+    fontSize: '0.7rem',
+    fontFamily: fontFamily.ceraMedium,
+  },
 });

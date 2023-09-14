@@ -19,13 +19,28 @@ import EStyleSheet from 'react-native-extended-stylesheet';
 import fontFamily from '../Styles/fontFamily';
 import Ficon from 'react-native-fontawesome-pro';
 
-const ViewInput = ({
-  placeholder,
+const InputBackground = ({
+  style,
   dateText,
   dateFun,
   iconName,
   iconColor,
- 
+  onChange,
+  onChangeText,
+  placeholder,
+  Value,
+  placeholderColor,
+  maxLength,
+  keyboardType,
+  multiline,
+  onPressIn,
+  autoFocus,
+  onFocus,
+  editable,
+  secureTextEntry,
+  returnKeyType,
+  numberOfLines,
+  ref,
 }) => {
   return (
     <TouchableOpacity
@@ -39,6 +54,7 @@ const ViewInput = ({
           flex: 0.16,
           justifyContent: 'center',
           alignItems: 'center',
+          // paddingHorizontal: wp('1'),
           backgroundColor: '#FDEB13',
           borderRadius: wp('10'),
         }}>
@@ -52,12 +68,12 @@ const ViewInput = ({
           justifyContent: 'center',
           paddingLeft: wp(1),
         }}>
-        <View >
-          {dateText ? (<Text style={[styles.inpText,{marginTop:hp(3.5)}]}>{dateText}</Text>):(<Text style={[styles.inpText,{marginTop:hp(3.5),color:'gray'}]}>{placeholder}</Text>)}
-            
-          
-            
-         
+        <View style={{justifyContent: 'center', marginTop: hp(3.5)}}>
+          {dateText != '' ? (
+            <Text>{dateText}</Text>
+          ) : (
+            <Text style={styles.inpText}>Tue, Jun 27, 2023</Text>
+          )}
         </View>
       </View>
       <TouchableOpacity
@@ -74,7 +90,7 @@ const ViewInput = ({
     </TouchableOpacity>
   );
 };
-export default ViewInput;
+export default InputBackground;
 
 const styles = EStyleSheet.create({
   zetext1: {
@@ -101,7 +117,7 @@ const styles = EStyleSheet.create({
     paddingLeft: hp(0.5),
     fontSize: hp(2),
     fontWeight: '700',
-    fontFamily: fontFamily.ceraBold,
+    fontFamily: fontFamily.ceraBlack,
   },
   inpText: {
     fontSize: '0.7rem',

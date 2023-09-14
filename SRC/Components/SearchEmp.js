@@ -17,19 +17,7 @@ export default SearchEmp = ({ item }) => {
   const onPress = ({ }) => {
     setExpended(!expanded);
   };
-  const renderDot = color => {
-    return (
-      <View
-        style={{
-          height: hp(3.5),
-          width: wp(2.5),
-          borderRadius: 1,
-          backgroundColor: color,
-          marginRight: 10,
-        }}
-      />
-    );
-  };
+ 
   return (
     <View style={{ marginTop: hp(1) }}>
       <View

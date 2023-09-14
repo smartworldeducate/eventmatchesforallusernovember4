@@ -86,10 +86,10 @@ export default CmpHistory = () => {
                     marginVertical: hp(1),
                   }}>
                   <View style={{justifyContent: 'center'}}>
-                    <Text style={styles.dob}>{item.text}</Text>
+                    <Text style={styles.dobdata}>{item.text}</Text>
                   </View>
                   <View>
-                    <Text style={styles.dob}>{item.number}</Text>
+                    <Text style={styles.dobdata}>{item.number}</Text>
                   </View>
                 </View>
               );

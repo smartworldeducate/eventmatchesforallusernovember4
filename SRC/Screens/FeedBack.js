@@ -112,13 +112,13 @@ const FeedBack = props => {
           placeholderColor={'gray'}
           //   iconColor={colors.loginIconColor}
           placeholderTextColor="gray"
-          style={styles.textInputCustomStyle}></TextInput>
+          style={[styles.textInputCustomStyle,{marginTop:hp(1.2)}]}></TextInput>
       </View>
 
       <View
         style={{
           marginHorizontal: hp(2.5),
-          height: hp(32),
+         
           borderRadius: hp(2),
           marginTop: hp(2),
           backgroundColor: '#ffffff',
@@ -148,6 +148,7 @@ const FeedBack = props => {
         />
       </View>
       <TouchableOpacity
+      activeOpacity={0.8}
         style={{
           marginHorizontal: hp(2.5),
           height: hp(7),
@@ -180,8 +181,7 @@ const FeedBack = props => {
           elevation: 4,
         }}>
         <TextInput
-          //   value={employeeId}
-          //   onChangeText={onChangeEmpId}
+          
           returnKeyType={'done'}
           iconName={'user'}
           placeholder={'Suggestion'}
@@ -192,6 +192,7 @@ const FeedBack = props => {
       </View>
       
       <TouchableOpacity
+      activeOpacity={0.8}
         style={{
           marginHorizontal: hp(2.5),
           height: hp(7),
@@ -217,11 +218,12 @@ export default FeedBack;
 const styles = EStyleSheet.create({
   textInputCustomStyle: {
     fontSize: hp('1.65'),
-    height: hp('6'),
+    height: hp(32),
     letterSpacing: -0.05,
     paddingLeft: wp('5'),
     marginRight: hp(2),
     color: 'black',
+    textAlignVertical: 'top',
   },
   headertext:{
     fontSize: '0.75rem',
