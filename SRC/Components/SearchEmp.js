@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { View, Text, Button, Image } from 'react-native';
+import React, {useState} from 'react';
+import {View, Text, Button, Image} from 'react-native';
 import {
   Collapse,
   CollapseHeader,
@@ -12,14 +12,14 @@ import {
 import GraphList from './GraphList';
 import fontFamily from '../Styles/fontFamily';
 import EStyleSheet from 'react-native-extended-stylesheet';
-export default SearchEmp = ({ item }) => {
+export default SearchEmp = ({item}) => {
   const [expanded, setExpended] = useState(false);
-  const onPress = ({ }) => {
+  const onPress = ({}) => {
     setExpended(!expanded);
   };
- 
+
   return (
-    <View style={{ marginTop: hp(1) }}>
+    <View style={{marginTop: hp(1)}}>
       <View
         style={{
           justifyContent: 'center',
@@ -34,8 +34,8 @@ export default SearchEmp = ({ item }) => {
               height: hp(12),
               marginHorizontal: hp(1),
             }}>
-            <View style={{ flex: 1 }}>
-              <View style={{ flexDirection: 'row' }}>
+            <View style={{flex: 1}}>
+              <View style={{flexDirection: 'row'}}>
                 <View
                   style={{
                     flex: 0.3,
@@ -53,17 +53,17 @@ export default SearchEmp = ({ item }) => {
                       top: hp(0),
                       borderRadius: hp(1),
                     }}
-                    source={{ uri: item.img }}
+                    source={{uri: item.img}}
                     resizeMode="contain"
                   />
                 </View>
-                <View style={{ flex: 0.7, marginLeft: hp(-2.5) }}>
+                <View style={{flex: 0.7, marginLeft: hp(-2.5)}}>
                   <View
                     style={{
                       flexDirection: 'row',
                       justifyContent: 'space-between',
                     }}>
-                    <View style={{ marginVertical: hp(1.5) }}>
+                    <View style={{marginVertical: hp(1.5), marginLeft: hp(-1)}}>
                       <Text style={styles.childname}>{item.name}</Text>
                     </View>
                     <View
@@ -81,7 +81,7 @@ export default SearchEmp = ({ item }) => {
                       justifyContent: 'space-between',
                       marginTop: hp(-2),
                     }}>
-                    <View style={{ marginVertical: hp(1.5) }}>
+                    <View style={{marginVertical: hp(1.5)}}>
                       <Text style={styles.dob}>Designation:</Text>
                     </View>
                     <View
@@ -99,7 +99,7 @@ export default SearchEmp = ({ item }) => {
                       justifyContent: 'space-between',
                       marginTop: hp(-2.5),
                     }}>
-                    <View style={{ marginVertical: hp(1.5) }}>
+                    <View style={{marginVertical: hp(1.5)}}>
                       <Text style={styles.dob}>Date:</Text>
                     </View>
                     <View
@@ -115,13 +115,13 @@ export default SearchEmp = ({ item }) => {
               </View>
             </View>
           </CollapseHeader>
-          <CollapseBody style={{ marginHorizontal: hp(2.5) }}>
+          <CollapseBody style={{marginHorizontal: hp(2.5)}}>
             <View
               style={{
                 flexDirection: 'row',
                 justifyContent: 'space-between',
               }}>
-              <View style={{ justifyContent: 'center' }}>
+              <View style={{justifyContent: 'center'}}>
                 <Text style={styles.dob}>Branch:</Text>
               </View>
               <View
@@ -138,7 +138,7 @@ export default SearchEmp = ({ item }) => {
                 justifyContent: 'space-between',
                 marginTop: hp(1),
               }}>
-              <View style={{ justifyContent: 'center' }}>
+              <View style={{justifyContent: 'center'}}>
                 <Text style={styles.dob}>Department:</Text>
               </View>
               <View
@@ -155,7 +155,7 @@ export default SearchEmp = ({ item }) => {
                 justifyContent: 'space-between',
                 marginTop: hp(1),
               }}>
-              <View style={{ justifyContent: 'center' }}>
+              <View style={{justifyContent: 'center'}}>
                 <Text style={styles.dob}>Status:</Text>
               </View>
               <View
@@ -172,7 +172,7 @@ export default SearchEmp = ({ item }) => {
                 justifyContent: 'space-between',
                 marginTop: hp(1),
               }}>
-              <View style={{ justifyContent: 'center' }}>
+              <View style={{justifyContent: 'center'}}>
                 <Text style={styles.dob}>Service Length:</Text>
               </View>
               <View
@@ -189,7 +189,7 @@ export default SearchEmp = ({ item }) => {
                 justifyContent: 'space-between',
                 marginTop: hp(1),
               }}>
-              <View style={{ justifyContent: 'center' }}>
+              <View style={{justifyContent: 'center'}}>
                 <Text style={styles.dob}>Cardre:</Text>
               </View>
               <View
@@ -271,6 +271,15 @@ const styles = EStyleSheet.create({
     paddingHorizontal: hp(0.8),
     fontFamily: fontFamily.ceraMedium,
     fontSize: '0.55rem',
+    fontWeight: '300',
+    fontStyle: 'normal',
+  },
+  childname: {
+    color: '#353535',
+    borderRadius: hp(50),
+    paddingHorizontal: hp(0.8),
+    fontFamily: fontFamily.ceraMedium,
+    fontSize: '0.7rem',
     fontWeight: '300',
     fontStyle: 'normal',
   },

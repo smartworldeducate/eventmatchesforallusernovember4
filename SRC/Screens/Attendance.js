@@ -437,7 +437,7 @@ const Attendance = props => {
                       height: hp('0.1'),
                       marginHorizontal: wp('5'),
                       marginTop: hp('1'),
-                      backgroundColor: '#cdcdcdgreygreygreygrey',
+                     
                     }}></View>
                 </>
               ) : (

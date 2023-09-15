@@ -1,4 +1,11 @@
-import {View, Text, ScrollView, Animated, TouchableOpacity} from 'react-native';
+import {
+  View,
+  Text,
+  ScrollView,
+  Animated,
+  TouchableOpacity,
+  FlatList,
+} from 'react-native';
 import React, {useState} from 'react';
 import MainHeader from '../Components/Headers/MainHeader';
 import {
@@ -8,29 +15,47 @@ import {
 import fontFamily from '../Styles/fontFamily';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import {Image} from 'react-native';
-
+import colors from '../Styles/colors';
+import BssChild from '../Components/BssChild';
 const ChildBss = props => {
-  const data = [{id: 1}, {id: 2}, {id: 3}, {id: 4}, {id: 5}];
-  const [expanded, setExpanded] = useState(false);
-  const [animation] = useState(new Animated.Value(0));
-  const [inheight, setInHeight] = useState(null);
-  const toggleExpansion = item => {
-    setInHeight(item);
-    setExpanded(!expanded);
+  const data = [
+    {
+      id: 283831,
+      name: 'Muhammad Moeez Zeeshan',
+      img: 'bss',
+      dob: '15 Oct, 2017',
+      date: 'One Violet',
+      school: 'LMA 11-FCC Gulberg, Lahore',
+      fee: '1010 (for Jul-Jul 2023)',
+      due: 'Due Date 13 July, 2023',
+      invoice: '2400000012345 (for Jul-Jul 2023)',
+    },
+    {
+      id: 283832,
+      name: 'Muhammad Moeez Zeeshan',
+      img: 'bss',
+      dob: '15 Oct, 2017',
+      date: 'One Violet',
+      school: 'IT Department',
+      fee: 'Head office',
+      due: 'Administrative Staff',
+      invoice: 'Regular',
+    },
+    {
+      id: 283833,
+      name: 'Muhammad Moeez Zeeshan',
+      img: 'bss',
+      dob: '15 Oct, 2017',
+      date: 'One Violet',
+      school: 'IT Department',
+      fee: 'Head office',
+      due: 'Administrative Staff',
+      invoice: 'Regular',
+    },
+  ];
 
-    Animated.timing(animation, {
-      toValue: expanded ? 0 : 1,
-      duration: 300,
-      useNativeDriver: false,
-    }).start();
-  };
-
-  const height = animation.interpolate({
-    inputRange: [0, 1],
-    outputRange: [90, 250],
-  });
   return (
-    <View style={{flex: 1}}>
+    <View style={{flex: 1, backgroundColor: colors.appBackGroundColor}}>
       <View>
         <MainHeader
           text={'Child’s in BSS'}
@@ -38,202 +63,11 @@ const ChildBss = props => {
           onpressBtn={() => props.navigation.goBack()}
         />
       </View>
-      <ScrollView style={{flex: 1, marginTop: hp(2)}}>
+      <View>
         {data.map((item, i) => {
-          return (
-            <View
-              style={{marginHorizontal: wp('5'), marginBottom: hp(1.5)}}
-              key={i}>
-              <TouchableOpacity
-                activeOpacity={0.8}
-                onPress={() => toggleExpansion(item.id)}
-                style={{
-                  width: wp(90),
-                  borderRadius: hp(2),
-                  backgroundColor: '#FFF',
-                  shadowColor: '#000',
-                  shadowOpacity: 0.4,
-                  shadowRadius: 1,
-                  elevation: 4,
-                }}>
-                {inheight == item.id && (
-                  <Animated.View
-                    style={{
-                      height,
-
-                      overflow: 'hidden',
-                    }}>
-                    <View style={{flexDirection: 'row', flex: 1}}>
-                      <View
-                        style={{
-                          flex: 0.3,
-                          justifyContent: 'center',
-                          alignItems: 'center',
-                          marginLeft: hp(-2),
-                        }}>
-                        <Image
-                          style={{
-                            width: wp(18),
-                            height: hp(9),
-                            marginTop: hp('1.5'),
-                            position: 'absolute',
-                            top: hp(0),
-                          }}
-                          source={{uri: 'bss'}}
-                          resizeMode="contain"
-                        />
-                      </View>
-                      <View style={{flex: 0.7, marginLeft: hp(-2.5)}}>
-                        <View
-                          style={{
-                            flexDirection: 'row',
-                            justifyContent: 'space-between',
-                          }}>
-                          <View style={{marginVertical: hp(1.5)}}>
-                            <Text style={styles.childname}>
-                              Muhammad Moeez Zeeshan
-                            </Text>
-                          </View>
-                          <View
-                            style={{
-                              justifyContent: 'center',
-                              alignItems: 'center',
-                              marginRight: hp(2),
-                            }}>
-                            <Text style={styles.number}>283831</Text>
-                          </View>
-                        </View>
-                        <View
-                          style={{
-                            flexDirection: 'row',
-                            justifyContent: 'space-between',
-                            marginTop: hp(-2),
-                          }}>
-                          <View style={{marginVertical: hp(1.5)}}>
-                            <Text style={styles.dob}>DOB :</Text>
-                          </View>
-                          <View
-                            style={{
-                              justifyContent: 'center',
-                              alignItems: 'center',
-                              marginRight: hp(2),
-                            }}>
-                            <Text style={styles.dobdata}>15 Oct, 2017</Text>
-                          </View>
-                        </View>
-                        <View
-                          style={{
-                            flexDirection: 'row',
-                            justifyContent: 'space-between',
-                            marginTop: hp(-2.5),
-                          }}>
-                          <View style={{marginVertical: hp(1.5)}}>
-                            <Text style={styles.dob}>Class Section:</Text>
-                          </View>
-                          <View
-                            style={{
-                              justifyContent: 'center',
-                              alignItems: 'center',
-                              marginRight: hp(2),
-                            }}>
-                            <Text style={styles.dobdata}>One Violet</Text>
-                          </View>
-                        </View>
-                      </View>
-                    </View>
-                  </Animated.View>
-                )}
-                {inheight !== item.id && (
-                  <Animated.View
-                    style={{
-                      height: hp(11),
-                      overflow: 'hidden',
-                    }}>
-                    <View style={{flexDirection: 'row', flex: 1}}>
-                      <View
-                        style={{
-                          flex: 0.3,
-                          justifyContent: 'center',
-                          alignItems: 'center',
-                          marginLeft: hp(-2),
-                        }}>
-                        <Image
-                          style={{
-                            width: wp(18),
-                            height: hp(9),
-                            marginTop: hp('1.5'),
-                            position: 'absolute',
-                            top: hp(0),
-                          }}
-                          source={{uri: 'bss'}}
-                          resizeMode="contain"
-                        />
-                      </View>
-                      <View style={{flex: 0.7, marginLeft: hp(-2.5)}}>
-                        <View
-                          style={{
-                            flexDirection: 'row',
-                            justifyContent: 'space-between',
-                          }}>
-                          <View style={{marginVertical: hp(1.5)}}>
-                            <Text style={styles.childname}>
-                              Muhammad Moeez Zeeshan
-                            </Text>
-                          </View>
-                          <View
-                            style={{
-                              justifyContent: 'center',
-                              alignItems: 'center',
-                              marginRight: hp(2),
-                            }}>
-                            <Text style={styles.number}>283831</Text>
-                          </View>
-                        </View>
-                        <View
-                          style={{
-                            flexDirection: 'row',
-                            justifyContent: 'space-between',
-                            marginTop: hp(-2),
-                          }}>
-                          <View style={{marginVertical: hp(1.5)}}>
-                            <Text style={styles.dob}>DOB :</Text>
-                          </View>
-                          <View
-                            style={{
-                              justifyContent: 'center',
-                              alignItems: 'center',
-                              marginRight: hp(2),
-                            }}>
-                            <Text style={styles.dobdata}>15 Oct, 2017</Text>
-                          </View>
-                        </View>
-                        <View
-                          style={{
-                            flexDirection: 'row',
-                            justifyContent: 'space-between',
-                            marginTop: hp(-2.5),
-                          }}>
-                          <View style={{marginVertical: hp(1.5)}}>
-                            <Text style={styles.dob}>Class Section:</Text>
-                          </View>
-                          <View
-                            style={{
-                              justifyContent: 'center',
-                              alignItems: 'center',
-                              marginRight: hp(2),
-                            }}>
-                            <Text style={styles.dobdata}>One Violet</Text>
-                          </View>
-                        </View>
-                      </View>
-                    </View>
-                  </Animated.View>
-                )}
-              </TouchableOpacity>
-            </View>
-          );
+          return <BssChild item={item} key={i} />;
         })}
-      </ScrollView>
+      </View>
     </View>
   );
 };

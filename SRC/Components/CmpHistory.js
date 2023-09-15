@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View, Text, Button} from 'react-native';
+import {View, Text, Button, Image} from 'react-native';
 import {
   Collapse,
   CollapseHeader,
@@ -9,41 +9,19 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-import GraphList from './GraphList';
 import fontFamily from '../Styles/fontFamily';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import Icon from 'react-native-fontawesome-pro';
-export default CmpHistory = () => {
+export default CmpHistory = ({item}) => {
   const [expanded, setExpended] = useState(false);
   const onPress = ({}) => {
     setExpended(!expanded);
   };
-  const renderDot = color => {
-    return (
-      <View
-        style={{
-          height: hp(3.5),
-          width: wp(2.5),
-          borderRadius: 1,
-          backgroundColor: color,
-          marginRight: 10,
-        }}
-      />
-    );
-  };
-  const data = [
-    {text: 'Late Arrival (Approved)', number: '23,June'},
-    {text: 'Sick Leave (Approved)', number: '5,June'},
-    {text: 'Casual Leave (Approved)', number: '5,June'},
-    {text: 'Attendance Not Marked', number: '5,June'},
-    {text: 'Annual (Leave(Approved))', number: '5,June'},
-    {text: 'Hajj Leave (Approved)', number: '5,June'},
-  ];
+
   return (
-    <View style={{marginTop: hp(1)}}>
+    <View style={{marginTop: hp(2)}}>
       <View
         style={{
-          justifyContent: 'center',
           backgroundColor: '#FFFFFF',
           borderRadius: hp(2),
           marginHorizontal: hp(2.5),
@@ -54,46 +32,123 @@ export default CmpHistory = () => {
             style={{
               height: hp(7),
               marginHorizontal: hp(1),
-              flexDirection: 'row',
-              alignItems: 'center',
             }}>
-            <View style={{flex: 0.5, justifyContent: 'center'}}>
-              <Text style={styles.dobtitle}>June 2023</Text>
-            </View>
-
-            <View
-              style={{
-                flex: 0.5,
-                justifyContent: 'center',
-                alignItems: 'flex-end',
-              }}>
-              <Icon
-                type="light"
-                name="arrow-right"
-                size={hp(2)}
-                color="#cdcdcd"
-                Size={hp(2)}
-              />
-            </View>
-          </CollapseHeader>
-          <CollapseBody style={{marginHorizontal: hp(2.5)}}>
-            {data.map((item, i) => {
-              return (
+            <View style={{}}>
+              <View
+                style={{flexDirection: 'row', justifyContent: 'space-between'}}>
                 <View
                   style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                    marginVertical: hp(1),
+                    justifyContent: 'center',
+                    marginVertical: hp(2.3),
                   }}>
-                  <View style={{justifyContent: 'center'}}>
-                    <Text style={styles.dobdata}>{item.text}</Text>
-                  </View>
-                  <View>
-                    <Text style={styles.dobdata}>{item.number}</Text>
-                  </View>
+                  <Text style={styles.name}>{item.title1}</Text>
                 </View>
-              );
-            })}
+                <View
+                  style={{
+                    justifyContent: 'center',
+                    marginVertical: hp(2.3),
+                  }}>
+                  <Icon
+                    type="light"
+                    name="arrow-right"
+                    size={hp(2.5)}
+                    color="#cdcdcd"
+                  />
+                </View>
+              </View>
+            </View>
+          </CollapseHeader>
+          <CollapseBody
+            style={{marginHorizontal: hp(1.5), paddingVertical: hp(2)}}>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                paddingVertical: hp(1),
+              }}>
+              <View style={{justifyContent: 'center'}}>
+                <Text style={styles.dob}>{item.text1}</Text>
+              </View>
+              <View
+                style={{
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}>
+                <Text style={styles.dobdata}>{item.number1}</Text>
+              </View>
+            </View>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                paddingVertical: hp(1),
+                marginTop: hp(1),
+              }}>
+              <View style={{justifyContent: 'center'}}>
+                <Text style={styles.dob}>{item.text2}</Text>
+              </View>
+              <View
+                style={{
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}>
+                <Text style={styles.dobdata}>{item.number2}</Text>
+              </View>
+            </View>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                marginTop: hp(1),
+                paddingVertical: hp(1),
+              }}>
+              <View style={{justifyContent: 'center'}}>
+                <Text style={styles.dob}>{item.text3}</Text>
+              </View>
+              <View
+                style={{
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}>
+                <Text style={styles.dobdata}>{item.number3}</Text>
+              </View>
+            </View>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                marginTop: hp(1),
+                paddingVertical: hp(1),
+              }}>
+              <View style={{justifyContent: 'center'}}>
+                <Text style={styles.dob}>{item.text4}</Text>
+              </View>
+              <View
+                style={{
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}>
+                <Text style={styles.dobdata}>{item.number4}</Text>
+              </View>
+            </View>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                marginTop: hp(1),
+                paddingVertical: hp(1),
+              }}>
+              <View style={{justifyContent: 'center'}}>
+                <Text style={styles.dob}>{item.text5}</Text>
+              </View>
+              <View
+                style={{
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}>
+                <Text style={styles.dobdata}>{item.number5}</Text>
+              </View>
+            </View>
           </CollapseBody>
         </Collapse>
       </View>
@@ -152,17 +207,17 @@ const styles = EStyleSheet.create({
     fontWeight: '700',
     fontStyle: 'normal',
   },
-  dobtitle: {
-    color: '#363636',
-    fontFamily: fontFamily.ceraBold,
-    fontSize: '0.6rem',
-    fontWeight: '700',
-    fontStyle: 'normal',
-  },
   dob: {
     color: '#363636',
     fontFamily: fontFamily.ceraMedium,
-    fontSize: '0.55rem',
+    fontSize: '0.6rem',
+    fontWeight: '300',
+    fontStyle: 'normal',
+  },
+  name: {
+    color: '#363636',
+    fontFamily: fontFamily.ceraBold,
+    fontSize: '0.7rem',
     fontWeight: '300',
     fontStyle: 'normal',
   },

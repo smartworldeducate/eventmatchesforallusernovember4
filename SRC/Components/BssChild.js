@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { View, Text, Button, Image } from 'react-native';
+import React, {useState} from 'react';
+import {View, Text, Button, Image} from 'react-native';
 import {
   Collapse,
   CollapseHeader,
@@ -12,9 +12,9 @@ import {
 import GraphList from './GraphList';
 import fontFamily from '../Styles/fontFamily';
 import EStyleSheet from 'react-native-extended-stylesheet';
-export default BssChild = ({ item }) => {
+export default BssChild = ({item}) => {
   const [expanded, setExpended] = useState(false);
-  const onPress = ({ }) => {
+  const onPress = ({}) => {
     setExpended(!expanded);
   };
   const renderDot = color => {
@@ -31,7 +31,7 @@ export default BssChild = ({ item }) => {
     );
   };
   return (
-    <View style={{ marginTop: hp(1) }}>
+    <View style={{marginTop: hp(1)}}>
       <View
         style={{
           justifyContent: 'center',
@@ -43,11 +43,11 @@ export default BssChild = ({ item }) => {
         <Collapse isExpanded={expanded} onToggle={onPress}>
           <CollapseHeader
             style={{
-              height: hp(12),
+              height: hp(10.7),
               marginHorizontal: hp(1),
             }}>
-            <View style={{ flex: 1 }}>
-              <View style={{ flexDirection: 'row' }}>
+            <View style={{flex: 1}}>
+              <View style={{flexDirection: 'row'}}>
                 <View
                   style={{
                     flex: 0.3,
@@ -65,17 +65,17 @@ export default BssChild = ({ item }) => {
                       top: hp(0),
                       borderRadius: hp(1),
                     }}
-                    source={{ uri: item.img }}
+                    source={{uri: item.img}}
                     resizeMode="contain"
                   />
                 </View>
-                <View style={{ flex: 0.7, marginLeft: hp(-2.5) }}>
+                <View style={{flex: 0.7, marginLeft: hp(-2.5)}}>
                   <View
                     style={{
                       flexDirection: 'row',
                       justifyContent: 'space-between',
                     }}>
-                    <View style={{ marginVertical: hp(1.5) }}>
+                    <View style={{marginVertical: hp(1.5), marginLeft: hp(-1)}}>
                       <Text style={styles.childname}>{item.name}</Text>
                     </View>
                     <View
@@ -93,8 +93,8 @@ export default BssChild = ({ item }) => {
                       justifyContent: 'space-between',
                       marginTop: hp(-2),
                     }}>
-                    <View style={{ marginVertical: hp(1.5) }}>
-                      <Text style={styles.dob}>Designation:</Text>
+                    <View style={{marginVertical: hp(1.5)}}>
+                      <Text style={styles.dob}>DOB:</Text>
                     </View>
                     <View
                       style={{
@@ -102,7 +102,7 @@ export default BssChild = ({ item }) => {
                         alignItems: 'center',
                         marginRight: hp(2),
                       }}>
-                      <Text style={styles.dobdata}>{item.desig}</Text>
+                      <Text style={styles.dobdata}>{item.dob}</Text>
                     </View>
                   </View>
                   <View
@@ -111,8 +111,8 @@ export default BssChild = ({ item }) => {
                       justifyContent: 'space-between',
                       marginTop: hp(-2.5),
                     }}>
-                    <View style={{ marginVertical: hp(1.5) }}>
-                      <Text style={styles.dob}>Date:</Text>
+                    <View style={{marginVertical: hp(1.5)}}>
+                      <Text style={styles.dob}>Class Section:</Text>
                     </View>
                     <View
                       style={{
@@ -120,96 +120,95 @@ export default BssChild = ({ item }) => {
                         alignItems: 'center',
                         marginRight: hp(2),
                       }}>
-                      <Text style={styles.dobdata}>{item.hdate}</Text>
+                      <Text style={styles.dobdata}>{item.date}</Text>
                     </View>
                   </View>
                 </View>
               </View>
             </View>
           </CollapseHeader>
-          <CollapseBody style={{ marginHorizontal: hp(2.5) }}>
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-              }}>
-              <View style={{ justifyContent: 'center' }}>
-                <Text style={styles.dob}>Branch:</Text>
-              </View>
+          <CollapseBody style={{marginHorizontal: hp(2.5)}}>
+            <View style={{flexDirection: 'row', marginTop: hp(-3)}}>
               <View
                 style={{
+                  flex: 0.3,
                   justifyContent: 'center',
                   alignItems: 'center',
-                }}>
-                <Text style={styles.dobdata}>{item.brnch}</Text>
-              </View>
-            </View>
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                marginTop: hp(1),
-              }}>
-              <View style={{ justifyContent: 'center' }}>
-                <Text style={styles.dob}>Department:</Text>
-              </View>
-              <View
-                style={{
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}>
-                <Text style={styles.dobdata}>{item.dpt}</Text>
-              </View>
-            </View>
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                marginTop: hp(1),
-              }}>
-              <View style={{ justifyContent: 'center' }}>
-                <Text style={styles.dob}>Status:</Text>
-              </View>
-              <View
-                style={{
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}>
-                <Text style={styles.dobdata}>{item.status}</Text>
-              </View>
-            </View>
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                marginTop: hp(1),
-              }}>
-              <View style={{ justifyContent: 'center' }}>
-                <Text style={styles.dob}>Service Length:</Text>
-              </View>
-              <View
-                style={{
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}>
-                <Text style={styles.dobdata}>{item.slength}</Text>
-              </View>
-            </View>
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                marginTop: hp(1),
-              }}>
-              <View style={{ justifyContent: 'center' }}>
-                <Text style={styles.dob}>Cardre:</Text>
-              </View>
-              <View
-                style={{
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}>
-                <Text style={styles.dobdata}>{item.carde}</Text>
+                  marginLeft: hp(-2),
+                  marginVertical: hp(0.3),
+                }}></View>
+              <View style={{flex: 0.7, marginLeft: hp(-3)}}>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                  }}>
+                  <View style={{marginVertical: hp(1.5)}}>
+                    <Text style={styles.dob}>School</Text>
+                  </View>
+                  <View
+                    style={{
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      marginRight: hp(1),
+                    }}>
+                    <Text style={styles.dob}>{item.school}</Text>
+                  </View>
+                </View>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    marginTop: hp(-2),
+                  }}>
+                  <View style={{marginVertical: hp(1.5)}}>
+                    <Text style={styles.dob}>Fee Due:</Text>
+                  </View>
+                  <View
+                    style={{
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      marginRight: hp(0),
+                    }}>
+                    <Text style={styles.dobdata}>{item.fee}</Text>
+                  </View>
+                </View>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    marginTop: hp(-2.5),
+                  }}>
+                  <View style={{marginVertical: hp(1.5)}}>
+                    <Text style={styles.dob}>Due Date:</Text>
+                  </View>
+                  <View
+                    style={{
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      marginRight: hp(0),
+                    }}>
+                    <Text style={styles.dobdata}>{item.due}</Text>
+                  </View>
+                </View>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    marginTop: hp(-2.5),
+                  }}>
+                  <View style={{marginVertical: hp(1.5)}}>
+                    <Text style={styles.dob}>Invoice:</Text>
+                  </View>
+                  <View
+                    style={{
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      marginRight: hp(0),
+                    }}>
+                    <Text style={styles.dobdata}>{item.invoice}</Text>
+                  </View>
+                </View>
               </View>
             </View>
           </CollapseBody>
@@ -283,6 +282,15 @@ const styles = EStyleSheet.create({
     paddingHorizontal: hp(0.8),
     fontFamily: fontFamily.ceraMedium,
     fontSize: '0.55rem',
+    fontWeight: '300',
+    fontStyle: 'normal',
+  },
+  childname: {
+    color: '#353535',
+    borderRadius: hp(50),
+    paddingHorizontal: hp(0.8),
+    fontFamily: fontFamily.ceraMedium,
+    fontSize: '0.65rem',
     fontWeight: '300',
     fontStyle: 'normal',
   },

@@ -30,25 +30,8 @@ import GraphList from '../Components/GraphList';
 import { color } from '@rneui/themed/dist/config';
 import CmpTest from '../Components/CmpTest';
 const Financial = props => {
-  const [expanded, setExpanded] = useState(false);
-  const [animation] = useState(new Animated.Value(0));
-  const [inheight, setInHeight] = useState(null);
-  const toggleExpansion = item => {
-    setInHeight(item);
-    setExpanded(!expanded);
 
-    Animated.timing(animation, {
-      toValue: expanded ? 0 : 1,
-      duration: 300,
-      useNativeDriver: false,
-    }).start();
-  };
-  const expandData = [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }, { id: 5 }];
 
-  const height = animation.interpolate({
-    inputRange: [0, 1],
-    outputRange: [100, 335], // Change this value to control the expanded height
-  });
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(null);
   const [items, setItems] = useState([
@@ -57,17 +40,12 @@ const Financial = props => {
   ]);
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [hide, setHide] = useState(true);
-
-  const [dateView, setDateView] = useState(true);
   const [date, setDate] = useState('');
   const [visible, setVisible] = useState(false);
   const [pf, setPf] = useState(false);
   const [txt, setTxt] = useState(false);
   const [slip, setSlip] = useState(false);
-  const [btColor, setBtColor] = useState(false);
-  const [btColor1, setBtColor1] = useState(false);
-  const [btColor2, setBtColor2] = useState(false);
-  const [btColor3, setBtColor3] = useState(false);
+ 
 
   const pfHandler = () => {
     setPf(true);
@@ -153,9 +131,7 @@ const Financial = props => {
     setHide(false);
   };
 
-  const renderDot = color => {
-    return <View style={styles.renderdot} />;
-  };
+ 
   return (
     <View style={{ flex: 1 }}>
       <View>
@@ -878,199 +854,7 @@ const Financial = props => {
               {data1.map((item, i) => {
                 return (
                   <View style={{ marginBottom: hp(0.5) }} key={i}>
-                    {/* <TouchableOpacity
-                      onPress={() => toggleExpansion(item.id)}
-                      style={{
-                        borderRadius: hp(2),
-                        backgroundColor: '#FFF',
-                        shadowColor: '#000',
-                        shadowOpacity: 0.4,
-                        shadowRadius: 1,
-                        elevation: 1,
-                      }}>
-                      {inheight == item.id && (
-                        <Animated.View
-                          style={{
-                            height,
-                            paddingHorizontal: hp(2.5),
-                            overflow: 'hidden',
-                            position: 'relative',
-                          }}>
-                          <View
-                            style={{
-                              flexDirection: 'row',
-                              position: 'absolute',
-                              top: 0,
-                              left: hp(2.5),
-                            }}>
-                            <View
-                              style={{
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                                marginTop: hp(1.5),
-                              }}>
-                              <GraphList />
-                            </View>
-                            <View
-                              style={{
-                                justifyContent: 'center',
-                                marginHorizontal: hp(1.5),
-                              }}>
-                              <View style={{ flexDirection: 'row' }}>
-                                <View style={{ marginVertical: hp(0.5) }}>
-                                  {renderDot('#C1B7FD')}
-                                </View>
-                                <View>
-                                  <View>
-                                    <Text style={styles.numbertext}>
-                                      25,000
-                                    </Text>
-                                  </View>
-                                  <View>
-                                    <Text style={styles.basictext}>
-                                      Gross Salary
-                                    </Text>
-                                  </View>
-                                </View>
-                              </View>
-                            </View>
-                            <View
-                              style={{
-                                justifyContent: 'center',
-                                marginLeft: hp(2),
-                              }}>
-                              <View style={{ flexDirection: 'row' }}>
-                                <View style={{ marginVertical: hp(0.5) }}>
-                                  {renderDot('#FEBB5B')}
-                                </View>
-                                <View>
-                                  <View>
-                                    <Text style={styles.numbertext}>
-                                      25,000
-                                    </Text>
-                                  </View>
-                                  <View>
-                                    <Text style={styles.basictext}>
-                                      net Salary
-                                    </Text>
-                                  </View>
-                                </View>
-                              </View>
-                            </View>
-                          </View>
-                          {inheight == item.id && (
-                            <View
-                              style={{
-                                height: hp(0.1),
-                                backgroundColor: '#cdcdcd',
-                                marginTop: hp(13.5),
-                              }}></View>
-                          )}
-                          {data.map((item, i) => {
-                            return (
-                              <View
-                                style={{
-                                  flexDirection: 'row',
-                                  justifyContent: 'space-between',
-                                  marginVertical: hp(1),
-                                }}>
-                                <View style={{ justifyContent: 'center' }}>
-                                  <Text style={styles.dob}>{item.text}</Text>
-                                </View>
-                                <View>
-                                  <Text style={styles.dob}>{item.number}</Text>
-                                </View>
-                              </View>
-                            );
-                          })}
-                        </Animated.View>
-                      )}
-                      {inheight !== item.id && (
-                        <Animated.View
-                          style={{
-                            height: hp(12.8),
-                            overflow: 'hidden',
-                            paddingHorizontal: hp(2.5),
-                          }}>
-                          <View
-                            style={{
-                              flexDirection: 'row',
-                              position: 'absolute',
-                              top: 0,
-                              left: hp(2.5),
-                            }}>
-                            <View
-                              style={{
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                                marginTop: hp(1.5),
-                              }}>
-                              <GraphList />
-                            </View>
-                            <View
-                              style={{
-                                justifyContent: 'center',
-                                marginHorizontal: hp(1.5),
-                              }}>
-                              <View style={{ flexDirection: 'row' }}>
-                                <View style={{ marginVertical: hp(0.5) }}>
-                                  {renderDot('#C1B7FD')}
-                                </View>
-                                <View>
-                                  <View>
-                                    <Text style={styles.numbertext}>
-                                      25,000
-                                    </Text>
-                                  </View>
-                                  <View>
-                                    <Text style={styles.basictext}>
-                                      Gross Salary
-                                    </Text>
-                                  </View>
-                                </View>
-                              </View>
-                            </View>
-                            <View
-                              style={{
-                                justifyContent: 'center',
-                                marginLeft: hp(2),
-                              }}>
-                              <View style={{ flexDirection: 'row' }}>
-                                <View style={{ marginVertical: hp(0.5) }}>
-                                  {renderDot('#FEBB5B')}
-                                </View>
-                                <View>
-                                  <View>
-                                    <Text style={styles.numbertext}>
-                                      25,000
-                                    </Text>
-                                  </View>
-                                  <View>
-                                    <Text style={styles.basictext}>
-                                      net Salary
-                                    </Text>
-                                  </View>
-                                </View>
-                              </View>
-                            </View>
-                          </View>
-                          <View
-                            style={{
-                              flexDirection: 'row',
-                              position: 'absolute',
-                              top: hp(13.2),
-                              left: hp(2.5),
-                            }}>
-                            <View style={{ justifyContent: 'center' }}>
-                              <Text style={styles.dob}>fgd</Text>
-                            </View>
-                            <View>
-                              <Text style={styles.dob}>fgd</Text>
-                            </View>
-                          </View>
-                        </Animated.View>
-                      )}
-                    </TouchableOpacity> */}
+                   
                     <CmpTest />
                   </View>
                 );

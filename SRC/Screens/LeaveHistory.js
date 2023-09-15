@@ -1,12 +1,13 @@
 import React, {useState} from 'react';
-import {View, Text, Button, FlatList, TouchableOpacity} from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
-
 import {
-  Collapse,
-  CollapseHeader,
-  CollapseBody,
-} from 'accordion-collapse-react-native';
+  View,
+  Text,
+  Button,
+  FlatList,
+  TouchableOpacity,
+  ScrollView,
+} from 'react-native';
+import LinearGradient from 'react-native-linear-gradient';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -14,11 +15,9 @@ import {
 import EStyleSheet from 'react-native-extended-stylesheet';
 import fontFamily from '../Styles/fontFamily';
 import MainHeader from '../Components/Headers/MainHeader';
-import Icon from 'react-native-fontawesome-pro';
 import CmpHistory from '../Components/CmpHistory';
-
+import colors from '../Styles/colors';
 const LeaveHistory = props => {
-  const [expanded, setExpended] = useState(false);
   const [clinder, setClinder] = useState(null);
   const [defalut, setDefalut] = useState(true);
   const clinderHandler = item => {
@@ -26,6 +25,137 @@ const LeaveHistory = props => {
     setDefalut(false);
     console.log('my item  time out', item);
   };
+
+  // const data = [
+  //   {text: 'Late Arrival (Approved)', number: '23,June',title:'June 23',
+  //   text: 'Sick Leave (Approved)', number: '5,June',title:'June 22',
+  //   text: 'Casual Leave (Approved)', number: '5,June',title:'June 21',
+  //   text: 'Attendance Not Marked', number: '5,June',title:'June 20',
+  //   text: 'Annual (Leave(Approved))', number: '5,June',title:'June 19',
+  //   text: 'Hajj Leave (Approved)', number: '5,June',title:'June 18',}
+  // ];
+  const data = [
+    {
+      id: 283831,
+      text1: 'Late Arrival (Approved)',
+      number1: '23,June',
+      title1: 'June 23',
+      text2: 'Sick Leave (Approved)',
+      number2: '5,June',
+      title2: 'June 22',
+      text3: 'Casual Leave (Approved)',
+      number3: '5,June',
+      title3: 'June 21',
+      text4: 'Attendance Not Marked',
+      number4: '5,June',
+      title4: 'June 20',
+      text5: 'Annual (Leave(Approved))',
+      number5: '5,June',
+      title5: 'June 19',
+      text6: 'Hajj Leave (Approved)',
+      number6: '5,June',
+      title6: 'June 18',
+    },
+    {
+      id: 283831,
+      text1: 'Late Arrival (Approved)',
+      number1: '23,June',
+      title1: 'June 22',
+      text2: 'Sick Leave (Approved)',
+      number2: '5,June',
+      title2: 'June 22',
+      text3: 'Casual Leave (Approved)',
+      number3: '5,June',
+      title3: 'June 21',
+      text4: 'Attendance Not Marked',
+      number4: '5,June',
+      title4: 'June 20',
+      text5: 'Annual (Leave(Approved))',
+      number5: '5,June',
+      title5: 'June 19',
+      text6: 'Hajj Leave (Approved)',
+      number6: '5,June',
+      title6: 'June 18',
+    },
+    {
+      id: 283831,
+      text1: 'Late Arrival (Approved)',
+      number1: '23,June',
+      title1: 'June 21',
+      text2: 'Sick Leave (Approved)',
+      number2: '5,June',
+      title2: 'June 22',
+      text3: 'Casual Leave (Approved)',
+      number3: '5,June',
+      title3: 'June 21',
+      text4: 'Attendance Not Marked',
+      number4: '5,June',
+      title4: 'June 20',
+      text5: 'Annual (Leave(Approved))',
+      number5: '5,June',
+      title5: 'June 19',
+      text6: 'Hajj Leave (Approved)',
+      number6: '5,June',
+      title6: 'June 18',
+    },
+    {
+      id: 283831,
+      text1: 'Late Arrival (Approved)',
+      number1: '23,June',
+      title1: 'June 20',
+      text2: 'Sick Leave (Approved)',
+      number2: '5,June',
+      title2: 'June 22',
+      text3: 'Casual Leave (Approved)',
+      number3: '5,June',
+      title3: 'June 21',
+      text4: 'Attendance Not Marked',
+      number4: '5,June',
+      title4: 'June 20',
+      text5: 'Annual (Leave(Approved))',
+      number5: '5,June',
+      title5: 'June 19',
+      text6: 'Hajj Leave (Approved)',
+      number6: '5,June',
+      title6: 'June 18',
+    },
+    {
+      id: 283831,
+      text1: 'Late Arrival (Approved)',
+      number1: '23,June',
+      title1: 'June 19',
+      text2: 'Sick Leave (Approved)',
+      number2: '5,June',
+      title2: 'June 22',
+      text3: 'Casual Leave (Approved)',
+      number3: '5,June',
+      title3: 'June 21',
+      text4: 'Attendance Not Marked',
+      number4: '5,June',
+      title4: 'June 20',
+      text5: 'Annual (Leave(Approved))',
+      number5: '5,June',
+      title5: 'June 19',
+      text6: 'Hajj Leave (Approved)',
+      number6: '5,June',
+      title6: 'June 18',
+    },
+  ];
+
+  const years = [
+    {id: 1, month: 'Jan'},
+    {id: 2, month: 'Fab'},
+    {id: 3, month: 'Mar'},
+    {id: 4, month: 'Apr'},
+    {id: 5, month: 'May'},
+    {id: 6, month: 'Jun'},
+    {id: 7, month: 'Jul'},
+    {id: 8, month: 'Aug'},
+    {id: 9, month: 'Sep'},
+    {id: 10, month: 'Oct'},
+    {id: 11, month: 'Nov'},
+    {id: 12, month: 'Dec'},
+  ];
 
   const renderItem = ({item, index}) => {
     console.log('index', index);
@@ -62,20 +192,7 @@ const LeaveHistory = props => {
       </TouchableOpacity>
     );
   };
-  const years = [
-    {id: 1, month: 'Jan'},
-    {id: 2, month: 'Fab'},
-    {id: 3, month: 'Mar'},
-    {id: 4, month: 'Apr'},
-    {id: 5, month: 'May'},
-    {id: 6, month: 'Jun'},
-    {id: 7, month: 'Jul'},
-    {id: 8, month: 'Aug'},
-    {id: 9, month: 'Sep'},
-    {id: 10, month: 'Oct'},
-    {id: 11, month: 'Nov'},
-    {id: 12, month: 'Dec'},
-  ];
+
   const renderItemGradient = ({item, index}) => {
     console.log('index', index);
     return (
@@ -140,33 +257,9 @@ const LeaveHistory = props => {
       </View>
     );
   };
-  const onPress = ({}) => {
-    setExpended(!expanded);
-  };
-  const renderDot = color => {
-    return (
-      <View
-        style={{
-          height: hp(3.5),
-          width: wp(2.5),
-          borderRadius: 1,
-          backgroundColor: color,
-          marginRight: 10,
-        }}
-      />
-    );
-  };
-  const data = [
-    {text: 'Sick', number: '5,000'},
-    {text: 'Casual', number: '250'},
-    {text: 'Income Tax', number: '5,000'},
-    {text: 'Annual(Leave)', number: '0(0)'},
-    {text: 'Hajj', number: '840'},
-    // {text: 'Total Deduction', number: '1190'},
-    // {text: 'Net Salary', number: '88090'},
-  ];
+
   return (
-    <View style={{flex: 1}}>
+    <View style={{flex: 1, backgroundColor: colors.appBackGroundColor}}>
       <View>
         <MainHeader
           text={'Leave History'}
@@ -199,9 +292,9 @@ const LeaveHistory = props => {
           />
         </View>
       )}
-      <View style={{marginTop: hp(1)}}>
-        {[1, 2, 3, 4, 5, 6].map((item, i) => {
-          return <CmpHistory />;
+      <View style={{flex: 1}}>
+        {data.map((item, i) => {
+          return <CmpHistory item={item} key={i} />;
         })}
       </View>
     </View>
@@ -264,7 +357,7 @@ const styles = EStyleSheet.create({
   dob: {
     color: '#363636',
     fontFamily: fontFamily.ceraMedium,
-    fontSize: '0.5rem',
+    fontSize: '0.6rem',
     fontWeight: '300',
     fontStyle: 'normal',
   },
