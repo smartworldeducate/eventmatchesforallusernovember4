@@ -110,8 +110,7 @@ const Skip1 = () => {
                 <View style={{width: wp(50)}}></View>
                 <TouchableOpacity
                 activeOpacity={0.8}
-                // onPress={onPressLogin}
-                  onPress={handleSkip}
+                onPress={onPressLogin}
                   style={{width: wp(50), marginLeft: hp(15)}}>
                   <Text style={{fontSize: hp(2), color: 'black'}}>SKIP</Text>
                 </TouchableOpacity>

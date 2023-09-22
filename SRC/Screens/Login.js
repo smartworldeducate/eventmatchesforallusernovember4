@@ -1,8 +1,11 @@
 import React, {useEffect, useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import Modal from 'react-native-modal';
 import {
   GoogleSignin,
   statusCodes,
 } from '@react-native-google-signin/google-signin';
+import {loginUserHandle} from '../features/register/googleLoginSlice';
 import {
   SafeAreaView,
   StatusBar,
@@ -15,6 +18,8 @@ import {
   TouchableOpacity,
   Platform,
   KeyboardAvoidingView,
+  ActivityIndicator,
+  ToastAndroid,
 } from 'react-native';
 import {
   widthPercentageToDP as wp,
@@ -28,7 +33,8 @@ import {
   useNavigation,
   CommonActions,
 } from '@react-navigation/native';
-const Login = () => {
+const Login = props => {
+  const dispatch = useDispatch();
   const navigation = useNavigation();
   const handleNavigate = (routeName, clearStack, params) => {
     navigation.navigate(routeName, params);
@@ -38,10 +44,42 @@ const Login = () => {
   };
   const [employeeId, setEmployeeId] = useState();
   const [employeePassword, setEmployeePassword] = useState();
+  const [loaduiung, setLoding] = useState(false);
+  const [visible, setVisible] = useState(false);
+  const [animodal, setAnimodal] = useState(false);
+  const [animation, setAnimation] = useState(true);
+  const [data, setData] = useState([]);
+  const handleLogin = async () => {
+    if (employeeId && employeePassword !== '') {
+      var login_data = await dispatch(
+        loginUserHandle({employeeId: employeeId, password: employeePassword}),
+      );
+      console.log("login data on login screen",login_data.payload);
+      // setData(login_data?.payload?.message);
+      // setLoding(true);
+      // if (login_data?.payload?.success == 1) {
+      //   props.navigation.navigate('HomeScreen');
+      //   setLoding(false);
+      // } else {
+      //   ToastAndroid.showWithGravity(
+      //     login_data?.payload?.message,
+      //     ToastAndroid.LONG,
+      //     ToastAndroid.CENTER,
+      //   );
+      // }
+    } else {
+      ToastAndroid.showWithGravity(
+        'enter valid username and password',
+        ToastAndroid.LONG,
+        ToastAndroid.CENTER,
+      );
+    }
+  };
+  //249159142983-3r1307q40tb9de7qctsm4ckk244etg9h.apps.googleusercontent.com
   useEffect(() => {
     GoogleSignin.configure({
       webClientId:
-        '249159142983-3r1307q40tb9de7qctsm4ckk244etg9h.apps.googleusercontent.com',
+        '941654580803-btnt6no51u8js15k4aorf8gqiu9vq2jf.apps.googleusercontent.com',
     });
   }, []);
   const signinWithGoogle = async () => {
@@ -100,6 +138,29 @@ const Login = () => {
           Platform.OS === 'android' ? colors.white : colors.white,
       }}>
       <StatusBar barStyle={'default'} backgroundColor={colors.loginIconColor} />
+      {animation && (
+        <View>
+          <Modal isVisible={animodal}>
+            <View
+              style={{
+                width: wp(30),
+                height: hp(15),
+                backgroundColor: '#EAFAF1',
+                borderRadius: hp(2),
+                justifyContent: 'center',
+                alignItems: 'center',
+                marginHorizontal: hp(15),
+              }}>
+              <View style={{}}>
+                <ActivityIndicator animating={animation} size={'large'} />
+              </View>
+              <View style={{}}>
+                <Text>please wait</Text>
+              </View>
+            </View>
+          </Modal>
+        </View>
+      )}
       <ImageBackground
         source={{uri: 'appbg'}}
         style={{flex: 1}}
@@ -168,11 +229,11 @@ const Login = () => {
               }}>
               <TouchableOpacity
                 activeOpacity={0.8}
-                onPress={onPressLogin}
+                onPress={handleLogin}
                 style={{
                   height: hp('7'),
                   width: wp('90'),
-                  backgroundColor:colors.whiteColor,
+                  backgroundColor: colors.whiteColor,
                   justifyContent: 'center',
                   alignItems: 'center',
                   borderRadius: wp(10),

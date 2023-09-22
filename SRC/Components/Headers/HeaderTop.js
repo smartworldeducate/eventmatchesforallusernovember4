@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import Icon from 'react-native-fontawesome-pro';
-
+import {useSelector} from 'react-redux';
 import {
   SafeAreaView,
   StatusBar,
@@ -38,6 +38,9 @@ const HeaderTop = ({
   iconColor2,
   onPressIcon,
 }) => {
+  // const userData = useSelector(state => state.userLogin);
+  // console.log('header data from header', userData?.user.data.EMP_PHOTO);
+  // const {EMP_PHOTO, DESIGNATION, EMP_NAME} = userData?.user.data;
   const data = [
     {id: 1, image: 'igt'},
     {id: 2, image: 'salman'},
@@ -61,7 +64,7 @@ const HeaderTop = ({
   const keyboardVerticalOffset = Platform.OS === 'ios' ? 60 : 20;
 
   const onChangeEmpId = val => {
-    navigation.navigate('Search')
+    navigation.navigate('Search');
     setEmployeeId('');
   };
   const onChangeEmpPassword = val => {
@@ -84,7 +87,7 @@ const HeaderTop = ({
         style={styles.mainHeader}>
         <View style={styles.headerChild}>
           <TouchableOpacity
-           activeOpacity={0.8}
+            activeOpacity={0.8}
             style={styles.firstRow}
             onPress={() => navigation.navigate('Profile')}>
             <View style={styles.firstRowView}>
@@ -106,7 +109,7 @@ const HeaderTop = ({
 
           <View style={styles.firstRowRightSection}>
             <TouchableOpacity
-             activeOpacity={0.8}
+              activeOpacity={0.8}
               style={styles.bell}
               onPress={() => handleNavigate('Notification')}>
               <Icon type="light" name="bell" size={hp(3)} color="#fff" />
@@ -123,13 +126,13 @@ const HeaderTop = ({
         </View>
 
         <TouchableOpacity
-         activeOpacity={0.8}
+          activeOpacity={0.8}
           style={styles.homeSearch}
           onPress={() => navigation.navigate('Search')}>
           <View style={styles.homesearchView}>
             <TextInput
               value={employeeId}
-              onChangeText={(text)=>onChangeEmpId(text)}
+              onChangeText={text => onChangeEmpId(text)}
               returnKeyType={'done'}
               iconName={'user'}
               placeholder={'Search Employee'}
@@ -139,7 +142,10 @@ const HeaderTop = ({
               placeholderStyle={styles.plaseholderStyle}
               style={styles.textInputCustomStyle}></TextInput>
           </View>
-          <TouchableOpacity  activeOpacity={0.8} style={styles.searchicon} onPress={() => {}}>
+          <TouchableOpacity
+            activeOpacity={0.8}
+            style={styles.searchicon}
+            onPress={() => {}}>
             <Icon
               type="light"
               name="magnifying-glass"
@@ -156,7 +162,10 @@ const HeaderTop = ({
               : console.log('lastitem id', item.id);
             if (i < 6) {
               return (
-                <TouchableOpacity onPress={()=>navigation.navigate('Reportee')} style={styles.imageList} key={i}>
+                <TouchableOpacity
+                  onPress={() => navigation.navigate('Reportee')}
+                  style={styles.imageList}
+                  key={i}>
                   <Image
                     style={styles.imgStyle}
                     source={{uri: item.image}}

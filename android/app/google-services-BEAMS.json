@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "941654580803",
+    "firebase_url": "https://beams-app-cae76.firebaseio.com",
+    "project_id": "beams-app-cae76",
+    "storage_bucket": "beams-app-cae76.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:941654580803:android:ba631efc7401ba4d",
+        "android_client_info": {
+          "package_name": "com.beamsapp.android"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "941654580803-btnt6no51u8js15k4aorf8gqiu9vq2jf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.beamsapp.android",
+            "certificate_hash": "42c4b05f352c804d55ba3df999486f8f0793a7d3"
+          }
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAm0phyqOpGeVqM8eW3pI1BmXIleinUAlE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
