@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import Modal from 'react-native-modal';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   GoogleSignin,
   statusCodes,
@@ -33,6 +34,7 @@ import {
   useNavigation,
   CommonActions,
 } from '@react-navigation/native';
+import {StackActions} from '@react-navigation/native';
 const Login = props => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
@@ -48,25 +50,40 @@ const Login = props => {
   const [visible, setVisible] = useState(false);
   const [animodal, setAnimodal] = useState(false);
   const [animation, setAnimation] = useState(true);
-  const [data, setData] = useState([]);
+  const [data, setData] = useState(null);
+
+  //set data in local storage///
+
+  async function saveData(value) {
+    const jsonString = JSON.stringify(value);
+    try {
+      await AsyncStorage.setItem("loginData", jsonString);
+      console.log('Data saved successfully.');
+    } catch (error) {
+      console.error('Error saving data:', error);
+    }
+  }
   const handleLogin = async () => {
     if (employeeId && employeePassword !== '') {
       var login_data = await dispatch(
         loginUserHandle({employeeId: employeeId, password: employeePassword}),
       );
-      console.log("login data on login screen",login_data.payload);
-      // setData(login_data?.payload?.message);
-      // setLoding(true);
-      // if (login_data?.payload?.success == 1) {
-      //   props.navigation.navigate('HomeScreen');
-      //   setLoding(false);
-      // } else {
-      //   ToastAndroid.showWithGravity(
-      //     login_data?.payload?.message,
-      //     ToastAndroid.LONG,
-      //     ToastAndroid.CENTER,
-      //   );
-      // }
+      const loginObj= Object.assign({}, ...login_data.payload)
+      saveData(loginObj)
+     console.log('login data on login screen',loginObj);
+      setData(loginObj);
+      setLoding(true);
+      if (login_data !== '') {
+        // console.log("login page data",login_data)
+        props.navigation.dispatch(StackActions.replace('HomeScreen'));
+        // setLoding(false);
+      } else {
+        ToastAndroid.showWithGravity(
+          'something went wrong',
+          ToastAndroid.LONG,
+          ToastAndroid.CENTER,
+        );
+      }
     } else {
       ToastAndroid.showWithGravity(
         'enter valid username and password',
@@ -75,6 +92,7 @@ const Login = props => {
       );
     }
   };
+
   //249159142983-3r1307q40tb9de7qctsm4ckk244etg9h.apps.googleusercontent.com
   useEffect(() => {
     GoogleSignin.configure({
@@ -327,8 +345,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     height: hp('7'),
     borderRadius: wp('10'),
-    // borderColor: colors.grey,
-    // borderWidth: wp('0.1'),
     marginBottom: hp('2'),
     shadowColor: '#000',
     shadowOffset: {
@@ -354,8 +370,6 @@ const styles = StyleSheet.create({
     height: hp('7'),
 
     borderRadius: wp('10'),
-    // borderColor: colors.grey,
-    // borderWidth: wp('0.1'),
     marginBottom: hp('2'),
     shadowColor: '#000',
     shadowOffset: {

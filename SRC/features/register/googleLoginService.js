@@ -9,7 +9,6 @@ const loginHandle=async(userData)=>{
       },
    
 )
-// console.log(response?.data?.data,"hghyugfbiuygbugygyuj")
     if(response?.data){
       
         return response?.data?.data

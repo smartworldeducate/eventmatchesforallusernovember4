@@ -8,11 +8,13 @@ import QRCodeScanner from 'react-native-qrcode-scanner';
 import Modal from 'react-native-modal';
 import {Toast} from 'galio-framework';
 import {BottomSheet} from '@rneui/themed';
+import {useRoute} from '@react-navigation/native';
+import {empMessageHandler} from '../features/message/createSlice';
 import {
   ScrollView,
-  RefreshControl,
+  RefreshControl, 
   SafeAreaView,
-  StatusBar,
+  StatusBar,  
   StyleSheet,
   View,
   Text,
@@ -29,19 +31,61 @@ import {
   useNavigation,
   CommonActions,
 } from '@react-navigation/native';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import colors from '../Styles/colors';
 import HeaderTop from '../Components/Headers/HeaderTop';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import Card from '../Components/Card';
 import Calinder from '../Components/Calinder';
 import fontSize from '../Styles/fontSize';
 import fontFamily from '../Styles/fontFamily';
 import Card1 from '../Components/Card1';
-
+import { salaryHistoryHandler } from '../features/history/createSlice';
+import { empSlaryHandler } from '../features/empSalary/createSlice';
+import {appraisalHandler} from '../features/appraisal/createSlice'
 const HomeScreen = props => {
+  const dispatch=useDispatch()
+  const [data, setData] = useState([]);
+  const [localData, setLocalData] = useState(null);
+  const [msgData,setMsgData]=useState([])
+  const [dateEmp, setDateEmp] = useState('2023-01-01');
   const userData = useSelector(state => state.userLogin);
-  // console.log('header datadvdgsdsd', userData.data);
+  const messagData = useSelector(state => state.empMessageState);
+
+  // console.log("employee local  data======",localData)
+  async function getData(key) {
+    try {
+      const value = await AsyncStorage.getItem(key);
+      if (value !== null) {
+        // console.log('Data retrieved successfully:', value);
+        const parsedData = JSON.parse(value);
+        setLocalData(parsedData);
+        const empSalary = await dispatch(
+          empSlaryHandler({
+            employeeId: parsedData?.EMPLOYEE_ID,
+            sal_date: dateEmp,
+          }),
+        );
+        const hisData = await dispatch(
+          salaryHistoryHandler({employeeId: parsedData?.EMPLOYEE_ID}),
+        );
+        const appData = await dispatch(
+          appraisalHandler({employeeId: parsedData?.EMPLOYEE_ID}),
+        );
+      } else {
+        console.log('No data found for key:', key);
+      }
+    } catch (error) {
+      console.error('Error retrieving data:', error);
+    }
+  }
+
+  
+  useEffect(() => {
+    getData('loginData');
+    setData(userData);
+   
+  }, []);
   const [animodal, setAnimodal] = useState(false);
   const [animation, setAnimation] = useState(true);
   const [isShow, setShow] = useState(false);
@@ -127,13 +171,6 @@ const HomeScreen = props => {
   };
   const [employeeId, setEmployeeId] = useState();
   const [employeePassword, setEmployeePassword] = useState();
-
-  // const [refreshing, setRefreshing] = useState(false);
-  // const onRefresh = () => {
-  //   setRefreshing(true);
-  //   setRefreshing(false);
-  // };
-
   const onChangeEmpId = val => {
     setEmployeeId(val);
   };
@@ -239,6 +276,7 @@ const HomeScreen = props => {
         <View style={styles.botContainer}>
           <View
             style={{
+              flex: 0.3,
               justifyContent: 'center',
               alignItems: 'center',
             }}>
@@ -249,7 +287,9 @@ const HomeScreen = props => {
               color="#4D69DC"
             />
 
-            <Text style={[styles.serviceSection]}>3.7 Years</Text>
+            <Text style={[styles.serviceSection]}>
+              {localData?.SERVICE_LENGTH}
+            </Text>
 
             <Text style={[styles.bootContText2]}>Service Length</Text>
           </View>
@@ -261,7 +301,7 @@ const HomeScreen = props => {
               color="#4D69DC"
             />
 
-            <Text style={[styles.serviceSection]}>Regular</Text>
+            <Text style={[styles.serviceSection]}>{localData?.EMP_STATUS}</Text>
             <Text style={[styles.bootContText2]}>Status</Text>
           </View>
 
@@ -269,6 +309,7 @@ const HomeScreen = props => {
             style={{
               justifyContent: 'center',
               alignItems: 'center',
+              flex: 0.3,
             }}>
             <Ficon
               type="light"
@@ -282,8 +323,10 @@ const HomeScreen = props => {
             <Text style={[styles.bootContText2]}>Attendance</Text>
           </View>
         </View>
-        <Card />
-        {/* <Card1 /> */}
+        
+       <Card />    
+        
+
         <View>
           <Calinder />
         </View>
@@ -449,7 +492,7 @@ const styles = EStyleSheet.create({
     fontWeight: '700',
     fontFamily: fontFamily.robotoMedium,
     fontStyle: 'normal',
-    paddingHorizontal: hp(2),
+    // paddingHorizontal: hp(2),
     color: '#353535',
     paddingTop: hp(0.3),
   },
@@ -521,9 +564,10 @@ const styles = EStyleSheet.create({
     borderRadius: 5,
   },
   monial: {
+    flex: 0.3,
     justifyContent: 'center',
     alignItems: 'center',
-    paddingHorizontal: hp(2),
+    // paddingHorizontal: hp(2),
   },
   wfh: {
     marginHorizontal: hp(2),

@@ -207,25 +207,11 @@ const Attendance = props => {
     {id: 11, month: 'Nov'},
     {id: 12, month: 'Dec'},
   ];
-  const [btn, setBtn] = useState(null);
-  const [timein, setTimeIn] = useState(null);
-  const [timeout, setTimeOut] = useState(null);
+
   const [clinder, setClinder] = useState(null);
   const [defalut, setDefalut] = useState(true);
 
-  const btnHandler = item => {
-    setBtn(item);
-    console.log('my item', item);
-  };
-  const timeInHandler = item => {
-    setTimeIn(item);
-    console.log('my item time in', item);
-  };
-  const timeOutHandler = item => {
-    setTimeOut(item);
-    console.log('index', i);
-    console.log('my item  time out', item);
-  };
+
   const clinderHandler = item => {
     setClinder(item);
     setDefalut(false);

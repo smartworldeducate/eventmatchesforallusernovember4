@@ -19,6 +19,7 @@ import {
 import EStyleSheet from 'react-native-extended-stylesheet';
 import fontFamily from '../Styles/fontFamily';
 import GraphChart from '../Components/LineChart';
+import ApComp from '../Components/AppraisalGraphList';
 const Approcial = props => {
   const [appraisal, setAppraisal] = useState(true);
   const [objective, setObjective] = useState(false);
@@ -179,13 +180,7 @@ const Approcial = props => {
     );
   };
 
-  const renderItem = () => {
-    return (
-      <View style={{marginBottom: hp(0.5)}}>
-        <CmpTest />
-      </View>
-    );
-  };
+  
 
   return (
     <>
@@ -244,25 +239,8 @@ const Approcial = props => {
 
         {appraisal && (
           <>
-            <View
-              style={{
-                shadowColor: '#000',
-                shadowOpacity: 0.5,
-                shadowRadius: 4,
-                elevation: 4,
-                marginHorizontal: hp(2.5),
-                backgroundColor: '#fff',
-                borderRadius: hp(2),
-                marginTop: hp(2),
-              }}>
-              <GraphChart />
-            </View>
-
-            <FlatList
-              data={[1, 2, 3, 4, 5]}
-              renderItem={renderItem}
-              keyExtractor={item => item.id}
-            />
+           
+             <ApComp/>
           </>
         )}
         {objective && (
@@ -278,7 +256,6 @@ const Approcial = props => {
                   data={years}
                   renderItem={calenderItem}
                   horizontal={true}
-                  // inverted={true}
                   keyExtractor={item => item.id}
                 />
               </View>

@@ -22,13 +22,12 @@ import {
   useNavigation,
   CommonActions,
 } from '@react-navigation/native';
-// import Icon from 'react-native-vector-icons/FontAwesome';
 import colors from '../../Styles/colors';
 import Card from '../Card';
 import fontFamily from '../../Styles/fontFamily';
 import fontSize from '../../Styles/fontSize';
-// import {ScrollView, TextInput} from 'react-native-gesture-handler';
 import LinearGradient from 'react-native-linear-gradient';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const HeaderTop = ({
   iconName,
@@ -37,10 +36,12 @@ const HeaderTop = ({
   iconName2,
   iconColor2,
   onPressIcon,
+  item,
 }) => {
-  // const userData = useSelector(state => state.userLogin);
-  // console.log('header data from header', userData?.user.data.EMP_PHOTO);
-  // const {EMP_PHOTO, DESIGNATION, EMP_NAME} = userData?.user.data;
+  // console.log('item data', item);
+  
+  const [localData, setLocalData] = useState(null);
+  // const {EMP_PHOTO,EMP_DEPT,EMP_NAME}=item
   const data = [
     {id: 1, image: 'igt'},
     {id: 2, image: 'salman'},
@@ -50,6 +51,25 @@ const HeaderTop = ({
     {id: 6, image: 'asd'},
     {id: 7, image: 'artg'},
   ];
+  async function getData(key) {
+    try {
+      const value = await AsyncStorage.getItem(key);
+      if (value !== null) {
+        // console.log('Data retrieved successfully:', value);
+        const parsedData = JSON.parse(value);
+        setLocalData(parsedData);
+        return value;
+      } else {
+        console.log('No data found for key:', key);
+      }
+    } catch (error) {
+      console.error('Error retrieving data:', error);
+    }
+  }
+  // console.log(' header lacal data', localData?.EMP_PHOTO);
+  useEffect(() => {
+    getData('loginData');
+  }, []);
   const navigation = useNavigation();
   const handleNavigate = (routeName, clearStack, params) => {
     navigation.navigate(routeName, params);
@@ -92,7 +112,7 @@ const HeaderTop = ({
             onPress={() => navigation.navigate('Profile')}>
             <View style={styles.firstRowView}>
               <Image
-                style={styles.userImage}
+                style={[styles.userImage, {borderRadius: hp(50)}]}
                 source={{uri: 'artg'}}
                 resizeMode="cover"
               />
@@ -102,7 +122,7 @@ const HeaderTop = ({
                 <Text style={styles.welCome}>Welcome</Text>
               </View>
               <View>
-                <Text style={styles.userName}>Zeeshan Hafeez</Text>
+                <Text style={styles.userName}>{localData?.EMP_NAME}</Text>
               </View>
             </View>
           </TouchableOpacity>

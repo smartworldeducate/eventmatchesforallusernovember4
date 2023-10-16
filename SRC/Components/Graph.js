@@ -1,5 +1,5 @@
 import {View, Text, TextInput} from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {PieChart} from 'react-native-gifted-charts';
 import {
   widthPercentageToDP as wp,
@@ -7,10 +7,11 @@ import {
 } from 'react-native-responsive-screen';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import fontFamily from '../Styles/fontFamily';
-const Graph = () => {
-  const [piData, setPiData] = useState(100000);
+const Fgraph = ({item}) => {
+  const [pdata, setPData] = useState(null);
   const [focus, setFocus] = useState(false);
-  const pieData = [
+  // const {UTILITIES,BASIC_SAL,HOUSE_RENT,ALLOWANCES}=item
+  const [pieData, setPiData] = useState([
     {
       value: 20,
       color: '#FFB243',
@@ -25,24 +26,15 @@ const Graph = () => {
       color: '#C1B7FD',
       gradientCenterColor: '#C1B7FD',
     },
-  ];
+  ]);
+
+  // useEffect(()=>{
+  //   setPiData(item)
+
+  // },[])
 
   const [isFocused, setIsFocused] = useState(false);
   const [text, setText] = useState('');
-
-  const onFocus = () => {
-    console.log('sfsdfsdf');
-    // setIsFocused(true);
-    // setText(e)
-  };
-
-  const onBlur = () => {
-    setIsFocused(false);
-  };
-
-  const onChangeText = inputText => {
-    setText(inputText);
-  };
 
   const renderDot = color => {
     return (
@@ -86,7 +78,9 @@ const Graph = () => {
               return (
                 <View style={{justifyContent: 'center', alignItems: 'center'}}>
                   {text != '' && <Text style={styles.tousandlakh}>{text}</Text>}
-                  {text == '' && <Text style={styles.tousandlakh}>100000</Text>}
+                  {text == '' && (
+                    <Text style={styles.tousandlakh}>{item?.GROSSSAL}</Text>
+                  )}
 
                   <Text style={styles.gross}>gross salary</Text>
                 </View>
@@ -106,7 +100,7 @@ const Graph = () => {
           <View style={{marginVertical: hp(0.5)}}>{renderDot('#C1B7FD')}</View>
           <View>
             <View>
-              <Text style={styles.numbertext}>25,000</Text>
+              <Text style={styles.numbertext}>{item?.BASIC_SAL}</Text>
             </View>
             <View>
               <Text style={styles.basictext}>Basic Salary</Text>
@@ -118,7 +112,7 @@ const Graph = () => {
           <View style={{marginVertical: hp(0.5)}}>{renderDot('#D4E9FF')}</View>
           <View>
             <View>
-              <Text style={styles.numbertext}>25,000</Text>
+              <Text style={styles.numbertext}>{item?.HOUSE_RENT}</Text>
             </View>
             <View>
               <Text style={styles.basictext}>House Rent</Text>
@@ -135,7 +129,7 @@ const Graph = () => {
           <View style={{marginVertical: hp(0.5)}}>{renderDot('#FEBB5B')}</View>
           <View>
             <View>
-              <Text style={styles.numbertext}>25,000</Text>
+              <Text style={styles.numbertext}>{item?.ALLOWANCES}</Text>
             </View>
             <View>
               <Text style={styles.basictext}>Allowances</Text>
@@ -147,7 +141,7 @@ const Graph = () => {
           <View style={{marginVertical: hp(0.5)}}>{renderDot('#76FFBD')}</View>
           <View>
             <View>
-              <Text style={styles.numbertext}>25,000</Text>
+              <Text style={styles.numbertext}>{item?.UTILITIES}</Text>
             </View>
             <View>
               <Text style={styles.basictext}>Utilities      </Text>
@@ -159,7 +153,7 @@ const Graph = () => {
   );
 };
 
-export default Graph;
+export default Fgraph;
 
 const styles = EStyleSheet.create({
   smalltext: {

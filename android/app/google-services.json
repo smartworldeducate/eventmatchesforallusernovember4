@@ -10,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:941654580803:android:ba631efc7401ba4d",
         "android_client_info": {
-          "package_name": "com.beamsapp.android"
+          "package_name": "com.beamsapp"
         }
       },
       "oauth_client": [
@@ -18,7 +18,7 @@
           "client_id": "941654580803-btnt6no51u8js15k4aorf8gqiu9vq2jf.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.beamsapp.android",
+            "package_name": "com.beamsapp",
             "certificate_hash": "42c4b05f352c804d55ba3df999486f8f0793a7d3"
           }
         }

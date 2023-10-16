@@ -14,7 +14,8 @@ const initialState={
     isSuccess:false,
     success:0,
     isLoading:false,
-    message:""
+    message:"",
+    
 }
 export const loginUserSlice=createSlice({
     name:'auth',

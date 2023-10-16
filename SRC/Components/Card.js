@@ -1,17 +1,24 @@
 import {
   Image,
+  RefreshControl,
   ScrollView,
   StyleSheet,
   Text,
+  TextInput,
   TouchableOpacity,
   View,
+  useWindowDimensions,
+  ActivityIndicator,
+  FlatList
 } from 'react-native';
-import React, { useState } from 'react';
+import React, {useCallback, useMemo, useRef, useEffect, useState} from 'react';
 import EStyleSheet from 'react-native-extended-stylesheet';
-import { BottomSheet } from '@rneui/themed';
+import {BottomSheet} from '@rneui/themed';
 import LinearGradient from 'react-native-linear-gradient';
 import Check from 'react-native-vector-icons/AntDesign';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import Modal from 'react-native-modal';
+import RenderHtml from 'react-native-render-html';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -20,18 +27,114 @@ import fontSize from '../Styles/fontSize';
 import fontFamily from '../Styles/fontFamily';
 import Icon from 'react-native-fontawesome-pro';
 import colors from '../Styles/colors';
-export default function Card() {
+import {useDispatch, useSelector} from 'react-redux';
+import {empMessageHandler} from '../features/message/createSlice';
+import { useNavigation } from '@react-navigation/native';
+import { detailMessageHandler } from '../features/detailMessage/createSlice';
+export default function Card({item}) {
+  const navigation=useNavigation()
+  const {width} = useWindowDimensions();
+  const dispatch = useDispatch();
   const [visible, setVisible] = useState(false);
-  const [iconType, setType] = useState(false)
+  const [Viewvisible, setViewVisible] = useState(false);
+  const [iconType, setType] = useState(false);
+  const [localData, setLocalData] = useState(null);
+  const [msgData, setMsgData] = useState([]);
+  const [filterData, setFilterData] = useState([]);
+  const [selectedItemId, setSelectedItemId] = useState(null);
+  const [refreshing, setRefreshing] = useState(false);
+  const [searchText, setSearchText] = useState('');
+  const [animodal, setAnimodal] = useState(false);
+  const [animation, setAnimation] = useState(true)
+  const [offset, setOffset] = useState(1); // Initial offset
+  const [msDetail, setMsDetail] = useState(null);
+
+  const messagData = useSelector(state => state.empMessageState);
+  // console.log('seeleted item data', selectedItemId);
+  async function getData(key) {
+    // setAnimodal(true)
+    try {
+      const value = await AsyncStorage.getItem(key);
+      if (value !== null) {
+        const parsedData = JSON.parse(value);
+        setLocalData(parsedData);
+        const empMsg = await dispatch(
+          empMessageHandler({employeeId: parsedData?.EMPLOYEE_ID,ofset:offset}),
+        );
+        // console.log("message data on card creen",empMsg?.payload)
+        setMsgData([...msgData, ...empMsg?.payload?.data]);
+        // setMsgData(empMsg?.payload?.data);
+        setFilterData([...filterData,...empMsg?.payload?.data]);
+        // setAnimodal(false)
+        return value;
+      } else {
+        console.log('No data found for key:', key);
+      }
+    } catch (error) {
+      console.error('Error retrieving data:', error);
+    }
+    
+  }
+
+  useEffect(() => {
+    const filtered =
+      filterData &&
+      filterData?.filter(item =>
+        item.MSG_SUBJECT.toLowerCase().includes(searchText.toLowerCase()),
+      );
+    console.log('filter data', filtered);
+
+    console.log('filterdata', filterData);
+
+    if (searchText == '') {
+      getData('loginData');
+    } else {
+      setFilterData(filtered);
+    }
+  }, [searchText]);
+
+  
+
+  useEffect(() => {
+    getData('loginData');
+  }, []);
+
+  const detailMessagePress = async item => {
+    setSelectedItemId(item);
+    setVisible(true);
+
+    const empMsg = await dispatch(
+      detailMessageHandler({messageId: item?.MSG_ID}),
+    );
+   
+   const dtmsg= Object.assign({}, ...empMsg?.payload?.data)
+   console.log('detail message',dtmsg)
+    setMsDetail(dtmsg);
+  };
+
   const handleReset = () => {
     setVisible(false);
   };
+  const openBottomSheet = item => {
+    setSelectedItemId(item);
+    setVisible(true);
+  };
+ 
   const typeHandler = () => {
-    setType(!iconType)
-  }
-  const data = [1, 2, 3, 4, 5];
+    setType(!iconType);
+  };
+
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{flex: 1}}>
+       {animation && (<View >
+        <Modal isVisible={animodal}>
+          <View style={{ width: wp(20), height: hp(10), backgroundColor: '#EAFAF1', borderRadius: hp(50), justifyContent: 'center', alignItems: 'center',marginHorizontal:hp(15) }}>
+            <View style={{}}>
+              <ActivityIndicator animating={animation} size={'large'} color='blue'/>
+            </View>
+          </View>
+        </Modal>
+      </View>)}
       <BottomSheet
         isVisible={visible}
         style={{
@@ -39,8 +142,8 @@ export default function Card() {
           flex: 1,
         }}>
         <LinearGradient
-          start={{ x: 0, y: 0 }}
-          end={{ x: 1, y: 0 }}
+          start={{x: 0, y: 0}}
+          end={{x: 1, y: 0}}
           colors={['#1C37A5', '#4D69DC']}
           style={styles.mainHeader}>
           <View
@@ -56,7 +159,7 @@ export default function Card() {
                 marginTop: hp(0),
                 height: hp(5),
               }}>
-              <Text style={{ color: '#fff', paddingBottom: hp(0.1) }}>
+              <Text style={{color: '#fff', paddingBottom: hp(0.1)}}>
                 Massages
               </Text>
             </View>
@@ -68,15 +171,15 @@ export default function Card() {
               <TouchableOpacity
                 activeOpacity={0.8}
                 onPress={handleReset}
-                style={{ justifyContent: 'center', marginTop: hp(0) }}>
+                style={{justifyContent: 'center', marginTop: hp(0)}}>
                 <Icon type="light" name="xmark" size={hp(3)} color="#fff" />
               </TouchableOpacity>
             </View>
           </View>
         </LinearGradient>
-        <View style={{ flex: 1, height: hp(84) }}>
+        <View style={{flex: 1, height: hp(84), backgroundColor: '#fff'}}>
           <View style={styles.detailcard}>
-            <View style={{ marginHorizontal: hp(1) }}>
+            <View style={{}}>
               <View
                 style={{
                   width: wp(50),
@@ -86,7 +189,7 @@ export default function Card() {
                 <View
                   style={{
                     marginVertical: hp(1.5),
-                    paddingHorizontal: hp(0.5),
+                    paddingHorizontal: hp(0),
                   }}>
                   <Image
                     style={{
@@ -94,7 +197,7 @@ export default function Card() {
                       height: hp(6),
                       borderRadius: hp(50),
                     }}
-                    source={{ uri: 'artg' }}
+                    source={{uri: 'qasim'}}
                     resizeMode="cover"
                   />
                 </View>
@@ -105,37 +208,68 @@ export default function Card() {
                     marginTop: hp(-0.7),
                   }}>
                   <View>
-                    <Text style={styles.cduserName}>Zeeshan Abdual Hafeez</Text>
+                    <Text style={styles.cduserName}>
+                      {selectedItemId?.EMP_NAME}
+                    </Text>
                   </View>
-                  <View style={{ marginRight: hp(1) }}>
-                    <Text style={styles.cdctitle}>May 22,2023</Text>
+                  <View style={{marginRight: hp(1)}}>
+                    <Text style={styles.cdctitle}>
+                      {selectedItemId?.HIRE_DATE}
+                    </Text>
                   </View>
                 </View>
               </View>
             </View>
-            <View style={{ marginTop: hp(-1) }}>
-              <Text style={styles.longdesc}>
-                React Native is an open-source UI software framework created by Meta Platforms, Inc. It is used to develop applications for Android, Android TV, iOS, macOS, tvOS, Web, Windows and UWP by enabling developers to use the React framework along with native platform capabilities
-              </Text>
+            <View style={{marginHorizontal: hp(0.7)}}>
+              <Text
+                style={{
+                  fontSize: hp('1.85'),
+                  color: colors.appColor,
+                  marginBottom: hp('2'),
+                }}></Text>
+              <View>
+                <RenderHtml
+                  contentWidth={width}
+                  source={{html: msDetail?.MSG_DETAIL_SUBSTRING}}
+                  // tagsStyles={styles.tagsStyles}
+                />
+              </View>
             </View>
-            <View style={{}}>
+            {/* <View style={{marginTop: hp(-1)}}>
+              <Text style={styles.longdesc}>
+                {selectedItemId?.MSG_DETAIL_SUBSTRING}
+              </Text>
+            </View> */}
+            {/* <View style={{}}>
               <Image
-                style={{ height: hp(35), borderRadius: hp(1) }}
+                style={{height: hp(35), borderRadius: hp(1)}}
                 resizeMode="contain"
                 source={{
                   uri: 'https://images.ctfassets.net/xmu5vdhtphau/6iYvUHa5loS3AIXjd2Jymf/0e341cb5a38a6ef9c1898e916262fb9a/social-bg-7.png',
                 }}
               />
-            </View>
-            {/* <View
-              style={{
-                height: hp(0.1),
-                backgroundColor: '#cdcdcd',
-                borderRadius: hp(50),
-              }}></View> */}
+            </View> */}
+            {/* <View>
+                      <Text
+                      style={{
+
+                      fontSize: hp('1.85'),
+                      color: colors.appColor,
+                      marginBottom: hp('2'),
+                      }}>
+
+                      </Text>
+                      <View>
+                      <RenderHtml
+                      contentWidth={width}
+                      source={{html:selectedItemId?.MSG_DETAIL_SUBSTRING}}
+                      // tagsStyles={styles.tagsStyles}
+                      />
+                      </View>
+                    </View> */}
           </View>
         </View>
-        <View style={{ flex: 1, backgroundColor: '#FFF', height: hp(8) }}>
+        <View style={{flex: 1, backgroundColor: '#FFF', height: hp(8)}}>
           <View
             style={{
               flexDirection: 'row',
@@ -170,82 +304,87 @@ export default function Card() {
                 justifyContent: 'center',
                 alignItems: 'center',
               }}>
-              <Icon type={iconType ? 'solid' : 'light'} name='thumbs-up' color='#1C37A4' size={hp(4)} />
+              <Icon
+                type={iconType ? 'solid' : 'light'}
+                name="thumbs-up"
+                color="#1C37A4"
+                size={hp(4)}
+              />
               {/* <Text style={styles.viewbtn}>Like </Text> */}
             </TouchableOpacity>
           </View>
         </View>
       </BottomSheet>
-      <View style={{ marginTop: hp(3) }}>
+     
+      <View style={{marginTop: hp(3)}}>
         <View style={styles.cardHeading}>
           <View>
             <Text style={styles.message}>Messages</Text>
           </View>
-          <View>
+          <TouchableOpacity onPress={()=>navigation.navigate('Messages')}>
             <Text style={styles.viewAll}>View All</Text>
-          </View>
+          </TouchableOpacity>
         </View>
         <ScrollView
           horizontal={true}
           style={styles.container}
           showsHorizontalScrollIndicator={false}>
-          {data.map((e, i) => {
-            return (
-              <TouchableOpacity
-                activeOpacity={0.8}
-                onPress={() => setVisible(true)}
-                style={styles.card}
-                key={i}>
-                <View style={{ marginHorizontal: hp(1) }}>
-                  <View
-                    style={{
-                      width: wp(50),
-                      height: hp(7.9),
-                      flexDirection: 'row',
-                    }}>
+          {msgData &&
+            msgData?.slice(0, 5).map((e, i) => {
+              return (
+                <TouchableOpacity
+                  activeOpacity={0.8}
+                  onPress={() => detailMessagePress(e)}
+                  style={styles.card}
+                  key={i}>
+                  <View style={{marginHorizontal: hp(1)}}>
                     <View
                       style={{
-                        marginVertical: hp(1.5),
-                        paddingHorizontal: hp(0.5),
+                        width: wp(50),
+                        height: hp(7.9),
+                        flexDirection: 'row',
                       }}>
-                      <Image
+                      <View
                         style={{
-                          width: wp(7),
-                          height: hp(3.5),
-                          borderRadius: hp(50),
-                        }}
-                        source={{ uri: 'artg' }}
-                        resizeMode="cover"
-                      />
-                    </View>
-                    <View
-                      style={{
-                        marginLeft: hp(0.5),
-                        justifyContent: 'center',
-                        marginTop: hp(-0.7),
-                      }}>
-                      <View>
-                        <Text style={styles.userName}>
-                          Zeeshan Abdual Hafeez
-                        </Text>
+                          marginVertical: hp(1.5),
+                          paddingHorizontal: hp(0.5),
+                        }}>
+                        <Image
+                          style={{
+                            width: wp(7),
+                            height: hp(3.5),
+                            borderRadius: hp(50),
+                          }}
+                          source={{uri: 'qasim'}}
+                          resizeMode="cover"
+                        />
                       </View>
-                      <View style={{ marginRight: hp(1) }}>
-                        <Text style={styles.ctitle}>May 22,2023</Text>
+                      <View
+                        style={{
+                          marginLeft: hp(0.5),
+                          justifyContent: 'center',
+                          marginTop: hp(-0.7),
+                        }}>
+                        <View>
+                          <Text style={styles.userName}>{e?.EMP_NAME}</Text>
+                        </View>
+                        <View style={{marginRight: hp(1)}}>
+                          <Text style={styles.ctitle}>{e?.HIRE_DATE}</Text>
+                        </View>
                       </View>
                     </View>
                   </View>
-                </View>
-                <View style={{ marginHorizontal: hp(1.5), marginTop: hp(-2) }}>
-                  <Text
-                    style={styles.cardText}
-                    numberOfLines={5}
-                    ellipsizeMode={'tail'}>
-                    React Native is an open-source UI software framework created by Meta Platforms about at Inc. It is used to develop applications for Android, Android TV, iOS, macOS, tvOS, Web, Windows and UWP by enabling developers to use the React framework along with native platform capabilities.
-                  </Text>
-                </View>
-              </TouchableOpacity>
-            );
-          })}
+                  <View style={{marginHorizontal: hp(1.5), marginTop: hp(-2)}}>
+                    <Text
+                      style={styles.cardText}
+                      numberOfLines={5}
+                      ellipsizeMode={'tail'}>
+                      {e.MSG_SUBJECT}
+                    </Text>
+                  </View>
+                </TouchableOpacity>
+              );
+            })}
         </ScrollView>
       </View>
     </View>
@@ -256,6 +395,7 @@ const styles = EStyleSheet.create({
   container: {
     paddingHorizontal: hp(1),
   },
+
   card: {
     flex: 1,
     backgroundColor: '#FFFFFF',
@@ -318,7 +458,7 @@ const styles = EStyleSheet.create({
     lineHeight: hp(1.9),
     // letterSpacing:hp(0.1),
     // textTransform: 'uppercase',
-    textAlign: 'left'
+    textAlign: 'left',
   },
   cardHeading: {
     flex: 1,
@@ -373,7 +513,7 @@ const styles = EStyleSheet.create({
     padding: hp(1.5),
     lineHeight: hp(2),
     letterSpacing: hp(0.1),
-    textAlign: 'left'
+    textAlign: 'left',
   },
   detailcard: {
     marginHorizontal: hp(2.5),
@@ -405,5 +545,26 @@ const styles = EStyleSheet.create({
     fontFamily: fontFamily.ceraLight,
     fontStyle: 'normal',
     paddingLeft: hp(0.5),
+  },
+  cardview: {
+    flex: 1,
+    backgroundColor: '#FFFFFF',
+    shadowColor: '#000',
+    shadowOpacity: 0.5,
+    shadowRadius: 4,
+    elevation: 4,
+    height: hp(18),
+    marginHorizontal: hp(2),
+    borderRadius: hp(2),
+    marginTop: hp(2),
+  },
+  textInputCustomStyle: {
+    height: hp('6'),
+    letterSpacing: -0.05,
+    paddingLeft: wp('3'),
+    color: '#292D32',
+    fontSize: '0.7rem',
+    fontWeight: '300',
+    fontFamily: fontFamily.ceraLight,
   },
 });
