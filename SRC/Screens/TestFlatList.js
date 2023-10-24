@@ -26,7 +26,7 @@ const TestFlatList = () => {
 
     return (
         <View style={{ flex: 1, marginVertical: 50, marginHorizontal: 20, backgroundColor: "silver" }}>
-            <Text style={{ color: 'red' }}>salman today</Text>
+            <Text style={{ color: 'red' }}>checkout 24latestNewBeamsBranch</Text>
             <Text style={{color:'red'}}>today latest push on git hub</Text>
             <FlatList
                 data={hisData?.user}
