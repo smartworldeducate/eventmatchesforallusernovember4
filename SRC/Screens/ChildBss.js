@@ -63,11 +63,7 @@ const ChildBss = props => {
           onpressBtn={() => props.navigation.goBack()}
         />
       </View>
-      <View>
-        {data.map((item, i) => {
-          return <BssChild item={item} key={i} />;
-        })}
-      </View>
+      <BssChild/>
     </View>
   );
 };

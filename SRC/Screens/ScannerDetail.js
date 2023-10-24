@@ -26,7 +26,7 @@ import {BottomSheet} from '@rneui/themed';
 import {useDispatch} from 'react-redux';
 import fontFamily from '../Styles/fontFamily';
 import EStyleSheet from 'react-native-extended-stylesheet';
-import fontSize from '../Styles/fontSize';
+import {getSingleTag} from '../features/tagsingle/singletagSlice';
 const ScannerDetail = props => {
   const dispatch = useDispatch();
   const [sData, setSdata] = useState([]);
@@ -34,8 +34,8 @@ const ScannerDetail = props => {
   const [animation, setAnimation] = useState(true);
   const [isShow, setShow] = useState(false);
   const [visibleBtn, setVisibleBtn] = useState(false);
-  const data = props.route.params;
-  console.log(data.user_id);
+  const param = props.route.params;
+  console.log('this scannerdetail data', param?.employee_id);
   const [visible, setVisible] = useState(false);
   const [state, setState] = useState({
     scan: false,
@@ -43,19 +43,20 @@ const ScannerDetail = props => {
     result: '',
   });
 
-  const getcatHandle = async user_id => {
+  const getcatHandle = async () => {
+    // console.log('single data id', param?.employee_id);
     setAnimodal(true);
-    const data = await dispatch(filterCats({user_id: user_id}));
-    // console.log("single data", data.payload)
+    const data = await dispatch(getSingleTag({employee_id: param?.employee_id}));
+    console.log('single data', data?.payload?.data);
     if (data !== '') {
-      await setSdata(data.payload);
+      await setSdata(data?.payload?.data);
       // console.log("tagdata here", data.payload)
       setAnimodal(false);
     }
   };
 
   useEffect(() => {
-    getcatHandle(data.user_id);
+    getcatHandle();
   }, []);
 
   const {scan, ScanResult, result} = state;
@@ -77,12 +78,7 @@ const ScannerDetail = props => {
   const scanData = result;
 
   const onSuccess = async e => {
-    console.log(data.user_id, ' ==  ', e);
-
-    data.user_id == e.data ? alert(' success') : setShow(true);
-    setInterval(() => {
-      setShow(false);
-    }, 4000);
+  
     const check = e.data.substring(0, 4);
     setState({
       result: e,
@@ -94,13 +90,20 @@ const ScannerDetail = props => {
         console.error('An error occured', err),
       );
     } else {
-      await dispatch(
-        handleScaneer({
-          tag_id: e.data,
-          user_id: data.user_id,
-          setup_id: data.setup_id,
-        }),
-      );
+      if (param?.tag_id == e?.data) {
+        await dispatch(
+          handleScaneer({
+            tag_id: e.data,
+            employeeId: param?.employee_id,
+            setup_id: param.setup_id,
+          }),
+        );
+      } else {
+        param?.employee_id == e.data ? alert(' invalid tag id') : setShow(true);
+        setInterval(() => {
+          setShow(false);
+        }, 4000);
+      }
 
       setState({
         result: e,
@@ -109,8 +112,8 @@ const ScannerDetail = props => {
       });
       setVisible(false);
       console.log('scan data', e.data);
-      const catData = await dispatch(filterCats({user_id: data.user_id}));
-      await setSdata(catData.payload);
+      const catData = await dispatch(getSingleTag({employee_id: param?.employee_id}));
+      await setSdata(catData?.payload?.data);
     }
   };
 
@@ -125,6 +128,7 @@ const ScannerDetail = props => {
     setVisible(true);
     activeQR('active qr');
   };
+  
 
   const handleReset = () => {
     // setShow(true)
@@ -145,7 +149,7 @@ const ScannerDetail = props => {
         }}>
         <Text style={{color: '#fff'}}>please enter valid Qrcode</Text>
       </Toast>
-
+        
       {animation && (
         <View>
           <Modal isVisible={animodal}>
@@ -154,7 +158,7 @@ const ScannerDetail = props => {
                 width: wp(30),
                 height: hp(15),
                 backgroundColor: '#EAFAF1',
-                borderRadius: hp(2),
+                borderRadius: hp(50),
                 justifyContent: 'center',
                 alignItems: 'center',
                 marginHorizontal: hp(15),
@@ -218,140 +222,141 @@ const ScannerDetail = props => {
         )}
       </BottomSheet>
       <View style={{flex: 1}}>
-        {sData?.map((e, i) => {
-          const {setup_id, scan_time} = e;
-          console.log('map fdata', e);
-          return (
-            <View>
-              <View style={{flex: hp(1)}} key={i}>
-                <ImageBackground
-                  style={{height: hp(30)}}
-                  source={{uri: e.tag_banner}}
-                  resizeMode="cover">
-                  <TouchableOpacity
-                    activeOpacity={0.8}
-                    onPress={() => props.navigation.goBack()}>
-                    <View
-                      style={{
-                        marginTop: hp(8),
-                        marginLeft: hp(2),
-                      }}>
-                      <Icon
-                        type="light"
-                        name="arrow-left"
-                        size={hp(3)}
-                        color="#fff"
-                      />
-                    </View>
-                  </TouchableOpacity>
-                </ImageBackground>
-                <View style={{height: hp(5), marginHorizontal: hp(3.5)}}>
-                  <Text style={styles.desc}>{e.tag_desc}</Text>
-                </View>
-                <View
-                  style={{
-                    height: hp(5),
-                    marginHorizontal: hp(3.5),
-                    // marginTop: hp(5),
-                  }}>
-                  <Text style={styles.desc}>About</Text>
-                </View>
-                <View
-                  style={{
-                    height: hp(17),
-                    marginHorizontal: hp(3.5),
-                    marginTop: hp(2),
-                  }}>
-                  <Text style={styles.longdesc}>{e.tag_text}</Text>
-                </View>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    marginTop: hp(5),
-                    height: hp(10),
-                  }}>
-                  {e.scan_time == null && (
-                    <View
-                      style={{
-                        flexDirection: 'row',
-                        width: wp(45),
-                        marginHorizontal: hp(3.5),
-                      }}>
+        {sData &&
+          sData?.map((e, i) => {
+            const {setup_id, scan_time} = e;
+            console.log('map fdata', e);
+            return (
+              <View key={i}>
+                <View style={{flex: hp(1)}} key={i}>
+                  <ImageBackground
+                    style={{height: hp(30)}}
+                    source={{uri: e.tag_banner}}
+                    resizeMode="cover">
+                    <TouchableOpacity
+                      activeOpacity={0.8}
+                      onPress={() => props.navigation.goBack()}>
                       <View
                         style={{
-                          width: wp(14),
-                          height: hp(7),
-                          borderRadius: hp(2),
-                          backgroundColor:
-                            setup_id == 1 ? '#D6EAF8' : '#5DADE2',
+                          marginTop: hp(8),
+                          marginLeft: hp(2),
                         }}>
-                        <Tin
-                          style={{
-                            marginVertical: hp(1.5),
-                            marginHorizontal: hp(1.7),
-                          }}
-                          name="clock-time-nine"
-                          size={30}
-                          color={setup_id == 1 ? '#5DADE2' : '#D6EAF8'}
+                        <Icon
+                          type="light"
+                          name="arrow-left"
+                          size={hp(3)}
+                          color="#fff"
                         />
                       </View>
+                    </TouchableOpacity>
+                  </ImageBackground>
+                  <View style={{height: hp(5), marginHorizontal: hp(3.5)}}>
+                    <Text style={styles.desc}>{e.tag_desc}</Text>
+                  </View>
+                  <View
+                    style={{
+                      height: hp(5),
+                      marginHorizontal: hp(3.5),
+                      // marginTop: hp(5),
+                    }}>
+                    <Text style={styles.desc}>About</Text>
+                  </View>
+                  <View
+                    style={{
+                      height: hp(17),
+                      marginHorizontal: hp(3.5),
+                      marginTop: hp(2),
+                    }}>
+                    <Text style={styles.longdesc}>{e.tag_text}</Text>
+                  </View>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      marginTop: hp(5),
+                      height: hp(10),
+                    }}>
+                    {e.scan_time == null && (
                       <View
                         style={{
-                          height: hp(10),
-                          marginLeft: hp(1.5),
-                          marginTop: hp(0.5),
+                          flexDirection: 'row',
+                          width: wp(45),
+                          marginHorizontal: hp(3.5),
                         }}>
-                        <View>
-                          <Text style={styles.times}>00:00</Text>
-                        </View>
-                        <View style={{marginTop: hp(0.5)}}>
-                          <Text style={styles.texttime}> Time</Text>
-                        </View>
-                      </View>
-                    </View>
-                  )}
-                  {e.scan_time !== null && (
-                    <View
-                      style={{
-                        flexDirection: 'row',
-                        // width: wp(45),
-                        marginHorizontal: hp(3.5),
-                      }}>
-                      <View
-                        style={{
-                          width: wp(14),
-                          height: hp(7),
-                          borderRadius: hp(2),
-                          backgroundColor:
-                            setup_id == 1 ? '#D6EAF8' : '#5DADE2',
-                        }}>
-                        <Tin
+                        <View
                           style={{
-                            marginVertical: hp(1.5),
-                            marginHorizontal: hp(1.7),
-                          }}
-                          name="clock-time-nine"
-                          size={30}
-                          color={setup_id == 1 ? '#5DADE2' : '#D6EAF8'}
-                        />
-                      </View>
-                      <View style={{marginLeft: hp(1.5), marginTop: hp(0.5)}}>
-                        <View>
-                          <Text style={styles.times}>{e.scan_time}</Text>
+                            width: wp(14),
+                            height: hp(7),
+                            borderRadius: hp(2),
+                            backgroundColor:
+                              setup_id == 1 ? '#D6EAF8' : '#5DADE2',
+                          }}>
+                          <Tin
+                            style={{
+                              marginVertical: hp(1.5),
+                              marginHorizontal: hp(1.7),
+                            }}
+                            name="clock-time-nine"
+                            size={30}
+                            color={setup_id == 1 ? '#5DADE2' : '#D6EAF8'}
+                          />
                         </View>
-                        <View style={{marginTop: hp(0.5)}}>
-                          <Text style={styles.texttime}>
-                            {setup_id == 1 ? 'IN' : 'OUT'} Time
-                          </Text>
+                        <View
+                          style={{
+                            height: hp(10),
+                            marginLeft: hp(1.5),
+                            marginTop: hp(0.5),
+                          }}>
+                          <View>
+                            <Text style={styles.times}>00:00</Text>
+                          </View>
+                          <View style={{marginTop: hp(0.5)}}>
+                            <Text style={styles.texttime}> Time</Text>
+                          </View>
                         </View>
                       </View>
-                    </View>
-                  )}
+                    )}
+                    {e.scan_time !== null && (
+                      <View
+                        style={{
+                          flexDirection: 'row',
+                          // width: wp(45),
+                          marginHorizontal: hp(3.5),
+                        }}>
+                        <View
+                          style={{
+                            width: wp(14),
+                            height: hp(7),
+                            borderRadius: hp(2),
+                            backgroundColor:
+                              setup_id == 1 ? '#D6EAF8' : '#5DADE2',
+                          }}>
+                          <Tin
+                            style={{
+                              marginVertical: hp(1.5),
+                              marginHorizontal: hp(1.7),
+                            }}
+                            name="clock-time-nine"
+                            size={30}
+                            color={setup_id == 1 ? '#5DADE2' : '#D6EAF8'}
+                          />
+                        </View>
+                        <View style={{marginLeft: hp(1.5), marginTop: hp(0.5)}}>
+                          <View>
+                            <Text style={styles.times}>{e.scan_time}</Text>
+                          </View>
+                          <View style={{marginTop: hp(0.5)}}>
+                            <Text style={styles.texttime}>
+                              {setup_id == 1 ? 'IN' : 'OUT'} Time
+                            </Text>
+                          </View>
+                        </View>
+                      </View>
+                    )}
+                  </View>
                 </View>
               </View>
-            </View>
-          );
-        })}
+            );
+          })}
       </View>
       <View
         style={{

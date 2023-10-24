@@ -21,6 +21,7 @@ import empMessageReducer from '..//features/message/createSlice'
 import detailMessageReducer from '../features/detailMessage/createSlice'
 import historyReducer from '../features/history/createSlice'
 import appraisalReducer from '../features/appraisal/createSlice'
+import bssChildReducer from '../features/childbss/createSlice'
 export const store=configureStore({
     reducer:{
         register:authReducer,
@@ -44,6 +45,7 @@ export const store=configureStore({
         empMessageState:empMessageReducer,
         detailMessageState:detailMessageReducer,
         selectHistory:historyReducer,
-        appraisalState:appraisalReducer
+        appraisalState:appraisalReducer,
+        childState:bssChildReducer
        }
 })

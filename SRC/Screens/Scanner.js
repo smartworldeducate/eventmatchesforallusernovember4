@@ -2,7 +2,6 @@ import React, {useEffect, useState, useCallback, useRef} from 'react';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import Icon from 'react-native-fontawesome-pro';
 import QRCodeScanner from 'react-native-qrcode-scanner';
-
 import {
   SafeAreaView,
   StatusBar,
@@ -22,7 +21,6 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import Modal from 'react-native-modal';
-
 import {
   useLinkProps,
   useNavigation,
@@ -36,36 +34,29 @@ import fontSize from '../Styles/fontSize';
 import colors from '../Styles/colors';
 import Menu from 'react-native-vector-icons/AntDesign';
 // import Sop from 'react-native-vector-icons/Entypo';
-import Gpt from 'react-native-vector-icons/FontAwesome5';
-import Saminar from 'react-native-vector-icons/MaterialIcons';
-import Camra from 'react-native-vector-icons/MaterialCommunityIcons';
+
 import Ball from 'react-native-vector-icons/MaterialIcons';
-import Filter from 'react-native-vector-icons/Octicons';
-import Search from 'react-native-vector-icons/Feather';
-import Bell from 'react-native-vector-icons/EvilIcons';
-import Drop from 'react-native-vector-icons/FontAwesome5';
 import {useSelector, useDispatch} from 'react-redux';
 import {getAllTags} from '../features/tags/tagSlice';
 import {getAllCats} from '../features/category/allCatSlice';
 import {filterCats} from '../features/category/singleCatSlice';
-
-// import Modal from 'react-native-modal';
-
 import {useFocusEffect} from '@react-navigation/native';
+import { getSingleTag } from '../features/tagsingle/singletagSlice';
+import { handleScaneer } from '../features/scan/scanSlice';
 const Scanner = props => {
+  const tgData = useSelector(state => state.getAllTags);
+  const catData = useSelector(state => state.getAllCats);
   const dispatch = useDispatch();
-  // const [visible, setVisible] = useState(false)
-  // const [success, setSuccess] = useState(false)
+  const param = props.route.params;
+  console.log('lacalData data===', param);
   const [refreshing, setRefreshing] = useState(false);
-  // const [animodal, setAnimodal] = useState(false);
-  // const [animation, setAnimation] = useState(true);
   const [tagData, setTagData] = useState([]);
   const [catgory, setCategory] = useState([]);
   const [search, setSearch] = useState('');
-  const [filteredDataSource, setFilteredDataSource] = useState([]);
   const [masterDataSource, setMasterDataSource] = useState([]);
   const [animodal, setAnimodal] = useState(false);
   const [animation, setAnimation] = useState(true);
+  const [modalState,setModalState]=useState(false)
   const [isShow, setShow] = useState(false);
   const [visibleBtn, setVisibleBtn] = useState(false);
   const [visible, setVisible] = useState(false);
@@ -76,27 +67,12 @@ const Scanner = props => {
   });
   const {scan, ScanResult, result} = state;
 
-  var ncode = result?.data;
+ 
 
-  var [barcode, setBarcode] = useState({
-    item: [],
-  });
-
-  const addCode = data => {
-    const newCode = barcode.item.concat(data);
-    setBarcode({item: newCode});
-  };
-  // console.log(barcode.item);
 
   const scanner = useRef(null);
 
-  const scanData = result;
-
   const onSuccess = async e => {
-    props.navigation.navigate('Scanner', e);
-    setInterval(() => {
-      setShow(false);
-    }, 4000);
     const check = e.data.substring(0, 4);
     setState({
       result: e,
@@ -108,13 +84,25 @@ const Scanner = props => {
         console.error('An error occured', err),
       );
     } else {
+    
+        await dispatch(
+          handleScaneer({
+            tag_id: e.data,
+            employeeId: param?.EMPLOYEE_ID,
+          }),
+        );
+      
       setState({
-        result: e,
+        result: e.data,
         scan: false,
         ScanResult: true,
       });
+      const catData = await dispatch(getSingleTag({employee_id: param?.EMPLOYEE_ID}));
+      await setTagData(catData?.payload?.data);
       setVisible(false);
-      console.log('scan data', e.data);
+      // console.log('scan data', e.data);
+      setModalState(true)
+      
     }
   };
 
@@ -125,7 +113,6 @@ const Scanner = props => {
   };
 
   const handleQrcode = () => {
-    // setShow(true)
     setVisible(true);
     activeQR('active qr');
   };
@@ -134,27 +121,12 @@ const Scanner = props => {
     setState({scan: false});
     setVisible(false);
   };
-  // useEffect(() => {
-  //   fetch('https://jsonplaceholder.typicode.com/posts')
-  //     .then(response => response.json())
-  //     .then(responseJson => {
-  //       setFilteredDataSource(responseJson);
-  //       setMasterDataSource(responseJson);
-  //     })
-  //     .catch(error => {
-  //       console.error(error);
-  //     });
-  // }, []);
 
   const searchFilterFunction = text => {
-    // Check if searched text is not blank
     if (text) {
-      // Inserted text is not blank
-      // Filter the masterDataSource and update FilteredDataSource
       const newData = masterDataSource.filter(function (item) {
-        // Applying filter for the inserted text in search bar
-        const itemData = item.title
-          ? item.title.toUpperCase()
+        const itemData = item.tag_desc
+          ? item.tag_desc.toUpperCase()
           : ''.toUpperCase();
         const textData = text.toUpperCase();
         return itemData.indexOf(textData) > -1;
@@ -162,8 +134,6 @@ const Scanner = props => {
       setTagData(newData);
       setSearch(text);
     } else {
-      // Inserted text is blank
-      // Update FilteredDataSource with masterDataSource
       setTagData(masterDataSource);
       setSearch(text);
     }
@@ -172,50 +142,31 @@ const Scanner = props => {
     setAnimodal(true);
     const tagData = await dispatch(getAllTags());
     if (tagData !== '') {
-      await setTagData(tagData.payload);
-      await setMasterDataSource(tagData.payload);
+      await setTagData(tagData?.payload?.data);
+      await setMasterDataSource(tagData?.payload?.data);
     }
     setInterval(() => {
       setAnimodal(false);
     }, 1000);
   };
 
-  const getAllCatHandle = async () => {
-    const catData = await dispatch(getAllCats());
-    if (catData !== '') {
-      await setCategory(catData.payload);
-      // console.log("tagdata here", data.payload)
-    }
-  };
+  // const getAllCatHandle = async () => {
+  //   const catData = await dispatch(getAllCats());
+  //   if (catData !== '') {
+  //     await setCategory(catData?.payload?.data);
+  //   }
+  // };
 
   const handleFilter = async category_id => {
     setAnimodal(true);
-    // console.log("fsdgfdghfgjgfj", category_id)
-    const flData = await dispatch(filterCats({user_id: category_id}));
+    const flData = await dispatch(filterCats({employeeId: category_id}));
     if (flData !== '') {
-      setTagData(flData.payload);
-      // console.log("filter  here", flData.payload)
+      setTagData(flData?.payload?.data);
     }
     setInterval(() => {
       setAnimodal(false);
     }, 1000);
   };
-
-  const [searchQuery, setSearchQuery] = useState('');
-
-  const handleSearch = query => {
-    setSearchQuery(query);
-
-    const filtered = tagData.filter(item =>
-      item.tag_desc.toLowerCase().includes(query.toLowerCase()),
-    );
-
-    setTagData(filtered);
-    if (searchQuery == '') {
-      handleTags();
-    }
-  };
-  // console.log("tagdata here",tagData)
 
   useFocusEffect(
     useCallback(() => {
@@ -223,27 +174,14 @@ const Scanner = props => {
     }, []),
   );
   useEffect(() => {
-    handleTags();
-    getAllCatHandle();
+    console.log('selector alltag data', tgData?.user);
+    setTagData(tgData?.user);
+    setMasterDataSource(tgData?.user);
+    setCategory(catData?.user);
+    // handleTags();
+    // getAllCatHandle();
   }, []);
 
-  const onRefresh = useCallback(() => {
-    setRefreshing(true);
-    handleTags();
-    setTimeout(() => {
-      setRefreshing(false);
-    }, 2000);
-  }, []);
-
-  const data = [
-    {id: 1, image: 'one'},
-    {id: 2, image: 'two'},
-    {id: 3, image: 'five'},
-    {id: 4, image: 'imran'},
-    {id: 5, image: 'im'},
-    {id: 6, image: 'ssl'},
-    {id: 7, image: 'artg'},
-  ];
   const navigation = useNavigation();
   const handleNavigate = (routeName, clearStack, params) => {
     navigation.navigate(routeName, params);
@@ -253,23 +191,6 @@ const Scanner = props => {
   };
 
   const [employeeId, setEmployeeId] = useState();
-  const [employeePassword, setEmployeePassword] = useState();
-
-  const keyboardVerticalOffset = Platform.OS === 'ios' ? 60 : 20;
-
-  const onChangeEmpId = val => {
-    setEmployeeId(val);
-  };
-  const onChangeEmpPassword = val => {
-    setEmployeePassword(val);
-  };
-
-  const [isEnabled, setIsEnabled] = useState(true);
-  const toggleSwitch = () => setIsEnabled(previousState => !previousState);
-
-  const onPressLogin = () => {
-    handleNavigate('HomeScreen');
-  };
 
   return (
     <SafeAreaView
@@ -291,7 +212,32 @@ const Scanner = props => {
         }}>
         <Text style={{color: '#fff'}}>please enter valid Qrcode</Text>
       </Toast>
-
+      {modalState && (<View >
+          <Modal isVisible={modalState}>
+          {tagData && tagData?.map((item,i)=>{
+                return(<View style={{width:wp(80),height:hp(20),backgroundColor:'#cdcdcd',marginHorizontal:hp(2.3),borderRadius:hp(2),}} key={i}>
+             
+                <View style={{flexDirection:'row',justifyContent:'space-between'}}>
+                  <View></View>
+                  <TouchableOpacity onPress={()=>setModalState(false)} style={{width:wp(8),height:hp(4),backgroundColor:'red',borderRadius:hp(5),justifyContent:'center',alignItems:'center',marginTop:hp(-2),marginRight:hp(-2)}}>
+                    <Text style={{color:'#fff'}}>X</Text>
+                  </TouchableOpacity>
+                </View>
+                  <View style={{alignItems:'center',marginTop:hp(2)}}>
+                    <Text style={{color:'#186A3B',alignContent:'center',paddingLeft:hp(2),fontSize:hp(3)}}>Tag Scan successfully</Text>
+                  </View>
+                  <View style={{marginLeft:hp(5),marginTop:hp(1)}}>
+                  <Text style={{color:'#363636',paddingLeft:hp(2)}}>Tag ID : {item?.tag_id}</Text>
+                  <Text style={{color:'#363636',paddingLeft:hp(2)}}>Employee ID  :  {item?.employee_id}</Text>
+                  <Text style={{color:'#363636',paddingLeft:hp(2)}}>IN TIME :  {item?.scan_time}</Text>
+                  <Text style={{color:'#363636',paddingLeft:hp(2)}}>OUT TIME  :  {item?.scan_time2}</Text>
+                  </View>
+                 
+                </View>)
+              })}
+            
+          </Modal>
+        </View>)} 
       {animation && (
         <View>
           <Modal isVisible={animodal}>
@@ -300,7 +246,7 @@ const Scanner = props => {
                 width: wp(30),
                 height: hp(15),
                 backgroundColor: '#EAFAF1',
-                borderRadius: hp(2),
+                borderRadius: hp(50),
                 justifyContent: 'center',
                 alignItems: 'center',
                 marginHorizontal: hp(15),
@@ -376,7 +322,7 @@ const Scanner = props => {
             <View style={styles.firstRowView}>
               <Image
                 style={styles.userImage}
-                source={{uri: 'artg'}}
+                source={{uri: 'group'}}
                 resizeMode="cover"
               />
             </View>
@@ -385,7 +331,7 @@ const Scanner = props => {
                 <Text style={styles.welCome}>Welcome</Text>
               </View>
               <View>
-                <Text style={styles.userName}>Zeeshan Hafeez</Text>
+                <Text style={styles.userName}>{param?.EMP_NAME}</Text>
               </View>
             </View>
           </TouchableOpacity>
@@ -449,271 +395,184 @@ const Scanner = props => {
             paddingRight: hp(1),
           }}
           showsHorizontalScrollIndicator={false}>
-          {catgory?.map((e, i) => {
-            const icon = [
-              'grid-view',
-              'pause-presentation',
-              'card-giftcard',
-              'flight-land',
-            ];
-            const bgcolor = [
-              '#46CDFB',
-              '#F0635A',
-              '#F19561',
-              '#29D697',
-              '#46CDFB',
-              '#F19561',
-              '#F19561',
-            ];
-            if (i == 4) {
-              i = 0;
-            }
-            const {category_id, category_name} = e;
-            return (
-              <View
-                style={{marginRight: hp(1), justifyContent: 'center'}}
-                key={category_id}>
-                <TouchableOpacity
-                  activeOpacity={0.8}
-                  onPress={() =>
-                    category_name == 'All'
-                      ? handleTags()
-                      : handleFilter(category_id)
-                  }>
-                  <View
-                    style={{
-                      height: hp(4.3),
-                      paddingHorizontal: hp(1.2),
-                      borderRadius: hp(2),
-                      backgroundColor: bgcolor[i],
-                      flexDirection: 'row',
-                    }}>
+          {catgory &&
+            catgory?.map((e, i) => {
+              const icon = [
+                'grid-view',
+                'pause-presentation',
+                'card-giftcard',
+                'flight-land',
+              ];
+              const bgcolor = [
+                '#46CDFB',
+                '#F0635A',
+                '#F19561',
+                '#29D697',
+                '#46CDFB',
+                '#F19561',
+                '#F19561',
+              ];
+              if (i == 4) {
+                i = 0;
+              }
+              const {category_id, category_name} = e;
+              return (
+                <View
+                  style={{marginRight: hp(1), justifyContent: 'center'}}
+                  key={category_id}>
+                  <TouchableOpacity
+                    activeOpacity={0.8}
+                    onPress={() =>
+                      category_name == 'All'
+                        ? handleTags()
+                        : handleFilter(category_id)
+                    }>
                     <View
                       style={{
-                        marginVertical: hp(0.9),
-                        justifyContent: 'center',
-                        alignItems: 'center',
+                        height: hp(4.3),
+                        paddingHorizontal: hp(1.2),
+                        borderRadius: hp(2),
+                        backgroundColor: bgcolor[i],
+                        flexDirection: 'row',
                       }}>
-                      <Ball name={icon[i]} color="white" size={20} />
+                      <View
+                        style={{
+                          marginVertical: hp(0.9),
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                        }}>
+                        <Ball name={icon[i]} color="white" size={20} />
+                      </View>
+                      <View
+                        style={{
+                          marginLeft: hp(0.5),
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                          paddingRight: wp(0.75),
+                        }}>
+                        <Text style={styles.catname}>{category_name}</Text>
+                      </View>
                     </View>
-                    <View
-                      style={{
-                        marginLeft: hp(0.5),
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        paddingRight: wp(0.75),
-                      }}>
-                      <Text style={styles.catname}>{category_name}</Text>
-                    </View>
-                  </View>
-                </TouchableOpacity>
-              </View>
-            );
-          })}
+                  </TouchableOpacity>
+                </View>
+              );
+            })}
         </ScrollView>
       </View>
 
-      {tagData.length >= 6 ? (
-        <ScrollView style={{paddingTop: hp(5)}}>
-          {tagData?.map((e, i) => {
-            const {
-              tag_id,
-              tag_desc,
-              tag_logo,
-              setup_name,
-              scan_time,
-              setup_id,
-              scan_time2,
-            } = e;
-            return (
-              <TouchableOpacity
-                activeOpacity={0.8}
-                style={{
-                  height: hp(10),
-                  flexDirection: 'row',
-                  marginHorizontal: hp(2.5),
-                  marginBottom: hp(2),
-                  backgroundColor: '#FFFFFF',
-                  borderRadius: hp(2),
-                  shadowColor: '#000',
-                  shadowOpacity: 0.5,
-                  shadowRadius: 4,
-                  elevation: 1,
-                }}
-                onPress={() => props.navigation.navigate('ScannerDetail', e)}
-                key={i}>
-                <View
+    
+        <ScrollView style={{paddingTop: hp(5),flex:0.9}}>
+          {tagData &&
+            tagData?.map((e, i) => {
+              const {
+                tag_id,
+                tag_desc,
+                tag_logo,
+                setup_name,
+                scan_time,
+                setup_id,
+                scan_time2,
+              } = e;
+              return (
+                <TouchableOpacity
+                  activeOpacity={0.8}
                   style={{
                     height: hp(10),
-                    backgroundColor: '#58D68D ',
+                    flexDirection: 'row',
+                    marginHorizontal: hp(2.5),
+                    marginBottom: hp(2),
+                    backgroundColor: '#FFFFFF',
                     borderRadius: hp(2),
-                    marginVertical: hp(1.5),
-                    marginHorizontal: hp(1.5),
-                    marginRight: hp(2),
-                  }}>
-                  <Image
+                    shadowColor: '#000',
+                    shadowOpacity: 0.5,
+                    shadowRadius: 4,
+                    elevation: 4,
+                  }}
+                  onPress={() => props.navigation.navigate('ScannerDetail', e)}
+                  key={i}>
+                  <View
                     style={{
-                      width: wp(14),
-                      height: hp(7),
-                      borderRadius: hp(1),
-                    }}
-                    source={{uri: tag_logo}}
-                    resizeMode="cover"
-                  />
-                </View>
-                <View>
-                  <View style={{marginVertical: hp(0.5)}}>
-                    <Text style={styles.desc}>{tag_desc}</Text>
+                      height: hp(10),
+                      backgroundColor: '#58D68D ',
+                      borderRadius: hp(2),
+                      marginVertical: hp(1.5),
+                      marginHorizontal: hp(1.5),
+                      marginRight: hp(2),
+                    }}>
+                    <Image
+                      style={{
+                        width: wp(14),
+                        height: hp(7),
+                        borderRadius: hp(1),
+                      }}
+                      source={{uri: tag_logo}}
+                      resizeMode="cover"
+                    />
                   </View>
+                  <View>
+                    <View style={{marginVertical: hp(0.5)}}>
+                      <Text style={styles.desc}>{tag_desc}</Text>
+                    </View>
 
-                  {scan_time !== null && (
-                    <View style={{flexDirection: 'row', marginTop: hp(0)}}>
-                      <View style={{marginRight: hp(1)}}>
-                        <Text style={styles.texttime}>
-                          TIME {setup_id == 1 ? 'IN ' : 'IN'}{' '}
-                          <Text style={styles.times}>{scan_time}</Text>
-                        </Text>
-                      </View>
-                      {scan_time2 !== null && (
-                        <View>
+                    {scan_time !== null && (
+                      <View style={{flexDirection: 'row', marginTop: hp(0)}}>
+                        <View style={{marginRight: hp(1)}}>
                           <Text style={styles.texttime}>
-                            {' '}
-                            | TIME {setup_id == 2 ? 'OUT' : 'OUT'}{' '}
-                            <Text style={styles.times}>{scan_time2}</Text>
+                            TIME {setup_id == 1 ? 'IN ' : 'IN'}{' '}
+                            <Text style={styles.times}>{scan_time}</Text>
                           </Text>
                         </View>
-                      )}
-                    </View>
-                  )}
-                  {scan_time == null && (
-                    <View style={{flexDirection: 'row', marginTop: hp(0)}}>
-                      <View style={{marginRight: hp(1)}}>
-                        <Text style={styles.texttime}>
-                          TIME IN <Text style={styles.times}> 00:00 |</Text>
-                        </Text>
-                      </View>
-                      {scan_time2 == null && (
-                        <View>
-                          <Text style={styles.texttime}>
-                            TIME OUT <Text style={styles.times}>00:00</Text>
-                          </Text>
-                        </View>
-                      )}
-                    </View>
-                  )}
-                </View>
-                <View
-                  style={{
-                    marginVertical: hp(3.5),
-                    position: 'absolute',
-                    left: hp(40),
-                  }}>
-                  <Image
-                    style={{width: wp(6), height: hp(3)}}
-                    source={{uri: scan_time == null ? 'yelo' : 'listicon'}}
-                    resizeMode="cover"
-                  />
-                </View>
-              </TouchableOpacity>
-            );
-          })}
-        </ScrollView>
-      ) : (
-        <View style={{marginTop: hp(3)}}>
-          {tagData?.map((e, i) => {
-            // console.log(e.tag_logo)
-            const {
-              tag_id,
-              tag_desc,
-              tag_logo,
-              setup_name,
-              scan_time,
-              setup_id,
-            } = e;
-            return (
-              <TouchableOpacity
-                activeOpacity={0.8}
-                style={{
-                  height: hp(10),
-                  flexDirection: 'row',
-                  marginHorizontal: hp(2.5),
-                  marginBottom: hp(2),
-                  backgroundColor: 'white',
-                  borderRadius: hp(1.3),
-                  shadowColor: '#000',
-                  shadowOpacity: 0.5,
-                  shadowRadius: 4,
-                  elevation: 1,
-                }}
-                onPress={() => props.navigation.navigate('ScannerDetail', e)}
-                key={i}>
-                <View
-                  style={{
-                    width: wp(14),
-                    height: hp(7),
-                    backgroundColor: '#58D68D ',
-                    borderRadius: hp(2),
-                    marginVertical: hp(1.5),
-                    marginHorizontal: hp(1.5),
-                    marginRight: hp(2),
-                  }}>
-                  <Image
-                    style={{width: wp(14), height: hp(7), borderRadius: hp(1)}}
-                    source={{uri: tag_logo}}
-                    resizeMode="cover"
-                  />
-                </View>
-                <View>
-                  <View style={{marginVertical: hp(0.5)}}>
-                    <Text style={styles.desc}>{tag_desc}</Text>
-                  </View>
-                  <View style={{flexDirection: 'row', marginTop: hp(0)}}>
-                    <View style={{marginRight: hp(1)}}>
-                      {scan_time == null && (
-                        <View style={{flexDirection: 'row', marginTop: hp(0)}}>
-                          <View style={{marginRight: hp(1)}}>
-                            <Text style={styles.texttime}>
-                              TIME IN <Text style={styles.times}>00:00 |</Text>
-                            </Text>
-                          </View>
+                        {scan_time2 !== null && (
                           <View>
                             <Text style={styles.texttime}>
-                              TIME OUT <Text style={styles.times}>00:00 </Text>
+                              {' '}
+                              | TIME {setup_id == 2 ? 'OUT' : 'OUT'}{' '}
+                              <Text style={styles.times}>{scan_time2}</Text>
                             </Text>
                           </View>
+                        )}
+                      </View>
+                    )}
+                    {scan_time == null && (
+                      <View style={{flexDirection: 'row', marginTop: hp(0)}}>
+                        <View style={{marginRight: hp(1)}}>
+                          <Text style={styles.texttime}>
+                            TIME IN <Text style={styles.times}> 00:00 |</Text>
+                          </Text>
                         </View>
-                      )}
-                      {scan_time !== null && (
-                        <Text style={styles.texttime}>
-                          TIME {setup_id == 1 ? 'IN' : 'OUT'}{' '}
-                          <Text style={styles.times}>{scan_time}</Text>
-                        </Text>
-                      )}
-                    </View>
+                        {scan_time2 == null && (
+                          <View>
+                            <Text style={styles.texttime}>
+                              TIME OUT <Text style={styles.times}>00:00</Text>
+                            </Text>
+                          </View>
+                        )}
+                      </View>
+                    )}
                   </View>
-                </View>
-                <View
-                  style={{
-                    marginVertical: hp(3.5),
-                    position: 'absolute',
-                    left: hp(40),
-                  }}>
-                  <Image
-                    style={{width: wp(6), height: hp(3)}}
-                    source={{uri: scan_time == null ? 'yelo' : 'listicon'}}
-                    resizeMode="cover"
-                  />
-                </View>
-              </TouchableOpacity>
-            );
-          })}
-        </View>
-      )}
-      {tagData.length >= 6 && ( <View
+                  <View
+                    style={{
+                      marginVertical: hp(3.5),
+                      position: 'absolute',
+                      left: hp(40),
+                    }}>
+                    <Image
+                      style={{width: wp(6), height: hp(3)}}
+                      source={{uri: scan_time == null ? 'yelo' : 'listicon'}}
+                      resizeMode="cover"
+                    />
+                  </View>
+                </TouchableOpacity>
+              );
+            })}
+        </ScrollView>
+        <View
         style={{
           backgroundColor: '#fff',
           position: 'relative',
           bottom: hp(0),
+          flex:0.1
+          
         }}>
         <View
           style={{
@@ -726,7 +585,7 @@ const Scanner = props => {
           {/* <View style={{flex:0.1}}></View> */}
           <TouchableOpacity
             activeOpacity={0.8}
-            onPress={() => props.navigation.navigate('HomeScreenDrawer')}
+            onPress={() => {}}
             style={{flex: 0.2, alignItems: 'center'}}>
             <Menu name="home" size={hp(3)} color="#1C37A4" style={{}} />
           </TouchableOpacity>
@@ -765,8 +624,13 @@ const Scanner = props => {
           <TouchableOpacity
             activeOpacity={0.8}
             style={{flex: 0.2, alignItems: 'center'}}
-            onPress={() => props.navigation.navigate('Scanner')}>
-            <Icon type="light" name="user-tag" size={hp(3.5)} color="#979797" />
+            onPress={() => {}}>
+            <Icon
+              type="light"
+              name="user-tag"
+              size={hp(3.5)}
+              color="#979797"
+            />
           </TouchableOpacity>
           <TouchableOpacity
             activeOpacity={0.8}
@@ -774,10 +638,8 @@ const Scanner = props => {
             style={{flex: 0.2, alignItems: 'center', paddingTop: hp(0)}}>
             <Icon type="light" name="user-tie" size={hp(3)} color="#979797" />
           </TouchableOpacity>
-          {/* <View style={{flex:0.1}}></View> */}
         </View>
-      </View>)}
-     
+      </View>
     </SafeAreaView>
   );
 };

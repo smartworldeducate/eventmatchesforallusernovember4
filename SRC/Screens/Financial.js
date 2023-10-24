@@ -1,19 +1,8 @@
-import {
-  View,
-  Text,
-  ScrollView,
-  TouchableOpacity,
-  Image,
-  Animated,
-  Dimensions,
-  Platform,
-  Linking,
-} from 'react-native';
+import {View, Text, TouchableOpacity, Dimensions} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import MainHeader from '../Components/Headers/MainHeader';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -21,72 +10,13 @@ import {
 import fontFamily from '../Styles/fontFamily';
 import {color} from '@rneui/themed/dist/config';
 import CmpTest from '../Components/CmpTest';
-import {useDispatch, useSelector} from 'react-redux';
-import {empSlaryHandler} from '../features/empSalary/createSlice';
-import {salMonthHandleFun} from '../features/salmonth/createSlice';
-import {salaryHistoryHandler} from '../features/history/createSlice';
 import SallaryComp from '../Components/Sallary';
 const Financial = props => {
-  const dispatch = useDispatch();
-
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
-
-  const [dateEmp, setDateEmp] = useState('2023-01-01');
- const [historyData,setHistoryData]=useState([])
-  const empSalHendler = async () => {
-    try {
-      const empsal = await dispatch(salMonthHandleFun());
-      if (empsal && empsal.payload && empsal.payload.data) {
-        
-        setSalMonth(empsal?.payload?.data);
-      }
-      return empsal;
-    } catch (error) {
-      console.error('Error in reporteeHandler:', error);
-      throw error;
-    }
-  };
-  async function getData(key) {
-    // setAnimodal(true)
-    try {
-      const value = await AsyncStorage.getItem(key);
-      if (value !== null) {
-        const parsedData = JSON.parse(value);
-        // setLocalData(parsedData);
-        const empSalary = await dispatch(
-          empSlaryHandler({
-            employeeId: parsedData?.EMPLOYEE_ID,
-            sal_date: dateEmp,
-          }),
-        );
-
-        const salaryEmp = Object.assign({}, ...empSalary?.payload);
-        // console.log('salary of employe data', salaryEmp);
-        // setEmpSalary(salaryEmp);
-
-        const hisData = await dispatch(
-          salaryHistoryHandler({employeeId: parsedData?.EMPLOYEE_ID}),
-        );
-        console.log('history of employe data', hisData?.payload?.data);
-        setHistoryData(hisData?.payload?.data);
-        // return value;
-      } else {
-        console.log('No data found for key:', key);
-      }
-    } catch (error) {
-      console.error('Error retrieving data:', error);
-    }
-  }
- 
-  useEffect(() => {
-    empSalHendler();
-    getData('loginData');
-  }, []);
-
 
   const [salary, setSalary] = useState(true);
   const [history, setHistory] = useState(false);
- 
+
   const salaryHandler = () => {
     setSalary(true);
     setHistory(false);
@@ -101,10 +31,6 @@ const Financial = props => {
     setDefalut(false);
     // console.log('my month', item);
   };
-
- 
-
-
 
   const showDatePicker = () => {
     setDatePickerVisibility(true);
@@ -124,9 +50,6 @@ const Financial = props => {
     setDateView(false);
     setHide(false);
   };
-
-
-  
 
   return (
     <View style={{flex: 1}}>
@@ -178,16 +101,14 @@ const Financial = props => {
           </TouchableOpacity>
         </View>
       </View>
-      
-     {salary==true && (<SallaryComp/>)} 
-     {history==true && (<CmpTest item={historyData}/>)} 
 
+      {salary == true && <SallaryComp />}
+      {history == true && <CmpTest />}
     </View>
   );
 };
 
 export default Financial;
-
 const styles = EStyleSheet.create({
   smalltext: {
     fontWeight: '500',

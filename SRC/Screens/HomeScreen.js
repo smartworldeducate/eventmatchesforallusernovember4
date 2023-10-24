@@ -1,5 +1,4 @@
 import React, {useEffect, useState, useRef} from 'react';
-// import Left from 'react-native-vector-icons/AntDesign';
 import Ficon from 'react-native-fontawesome-pro';
 import Menu from 'react-native-vector-icons/Entypo';
 import EStyleSheet from 'react-native-extended-stylesheet';
@@ -8,14 +7,10 @@ import QRCodeScanner from 'react-native-qrcode-scanner';
 import Modal from 'react-native-modal';
 import {Toast} from 'galio-framework';
 import {BottomSheet} from '@rneui/themed';
-import {useRoute} from '@react-navigation/native';
-import {empMessageHandler} from '../features/message/createSlice';
 import {
   ScrollView,
-  RefreshControl, 
   SafeAreaView,
   StatusBar,  
-  StyleSheet,
   View,
   Text,
   TouchableOpacity,
@@ -27,9 +22,7 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import {
-  useLinkProps,
   useNavigation,
-  CommonActions,
 } from '@react-navigation/native';
 import {useDispatch, useSelector} from 'react-redux';
 import colors from '../Styles/colors';
@@ -39,20 +32,37 @@ import Card from '../Components/Card';
 import Calinder from '../Components/Calinder';
 import fontSize from '../Styles/fontSize';
 import fontFamily from '../Styles/fontFamily';
-import Card1 from '../Components/Card1';
 import { salaryHistoryHandler } from '../features/history/createSlice';
 import { empSlaryHandler } from '../features/empSalary/createSlice';
 import {appraisalHandler} from '../features/appraisal/createSlice'
+import {bssChildHandler} from '../features/childbss/createSlice'
+import { getAllTags } from '../features/tags/tagSlice';
+import { getAllCats } from '../features/category/allCatSlice';
+import { salMonthHandleFun } from '../features/salmonth/createSlice';
+import { getSingleTag } from '../features/tagsingle/singletagSlice';
+import { handleScaneer } from '../features/scan/scanSlice';
 const HomeScreen = props => {
   const dispatch=useDispatch()
   const [data, setData] = useState([]);
   const [localData, setLocalData] = useState(null);
-  const [msgData,setMsgData]=useState([])
+  const [tagData,setTagData]=useState([])
   const [dateEmp, setDateEmp] = useState('2023-01-01');
+  const [animodal, setAnimodal] = useState(false);
+  const [modalState,setModalState]=useState(false)
+  const [animation, setAnimation] = useState(true);
+  const [isShow, setShow] = useState(false);
+  const [visibleBtn, setVisibleBtn] = useState(false);
+  const [sData, setSdata] = useState([]);
+  const [visible, setVisible] = useState(false);
+  const [state, setState] = useState({
+    scan: false,
+    ScanResult: false,
+    result: '',
+  });
+  const {scan, ScanResult, result} = state;
   const userData = useSelector(state => state.userLogin);
-  const messagData = useSelector(state => state.empMessageState);
 
-  // console.log("employee local  data======",localData)
+  console.log("homescreen singletag data=========",tagData)
   async function getData(key) {
     try {
       const value = await AsyncStorage.getItem(key);
@@ -72,6 +82,12 @@ const HomeScreen = props => {
         const appData = await dispatch(
           appraisalHandler({employeeId: parsedData?.EMPLOYEE_ID}),
         );
+        const bssData = await dispatch(
+          bssChildHandler({employeeId: parsedData?.EMPLOYEE_ID}),
+        );
+        const tagData = await dispatch(getAllTags());
+        const catData = await dispatch(getAllCats());
+        const empsal = await dispatch(salMonthHandleFun());
       } else {
         console.log('No data found for key:', key);
       }
@@ -84,41 +100,12 @@ const HomeScreen = props => {
   useEffect(() => {
     getData('loginData');
     setData(userData);
+    // getcatHandle();
    
   }, []);
-  const [animodal, setAnimodal] = useState(false);
-  const [animation, setAnimation] = useState(true);
-  const [isShow, setShow] = useState(false);
-  const [visibleBtn, setVisibleBtn] = useState(false);
-  const [visible, setVisible] = useState(false);
-  const [state, setState] = useState({
-    scan: false,
-    ScanResult: false,
-    result: '',
-  });
-  const {scan, ScanResult, result} = state;
-
-  var ncode = result?.data;
-
-  var [barcode, setBarcode] = useState({
-    item: [],
-  });
-
-  const addCode = data => {
-    const newCode = barcode.item.concat(data);
-    setBarcode({item: newCode});
-  };
-  // console.log(barcode.item);
 
   const scanner = useRef(null);
-
-  const scanData = result;
-
   const onSuccess = async e => {
-    props.navigation.navigate('Scanner', e);
-    setInterval(() => {
-      setShow(false);
-    }, 4000);
     const check = e.data.substring(0, 4);
     setState({
       result: e,
@@ -130,13 +117,26 @@ const HomeScreen = props => {
         console.error('An error occured', err),
       );
     } else {
+    
+        await dispatch(
+          handleScaneer({
+            tag_id: e.data,
+            employeeId: localData?.EMPLOYEE_ID,
+            
+          }),
+        );
+      
       setState({
-        result: e,
+        result: e.data,
         scan: false,
         ScanResult: true,
       });
+      const catData = await dispatch(getSingleTag({employee_id: localData?.EMPLOYEE_ID}));
+      await setTagData(catData?.payload?.data);
       setVisible(false);
-      console.log('scan data', e.data);
+      // console.log('scan data', e.data);
+      setModalState(true)
+      
     }
   };
 
@@ -211,6 +211,34 @@ const HomeScreen = props => {
       <Toast isShow={isShow} positionIndicator="top" style={styles.tost}>
         <Text style={{color: '#fff'}}>please enter valid Qrcode</Text>
       </Toast>
+      
+
+    {modalState && (<View >
+          <Modal isVisible={modalState}>
+          {tagData && tagData?.map((item,i)=>{
+                return(<View style={{width:wp(80),height:hp(20),backgroundColor:'#cdcdcd',marginHorizontal:hp(2.3),borderRadius:hp(2),}} key={i}>
+             
+                <View style={{flexDirection:'row',justifyContent:'space-between'}}>
+                  <View></View>
+                  <TouchableOpacity onPress={()=>setModalState(false)} style={{width:wp(8),height:hp(4),backgroundColor:'red',borderRadius:hp(5),justifyContent:'center',alignItems:'center',marginTop:hp(-2),marginRight:hp(-2)}}>
+                    <Text style={{color:'#fff'}}>X</Text>
+                  </TouchableOpacity>
+                </View>
+                  <View style={{alignItems:'center',marginTop:hp(2)}}>
+                    <Text style={{color:'#186A3B',alignContent:'center',paddingLeft:hp(2),fontSize:hp(3)}}>Tag Scan successfully</Text>
+                  </View>
+                  <View style={{marginLeft:hp(5),marginTop:hp(1)}}>
+                  <Text style={{color:'#363636',paddingLeft:hp(2)}}>Tag ID : {item?.tag_id}</Text>
+                  <Text style={{color:'#363636',paddingLeft:hp(2)}}>Employee ID  :  {item?.employee_id}</Text>
+                  <Text style={{color:'#363636',paddingLeft:hp(2)}}>IN TIME :  {item?.scan_time}</Text>
+                  <Text style={{color:'#363636',paddingLeft:hp(2)}}>OUT TIME  :  {item?.scan_time2}</Text>
+                  </View>
+                 
+                </View>)
+              })}
+            
+          </Modal>
+        </View>)}  
 
       {animation && (
         <View>
@@ -399,7 +427,7 @@ const HomeScreen = props => {
           <TouchableOpacity
             activeOpacity={0.8}
             style={{flex: 0.2, alignItems: 'center'}}
-            onPress={() => props.navigation.navigate('Scanner')}>
+            onPress={() => props.navigation.navigate('Scanner',localData)}>
             <Ficon
               type="light"
               name="user-tag"

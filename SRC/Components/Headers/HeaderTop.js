@@ -113,7 +113,7 @@ const HeaderTop = ({
             <View style={styles.firstRowView}>
               <Image
                 style={[styles.userImage, {borderRadius: hp(50)}]}
-                source={{uri: 'artg'}}
+                source={{uri: 'group'}}
                 resizeMode="cover"
               />
             </View>

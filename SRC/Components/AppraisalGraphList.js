@@ -101,11 +101,11 @@ import GraphChart from './LineChart';
                     <View>
                       <View>
                         <Text style={styles.numbertext}>
-                        {item?.RATING_ID}
+                        {item?.VALUE}
                         </Text>
                       </View>
                       <View>
-                        <Text style={styles.basictext}>STAR</Text>
+                        <Text style={styles.basictext}>{item?.RATING_DESC}</Text>
                       </View>
                     </View>
                   </View>

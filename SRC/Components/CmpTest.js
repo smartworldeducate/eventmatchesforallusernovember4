@@ -27,8 +27,8 @@ import {
 import {useDispatch, useSelector} from 'react-redux';
 import FgraphList from './GraphList';
 const CmpTest = () => {
+  const salMonth = useSelector(state => state.getSalMonth);
   const hsData = useSelector(state => state.selectHistory);
-  console.log("history data on comp screen",hsData?.user)
   const [expanded, setExpended] = useState(false);
   const [defalut, setDefalut] = useState(true);
   const [clinder, setClinder] = useState(null);
@@ -36,24 +36,7 @@ const CmpTest = () => {
     setClinder(item);
     setDefalut(false);
   };
-  const onPress = ({item}) => {
-    // console.log('onPress item', item);
-    // setExpended(!expanded);
-  };
-  const years = [
-    {id: 1, month: 'Jan'},
-    {id: 2, month: 'Fab'},
-    {id: 3, month: 'Mar'},
-    {id: 4, month: 'Apr'},
-    {id: 5, month: 'May'},
-    {id: 6, month: 'Jun'},
-    {id: 7, month: 'Jul'},
-    {id: 8, month: 'Aug'},
-    {id: 9, month: 'Sep'},
-    {id: 10, month: 'Oct'},
-    {id: 11, month: 'Nov'},
-    {id: 12, month: 'Dec'},
-  ];
+  const onPress = ({item}) => {};
 
   const renderDot = color => {
     return (
@@ -69,7 +52,7 @@ const CmpTest = () => {
     );
   };
 
-  const renderHistoryItem = ({item,index}) => {
+  const renderHistoryItem = ({item, index}) => {
     return (
       <View style={{marginTop: hp(1)}}>
         <View
@@ -89,7 +72,7 @@ const CmpTest = () => {
                 alignItems: 'center',
               }}>
               <View style={{flex: 0.3, marginTop: hp(1)}}>
-                <FgraphList item={item}/>
+                <FgraphList item={item} />
               </View>
               <View style={{flex: 0.3}}>
                 <View style={{flexDirection: 'row', marginLeft: hp(1)}}>
@@ -98,9 +81,7 @@ const CmpTest = () => {
                   </View>
                   <View>
                     <View>
-                      <Text style={styles.numbertext}>
-                        {item?.GROSSSAL}
-                      </Text>
+                      <Text style={styles.numbertext}>{item?.GROSSSAL}</Text>
                     </View>
                     <View>
                       <Text style={styles.basictext}>Gross Salary</Text>
@@ -115,9 +96,7 @@ const CmpTest = () => {
                   </View>
                   <View>
                     <View>
-                      <Text style={styles.numbertext}>
-                        {item?.NET_SAL}
-                      </Text>
+                      <Text style={styles.numbertext}>{item?.NET_SAL}</Text>
                     </View>
                     <View>
                       <Text style={styles.basictext}>net Salary</Text>
@@ -251,8 +230,7 @@ const CmpTest = () => {
     return (
       <TouchableOpacity
         activeOpacity={0.8}
-        onPress={() => clinderHandler(item.id)}
-        // key={i}
+        onPress={() => clinderHandler(item?.SAL_MONTH)}
         style={{}}>
         <View
           style={{
@@ -274,7 +252,7 @@ const CmpTest = () => {
                 color: index == 2 ? '#FFF' : 'gray',
                 fontSize: hp(1.5),
               }}>
-              {item.month}
+              {item?.SAL_MONTH.slice(0, 3)}
             </Text>
           </View>
         </View>
@@ -282,10 +260,11 @@ const CmpTest = () => {
     );
   };
   const renderItemGradient = ({item, index}) => {
+    // index==2 ? setClinder(item?.SAL_MONTH):''
     console.log('index', index);
     return (
       <View>
-        {clinder == item.id && (
+        {clinder == item.SAL_MONTH && (
           <TouchableOpacity activeOpacity={0.8}>
             <LinearGradient
               start={{x: 0, y: 0}}
@@ -311,14 +290,14 @@ const CmpTest = () => {
                     fontSize: hp(1.5),
                     paddingHorizontal: hp(0.5),
                   }}>
-                  {item.month}
+                  {item?.SAL_MONTH.slice(0, 3)}
                 </Text>
               </View>
             </LinearGradient>
           </TouchableOpacity>
         )}
-        {clinder !== item.id && (
-          <TouchableOpacity onPress={() => clinderHandler(item.id)}>
+        {clinder !== item.SAL_MONTH && (
+          <TouchableOpacity onPress={() => clinderHandler(item?.SAL_MONTH)}>
             <View
               style={{
                 height: hp(3.7),
@@ -336,7 +315,7 @@ const CmpTest = () => {
                     color: 'gray',
                     fontSize: hp(1.5),
                   }}>
-                  {item.month}
+                  {item?.SAL_MONTH.slice(0, 3)}
                 </Text>
               </View>
             </View>
@@ -351,7 +330,7 @@ const CmpTest = () => {
         <View
           style={{height: hp(7), marginTop: hp(2), marginHorizontal: hp(2.5)}}>
           <FlatList
-            data={years}
+            data={salMonth?.user}
             renderItem={renderItem}
             horizontal={true}
             // inverted={true}
@@ -364,11 +343,10 @@ const CmpTest = () => {
         <View
           style={{height: hp(7), marginTop: hp(2), marginHorizontal: hp(2.5)}}>
           <FlatList
-            data={years}
+            data={salMonth?.user}
             renderItem={renderItemGradient}
             horizontal={true}
-            // inverted={true}
-            keyExtractor={item => item.id}
+            keyExtractor={(item, index) => index.toString()}
           />
         </View>
       )}

@@ -26,7 +26,7 @@ const CustomDrawer = ({ navigation }) => {
     try {
       const value = await AsyncStorage.getItem(key);
       if (value !== null) {
-        console.log('Data retrieved successfully:', value);
+        // console.log('Data retrieved successfully:', value);
         const parsedData = JSON.parse(value);
         setLocalData(parsedData);
         return value;
@@ -37,7 +37,7 @@ const CustomDrawer = ({ navigation }) => {
       console.error('Error retrieving data:', error);
     }
   }
-  console.log(' drawer lacal data', localData?.EMP_PHOTO);
+  // console.log(' drawer lacal data', localData?.EMP_PHOTO);
   useEffect(() => {
     getData('loginData');
   }, []);

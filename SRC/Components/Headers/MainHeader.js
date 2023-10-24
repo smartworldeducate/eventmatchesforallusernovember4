@@ -28,7 +28,7 @@ const MainHeader = ({text, iconName, onpressBtn, rightIcon, yearText}) => {
         <View style={styles.headerChild}>
           <TouchableOpacity
             onPress={onpressBtn}
-            style={{justifyContent: 'center'}}>
+            style={{padding:10,marginTop:hp(-1)}}>
             <Icon type="light" name={iconName} size={hp(2.5)} color="#fff" />
           </TouchableOpacity>
           <View style={{marginLeft: hp(-1.5)}}>

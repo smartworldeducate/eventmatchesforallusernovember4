@@ -491,12 +491,11 @@ const SallaryComp = () => {
             </BottomSheet>
           )}
           <ScrollView>
-            {employeeSallary?.user.map((item, i) => {
+            {employeeSallary && employeeSallary?.user.map((item, i) => {
               return (
-                <>
+                <View  key={i}>
                   <View style={{flex: 1}}>
-                    {/* <Graph item={empSalary} /> */}
-                    <Fgraph item={item} />
+                    <Fgraph item={item}/>
                   </View>
 
                   <View
@@ -655,7 +654,7 @@ const SallaryComp = () => {
                         style={{height: 1, backgroundColor: '#DBDBDB'}}></View>
                     </View>
                   </View>
-                </>
+                </View>
               );
             })}
           </ScrollView>

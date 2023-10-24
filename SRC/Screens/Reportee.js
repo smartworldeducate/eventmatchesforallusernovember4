@@ -357,8 +357,6 @@ const Reportee = props => {
           <SelectDropdown
             data={mangerData}
             onSelect={(selectedItem, index) => {
-              // console.log("seleted item here",selectedItem?.EMPLOYEE_ID);
-
               setSelectValue(selectedItem?.EMPLOYEE_ID);
             }}
             defaultButtonText={'Muhammad Qasim Ali Khan'}
@@ -369,7 +367,7 @@ const Reportee = props => {
                     <Image source={selectedItem.image} style={styles.dropdown3BtnImage} />
                   ) : (""
                    )}
-                  <Text style={styles.dropdown3BtnTxt}>{selectedItem ? selectedItem.EMP_NAME : ' Qasim Ali Khan'}</Text>
+                  <Text style={[styles.dropdown3BtnTxt,{color:'#363636'}]}>{selectedItem ? selectedItem.EMP_NAME : ' Qasim Ali Khan'}</Text>
                 </View>
               );
             }}

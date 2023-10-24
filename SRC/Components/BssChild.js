@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View, Text, Button, Image} from 'react-native';
+import {View, Text, Button, Image, FlatList, TouchableOpacity} from 'react-native';
 import {
   Collapse,
   CollapseHeader,
@@ -12,208 +12,196 @@ import {
 import GraphList from './GraphList';
 import fontFamily from '../Styles/fontFamily';
 import EStyleSheet from 'react-native-extended-stylesheet';
+import {useSelector} from 'react-redux';
 export default BssChild = ({item}) => {
+  const childData = useSelector(state => state.childState);
+  // console.log('chlidern data in bss copm', childData?.user);
   const [expanded, setExpended] = useState(false);
-  const onPress = ({}) => {
-    setExpended(!expanded);
+  const onPress = ({item}) => {
+    // console.log('onPress item', item);
+    // setExpended(!expanded);
   };
-  const renderDot = color => {
+
+  const renderItem = ({item, index}) => {
     return (
-      <View
-        style={{
-          height: hp(3.5),
-          width: wp(2.5),
-          borderRadius: 1,
-          backgroundColor: color,
-          marginRight: 10,
-        }}
-      />
-    );
-  };
-  return (
-    <View style={{marginTop: hp(1)}}>
-      <View
-        style={{
-          justifyContent: 'center',
-          backgroundColor: '#FFFFFF',
-          borderRadius: hp(2),
-          marginHorizontal: hp(2.5),
-          elevation: 4,
-        }}>
-        <Collapse isExpanded={expanded} onToggle={onPress}>
-          <CollapseHeader
-            style={{
-              height: hp(10.7),
-              marginHorizontal: hp(1),
-            }}>
-            <View style={{flex: 1}}>
-              <View style={{flexDirection: 'row'}}>
-                <View
-                  style={{
-                    flex: 0.3,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    marginLeft: hp(-2),
-                    marginVertical: hp(0.3),
-                  }}>
-                  <Image
-                    style={{
-                      width: wp(16),
-                      height: hp(8),
-                      marginTop: hp('1.5'),
-                      position: 'absolute',
-                      top: hp(0),
-                      borderRadius: hp(1),
-                    }}
-                    source={{uri: item.img}}
-                    resizeMode="contain"
-                  />
-                </View>
-                <View style={{flex: 0.7, marginLeft: hp(-2.5)}}>
+      <View style={{marginTop: hp(1)}}>
+        <View
+          style={{
+            justifyContent: 'center',
+            backgroundColor: '#FFFFFF',
+            borderRadius: hp(2),
+            marginHorizontal: hp(2.5),
+            elevation: 4,
+          }}>
+          <Collapse isExpanded={expanded} onToggle={() => onPress(item)}>
+            <CollapseHeader
+              style={{
+                height: hp(10.7),
+                marginHorizontal: hp(1),
+              }}>
+              <View style={{flex: 1}}>
+                <View style={{flexDirection: 'row'}}>
                   <View
                     style={{
-                      flexDirection: 'row',
-                      justifyContent: 'space-between',
+                      flex: 0.3,
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      marginLeft: hp(-2),
+                      marginVertical: hp(0.3),
                     }}>
-                    <View style={{marginVertical: hp(1.5), marginLeft: hp(-1)}}>
-                      <Text style={styles.childname}>{item.name}</Text>
-                    </View>
-                    <View
+                    <Image
                       style={{
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        marginRight: hp(2),
-                      }}>
-                      <Text style={styles.number}>{item.id}</Text>
-                    </View>
+                        width: wp(16),
+                        height: hp(8),
+                        marginTop: hp('0.5'),
+                        // position: 'absolute',
+                        // top: hp(0),
+                        borderRadius: hp(1),
+                      }}
+                      source={{uri: 'group'}}
+                      resizeMode="contain"
+                    />
                   </View>
-                  <View
-                    style={{
-                      flexDirection: 'row',
-                      justifyContent: 'space-between',
-                      marginTop: hp(-2),
-                    }}>
-                    <View style={{marginVertical: hp(1.5)}}>
-                      <Text style={styles.dob}>DOB:</Text>
+                  <View style={{flex: 0.7, marginLeft: hp(-2.5)}}>
+                    <View
+                      style={{
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                      }}>
+                      <View
+                        style={{marginVertical: hp(1.5), marginLeft: hp(-1)}}>
+                        <Text style={styles.childname}>{item?.STD_NAME}</Text>
+                      </View>
+                      <View
+                        style={{
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                          marginRight: hp(2),
+                         
+                        }}>
+                        <Text style={[styles.number,{padding:hp(0.5)}]}>{item?.BR_STD_ID}</Text>
+                      </View>
                     </View>
                     <View
                       style={{
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        marginRight: hp(2),
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                        marginTop: hp(-2),
                       }}>
-                      <Text style={styles.dobdata}>{item.dob}</Text>
-                    </View>
-                  </View>
-                  <View
-                    style={{
-                      flexDirection: 'row',
-                      justifyContent: 'space-between',
-                      marginTop: hp(-2.5),
-                    }}>
-                    <View style={{marginVertical: hp(1.5)}}>
-                      <Text style={styles.dob}>Class Section:</Text>
+                      <View style={{marginVertical: hp(1.5)}}>
+                        <Text style={styles.testname}>DOB:</Text>
+                      </View>
+                      <View
+                        style={{
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                          marginRight: hp(2),
+                        }}>
+                        <Text style={[styles.textnum,{paddingRight:5}]}>
+                          {item?.DATE_OF_BIRTH}
+                        </Text>
+                      </View>
                     </View>
                     <View
                       style={{
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        marginRight: hp(2),
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                        marginTop: hp(-2.5),
                       }}>
-                      <Text style={styles.dobdata}>{item.date}</Text>
+                      <View style={{marginVertical: hp(1.5)}}>
+                        <Text style={styles.testname}>Class Section:</Text>
+                      </View>
+                      <View
+                        style={{
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                          marginRight: hp(2),
+                        }}>
+                        <Text style={[styles.textnum, {paddingRight:5}]}>
+                          {item?.CLASS_SECTION.replace(/\s+$/, '')}
+                        </Text>
+                      </View>
                     </View>
                   </View>
                 </View>
               </View>
-            </View>
-          </CollapseHeader>
-          <CollapseBody style={{marginHorizontal: hp(2.5)}}>
-            <View style={{flexDirection: 'row', marginTop: hp(-3)}}>
+            </CollapseHeader>
+            <CollapseBody style={{marginHorizontal: hp(2.5)}}>
               <View
                 style={{
-                  flex: 0.3,
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  marginLeft: hp(-2),
-                  marginVertical: hp(0.3),
-                }}></View>
-              <View style={{flex: 0.7, marginLeft: hp(-3)}}>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                  }}>
-                  <View style={{marginVertical: hp(1.5)}}>
-                    <Text style={styles.dob}>School</Text>
-                  </View>
-                  <View
-                    style={{
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      marginRight: hp(1),
-                    }}>
-                    <Text style={styles.dob}>{item.school}</Text>
-                  </View>
+                  height: hp(4),
+                  marginHorizontal: hp(1),
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                }}>
+                <View style={{justifyContent: 'center'}}>
+                  <Text style={styles.testname}>Fee Due</Text>
                 </View>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                    marginTop: hp(-2),
-                  }}>
-                  <View style={{marginVertical: hp(1.5)}}>
-                    <Text style={styles.dob}>Fee Due:</Text>
-                  </View>
-                  <View
-                    style={{
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      marginRight: hp(0),
-                    }}>
-                    <Text style={styles.dobdata}>{item.fee}</Text>
-                  </View>
-                </View>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                    marginTop: hp(-2.5),
-                  }}>
-                  <View style={{marginVertical: hp(1.5)}}>
-                    <Text style={styles.dob}>Due Date:</Text>
-                  </View>
-                  <View
-                    style={{
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      marginRight: hp(0),
-                    }}>
-                    <Text style={styles.dobdata}>{item.due}</Text>
-                  </View>
-                </View>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                    marginTop: hp(-2.5),
-                  }}>
-                  <View style={{marginVertical: hp(1.5)}}>
-                    <Text style={styles.dob}>Invoice:</Text>
-                  </View>
-                  <View
-                    style={{
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      marginRight: hp(0),
-                    }}>
-                    <Text style={styles.dobdata}>{item.invoice}</Text>
-                  </View>
+                <View style={{justifyContent: 'center'}}>
+                  <Text style={styles.textnum}>{item?.FEE_DUE}</Text>
                 </View>
               </View>
-            </View>
-          </CollapseBody>
-        </Collapse>
+              {/* <View style={{height: 1, backgroundColor: '#DBDBDB'}}></View> */}
+
+              <View
+                style={{
+                  height: hp(4),
+                  marginHorizontal: hp(1),
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                }}>
+                <View style={{justifyContent: 'center'}}>
+                  <Text style={styles.testname}>Due Date</Text>
+                </View>
+                <View style={{justifyContent: 'center'}}>
+                  <Text style={styles.textnum}>{item?.DUE_DATE}</Text>
+                </View>
+              </View>
+              {/* <View style={{height: 1, backgroundColor: '#DBDBDB'}}></View> */}
+              <View
+                style={{
+                  height: hp(4),
+                  marginHorizontal: hp(1),
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                }}>
+                <View style={{justifyContent: 'center'}}>
+                  <Text style={styles.testname}>Invoice</Text>
+                </View>
+                <View style={{justifyContent: 'center'}}>
+                  <Text style={styles.textnum}>{item?.INVOICE_NUM}</Text>
+                </View>
+              </View>
+              {/* <View style={{height: 1, backgroundColor: '#DBDBDB'}}></View> */}
+              <View
+                style={{
+                  height: hp(5.5),
+                  marginHorizontal: hp(1),
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                }}>
+                <View style={{justifyContent: 'center'}}>
+                  {/* <Text style={styles.testname}>Invoice</Text> */}
+                </View>
+                <TouchableOpacity style={{justifyContent: 'center',width:wp(18),height:hp(4),borderRadius:hp(5),backgroundColor:'#1C37A4',alignItems:'center'}}>
+                  <Text style={[styles.textnum,{color:'#fff'}]}>Pay</Text>
+                </TouchableOpacity>
+              </View>
+              {/* <View style={{height: 1, backgroundColor: '#DBDBDB'}}></View> */}
+            </CollapseBody>
+          </Collapse>
+        </View>
       </View>
+    );
+  };
+
+  return (
+    <View style={{flex: 1}}>
+      <FlatList
+        data={childData?.user}
+        renderItem={renderItem}
+        keyExtractor={(item, index) => index.toString()}
+      />
     </View>
   );
 };
@@ -265,7 +253,7 @@ const styles = EStyleSheet.create({
     borderRadius: hp(50),
     paddingHorizontal: hp(0.8),
     fontFamily: fontFamily.ceraBold,
-    fontSize: '0.5rem',
+    fontSize: '0.55rem',
     fontWeight: '700',
     fontStyle: 'normal',
   },
@@ -301,5 +289,19 @@ const styles = EStyleSheet.create({
     borderRadius: hp(1),
     backgroundColor: '#E7E7E7',
     marginTop: hp(2),
+  },
+  testname: {
+    color: '#343434',
+    fontSize: '0.6rem',
+    fontFamily: fontFamily.ceraMedium,
+    fontStyle: 'normal',
+    fontWeight: '500',
+  },
+  textnum: {
+    color: '#343434',
+    fontSize: '0.6rem',
+    fontFamily: fontFamily.ceraMedium,
+    fontStyle: 'normal',
+    fontWeight: '500',
   },
 });
