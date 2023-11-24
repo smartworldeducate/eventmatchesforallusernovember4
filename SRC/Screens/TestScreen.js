@@ -37,8 +37,8 @@ const TestScreen = () => {
       <View style={styles.container}>
         <AccordionList
           data={data}
-          customTitle={item => <Text>{item.title}</Text>}
-          customBody={item => <Text>{item.body}</Text>}
+          customTitle={item => <Text style={{color:'red'}}>{item.title}</Text>}
+          customBody={item => <Text style={{color:'#000'}}>{item.body}</Text>}
           animationDuration={400}
           expandMultiple={true}
         />
@@ -55,5 +55,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: '3%',
     height: '100%',
     backgroundColor: '#e7e7e7',
+    elevation:1
   },
 });

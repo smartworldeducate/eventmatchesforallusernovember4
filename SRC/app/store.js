@@ -22,6 +22,14 @@ import detailMessageReducer from '../features/detailMessage/createSlice'
 import historyReducer from '../features/history/createSlice'
 import appraisalReducer from '../features/appraisal/createSlice'
 import bssChildReducer from '../features/childbss/createSlice'
+import feedbackReducer from '../features/feeback/createSlice'
+import ratingReducer from '../features/rating/createSlice'
+import getRatingReducer from '../features/getallrating/createSlice'
+import updateRatingReducer from '../features/updaterating/createSlice'
+import utilityReducer from '../features/utility/createSlice'
+import wfhReducer from '../features/wfh/createSlice'
+import wfhInsertReducer from '../features/insertwfh/createSlice'
+import timeLineReducer from '../features/timeline/createSlice'
 export const store=configureStore({
     reducer:{
         register:authReducer,
@@ -46,6 +54,15 @@ export const store=configureStore({
         detailMessageState:detailMessageReducer,
         selectHistory:historyReducer,
         appraisalState:appraisalReducer,
-        childState:bssChildReducer
+        childState:bssChildReducer,
+        feedBackState:feedbackReducer,
+        ratingState:ratingReducer,
+        getallRating:getRatingReducer,
+        updateRatingState:updateRatingReducer,
+        utilityState:utilityReducer,
+        wfhState:wfhReducer,
+        wfhInsertState:wfhInsertReducer,
+        timeLineState:timeLineReducer
+
        }
 })

@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { StackActions} from '@react-navigation/native';
 
 import {
   SafeAreaView,
@@ -13,7 +14,6 @@ import {
   useLinkProps,
   useNavigation,
   CommonActions,
-  StackActions,
 } from '@react-navigation/native';
 
 const Splash = props => {
@@ -23,17 +23,17 @@ const Splash = props => {
     try {
       const value = await AsyncStorage.getItem(key);
       if (value !== null) {
-        console.log('Data retrieved successfully:', value);
+        // console.log('Data retrieved successfully:', value);
         const parsedData = JSON.parse(value);
         setData(parsedData);
 
-        console.log('here is splash screen data', parsedData?.EMP_NAME);
+        // console.log('here is splash screen data', parsedData?.EMP_NAME);
         if (parsedData) {
-          props.navigation.navigate('HomeScreen');
+          props.navigation.dispatch(StackActions.replace('HomeScreen'))
         }
         return parsedData;
       } else {
-        props.navigation.navigate('Skip1');
+        props.navigation.dispatch(StackActions.replace('Skip1'));
         console.log('No data found for key:', key);
       }
     } catch (error) {

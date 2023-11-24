@@ -10,7 +10,7 @@ const scanData=async(userData)=>{
      
 )
     if(response.data){
-        console.log("api responce data",response)
+        // console.log("api responce data",response)
         return response
     }
 }

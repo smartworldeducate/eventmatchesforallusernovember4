@@ -7,6 +7,7 @@ import {
 } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import Icon from 'react-native-fontawesome-pro';
+import { StackActions} from '@react-navigation/native';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -36,6 +37,14 @@ const CustomDrawer = ({ navigation }) => {
     } catch (error) {
       console.error('Error retrieving data:', error);
     }
+  }
+
+  async function saveData() {
+   console.log("logout")
+      await AsyncStorage.removeItem("loginData");
+      navigation.dispatch(StackActions.replace('Login'))
+      
+    
   }
   // console.log(' drawer lacal data', localData?.EMP_PHOTO);
   useEffect(() => {
@@ -223,7 +232,7 @@ const CustomDrawer = ({ navigation }) => {
               </View>
               <View style={styles.listnameStyle}>
                 <TouchableOpacity
-                  onPress={() => navigation.navigate('TestScreen')}>
+                  onPress={saveData}>
                   <View style={{ flexDirection: 'row', marginLeft: hp(3) }}>
                     <View style={styles.homeleft}>
                       <Text style={styles.textlistStyle}>Logout</Text>
@@ -231,18 +240,6 @@ const CustomDrawer = ({ navigation }) => {
                   </View>
                 </TouchableOpacity>
               </View>
-
-              <View>
-                <TouchableOpacity
-                  onPress={() => navigation.navigate('TestFlatList')}>
-                  <View style={{ flexDirection: 'row', marginLeft: hp(3) }}>
-                    <View style={styles.homeleft}>
-                      <Text style={styles.textlistStyle}>TestFlatList</Text>
-                    </View>
-                  </View>
-                </TouchableOpacity>
-              </View>
-
             </View>
             <View>
               <Image

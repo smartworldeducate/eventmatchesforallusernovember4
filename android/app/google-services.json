@@ -10,16 +10,40 @@
       "client_info": {
         "mobilesdk_app_id": "1:941654580803:android:ba631efc7401ba4d",
         "android_client_info": {
-          "package_name": "com.beamsapp"
+          "package_name": "com.beamsapp.android"
         }
       },
       "oauth_client": [
         {
+          "client_id": "941654580803-8sl1ugrh6u0s0p3v93h51g7027fqqgf6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.beamsapp.android",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "941654580803-adoi8vdu04kes8cc4aarm8ko57l5c2j3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.beamsapp.android",
+            "certificate_hash": "9fe10ada2d2a8422885a16c83c6c81dcda4a412d"
+          }
+        },
+        {
           "client_id": "941654580803-btnt6no51u8js15k4aorf8gqiu9vq2jf.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.beamsapp",
+            "package_name": "com.beamsapp.android",
             "certificate_hash": "42c4b05f352c804d55ba3df999486f8f0793a7d3"
+          }
+        },
+        {
+          "client_id": "941654580803-ng7pqk21th451gob5gfpv99ina8bohft.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.beamsapp.android",
+            "certificate_hash": "7d80fa9c0ca705746180a862c7ad252574403531"
           }
         }
       ],

@@ -10,7 +10,7 @@ const getAllCat=async(userData)=>{
      
 )
     if(response.data){
-        console.log("category data",response.data.data)
+        // console.log("category data",response.data.data)
         return response.data
     }
 }

@@ -36,7 +36,7 @@ export default SearchEmp = ({item}) => {
   const [search, setSearch] = useState('');
 
   const onpressSearch = async search => {
-    console.log('search ', search);
+    // console.log('search ', search);
     const response = await axios.post(
       'https://b2training.beaconhouse.net/beams_ci/index.php/api/search',
       {searchEmp: search},
@@ -47,15 +47,15 @@ export default SearchEmp = ({item}) => {
         },
       },
     );
-    console.log("search single record",response?.data?.data)
+    // console.log("search single record",response?.data?.data)
     setEmpData(response.data?.data);
-    console.log('search response', response.data?.data);
+    // console.log('search response', response.data?.data);
   };
 
   const onPress = item => {};
 
   const getAllEmpPress = async () => {
-    console.log('load function call====', offset);
+    // console.log('load function call====', offset);
     const emp = await dispatch(
       getAllEmployeeHandler({
         ofset: offset,
@@ -68,9 +68,9 @@ export default SearchEmp = ({item}) => {
   }, []);
   const handleLoadMore = async () => {
     setOffset(empData?.length);
-    console.log("handle function call",offset)
+    // console.log("handle function call",offset)
     await getAllEmpPress()
-      console.log("handle function after",offset)
+      // console.log("handle function after",offset)
   };
 
   const renderItem = ({item, index}) => {

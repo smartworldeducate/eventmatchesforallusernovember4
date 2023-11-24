@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { StyleSheet,Dimensions } from 'react-native';
 import Routes from './Routes';
 import EStyleSheet from 'react-native-extended-stylesheet';
@@ -13,7 +13,7 @@ EStyleSheet.build({
   $rem: rem,
 });
 const App = () => {
-
+  
   return (
     <Provider store={store}>
    

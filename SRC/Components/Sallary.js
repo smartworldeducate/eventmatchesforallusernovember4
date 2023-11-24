@@ -9,14 +9,15 @@ import {
   Platform,
   Linking,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import {AnimatedCircularProgress} from 'react-native-circular-progress';
 import Menu from 'react-native-vector-icons/Entypo';
 import Icon from 'react-native-fontawesome-pro';
 import {BottomSheet} from '@rneui/themed';
 import LinearGradient from 'react-native-linear-gradient';
-import DropDownPicker from 'react-native-dropdown-picker';
+// import DropDownPicker from 'react-native-dropdown-picker';
+import SelectDropdown from 'react-native-select-dropdown';
 import fontFamily from '../Styles/fontFamily';
 import {
   widthPercentageToDP as wp,
@@ -25,16 +26,21 @@ import {
 import {useDispatch, useSelector} from 'react-redux';
 import Fgraph from './Graph';
 import Pdf from 'react-native-pdf';
+import { reporteeHandleFun } from '../features/reportee/createSlice';
+import { getLineMangerHandller } from '../features/lineManager/createSlice';
 const SallaryComp = () => {
   const dispatch = useDispatch();
-  const lineMangerData = useSelector(state => state.getSalMonth);
+  // const lineMangerData = useSelector(state => state.getSalMonth);
+  const userData = useSelector(state => state.reportee);
+  
   const employeeSallary = useSelector(state => state.getEmpSalary);
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(null);
-  const [items, setItems] = useState([
-    {label: 'Qasim Team', value: 'Y'},
-    {label: 'Asad Numan Shahid', value: 'N'},
-  ]);
+  const [selectValue, setSelectValue] = useState(0);
+  const [reporteeData, setReporteeData] = useState([]);
+  const [mangerData,setMangerData]=useState([])
+ 
+  // console.log("text certificate data",mangerData)
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [hide, setHide] = useState(true);
   const [date, setDate] = useState('');
@@ -42,9 +48,47 @@ const SallaryComp = () => {
   const [pf, setPf] = useState(false);
   const [txt, setTxt] = useState(false);
   const [slip, setSlip] = useState(false);
-  const [salMonth, setSalMonth] = useState([]);
-  const [dateEmp, setDateEmp] = useState('2023-01-01');
-  const [historyData, setHistoryData] = useState([]);
+  // const [salMonth, setSalMonth] = useState([]);
+  // const [dateEmp, setDateEmp] = useState('2023-01-01');
+  // const [historyData, setHistoryData] = useState([]);
+  const lineMangerHandler = async () => {
+    try {
+      const lineMdata = await dispatch(getLineMangerHandller());
+      // console.log('line manager data', lineMdata?.payload?.data);
+      if (lineMdata && lineMdata.payload && lineMdata.payload.data) {
+        setMangerData(lineMdata?.payload?.data);
+      }
+      return lineMdata;
+    } catch (error) {
+      console.error('Error in reporteeHandler:', error);
+      throw error;
+    }
+  };
+  const reporteeHandler = async (val) => {
+    try {
+      // console.log('selected value', val);
+      const reportee = await dispatch(reporteeHandleFun(val));
+      if (reportee && reportee.payload && reportee.payload.data) {
+        // console.log('reprtee dada inside dispatch', reportee.payload?.data);
+        setReporteeData(reportee.payload?.data);
+        // setEmpLength(reportee.payload?.data?.length)
+      }
+      return reportee;
+    } catch (error) {
+      console.error('Error in reporteeHandler:', error);
+      throw error;
+    }
+  };
+  useEffect(() => {
+    setReporteeData(userData);
+    const rd = reporteeHandler({
+      reportingToId: selectValue ? selectValue:'18776'
+    });
+    setReporteeData(rd.payload?.data);
+    const lmd = lineMangerHandler();
+    // console.log("linemanger data",lmd.payload?.data)
+    // setMangerData(lmd);
+  }, [selectValue]);
   const showDatePicker = () => {
     setDatePickerVisibility(true);
     setDate('');
@@ -54,15 +98,15 @@ const SallaryComp = () => {
     setDatePickerVisibility(false);
   };
 
-  const handleDateConfirm = date => {
-    console.log(date);
-    const dt =
-      date.getDate() + '-' + date.getMonth() + '-' + date.getFullYear();
-    setDate(dt);
-    hideDatePicker();
-    setDateView(false);
-    setHide(false);
-  };
+  // const handleDateConfirm = date => {
+  //   console.log(date);
+  //   const dt =
+  //     date.getDate() + '-' + date.getMonth() + '-' + date.getFullYear();
+  //   setDate(dt);
+  //   hideDatePicker();
+  //   setDateView(false);
+  //   setHide(false);
+  // };
   const pfHandler = () => {
     setPf(true);
     setVisible(true);
@@ -334,21 +378,40 @@ const SallaryComp = () => {
                         borderRadius: hp(1.2),
                         backgroundColor: '#FFFFFF',
                       }}>
-                      <DropDownPicker
-                        placeholder="Select Tax Certificate"
-                        placeholderStyle={{color: '#cdcdcd'}}
-                        style={{
-                          borderColor: '#E4DFDF',
-                          borderWidth: 1,
-                          borderRadius: hp(1.2),
-                        }}
-                        open={open}
-                        value={value}
-                        items={items}
-                        setOpen={setOpen}
-                        setValue={setValue}
-                        setItems={setItems}
-                      />
+                  <SelectDropdown
+                      data={mangerData}
+                      onSelect={(selectedItem, index) => {
+                        setSelectValue(selectedItem?.EMPLOYEE_ID);
+                      }}
+                      defaultButtonText={'Muhammad Qasim Ali Khan'}
+                      renderCustomizedButtonChild={(selectedItem, index) => {
+                        return (
+                          <View style={styles.dropdown3BtnChildStyle}>
+                            {selectedItem ? (
+                              <Image source={selectedItem.image} style={styles.dropdown3BtnImage} />
+                            ) : (""
+                            )}
+                            <Text style={[styles.dropdown3BtnTxt,{color:'#363636'}]}>{selectedItem ? selectedItem.EMP_NAME : ' Qasim Ali Khan'}</Text>
+                          </View>
+                        );
+                      }}
+                      renderCustomizedRowChild={(item, index) => {
+                        return (
+                          <View style={styles.dropdown3RowChildStyle}>
+                            <Image source={item.image} style={styles.dropdownRowImage} />
+                            <Text style={styles.dropdown1RowTxtStyle}>{item.EMP_NAME}</Text>
+                          </View>
+                        );
+                      }}
+                    
+                      buttonStyle={styles.dropdown1BtnStyle}
+                      buttonTextStyle={styles.dropdown1BtnTxtStyle}
+                      dropdownStyle={styles.dropdown1DropdownStyle}
+                      rowStyle={styles.dropdown1RowStyle}
+                      rowTextStyle={styles.dropdown1RowTxtStyle}
+                      dropdownIconPosition={'left'}
+                    />
+                     
                     </View>
                   </TouchableOpacity>
 
@@ -866,4 +929,40 @@ const styles = EStyleSheet.create({
     backgroundColor: '#E7E7E7',
     marginTop: hp(2),
   },
+  dropdown1BtnStyle: {
+    width: '100%',
+    height: hp(5.9),
+    backgroundColor: '#FFF',
+    borderRadius: hp(1),
+    borderWidth: 1,
+    borderColor: '#cdcdcd',
+    // elevation: 8,
+  },
+  dropdown1BtnTxtStyle: {
+    color: '#363636',
+    fontSize: '0.7rem',
+    fontFamily: fontFamily.ceraMedium,
+    textAlign: 'left',
+  },
+  dropdown1DropdownStyle: {
+    backgroundColor: '#EFEFEF',
+    marginTop: hp(0),
+    borderRadius: hp(1.5),
+  },
+  dropdown3RowStyle: {
+    backgroundColor: '#EFEFEF',
+    borderBottomColor: '#C5C5C5',
+    width: wp(100),
+  },
+  dropdown1RowTxtStyle: {
+    color: '#444',
+    textAlign: 'left',
+    color: '#363636',
+    fontSize: '0.7rem',
+    fontFamily: fontFamily.ceraMedium,
+  },
+  dropdown3RowChildStyle:{
+    marginLeft:hp(1.5)
+  }
+ 
 });

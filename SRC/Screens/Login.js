@@ -97,7 +97,7 @@ const Login = props => {
   useEffect(() => {
     GoogleSignin.configure({
       webClientId:
-        '941654580803-btnt6no51u8js15k4aorf8gqiu9vq2jf.apps.googleusercontent.com',
+        '941654580803-ng7pqk21th451gob5gfpv99ina8bohft.apps.googleusercontent.com',
     });
   }, []);
   const signinWithGoogle = async () => {
@@ -105,9 +105,10 @@ const Login = props => {
     try {
       await GoogleSignin.hasPlayServices();
       const userInfo = await GoogleSignin.signIn();
-      console.log(userInfo?.user);
-      handleNavigate('HomeScreen');
+      console.log(userInfo);
+      // handleNavigate('HomeScreen');
       const {id, name, email, givenName, photo} = userInfo?.user;
+      //  console.log("google data",glData.payload.data)
       await storeData({google_id: id, photo: photo});
       const glData = await dispatch(loginUser({email: email, google_id: id}));
       // console.log("google data",glData.payload.data)

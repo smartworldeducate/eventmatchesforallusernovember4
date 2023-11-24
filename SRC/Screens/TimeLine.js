@@ -1,4 +1,4 @@
-import {View, Text, ScrollView} from 'react-native';
+import {View, Text, ScrollView, FlatList} from 'react-native';
 import React from 'react';
 import MainHeader from '../Components/Headers/MainHeader';
 import {
@@ -10,7 +10,11 @@ import Icon from 'react-native-fontawesome-pro';
 import fontFamily from '../Styles/fontFamily';
 import fontSize from '../Styles/fontSize';
 import EStyleSheet from 'react-native-extended-stylesheet';
+import { useSelector } from 'react-redux';
 const TimeLine = (props) => {
+const timeLineData=useSelector((state)=>state.timeLineState)
+console.log("timeLIneData",timeLineData?.user)
+
 
   const data1 = [
     {
@@ -104,6 +108,119 @@ const TimeLine = (props) => {
       colr: '#D69A03',
     },
   ];
+
+  const renderItem=({item,index})=>{
+    const bgcolor = [
+      '#D4FFCC',
+      '#CCFFF3',
+      '#FFFDCC',
+      '#E0CCFF',
+      '#FFE5CC',
+      '#FFCCCC',
+    ];
+    const color = [
+      '#2D8E00',
+      '#008E8E',
+      '#8E7700',
+      '#69008E',
+      '#D69A03',
+      '#D80000',
+    ];
+    const statusColore=[
+      "Hired as a",
+      "Promoted to",
+      "Confirmed as a",
+      "Awarded a",
+    ]
+ 
+    return(
+      <View style={{flexDirection: 'row'}} >
+              <View>
+                <View
+                  style={{
+                    width: wp(6),
+                    height: hp(3),
+                    borderRadius: hp(50),
+                    borderWidth: 1,
+                    borderColor: '#1C37A4',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}>
+                  <View
+                    style={{
+                      width: wp(4),
+                      height: hp(2),
+                      borderRadius: hp(50),
+                      backgroundColor: '#1C37A4',
+                    }}></View>
+                </View>
+                <View
+                  style={{
+                    height: hp(9.8),
+                    width: wp(0.5),
+                    backgroundColor: '#1C37A4',
+                    marginLeft: hp(1.2),
+                    marginTop: hp(0.5),
+                    marginBottom: hp(0.5),
+                  }}></View>
+              </View>
+              <View
+                style={{
+                  flex: 1,
+                  marginLeft: hp(1),
+                  height: hp(12),
+                  borderRadius: hp(2),
+                  backgroundColor: '#FFF',
+                  shadowColor: '#000',
+                  shadowOpacity: 0.8,
+                  shadowRadius: 3,
+                  elevation: 1,
+                }}>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    marginHorizontal: hp(2),
+                    marginTop: hp(1),
+                  }}>
+                  <View>
+                    <Text
+                      style={styles.dtext}>
+                      {item?.TIMELINE_DATE}
+                    </Text>
+                  </View>
+                  <View
+                    style={{
+                      backgroundColor:item?.TIMELINE_TYPE=='Appraisal' ? bgcolor[0]:item?.TIMELINE_TYPE=='Confirmation' ? bgcolor[2]:item?.TIMELINE_TYPE=='Hire' ? bgcolor[3]:item?.TIMELINE_TYPE=='m_log' ? bgcolor[3]:'',
+                      borderRadius: hp(5),
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                    }}>
+                    <Text
+                      style={[styles.ststext,{
+                        color:item?.TIMELINE_TYPE=='Appraisal' ? color[0]:item?.TIMELINE_TYPE=='Confirmation' ? color[2]:item?.TIMELINE_TYPE=='Hire' ? color[3]:item?.TIMELINE_TYPE=='m_log' ? color[3]:'',
+                        
+                      }]}>
+                      {item?.TIMELINE_TYPE}
+                    </Text>
+                  </View>
+                </View>
+                <View
+                  style={{
+                    marginHorizontal: hp(1),
+                    paddingVertical: hp(1),
+                    marginHorizontal: hp(2),
+                  }}>
+                  <Text style={styles.centertext}>
+                    {item?.TIMELINE_TYPE=='Hired' ? statusColore[0]:item?.TIMELINE_TYPE=='Confirmation' ? statusColore[2]:item?.TIMELINE_TYPE=='Appraisal' ? statusColore[3]:item?.TIMELINE_TYPE=='m_log' ? statusColore[0]:''}
+                      <Text style={[styles.prev,{color:item?.TIMELINE_TYPE =='Confirmation' ? color[2]:item?.TIMELINE_TYPE =='Appraisal' ? '#2ECC71':item?.TIMELINE_TYPE =='Promoted' ? 'green':''}]}> {item?.DESIGNATION}  </Text>
+                        in {item?.TIMELINE_TYPE=='Confirmation' ? (<Text style={[styles.prev]}>{item?.DEPT_NAME}</Text>):item?.TIMELINE_TYPE=='Promoted' ? (<Text style={styles.prev}>{item?.DEPT_NAME}</Text>):item?.TIMELINE_TYPE=='Promoted' ? (<Text style={styles.prev}>{item?.DEPT_NAME}</Text>):item?.TIMELINE_TYPE=='Appraisal' ? (<Text style={styles.prev}>rating for annual appraisals {item?.RATING_YEAR}</Text>):item?.TIMELINE_TYPE=='m_log' ? (<Text style={styles.prev}>rating for annual appraisals {item?.RATING_YEAR}</Text>):''}
+                  </Text>
+                </View>
+              </View>
+            </View>
+    )
+  }
   return (
     <>
       <View>
@@ -157,99 +274,14 @@ const TimeLine = (props) => {
           </View>
         </View>
       </View>
-      <ScrollView
+      <View
         style={{flex: 1, marginHorizontal: hp(2.5), marginTop: hp(2)}}>
-        {data1.map((item, i) => {
-          return (
-            <View style={{flexDirection: 'row'}} key={i}>
-              <View>
-                <View
-                  style={{
-                    width: wp(6),
-                    height: hp(3),
-                    borderRadius: hp(50),
-                    borderWidth: 1,
-                    borderColor: '#1C37A4',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                  }}>
-                  <View
-                    style={{
-                      width: wp(4),
-                      height: hp(2),
-                      borderRadius: hp(50),
-                      backgroundColor: '#1C37A4',
-                    }}></View>
-                </View>
-                <View
-                  style={{
-                    height: hp(9.8),
-                    width: wp(0.5),
-                    backgroundColor: '#1C37A4',
-                    marginLeft: hp(1.2),
-                    marginTop: hp(0.5),
-                    marginBottom: hp(0.5),
-                  }}></View>
-              </View>
-              <View
-                style={{
-                  flex: 1,
-                  marginLeft: hp(1),
-                  height: hp(12),
-                  borderRadius: hp(2),
-                  backgroundColor: '#FFF',
-                  shadowColor: '#000',
-                  shadowOpacity: 0.8,
-                  shadowRadius: 3,
-                  elevation: 1,
-                }}>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                    marginHorizontal: hp(2),
-                    marginTop: hp(1),
-                  }}>
-                  <View>
-                    <Text
-                      style={styles.dtext}>
-                      {item.date}
-                    </Text>
-                  </View>
-                  <View
-                    style={{
-                      backgroundColor: item.bgclor,
-                      borderRadius: hp(5),
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                    }}>
-                    <Text
-                      style={[styles.ststext,{
-                        color: item.colr,
-                        
-                      }]}>
-                      {item.status}
-                    </Text>
-                  </View>
-                </View>
-                <View
-                  style={{
-                    marginHorizontal: hp(1),
-                    paddingVertical: hp(1),
-                    marginHorizontal: hp(2),
-                  }}>
-                  <Text style={styles.centertext}>
-                    {item.text} 
-                      <Text style={styles.prev}> {item.centext}</Text>{' '}
-                       {item.in}
-                      <Text style={styles.endtext}>  {item.endtext}</Text>
-                  </Text>
-                </View>
-              </View>
-            </View>
-          );
-        })}
-      </ScrollView>
+       <FlatList
+          data={timeLineData?.user}
+          renderItem={renderItem}
+          keyExtractor={(item,index)=>index.toString()}
+        />
+      </View>
     </>
   );
 };
@@ -312,7 +344,7 @@ const styles = EStyleSheet.create({
     fontStyle:'normal'
   },
   prev:{
-  color: '#4E69DA',
+  // color: '#4E69DA',
   fontSize:'0.65rem',
   fontFamily: fontFamily.ceraMedium,
   fontWeight:'500',

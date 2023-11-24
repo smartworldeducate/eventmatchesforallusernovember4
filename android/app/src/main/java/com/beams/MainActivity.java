@@ -1,4 +1,4 @@
-package com.beamsapp;
+package com.beamsapp.android;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;

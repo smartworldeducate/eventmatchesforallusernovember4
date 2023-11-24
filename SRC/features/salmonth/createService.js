@@ -10,7 +10,7 @@ const salMonth=async(userData)=>{
     // console.log(userData)
 )
     if(response.data){
-       console.log("salary month  data",response.data)
+      //  console.log("salary month  data",response.data)
         return response.data
         
     }

@@ -9,7 +9,7 @@ import {
   View,
   useWindowDimensions,
   ActivityIndicator,
-  FlatList
+  FlatList,
 } from 'react-native';
 import React, {useCallback, useMemo, useRef, useEffect, useState} from 'react';
 import EStyleSheet from 'react-native-extended-stylesheet';
@@ -29,10 +29,10 @@ import Icon from 'react-native-fontawesome-pro';
 import colors from '../Styles/colors';
 import {useDispatch, useSelector} from 'react-redux';
 import {empMessageHandler} from '../features/message/createSlice';
-import { useNavigation } from '@react-navigation/native';
-import { detailMessageHandler } from '../features/detailMessage/createSlice';
+import {useNavigation} from '@react-navigation/native';
+import {detailMessageHandler} from '../features/detailMessage/createSlice';
 export default function Card({item}) {
-  const navigation=useNavigation()
+  const navigation = useNavigation();
   const {width} = useWindowDimensions();
   const dispatch = useDispatch();
   const [visible, setVisible] = useState(false);
@@ -45,27 +45,25 @@ export default function Card({item}) {
   const [refreshing, setRefreshing] = useState(false);
   const [searchText, setSearchText] = useState('');
   const [animodal, setAnimodal] = useState(false);
-  const [animation, setAnimation] = useState(true)
+  const [animation, setAnimation] = useState(true);
   const [offset, setOffset] = useState(1); // Initial offset
   const [msDetail, setMsDetail] = useState(null);
 
   const messagData = useSelector(state => state.empMessageState);
-  // console.log('seeleted item data', selectedItemId);
   async function getData(key) {
-    // setAnimodal(true)
     try {
       const value = await AsyncStorage.getItem(key);
       if (value !== null) {
         const parsedData = JSON.parse(value);
         setLocalData(parsedData);
         const empMsg = await dispatch(
-          empMessageHandler({employeeId: parsedData?.EMPLOYEE_ID,ofset:offset}),
+          empMessageHandler({
+            employeeId: parsedData?.EMPLOYEE_ID,
+            ofset: offset,
+          }),
         );
-        // console.log("message data on card creen",empMsg?.payload)
         setMsgData([...msgData, ...empMsg?.payload?.data]);
-        // setMsgData(empMsg?.payload?.data);
-        setFilterData([...filterData,...empMsg?.payload?.data]);
-        // setAnimodal(false)
+        setFilterData([...filterData, ...empMsg?.payload?.data]);
         return value;
       } else {
         console.log('No data found for key:', key);
@@ -73,7 +71,6 @@ export default function Card({item}) {
     } catch (error) {
       console.error('Error retrieving data:', error);
     }
-    
   }
 
   useEffect(() => {
@@ -82,9 +79,9 @@ export default function Card({item}) {
       filterData?.filter(item =>
         item.MSG_SUBJECT.toLowerCase().includes(searchText.toLowerCase()),
       );
-    console.log('filter data', filtered);
+    // console.log('filter data', filtered);
 
-    console.log('filterdata', filterData);
+    // console.log('filterdata', filterData);
 
     if (searchText == '') {
       getData('loginData');
@@ -92,8 +89,6 @@ export default function Card({item}) {
       setFilterData(filtered);
     }
   }, [searchText]);
-
-  
 
   useEffect(() => {
     getData('loginData');
@@ -106,9 +101,9 @@ export default function Card({item}) {
     const empMsg = await dispatch(
       detailMessageHandler({messageId: item?.MSG_ID}),
     );
-   
-   const dtmsg= Object.assign({}, ...empMsg?.payload?.data)
-   console.log('detail message',dtmsg)
+
+    const dtmsg = Object.assign({}, ...empMsg?.payload?.data);
+    //  console.log('detail message',dtmsg)
     setMsDetail(dtmsg);
   };
 
@@ -119,22 +114,52 @@ export default function Card({item}) {
     setSelectedItemId(item);
     setVisible(true);
   };
- 
+
   const typeHandler = () => {
     setType(!iconType);
   };
 
+  const tagsStyles = {
+    body: {
+      whiteSpace: 'normal',
+      color: '#aaa',
+    },
+    div: {color: 'blue', fontSize: 16},
+    p: {
+      color: '#000',
+      fontSize: hp(1.5),
+      lineHeight: hp(1.8),
+      fontFamily: fontFamily.ceraMedium,
+    }, 
+    span: {color: 'green'}, 
+  };
+
   return (
     <View style={{flex: 1}}>
-       {animation && (<View >
-        <Modal isVisible={animodal}>
-          <View style={{ width: wp(20), height: hp(10), backgroundColor: '#EAFAF1', borderRadius: hp(50), justifyContent: 'center', alignItems: 'center',marginHorizontal:hp(15) }}>
-            <View style={{}}>
-              <ActivityIndicator animating={animation} size={'large'} color='blue'/>
+      {animation && (
+        <View>
+          <Modal isVisible={animodal}>
+            <View
+              style={{
+                width: wp(20),
+                height: hp(10),
+                backgroundColor: '#EAFAF1',
+                borderRadius: hp(50),
+                justifyContent: 'center',
+                alignItems: 'center',
+                marginHorizontal: hp(15),
+              }}>
+              <View style={{}}>
+                <ActivityIndicator
+                  animating={animation}
+                  size={'large'}
+                  color="blue"
+                />
+              </View>
             </View>
-          </View>
-        </Modal>
-      </View>)}
+          </Modal>
+        </View>
+      )}
       <BottomSheet
         isVisible={visible}
         style={{
@@ -177,7 +202,7 @@ export default function Card({item}) {
             </View>
           </View>
         </LinearGradient>
-        <View style={{flex: 1, height: hp(84), backgroundColor: '#fff'}}>
+        <ScrollView style={{flex: 1, height: hp(84), backgroundColor: '#fff'}}>
           <View style={styles.detailcard}>
             <View style={{}}>
               <View
@@ -220,6 +245,12 @@ export default function Card({item}) {
                 </View>
               </View>
             </View>
+            <View style={{marginHorizontal: hp(1), marginVertical: hp(1)}}>
+              <Text
+                style={{color: '#072374', fontSize: hp(2), fontWeight: 'bold'}}>
+                {msDetail?.ASMSG_TITLE}
+              </Text>
+            </View>
             <View style={{marginHorizontal: hp(0.7)}}>
               <Text
                 style={{
@@ -227,48 +258,23 @@ export default function Card({item}) {
                   color: colors.appColor,
                   marginBottom: hp('2'),
                 }}></Text>
-              <View>
+              <View
+                contentInsetAdjustmentBehavior="automatic"
+                style={{marginTop: hp(-6)}}>
                 <RenderHtml
                   contentWidth={width}
-                  source={{html: msDetail?.MSG_DETAIL_SUBSTRING}}
-                  // tagsStyles={styles.tagsStyles}
+                  source={{
+                    html: msDetail
+                      ? '<p>' + msDetail.MSG_DETAIL_SUBSTRING + '</p>'
+                      : '',
+                  }}
+                  stylesheet={{color: 'blue'}}
+                  tagsStyles={tagsStyles}
                 />
               </View>
             </View>
-            {/* <View style={{marginTop: hp(-1)}}>
-              <Text style={styles.longdesc}>
-                {selectedItemId?.MSG_DETAIL_SUBSTRING}
-              </Text>
-            </View> */}
-            {/* <View style={{}}>
-              <Image
-                style={{height: hp(35), borderRadius: hp(1)}}
-                resizeMode="contain"
-                source={{
-                  uri: 'https://images.ctfassets.net/xmu5vdhtphau/6iYvUHa5loS3AIXjd2Jymf/0e341cb5a38a6ef9c1898e916262fb9a/social-bg-7.png',
-                }}
-              />
-            </View> */}
-            {/* <View>
-                      <Text
-                      style={{
-
-                      fontSize: hp('1.85'),
-                      color: colors.appColor,
-                      marginBottom: hp('2'),
-                      }}>
-
-                      </Text>
-                      <View>
-                      <RenderHtml
-                      contentWidth={width}
-                      source={{html:selectedItemId?.MSG_DETAIL_SUBSTRING}}
-                      // tagsStyles={styles.tagsStyles}
-                      />
-                      </View>
-                    </View> */}
           </View>
-        </View>
+        </ScrollView>
         <View style={{flex: 1, backgroundColor: '#FFF', height: hp(8)}}>
           <View
             style={{
@@ -315,13 +321,13 @@ export default function Card({item}) {
           </View>
         </View>
       </BottomSheet>
-     
+
       <View style={{marginTop: hp(3)}}>
         <View style={styles.cardHeading}>
           <View>
             <Text style={styles.message}>Messages</Text>
           </View>
-          <TouchableOpacity onPress={()=>navigation.navigate('Messages')}>
+          <TouchableOpacity onPress={() => navigation.navigate('Messages')}>
             <Text style={styles.viewAll}>View All</Text>
           </TouchableOpacity>
         </View>
@@ -566,5 +572,8 @@ const styles = EStyleSheet.create({
     fontSize: '0.7rem',
     fontWeight: '300',
     fontFamily: fontFamily.ceraLight,
+  },
+  tagsStyles: {
+    color: '#292D32',
   },
 });

@@ -39,7 +39,7 @@ const Reportee = props => {
       const lineMdata = await dispatch(getLineMangerHandller());
       console.log('line manager data', lineMdata?.payload?.data);
       if (lineMdata && lineMdata.payload && lineMdata.payload.data) {
-        // console.log('line manager data inside dispatch', lineMdata?.payload?.data);
+        console.log('line manager data inside dispatch', lineMdata?.payload?.data);
         setMangerData(lineMdata?.payload?.data);
       }
       return lineMdata;

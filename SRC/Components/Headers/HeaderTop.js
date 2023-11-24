@@ -177,9 +177,9 @@ const HeaderTop = ({
 
         <View style={styles.headerImageSection}>
           {data.slice(0, 7).map((item, i) => {
-            item.id == 6
-              ? console.log('lastitem of imagelist', item.id == 6)
-              : console.log('lastitem id', item.id);
+            // item.id == 6
+            //   ? console.log('lastitem of imagelist', item.id == 6)
+            //   : console.log('lastitem id', item.id);
             if (i < 6) {
               return (
                 <TouchableOpacity

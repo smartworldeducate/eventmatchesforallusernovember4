@@ -1,17 +1,52 @@
-import {View, Text, Image, TouchableOpacity} from 'react-native';
-import React, {useState} from 'react';
+import {View, Text, Image, TouchableOpacity, Button} from 'react-native';
+import React, {useEffect, useState} from 'react';
 import MainHeader from '../Components/Headers/MainHeader';
 import EStyleSheet from 'react-native-extended-stylesheet';
-import Ficon from 'react-native-fontawesome-pro';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import fontFamily from '../Styles/fontFamily';
+import {useDispatch, useSelector} from 'react-redux';
+import {wfhInsertHandler} from '../features/insertwfh/createSlice';
+import {wfhHandler} from '../features/wfh/createSlice';
+import moment from 'moment';
 const WorkFromHome = props => {
+  const dispatch = useDispatch();
+  const [wfh, setWfh] = useState('');
   const [timeState, setTimeState] = useState(true);
   const [outState, setOutState] = useState(false);
+  const [timeOne, setTimeOne] = useState('10:00');
+  const [timeTwo, setTimeTwo] = useState('5:00');
+  const [totalTime, setTotalTime] = useState('00');
+  const [totalMinut, setTotalMinut] = useState('00');
+  const [currentTime, setCurrentTime] = useState(new Date());
+  const [isDisabledTimein, setIsDisabledTimein] = useState(false);
+  const [isDisabledTimeout, setIsDisabledTimeout] = useState(false);
+  const prData = props.route.params;
+  const prDataCount = props.route.params;
+  // console.log("wfhdatatime==",totalTime)
+  const [locadata, setLocalData] = useState(prDataCount?.myKey1);
+  // const [myCountGet, setMyCountGet] = useState(prDataCount?.myCount);
+  const calculateTotalTime = () => {
+    if (timeOne != '' || timeTwo != '') {
+      const format = 'HH:mm:ss';
+      const momentTimeOne = moment(timeOne, format);
+      const momentTimeTwo = moment(timeTwo, format);
+
+      if (momentTimeOne && momentTimeTwo) {
+        const duration = moment.duration(momentTimeTwo.diff(momentTimeOne));
+        const hours = duration.hours();
+        const minutes = duration.minutes();
+        setTotalTime(hours);
+        setTotalMinut(minutes);
+      }
+    } else {
+      setTotalTime('');
+    }
+  };
+
   const timeinHandler = () => {
     setTimeState(true);
     setOutState(false);
@@ -20,18 +55,94 @@ const WorkFromHome = props => {
     setOutState(true);
     setTimeState(false);
   };
+
+  async function getData(key) {
+    try {
+      const value = await AsyncStorage.getItem(key);
+      if (value !== null) {
+        const parsedData = JSON.parse(value);
+        setLocalData(parsedData);
+        const wfhData = await dispatch(
+          wfhHandler({employee_id: parsedData?.EMPLOYEE_ID}),
+        );
+        const wfhObj = Object.assign({}, ...wfhData?.payload?.data);
+        setWfh(wfhObj);
+        if (wfhObj?.count == 1) {
+          setTimeOne(wfhObj?.time_in);
+        } else if (wfhObj?.count == 2) {
+          setTimeTwo(wfhObj?.time_out);
+        } else {
+        }
+      } else {
+        console.log('No data found for key:', key);
+      }
+    } catch (error) {
+      console.error('Error retrieving data:', error);
+    }
+  }
+
+  useEffect(() => {
+    getData('loginData');
+  }, []);
+
+  const inTimeHandler = async () => {
+    await dispatch(wfhInsertHandler({employee_id: locadata?.EMPLOYEE_ID}));
+    setIsDisabledTimein(true);
+    getData('loginData');
+    calculateTotalTime();
+  };
+
+  // useEffect(() => {
+  //   const intervalId = setInterval(() => {
+  //     setCurrentTime(new Date());
+  //   }, 1000);
+  //   return () => clearInterval(intervalId);
+  // }, []);
+
+  const formatTimeInPakistan = date => {
+    const options = {
+      timeZone: 'Asia/Karachi',
+      hour12: false,
+      era: 'long',
+    };
+
+    return date.toLocaleTimeString();
+  };
+
   return (
     <>
+      {wfh?.count == 1 || wfh?.count == 2 ? (
+        <View
+          style={{
+            position: 'absolute',
+            top: hp(15),
+            left: hp(5),
+            height: hp(4),
+            width: wp(80),
+            backgroundColor: '#ABEBC6',
+            borderRadius: hp(0),
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
+          <Text
+            style={{color: '#239B56', fontSize: hp(2), alignItems: 'center'}}>
+            {wfh?.message}
+          </Text>
+        </View>
+      ) : (
+        ''
+      )}
+
       <View>
         <MainHeader
           text={'Work From Home'}
           iconName={'arrow-left'}
           onpressBtn={() => props.navigation.goBack()}
         />
-        {timeState == true && <></>}
       </View>
+
       {timeState == true && (
-        <>
+        <View>
           <View
             style={{
               marginTop: hp(7),
@@ -40,57 +151,33 @@ const WorkFromHome = props => {
               marginLeft: hp(1.5),
             }}>
             <View style={{justifyContent: 'center', alignItems: 'center'}}>
-              <Text style={styles.time1}>09:41</Text>
-              <Text style={styles.timetext}>Thursday, June 22</Text>
+              <Text style={styles.time1}>{`${formatTimeInPakistan(
+                currentTime,
+              )}`}</Text>
+              <Text style={styles.timetext}>{wfh?.att_date}</Text>
             </View>
           </View>
-          <View
+          <TouchableOpacity
+            onPress={inTimeHandler}
             style={{
               height: hp(20),
               marginTop: hp(10),
               justifyContent: 'center',
               alignItems: 'center',
-            }}>
+            }}
+            disabled={wfh?.count == 2 ? isDisabledTimein : null}>
             <Image
               style={{width: wp(56), height: hp(28)}}
-              source={{uri: 'timein'}}
+              source={{uri: wfh?.count == 0 ? 'timein' : 'outimg'}}
               resizeMode="contain"
             />
-          </View>
-        </>
+          </TouchableOpacity>
+        </View>
       )}
-      {outState == true && (
-        <>
-          <View
-            style={{
-              marginTop: hp(7),
-              justifyContent: 'center',
-              alignItems: 'center',
-              marginLeft: hp(1.5),
-            }}>
-            <View style={{justifyContent: 'center', alignItems: 'center'}}>
-              <Text style={styles.time1}>09:41</Text>
-              <Text style={styles.timetext}>Thursday, June 22</Text>
-            </View>
-          </View>
-          <View
-            style={{
-              height: hp(20),
-              marginTop: hp(10),
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}>
-            <Image
-              style={{width: wp(56), height: hp(28)}}
-              source={{uri: 'outimg'}}
-              resizeMode="contain"
-            />
-          </View>
-        </>
-      )}
+
       <View style={styles.botContainer}>
-        <TouchableOpacity
-        activeOpacity={0.8}
+        <View
+          activeOpacity={0.8}
           onPress={timeinHandler}
           style={{
             justifyContent: 'center',
@@ -101,13 +188,14 @@ const WorkFromHome = props => {
             source={{uri: 'timeione'}}
             resizeMode="contain"
           />
-          <Text style={[styles.serviceSection]}>09:10:12</Text>
+          <Text style={[styles.serviceSection]}>
+            {wfh?.count ? wfh?.time_in : ''}
+          </Text>
 
           <Text style={[styles.bootContText2]}>TIME IN</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-        activeOpacity={0.8}
-          onPress={timeiOutHandler}
+        </View>
+        <View
+          activeOpacity={0.8}
           style={{
             justifyContent: 'center',
             alignItems: 'center',
@@ -119,12 +207,14 @@ const WorkFromHome = props => {
             resizeMode="contain"
           />
 
-          <Text style={[styles.serviceSection]}>--:--:--</Text>
+          <Text style={[styles.serviceSection]}>
+            {wfh?.count == 2 ? wfh?.time_out : ''}
+          </Text>
           <Text style={[styles.bootContText2]}>TIME out</Text>
-        </TouchableOpacity>
+        </View>
 
-        <TouchableOpacity
-        activeOpacity={0.8}
+        <View
+          activeOpacity={0.8}
           style={{
             justifyContent: 'center',
             alignItems: 'center',
@@ -135,9 +225,11 @@ const WorkFromHome = props => {
             resizeMode="contain"
           />
 
-          <Text style={styles.serviceSection}>--:--:--</Text>
+          <Text style={styles.serviceSection}>
+            {totalTime}:{totalMinut}
+          </Text>
           <Text style={[styles.bootContText2]}>Working hr’s</Text>
-        </TouchableOpacity>
+        </View>
       </View>
     </>
   );
@@ -222,10 +314,9 @@ const styles = EStyleSheet.create({
     fontWeight: 300,
   },
   time1: {
-    fontSize: hp(5),
     color: '#363636',
     fontFamily: fontFamily.ceraLight,
-    fontSize: '2.5rem',
+    fontSize: '2rem',
     fontWeight: '300',
   },
   timetext: {

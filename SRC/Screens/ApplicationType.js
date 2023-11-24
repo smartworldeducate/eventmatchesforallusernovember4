@@ -1,8 +1,6 @@
 import {View, Text, TouchableOpacity} from 'react-native';
 import React, { useState } from 'react';
 import MainHeader from '../Components/Headers/MainHeader';
-import User from 'react-native-vector-icons/AntDesign';
-import Gte from 'react-native-vector-icons/AntDesign';
 import Icon from 'react-native-fontawesome-pro';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import Menu from 'react-native-vector-icons/Entypo';import {

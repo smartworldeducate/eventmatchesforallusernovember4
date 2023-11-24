@@ -10,7 +10,7 @@ const getLineManger=async()=>{
     // console.log(userData)
 )
     if(response.data){
-       console.log("line manger data",response.data)
+      //  console.log("line manger data",response.data)
         return response.data
         
     }

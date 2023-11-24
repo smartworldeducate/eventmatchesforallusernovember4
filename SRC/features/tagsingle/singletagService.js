@@ -12,7 +12,7 @@ const getSingleTags=async(userData)=>{
      
 )
     if(response.data){
-        console.log("tagservice data",response.data)
+        // console.log("tagservice data",response.data)
         return response.data
     }
 }

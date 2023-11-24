@@ -9,7 +9,7 @@ const userList=async(userData)=>{
      console.log("user admin data")
 )
     if(response.data){
-        console.log("user admin data",response.data)
+        // console.log("user admin data",response.data)
         return response.data.data
         
     }

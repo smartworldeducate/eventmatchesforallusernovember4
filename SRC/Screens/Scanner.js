@@ -48,7 +48,7 @@ const Scanner = props => {
   const catData = useSelector(state => state.getAllCats);
   const dispatch = useDispatch();
   const param = props.route.params;
-  console.log('lacalData data===', param);
+  // console.log('lacalData data===', param);
   const [refreshing, setRefreshing] = useState(false);
   const [tagData, setTagData] = useState([]);
   const [catgory, setCategory] = useState([]);
@@ -71,7 +71,17 @@ const Scanner = props => {
 
 
   const scanner = useRef(null);
+  const handleZoomIn = () => {
+    if (scanner.current) {
+      scanner.current.zoomIn();
+    }
+  };
 
+  const handleZoomOut = () => {
+    if (scanner.current) {
+      scanner.current.zoomOut();
+    }
+  };
   const onSuccess = async e => {
     const check = e.data.substring(0, 4);
     setState({
@@ -174,7 +184,7 @@ const Scanner = props => {
     }, []),
   );
   useEffect(() => {
-    console.log('selector alltag data', tgData?.user);
+    // console.log('selector alltag data', tgData?.user);
     setTagData(tgData?.user);
     setMasterDataSource(tgData?.user);
     setCategory(catData?.user);

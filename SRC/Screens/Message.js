@@ -20,6 +20,7 @@ import Check from 'react-native-vector-icons/AntDesign';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Modal from 'react-native-modal';
 import RenderHtml from 'react-native-render-html';
+import HTMLView from 'react-native-htmlview';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -77,9 +78,9 @@ export default function Messages(props) {
       filterData?.filter(item =>
         item.MSG_SUBJECT.toLowerCase().includes(searchText.toLowerCase()),
       );
-    console.log('filter data', filtered);
+    // console.log('filter data', filtered);
 
-    console.log('filterdata', filterData);
+    // console.log('filterdata', filterData);
 
     if (searchText == '') {
       getData('loginData');
@@ -99,19 +100,19 @@ export default function Messages(props) {
   const detailMessagePress = async item => {
     setSelectedItemId(item);
     setVisible(true);
-
+    console.log('detail message====', item?.MSG_ID);
     const empMsg = await dispatch(
       detailMessageHandler({messageId: item?.MSG_ID}),
     );
-   
-   const dtmsg= Object.assign({}, ...empMsg?.payload?.data)
-  //  console.log('detail message',dtmsg)
+
+    const dtmsg = Object.assign({}, ...empMsg?.payload?.data);
+    console.log('detail message', dtmsg);
     setMsDetail(dtmsg);
   };
 
   //when user scroll down then this function will be call
   const handleLoadMore = async () => {
-    console.log('loadmore function call');
+    // console.log('loadmore function call');
     setOffset(filterData?.length);
     await getData('loginData');
   };
@@ -119,7 +120,7 @@ export default function Messages(props) {
   const handleReset = () => {
     setVisible(false);
   };
-  
+
   const typeHandler = () => {
     setType(!iconType);
   };
@@ -193,11 +194,26 @@ export default function Messages(props) {
             style={styles.cardText}
             numberOfLines={5}
             ellipsizeMode={'tail'}>
-            {item?.item.MSG_SUBJECT}
+            {item?.item?.MSG_SUBJECT}
           </Text>
         </View>
       </TouchableOpacity>
     );
+  };
+
+  const tagsStyles = {
+    body: {
+      whiteSpace: 'normal',
+      color: '#aaa',
+    },
+    div: {color: 'blue', fontSize: 16},
+    p: {
+      color: '#000',
+      fontSize: hp(1.5),
+      lineHeight: hp(1.8),
+      fontFamily: fontFamily.ceraMedium,
+    }, // Customize color and font size for paragraph tags
+    span: {color: 'green'},
   };
 
   return (
@@ -218,13 +234,14 @@ export default function Messages(props) {
               marginHorizontal: hp(2.5),
               flexDirection: 'row',
               justifyContent: 'space-between',
-              position: 'relative',
+              paddingBottom: hp(2.5),
+              // position: 'relative',
             }}>
             <View
               style={{
                 justifyContent: 'center',
                 marginTop: hp(0),
-                height: hp(5),
+                // height: hp(5),
               }}>
               <Text style={{color: '#fff', paddingBottom: hp(0.1)}}>
                 Massages
@@ -244,7 +261,7 @@ export default function Messages(props) {
             </View>
           </View>
         </LinearGradient>
-        <View style={{flex: 1, height: hp(84), backgroundColor: '#fff'}}>
+        <ScrollView style={{flex: 1, height: hp(84), backgroundColor: '#fff'}}>
           <View style={styles.detailcard}>
             <View style={{}}>
               <View
@@ -287,6 +304,16 @@ export default function Messages(props) {
                 </View>
               </View>
             </View>
+            <View style={{marginHorizontal: hp(1), marginVertical: hp(1)}}>
+              <Text
+                style={{
+                  color: '#072374',
+                  fontSize: hp(1.8),
+                  fontWeight: 'bold',
+                }}>
+                {msDetail?.ASMSG_TITLE}
+              </Text>
+            </View>
             <View style={{marginHorizontal: hp(0.7)}}>
               <Text
                 style={{
@@ -294,48 +321,23 @@ export default function Messages(props) {
                   color: colors.appColor,
                   marginBottom: hp('2'),
                 }}></Text>
-              <View>
+              <View
+                contentInsetAdjustmentBehavior="automatic"
+                style={{marginTop: hp(-6), flex: 1}}>
                 <RenderHtml
                   contentWidth={width}
-                  source={{html: msDetail?.MSG_DETAIL_SUBSTRING}}
-                  // tagsStyles={styles.tagsStyles}
+                  source={{
+                    html: msDetail
+                      ? '<p>' + msDetail.MSG_DETAIL_SUBSTRING + '</p>'
+                      : '',
+                  }}
+                  stylesheet={{color: 'blue'}}
+                  tagsStyles={tagsStyles}
                 />
               </View>
             </View>
-            {/* <View style={{marginTop: hp(-1)}}>
-              <Text style={styles.longdesc}>
-                {selectedItemId?.MSG_DETAIL_SUBSTRING}
-              </Text>
-            </View> */}
-            {/* <View style={{}}>
-              <Image
-                style={{height: hp(35), borderRadius: hp(1)}}
-                resizeMode="contain"
-                source={{
-                  uri: 'https://images.ctfassets.net/xmu5vdhtphau/6iYvUHa5loS3AIXjd2Jymf/0e341cb5a38a6ef9c1898e916262fb9a/social-bg-7.png',
-                }}
-              />
-            </View> */}
-            {/* <View>
-                      <Text
-                      style={{
-
-                      fontSize: hp('1.85'),
-                      color: colors.appColor,
-                      marginBottom: hp('2'),
-                      }}>
-
-                      </Text>
-                      <View>
-                      <RenderHtml
-                      contentWidth={width}
-                      source={{html:selectedItemId?.MSG_DETAIL_SUBSTRING}}
-                      // tagsStyles={styles.tagsStyles}
-                      />
-                      </View>
-                    </View> */}
           </View>
-        </View>
+        </ScrollView>
         <View style={{flex: 1, backgroundColor: '#FFF', height: hp(8)}}>
           <View
             style={{
@@ -386,7 +388,7 @@ export default function Messages(props) {
         start={{x: 0, y: 0}}
         end={{x: 1, y: 0}}
         colors={['#1C37A5', '#4D69DC']}
-        style={styles.mainHeader}>
+        style={styles.mainHeaderTop}>
         <View
           style={{
             marginHorizontal: hp(2.5),
@@ -524,7 +526,7 @@ const styles = EStyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: hp(2.3),
   },
-  mainHeader: {
+  mainHeaderTop: {
     height: hp(15),
     backgroundColor: '#1C37A4',
     borderBottomRightRadius: hp(0),

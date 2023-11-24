@@ -43,7 +43,6 @@ import Index from './SRC/Screens/Index';
 import ScannerDetail from './SRC/Screens/ScannerDetail';
 import Utility from './SRC/Screens/Utility';
 import Messages from './SRC/Screens/Message';
-import TestFlatList from './SRC/Screens/TestFlatList';
 const Drawer = createDrawerNavigator();
 const Tab = createBottomTabNavigator();
 function DrawerStack() {
@@ -63,7 +62,6 @@ function DrawerStack() {
       <Drawer.Screen name="Reportee" component={Reportee} />
       <Drawer.Screen name="Scanner" component={Scanner} />
       <Drawer.Screen name="Utility" component={Utility} />
-      <Drawer.Screen name="TestFlatList" component={TestFlatList} />
      
     </Drawer.Navigator>
   );

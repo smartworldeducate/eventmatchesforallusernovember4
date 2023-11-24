@@ -10,7 +10,7 @@ const createTagService=async(userData)=>{
     // console.log(userData)
 )
     if(response.data){
-       console.log("google responce data",response.data)
+      //  console.log("google responce data",response.data)
         return response.data
         
     }
