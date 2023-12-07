@@ -1,14 +1,17 @@
 import 'react-native-gesture-handler';
 import * as React from 'react';
-import {NavigationContainer} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Splash from './SRC/Screens/Splash';
 import WelcomeScreen from './SRC/Screens/WelcomeScreen';
 import Login from './SRC/Screens/Login';
 import ForgotPassword from './SRC/Screens/ForgotPassword';
+import Icon from 'react-native-fontawesome-pro';
+import Menu from 'react-native-vector-icons/Entypo';
+
 import Home from './SRC/Screens/Home';
 import Skip1 from './SRC/Screens/Skip1';
-import {createDrawerNavigator} from '@react-navigation/drawer';
+import { createDrawerNavigator } from '@react-navigation/drawer';
 import CustomDrawer from './SRC/Drawer/CustomDrawer'
 import {
   widthPercentageToDP as wp,
@@ -43,6 +46,9 @@ import Index from './SRC/Screens/Index';
 import ScannerDetail from './SRC/Screens/ScannerDetail';
 import Utility from './SRC/Screens/Utility';
 import Messages from './SRC/Screens/Message';
+import MovementLine from './SRC/Screens/MovementLine';
+import QcodeScreen from './SRC/Screens/Qrcode';
+import BottomTab from './SRC/Components/BottomTab/BottomTab';
 const Drawer = createDrawerNavigator();
 const Tab = createBottomTabNavigator();
 function DrawerStack() {
@@ -52,7 +58,7 @@ function DrawerStack() {
       screenOptions={{
         headerShown: false,
         drawerPosition: 'right',
-        drawerStyle: {width: wp('100'),backgroundColor:'#E6E6E6'},
+        drawerStyle: { width: wp('100'), backgroundColor: '#E6E6E6' },
       }}
       drawerContent={props => <CustomDrawer {...props} />}>
       <Drawer.Screen name="HomeScreenDrawer" component={HomeScreen} />
@@ -60,26 +66,81 @@ function DrawerStack() {
       <Drawer.Screen name="Approcial" component={Approcial} />
       <Drawer.Screen name="Attendance" component={Attendance} />
       <Drawer.Screen name="Reportee" component={Reportee} />
-      <Drawer.Screen name="Scanner" component={Scanner} />
+      {/* <Drawer.Screen name="Scanner" component={Scanner} /> */}
       <Drawer.Screen name="Utility" component={Utility} />
-     
+
     </Drawer.Navigator>
   );
 }
 
 
-const BottomTab = () => {
+// const BottomTabFun = () => {
+
+//   return (
+//     <Tab.Navigator>
+//       <Tab.Screen name="HomeScreenTab" component={BottomTab} />
+//       <Tab.Screen name="ProfileTab" component={Profile} />
+//       <Tab.Screen name="LeaveBalanceTab" component={LeaveBalance} />
+//       <Tab.Screen name="Scanner" component={Scanner} />
+//     </Tab.Navigator>
+//   );
+// };
+
+const BottomTabApplication = () => {
 
   return (
-    <Tab.Navigator>
-      <Tab.Screen name="HomeScreen" component={HomeScreen} />
-      <Tab.Screen name="Profile" component={Profile} />
-      <Tab.Screen name=""ApplicationType component={ApplicationType} />
-      
+    <Tab.Navigator screenOptions={{
+      headerShown: false,
+
+    }}
+      tabBarOptions={{
+        showLabel: false,
+        activeTintColor: 'blue',
+        inactiveTintColor: 'gray',
+       
+      }}
+      >
+      <Tab.Screen name="ApplicationTypeTab" component={ApplicationType} options={{
+        tabBarIcon: ({ color, size }) => (
+          <Icon
+            name="paper-plane"
+            size={hp(2.5)}
+            color={color}
+          />
+        ),
+      }} />
+      <Tab.Screen name="AttendanceTab" component={Attendance} options={{
+        tabBarIcon: ({ color, size }) => (
+          <Menu
+            name="calendar"
+            size={hp(2.5)}
+            color={color}
+
+          />
+        ),
+      }} />
+      <Tab.Screen name="LeaveBalanceTab" component={LeaveBalance} options={{
+        tabBarIcon: ({ color, size }) => (
+          <Icon
+            name="chart-simple"
+            size={hp(2.5)}
+            color={color}
+          />
+        ),
+      }} />
+
+      <Tab.Screen name="LeaveHistoryTab" component={LeaveHistory} options={{
+        tabBarIcon: ({ color, size }) => (
+          <Icon
+            name="rectangle-history"
+            size={hp(2.5)}
+            color={color}
+          />
+        ),
+      }} />
     </Tab.Navigator>
   );
 };
-
 
 const Routes = () => {
   const Stack = createNativeStackNavigator();
@@ -88,15 +149,14 @@ const Routes = () => {
     <NavigationContainer>
       <Stack.Navigator
         initialRouteName={'Splash'}
-        screenOptions={{headerShown: false}}>
+        screenOptions={{ headerShown: false }}>
         <Stack.Screen name="Splash" component={Splash} />
-        <Stack.Screen name="WelcomeScreen" component={WelcomeScreen} />
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
         <Stack.Screen name="Skip1" component={Skip1} />
         <Stack.Screen name="Profile" component={Profile} />
         <Stack.Screen name="HomeScreen" component={DrawerStack} />
-        <Stack.Screen name="ApplicationType" component={ApplicationType} />
+        <Stack.Screen name="ApplicationType" component={BottomTabApplication} />
         <Stack.Screen name="ApplyLeave" component={ApplyLeave} />
         <Stack.Screen name="Outstation" component={Outstation} />
         <Stack.Screen name="AttendenceMarked" component={AttendenceMarked} />
@@ -117,6 +177,7 @@ const Routes = () => {
         <Stack.Screen name="Index" component={Index} />
         <Stack.Screen name="ScannerDetail" component={ScannerDetail} />
         <Stack.Screen name="Messages" component={Messages} />
+        <Stack.Screen name="MovementLine" component={MovementLine} />
       </Stack.Navigator>
     </NavigationContainer>
   );

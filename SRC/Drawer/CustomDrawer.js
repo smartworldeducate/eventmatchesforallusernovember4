@@ -92,7 +92,8 @@ const CustomDrawer = ({ navigation }) => {
               marginHorizontal: hp(3),
               marginTop: hp(1),
             }}>
-            <View
+            <TouchableOpacity
+            onPress={()=>navigation.navigate('Profile')}
               style={{
                 width: wp(14),
                 height: hp(7),
@@ -108,10 +109,10 @@ const CustomDrawer = ({ navigation }) => {
                   height: hp(7),
                   borderRadius: hp(50),
                 }}
-                source={{ uri: 'artg' }}
+                source={{ uri: 'group' }}
                 resizeMode="cover"
               />
-            </View>
+            </TouchableOpacity>
             <View style={{ marginLeft: hp(-2) }}>
               <View>
                 <Text style={styles.username}>Salman Ali</Text>
@@ -222,7 +223,7 @@ const CustomDrawer = ({ navigation }) => {
             <View>
               <View style={styles.listnameStyle}>
                 <TouchableOpacity
-                  onPress={() => navigation.navigate('ForgotPassword')}>
+                  onPress={() => navigation.navigate('TestScreen')}>
                   <View style={{ flexDirection: 'row', marginLeft: hp(3) }}>
                     <View style={styles.homeleft}>
                       <Text style={styles.textlistStyle}>Change Password</Text>

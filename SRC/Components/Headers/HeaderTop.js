@@ -29,17 +29,7 @@ import fontSize from '../../Styles/fontSize';
 import LinearGradient from 'react-native-linear-gradient';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const HeaderTop = ({
-  iconName,
-  iconColor1,
-  text,
-  iconName2,
-  iconColor2,
-  onPressIcon,
-  item,
-}) => {
-  // console.log('item data', item);
-  
+const HeaderTop = ({onPressIcon}) => {
   const [localData, setLocalData] = useState(null);
   // const {EMP_PHOTO,EMP_DEPT,EMP_NAME}=item
   const data = [
@@ -55,8 +45,8 @@ const HeaderTop = ({
     try {
       const value = await AsyncStorage.getItem(key);
       if (value !== null) {
-        // console.log('Data retrieved successfully:', value);
         const parsedData = JSON.parse(value);
+        // console.log('Data retrieved successfully:', parsedData);
         setLocalData(parsedData);
         return value;
       } else {
@@ -80,9 +70,7 @@ const HeaderTop = ({
 
   const [employeeId, setEmployeeId] = useState();
   const [employeePassword, setEmployeePassword] = useState();
-
   const keyboardVerticalOffset = Platform.OS === 'ios' ? 60 : 20;
-
   const onChangeEmpId = val => {
     navigation.navigate('Search');
     setEmployeeId('');
@@ -90,10 +78,8 @@ const HeaderTop = ({
   const onChangeEmpPassword = val => {
     setEmployeePassword(val);
   };
-
   const [isEnabled, setIsEnabled] = useState(true);
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
-
   const onPressLogin = () => {
     handleNavigate('HomeScreen');
   };
@@ -177,9 +163,6 @@ const HeaderTop = ({
 
         <View style={styles.headerImageSection}>
           {data.slice(0, 7).map((item, i) => {
-            // item.id == 6
-            //   ? console.log('lastitem of imagelist', item.id == 6)
-            //   : console.log('lastitem id', item.id);
             if (i < 6) {
               return (
                 <TouchableOpacity

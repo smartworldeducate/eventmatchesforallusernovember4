@@ -13,10 +13,8 @@ import CmpTest from '../Components/CmpTest';
 import SallaryComp from '../Components/Sallary';
 const Financial = props => {
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
-
   const [salary, setSalary] = useState(true);
   const [history, setHistory] = useState(false);
-
   const salaryHandler = () => {
     setSalary(true);
     setHistory(false);
@@ -29,18 +27,14 @@ const Financial = props => {
   const clinderHandler = item => {
     setClinder(item);
     setDefalut(false);
-    // console.log('my month', item);
   };
-
   const showDatePicker = () => {
     setDatePickerVisibility(true);
     setDate('');
   };
-
   const hideDatePicker = () => {
     setDatePickerVisibility(false);
   };
-
   const handleDateConfirm = date => {
     console.log(date);
     const dt =
@@ -50,7 +44,6 @@ const Financial = props => {
     setDateView(false);
     setHide(false);
   };
-
   return (
     <View style={{flex: 1}}>
       <View>

@@ -30,6 +30,8 @@ import utilityReducer from '../features/utility/createSlice'
 import wfhReducer from '../features/wfh/createSlice'
 import wfhInsertReducer from '../features/insertwfh/createSlice'
 import timeLineReducer from '../features/timeline/createSlice'
+import profileReducer from '../features/profile/createSlice'
+import movementReducer from '../features/movement/createSlice'
 export const store=configureStore({
     reducer:{
         register:authReducer,
@@ -62,7 +64,9 @@ export const store=configureStore({
         utilityState:utilityReducer,
         wfhState:wfhReducer,
         wfhInsertState:wfhInsertReducer,
-        timeLineState:timeLineReducer
+        timeLineState:timeLineReducer,
+        profileState:profileReducer,
+        movementState:movementReducer
 
        }
 })

@@ -1,12 +1,12 @@
-import React, { useEffect, useState, useRef, useCallback } from 'react';
+import React, {useEffect, useState, useRef, useCallback} from 'react';
 import Ficon from 'react-native-fontawesome-pro';
 import Menu from 'react-native-vector-icons/Entypo';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import LinearGradient from 'react-native-linear-gradient';
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import Modal from 'react-native-modal';
-import { Toast } from 'galio-framework';
-import { BottomSheet } from '@rneui/themed';
+import {Toast} from 'galio-framework';
+import {BottomSheet} from '@rneui/themed';
 import {
   ScrollView,
   SafeAreaView,
@@ -22,11 +22,8 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-import {
-  useFocusEffect,
-  useNavigation,
-} from '@react-navigation/native';
-import { useDispatch, useSelector } from 'react-redux';
+import {useFocusEffect, useNavigation} from '@react-navigation/native';
+import {useDispatch, useSelector} from 'react-redux';
 import colors from '../Styles/colors';
 import HeaderTop from '../Components/Headers/HeaderTop';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -34,40 +31,46 @@ import Card from '../Components/Card';
 import Calinder from '../Components/Calinder';
 import fontSize from '../Styles/fontSize';
 import fontFamily from '../Styles/fontFamily';
-import { salaryHistoryHandler } from '../features/history/createSlice';
-import { empSlaryHandler } from '../features/empSalary/createSlice';
-import { utilityHandler } from '../features/utility/createSlice';
-import { appraisalHandler } from '../features/appraisal/createSlice'
-import { bssChildHandler } from '../features/childbss/createSlice'
-import { getAllTags } from '../features/tags/tagSlice';
-import { getAllCats } from '../features/category/allCatSlice';
-import { salMonthHandleFun } from '../features/salmonth/createSlice';
-import { getSingleTag } from '../features/tagsingle/singletagSlice';
-import { getRatingHandler } from '../features/getallrating/createSlice';
-import { handleScaneer } from '../features/scan/scanSlice';
-import { wfhHandler } from '../features/wfh/createSlice';
-import { timelineHandler } from '../features/timeline/createSlice';
+import {salaryHistoryHandler} from '../features/history/createSlice';
+import {empSlaryHandler} from '../features/empSalary/createSlice';
+import {utilityHandler} from '../features/utility/createSlice';
+import {appraisalHandler} from '../features/appraisal/createSlice';
+import {bssChildHandler} from '../features/childbss/createSlice';
+import {getAllTags} from '../features/tags/tagSlice';
+import {getAllCats} from '../features/category/allCatSlice';
+import {salMonthHandleFun} from '../features/salmonth/createSlice';
+import {getSingleTag} from '../features/tagsingle/singletagSlice';
+import {getRatingHandler} from '../features/getallrating/createSlice';
+import {handleScaneer} from '../features/scan/scanSlice';
+import {wfhHandler} from '../features/wfh/createSlice';
+import {timelineHandler} from '../features/timeline/createSlice';
+import { profileHandler } from '../features/profile/createSlice';
+import { mevementHandler } from '../features/movement/createSlice';
 const HomeScreen = props => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const [data, setData] = useState([]);
+  const [homeState, setHomeState] = useState(true);
+  const [indexState, setIndexState] = useState(false);
+  const [tagState, setTagState] = useState(false);
+  const [profileState, setProfileState] = useState(false);
   const [localData, setLocalData] = useState(null);
-  const [tagData, setTagData] = useState([])
+  const [tagData, setTagData] = useState([]);
   const [dateEmp, setDateEmp] = useState('2023-01-01');
   const [animodal, setAnimodal] = useState(false);
-  const [modalState, setModalState] = useState(false)
+  const [modalState, setModalState] = useState(false);
   const [animation, setAnimation] = useState(true);
   const [isShow, setShow] = useState(false);
   const [visibleBtn, setVisibleBtn] = useState(false);
   const [sData, setSdata] = useState([]);
   const [visible, setVisible] = useState(false);
-  const [wfh, setWfh] = useState('')
+  const [wfh, setWfh] = useState('');
   const [refreshing, setRefreshing] = useState(false);
   const [state, setState] = useState({
     scan: false,
     ScanResult: false,
     result: '',
   });
-  const { scan, ScanResult, result } = state;
+  const {scan, ScanResult, result} = state;
   const userData = useSelector(state => state.userLogin);
   async function getData(key) {
     try {
@@ -82,38 +85,39 @@ const HomeScreen = props => {
           }),
         );
         const hisData = await dispatch(
-          salaryHistoryHandler({ employeeId: parsedData?.EMPLOYEE_ID }),
+          salaryHistoryHandler({employeeId: parsedData?.EMPLOYEE_ID}),
         );
         const appData = await dispatch(
-          appraisalHandler({ employeeId: parsedData?.EMPLOYEE_ID }),
+          appraisalHandler({employeeId: parsedData?.EMPLOYEE_ID}),
         );
         const bssData = await dispatch(
-          bssChildHandler({ employeeId: parsedData?.EMPLOYEE_ID }),
+          bssChildHandler({employeeId: parsedData?.EMPLOYEE_ID}),
         );
         const tagData = await dispatch(getAllTags());
         const catData = await dispatch(getAllCats());
         const empsal = await dispatch(salMonthHandleFun());
-        const getRatingData = await dispatch(
-          getRatingHandler(),
-        );
-        const utilityData = await dispatch(
-          utilityHandler(),
-        );
+        const getRatingData = await dispatch(getRatingHandler());
+        const utilityData = await dispatch(utilityHandler());
         const wfhData = await dispatch(
-          wfhHandler({ employee_id: parsedData?.EMPLOYEE_ID }),
+          wfhHandler({employee_id: parsedData?.EMPLOYEE_ID}),
         );
-        if(wfhData?.payload?.data !='' && wfhData?.payload?.data !=null){
+        if (wfhData?.payload?.data != '' && wfhData?.payload?.data != null) {
           // console.log("wfhdata==", wfhData)
-          const wfhObj = Object.assign({}, ...wfhData?.payload?.data)
-          setWfh(wfhObj)
-        }else{
+          const wfhObj = Object.assign({}, ...wfhData?.payload?.data);
+          setWfh(wfhObj);
+        } else {
           // console.log("wfhdata==", wfhData)
         }
         const timeLineData = await dispatch(
-          timelineHandler({ employee_id: parsedData?.EMPLOYEE_ID }),
+          timelineHandler({employee_id: parsedData?.EMPLOYEE_ID}),
+        );  const profileData = await dispatch(
+          profileHandler({employee_id: parsedData?.EMPLOYEE_ID,branch_id:parsedData?.BRANCH_ID}),
         );
-       
-       
+        const movementData = await dispatch(
+          mevementHandler({employee_id: parsedData?.EMPLOYEE_ID}),
+        );
+        // console.log("testdata",movementData)
+        // console.log("home profile Data",profileData?.payload?.data)
       } else {
         console.log('No data found for key:', key);
       }
@@ -124,9 +128,12 @@ const HomeScreen = props => {
 
   useFocusEffect(
     useCallback(() => {
-      onRefresh()
-    }, [])
-  )
+      onRefresh();
+      setIndexState(false);
+      setTagState(false);
+      setProfileState(false);
+    }, []),
+  );
 
   const onRefresh = useCallback(() => {
     setRefreshing(true);
@@ -139,7 +146,6 @@ const HomeScreen = props => {
     getData('loginData');
     setData(userData);
     // getcatHandle();
-
   }, []);
 
   const scanner = useRef(null);
@@ -155,12 +161,10 @@ const HomeScreen = props => {
         console.error('An error occured', err),
       );
     } else {
-
       await dispatch(
         handleScaneer({
           tag_id: e.data,
           employeeId: localData?.EMPLOYEE_ID,
-
         }),
       );
 
@@ -169,12 +173,13 @@ const HomeScreen = props => {
         scan: false,
         ScanResult: true,
       });
-      const catData = await dispatch(getSingleTag({ employee_id: localData?.EMPLOYEE_ID }));
+      const catData = await dispatch(
+        getSingleTag({employee_id: localData?.EMPLOYEE_ID}),
+      );
       await setTagData(catData?.payload?.data);
       setVisible(false);
       // console.log('scan data', e.data);
-      setModalState(true)
-
+      setModalState(true);
     }
   };
 
@@ -191,7 +196,7 @@ const HomeScreen = props => {
   };
 
   const handleReset = () => {
-    setState({ scan: false });
+    setState({scan: false});
     setVisible(false);
   };
   const [leave, setLeave] = useState(false);
@@ -207,23 +212,49 @@ const HomeScreen = props => {
       console.log('Clear');
     }
   };
-  const [employeeId, setEmployeeId] = useState();
-  const [employeePassword, setEmployeePassword] = useState();
-  const onChangeEmpId = val => {
-    setEmployeeId(val);
-  };
-  const onChangeEmpPassword = val => {
-    setEmployeePassword(val);
-  };
+  // const [employeeId, setEmployeeId] = useState();
+  // const [employeePassword, setEmployeePassword] = useState();
+  // const onChangeEmpId = val => {
+  //   setEmployeeId(val);
+  // };
+  // const onChangeEmpPassword = val => {
+  //   setEmployeePassword(val);
+  // };
 
-  const [isEnabled, setIsEnabled] = useState(true);
-  const toggleSwitch = () => setIsEnabled(previousState => !previousState);
+  // const [isEnabled, setIsEnabled] = useState(true);
+  // const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
-  const onPressLogin = () => {
-    handleNavigate('Login');
+  // const onPressLogin = () => {
+  //   handleNavigate('Login');
+  // };
+
+  const homeHandler = () => {
+    setHomeState(true);
+    setIndexState(false);
+    setTagState(false);
+    setProfileState(false);
   };
-
-  // console.log("countValueHere", wfh.count);
+  const indexHandler = () => {
+    props.navigation.navigate('Index');
+    setHomeState(false);
+    setIndexState(true);
+    setTagState(false);
+    setProfileState(false);
+  };
+  const tagHandler = () => {
+    props.navigation.navigate('Scanner', localData);
+    setHomeState(false);
+    setIndexState(false);
+    setTagState(true);
+    setProfileState(false);
+  };
+  // const profileHandler = () => {
+  //   () => navigation.navigate('Profile');
+  //   setHomeState(false);
+  //   setIndexState(false);
+  //   setTagState(false);
+  //   setProfileState(true);
+  // };
 
   return (
     <SafeAreaView
@@ -235,50 +266,67 @@ const HomeScreen = props => {
             : colors.appBackGroundColor,
       }}>
       <LinearGradient
-        start={{ x: 0, y: 0 }}
-        end={{ x: 1, y: 0 }}
+        start={{x: 0, y: 0}}
+        end={{x: 1, y: 0}}
         colors={['#1C37A5', '#4D69DC']}
-        style={{ height: hp('5') }}>
+        style={{height: hp('5')}}>
         <StatusBar translucent backgroundColor="transparent" />
       </LinearGradient>
       <View>
         <HeaderTop
           onPressIcon={() => navigation.openDrawer()}
           iconName={'arrowleft'}
-        // text={'Change Password'}
+          // text={'Change Password'}
         />
       </View>
       <Toast isShow={isShow} positionIndicator="top" style={styles.tost}>
-        <Text style={{ color: '#fff' }}>please enter valid Qrcode</Text>
+        <Text style={{color: '#fff'}}>please enter valid Qrcode</Text>
       </Toast>
 
-
-      {modalState && (<View >
-        <Modal isVisible={modalState}>
-          {tagData && tagData?.map((item, i) => {
-            return (<View style={{ width: wp(80), height: hp(20), backgroundColor: '#cdcdcd', marginHorizontal: hp(2.3), borderRadius: hp(2), }} key={i}>
-
-              <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                <View></View>
-                <TouchableOpacity onPress={() => setModalState(false)} style={{ width: wp(8), height: hp(4), backgroundColor: 'red', borderRadius: hp(5), justifyContent: 'center', alignItems: 'center', marginTop: hp(-2), marginRight: hp(-2) }}>
-                  <Text style={{ color: '#fff' }}>X</Text>
-                </TouchableOpacity>
-              </View>
-              <View style={{ alignItems: 'center', marginTop: hp(2) }}>
-                <Text style={{ color: '#186A3B', alignContent: 'center', paddingLeft: hp(2), fontSize: hp(3) }}>Tag Scan successfully</Text>
-              </View>
-              <View style={{ marginLeft: hp(5), marginTop: hp(1) }}>
-                <Text style={{ color: '#363636', paddingLeft: hp(2) }}>Tag ID : {item?.tag_id}</Text>
-                <Text style={{ color: '#363636', paddingLeft: hp(2) }}>Employee ID  :  {item?.employee_id}</Text>
-                <Text style={{ color: '#363636', paddingLeft: hp(2) }}>IN TIME :  {item?.scan_time}</Text>
-                <Text style={{ color: '#363636', paddingLeft: hp(2) }}>OUT TIME  :  {item?.scan_time2}</Text>
-              </View>
-
-            </View>)
-          })}
-
-        </Modal>
-      </View>)}
+      {modalState && (
+        <View>
+          <Modal isVisible={modalState}>
+            {tagData &&
+              tagData?.map((item, i) => {
+                return (
+                  <View style={styles.modalstateView} key={i}>
+                    <View
+                      style={{
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                      }}>
+                      <View></View>
+                      <TouchableOpacity
+                        onPress={() => setModalState(false)}
+                        style={styles.tgDataView}>
+                        <Text style={{color: '#fff'}}>X</Text>
+                      </TouchableOpacity>
+                    </View>
+                    <View style={{alignItems: 'center', marginTop: hp(2)}}>
+                      <Text style={styles.tgdsuccess}>
+                        Tag Scan successfully
+                      </Text>
+                    </View>
+                    <View style={{marginLeft: hp(5), marginTop: hp(1)}}>
+                      <Text style={styles.modalText}>
+                        Tag ID : {item?.tag_id}
+                      </Text>
+                      <Text style={styles.modalText}>
+                        Employee ID : {item?.employee_id}
+                      </Text>
+                      <Text style={styles.modalText}>
+                        IN TIME : {item?.scan_time}
+                      </Text>
+                      <Text style={styles.modalText}>
+                        OUT TIME : {item?.scan_time2}
+                      </Text>
+                    </View>
+                  </View>
+                );
+              })}
+          </Modal>
+        </View>
+      )}
 
       {animation && (
         <View>
@@ -318,13 +366,13 @@ const HomeScreen = props => {
               top: 20,
               left: hp(45),
             }}>
-            <Text style={{ color: 'gray', fontSize: hp(2) }}>X</Text>
+            <Text style={{color: 'gray', fontSize: hp(2)}}>X</Text>
           </TouchableOpacity>
         </View>
 
         {scan && (
           <QRCodeScanner
-            cameraStyl={{ height: hp(120) }}
+            cameraStyl={{height: hp(120)}}
             reactivate={true}
             showMarker={true}
             ref={scanner}
@@ -340,12 +388,10 @@ const HomeScreen = props => {
           />
         )}
       </BottomSheet>
-      <ScrollView refreshControl={
-        <RefreshControl
-          refreshing={refreshing}
-          onRefresh={onRefresh}
-        />
-      }>
+      <ScrollView
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }>
         <View style={styles.botContainer}>
           <View
             style={{
@@ -399,38 +445,32 @@ const HomeScreen = props => {
 
         <Card />
 
-
-        <View style={{marginBottom:hp(1)}}>
+        <View style={{marginBottom: hp(1)}}>
           <Calinder />
         </View>
-       
 
-
-        {wfh?.count == "0" ||  wfh?.count == "1"  ? <View>
-        <View style={{ marginHorizontal: hp(2.2), marginTop: hp(2) }}>
-          <Text style={styles.clText1}>W.F.H</Text>
-        </View>
-        <View style={styles.wfh}>
-            <TouchableOpacity
-            
-              activeOpacity={0.8}
-              onPress={() => props.navigation.navigate('WorkFromHome', {"myKey1":localData, "myCount": wfh?.count})}
-              style={styles.mrf}>
-              <Text style={styles.clbtnStyle}>Mark Attendance</Text>
-            </TouchableOpacity>
+        {wfh?.count == '0' || wfh?.count == '1' ? (
+          <View>
+            <View style={{marginHorizontal: hp(2.2), marginTop: hp(2)}}>
+              <Text style={styles.clText1}>W.F.H</Text>
+            </View>
+            <View style={styles.wfh}>
+              <TouchableOpacity
+                activeOpacity={0.8}
+                onPress={() =>
+                  props.navigation.navigate('WorkFromHome', {
+                    myKey1: localData,
+                    myCount: wfh?.count,
+                  })
+                }
+                style={styles.mrf}>
+                <Text style={styles.clbtnStyle}>Mark Attendance</Text>
+              </TouchableOpacity>
+            </View>
           </View>
+        ) : null}
 
-        </View>
-          
-          :
-          null
-        }
-      
-         {wfh?.count == "2"  ? 
-         <></>
-          :
-          null
-        }
+        {wfh?.count == '2' ? <></> : null}
       </ScrollView>
 
       <View
@@ -450,19 +490,24 @@ const HomeScreen = props => {
           {/* <View style={{flex:0.1}}></View> */}
           <TouchableOpacity
             activeOpacity={0.8}
-            onPress={() => { }}
-            style={{ flex: 0.2, alignItems: 'center' }}>
-            <Menu name="home" size={hp(3)} color="#1C37A4" style={{}} />
+            onPress={homeHandler}
+            style={{flex: 0.2, alignItems: 'center'}}>
+            <Menu
+              name="home"
+              size={hp(3)}
+              color={homeState ? '#1C37A4' : 'gray'}
+              style={{}}
+            />
           </TouchableOpacity>
           <TouchableOpacity
             activeOpacity={0.8}
-            onPress={() => props.navigation.navigate('Index')}
-            style={{ flex: 0.2, paddingTop: hp(0.5), alignItems: 'center' }}>
+            onPress={indexHandler}
+            style={{flex: 0.2, paddingTop: hp(0.5), alignItems: 'center'}}>
             <Ficon
               type="light"
               name="book-bookmark"
               size={hp(3)}
-              color="#979797"
+              color={indexState ? '#1C37A4' : 'gray'}
             />
           </TouchableOpacity>
           <TouchableOpacity
@@ -472,36 +517,31 @@ const HomeScreen = props => {
               flex: 0.2,
               alignItems: 'center',
             }}>
-            <View
-              style={{
-                height: hp('6'),
-                alignItems: 'center',
-                width: wp(12),
-                borderWidth: hp(0.5),
-                borderColor: 'gray',
-                borderRadius: hp(50),
-                backgroundColor: 'black',
-                justifyContent: 'center',
-              }}>
+            <View style={styles.scanView}>
               <Ficon style={{}} name="qrcode" size={hp(4)} color="#fff" />
             </View>
           </TouchableOpacity>
           <TouchableOpacity
             activeOpacity={0.8}
-            style={{ flex: 0.2, alignItems: 'center' }}
-            onPress={() => props.navigation.navigate('Scanner', localData)}>
+            style={{flex: 0.2, alignItems: 'center'}}
+            onPress={tagHandler}>
             <Ficon
               type="light"
               name="user-tag"
               size={hp(3.5)}
-              color="#979797"
+              color={tagState ? '#1C37A4' : 'gray'}
             />
           </TouchableOpacity>
           <TouchableOpacity
             activeOpacity={0.8}
-            onPress={() => navigation.navigate('Profile')}
-            style={{ flex: 0.2, alignItems: 'center', paddingTop: hp(0) }}>
-            <Ficon type="light" name="user-tie" size={hp(3)} color="#979797" />
+            onPress={() => props.navigation.navigate('Profile')}
+            style={{flex: 0.2, alignItems: 'center', paddingTop: hp(0)}}>
+            <Ficon
+              type="light"
+              name="user-tie"
+              size={hp(3)}
+              color={profileState ? '#1C37A4' : 'gray'}
+            />
           </TouchableOpacity>
         </View>
       </View>
@@ -510,6 +550,40 @@ const HomeScreen = props => {
 };
 
 const styles = EStyleSheet.create({
+  scanView: {
+    height: hp('6'),
+    alignItems: 'center',
+    width: wp(12),
+    borderWidth: hp(0.5),
+    borderColor: 'gray',
+    borderRadius: hp(50),
+    backgroundColor: 'black',
+    justifyContent: 'center',
+  },
+  tgdsuccess: {
+    color: '#186A3B',
+    alignContent: 'center',
+    paddingLeft: hp(2),
+    fontSize: hp(3),
+  },
+  tgDataView: {
+    width: wp(8),
+    height: hp(4),
+    backgroundColor: 'red',
+    borderRadius: hp(5),
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: hp(-2),
+    marginRight: hp(-2),
+  },
+  modalstateView: {
+    width: wp(80),
+    height: hp(20),
+    backgroundColor: '#cdcdcd',
+    marginHorizontal: hp(2.3),
+    borderRadius: hp(2),
+  },
+  modalText: {color: '#363636', paddingLeft: hp(2)},
   textInputView: {
     justifyContent: 'center',
     backgroundColor: colors.whiteColor,

@@ -170,7 +170,7 @@ export default function Messages(props) {
                   height: hp(3.5),
                   borderRadius: hp(50),
                 }}
-                source={{uri: 'qasim'}}
+                source={{uri: 'group'}}
                 resizeMode="cover"
               />
             </View>
@@ -281,7 +281,7 @@ export default function Messages(props) {
                       height: hp(6),
                       borderRadius: hp(50),
                     }}
-                    source={{uri: 'qasim'}}
+                    source={{uri: 'group'}}
                     resizeMode="cover"
                   />
                 </View>

@@ -16,6 +16,7 @@ import Menu from 'react-native-vector-icons/Entypo';
 import Icon from 'react-native-fontawesome-pro';
 import {BottomSheet} from '@rneui/themed';
 import LinearGradient from 'react-native-linear-gradient';
+import DateTimePickerModal from 'react-native-modal-datetime-picker';
 // import DropDownPicker from 'react-native-dropdown-picker';
 import SelectDropdown from 'react-native-select-dropdown';
 import fontFamily from '../Styles/fontFamily';
@@ -26,20 +27,20 @@ import {
 import {useDispatch, useSelector} from 'react-redux';
 import Fgraph from './Graph';
 import Pdf from 'react-native-pdf';
-import { reporteeHandleFun } from '../features/reportee/createSlice';
-import { getLineMangerHandller } from '../features/lineManager/createSlice';
+import {reporteeHandleFun} from '../features/reportee/createSlice';
+import {getLineMangerHandller} from '../features/lineManager/createSlice';
 const SallaryComp = () => {
   const dispatch = useDispatch();
   // const lineMangerData = useSelector(state => state.getSalMonth);
   const userData = useSelector(state => state.reportee);
-  
+
   const employeeSallary = useSelector(state => state.getEmpSalary);
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(null);
   const [selectValue, setSelectValue] = useState(0);
   const [reporteeData, setReporteeData] = useState([]);
-  const [mangerData,setMangerData]=useState([])
- 
+  const [mangerData, setMangerData] = useState([]);
+
   // console.log("text certificate data",mangerData)
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [hide, setHide] = useState(true);
@@ -64,7 +65,7 @@ const SallaryComp = () => {
       throw error;
     }
   };
-  const reporteeHandler = async (val) => {
+  const reporteeHandler = async val => {
     try {
       // console.log('selected value', val);
       const reportee = await dispatch(reporteeHandleFun(val));
@@ -82,7 +83,7 @@ const SallaryComp = () => {
   useEffect(() => {
     setReporteeData(userData);
     const rd = reporteeHandler({
-      reportingToId: selectValue ? selectValue:'18776'
+      reportingToId: selectValue ? selectValue : '18776',
     });
     setReporteeData(rd.payload?.data);
     const lmd = lineMangerHandler();
@@ -98,15 +99,15 @@ const SallaryComp = () => {
     setDatePickerVisibility(false);
   };
 
-  // const handleDateConfirm = date => {
-  //   console.log(date);
-  //   const dt =
-  //     date.getDate() + '-' + date.getMonth() + '-' + date.getFullYear();
-  //   setDate(dt);
-  //   hideDatePicker();
-  //   setDateView(false);
-  //   setHide(false);
-  // };
+  const handleDateConfirm = date => {
+    console.log(date);
+    const dt =
+      date.getDate() + '-' + date.getMonth() + '-' + date.getFullYear();
+    setDate(dt);
+    hideDatePicker();
+    setDateView(false);
+    setHide(false);
+  };
   const pfHandler = () => {
     setPf(true);
     setVisible(true);
@@ -132,6 +133,12 @@ const SallaryComp = () => {
 
   return (
     <View style={{flex: 1}}>
+      <DateTimePickerModal
+        isVisible={isDatePickerVisible}
+        mode="date"
+        onConfirm={handleDateConfirm}
+        onCancel={hideDatePicker}
+      />
       {salary == true && (
         <View style={{flex: 1}}>
           {pf && (
@@ -378,40 +385,55 @@ const SallaryComp = () => {
                         borderRadius: hp(1.2),
                         backgroundColor: '#FFFFFF',
                       }}>
-                  <SelectDropdown
-                      data={mangerData}
-                      onSelect={(selectedItem, index) => {
-                        setSelectValue(selectedItem?.EMPLOYEE_ID);
-                      }}
-                      defaultButtonText={'Muhammad Qasim Ali Khan'}
-                      renderCustomizedButtonChild={(selectedItem, index) => {
-                        return (
-                          <View style={styles.dropdown3BtnChildStyle}>
-                            {selectedItem ? (
-                              <Image source={selectedItem.image} style={styles.dropdown3BtnImage} />
-                            ) : (""
-                            )}
-                            <Text style={[styles.dropdown3BtnTxt,{color:'#363636'}]}>{selectedItem ? selectedItem.EMP_NAME : ' Qasim Ali Khan'}</Text>
-                          </View>
-                        );
-                      }}
-                      renderCustomizedRowChild={(item, index) => {
-                        return (
-                          <View style={styles.dropdown3RowChildStyle}>
-                            <Image source={item.image} style={styles.dropdownRowImage} />
-                            <Text style={styles.dropdown1RowTxtStyle}>{item.EMP_NAME}</Text>
-                          </View>
-                        );
-                      }}
-                    
-                      buttonStyle={styles.dropdown1BtnStyle}
-                      buttonTextStyle={styles.dropdown1BtnTxtStyle}
-                      dropdownStyle={styles.dropdown1DropdownStyle}
-                      rowStyle={styles.dropdown1RowStyle}
-                      rowTextStyle={styles.dropdown1RowTxtStyle}
-                      dropdownIconPosition={'left'}
-                    />
-                     
+                      <SelectDropdown
+                        data={mangerData}
+                        onSelect={(selectedItem, index) => {
+                          setSelectValue(selectedItem?.EMPLOYEE_ID);
+                        }}
+                        defaultButtonText={'Muhammad Qasim Ali Khan'}
+                        renderCustomizedButtonChild={(selectedItem, index) => {
+                          return (
+                            <View style={styles.dropdown3BtnChildStyle}>
+                              {selectedItem ? (
+                                <Image
+                                  source={selectedItem.image}
+                                  style={styles.dropdown3BtnImage}
+                                />
+                              ) : (
+                                ''
+                              )}
+                              <Text
+                                style={[
+                                  styles.dropdown3BtnTxt,
+                                  {color: '#363636'},
+                                ]}>
+                                {selectedItem
+                                  ? selectedItem.EMP_NAME
+                                  : ' Qasim Ali Khan'}
+                              </Text>
+                            </View>
+                          );
+                        }}
+                        renderCustomizedRowChild={(item, index) => {
+                          return (
+                            <View style={styles.dropdown3RowChildStyle}>
+                              <Image
+                                source={item.image}
+                                style={styles.dropdownRowImage}
+                              />
+                              <Text style={styles.dropdown1RowTxtStyle}>
+                                {item.EMP_NAME}
+                              </Text>
+                            </View>
+                          );
+                        }}
+                        buttonStyle={styles.dropdown1BtnStyle}
+                        buttonTextStyle={styles.dropdown1BtnTxtStyle}
+                        dropdownStyle={styles.dropdown1DropdownStyle}
+                        rowStyle={styles.dropdown1RowStyle}
+                        rowTextStyle={styles.dropdown1RowTxtStyle}
+                        dropdownIconPosition={'left'}
+                      />
                     </View>
                   </TouchableOpacity>
 
@@ -554,172 +576,205 @@ const SallaryComp = () => {
             </BottomSheet>
           )}
           <ScrollView>
-            {employeeSallary && employeeSallary?.user.map((item, i) => {
-              return (
-                <View  key={i}>
-                  <View style={{flex: 1}}>
-                    <Fgraph item={item}/>
-                  </View>
+            {employeeSallary &&
+              employeeSallary?.user.map((item, i) => {
+                return (
+                  <View key={i}>
+                    <View style={{flex: 1}}>
+                      <Fgraph item={item} />
+                    </View>
 
-                  <View
-                    style={{
-                      flex: 1,
-                      marginHorizontal: hp(2.5),
-                      marginTop: hp(2),
-                    }}>
                     <View
                       style={{
-                        height: hp(4.5),
-                        backgroundColor: '#E7E7E7',
-                        justifyContent: 'center',
-                        paddingLeft: hp(1),
+                        flex: 1,
+                        marginHorizontal: hp(2.5),
+                        marginTop: hp(2),
                       }}>
-                      <Text style={styles.duction}>Deductions</Text>
-                    </View>
-
-                    <View>
                       <View
                         style={{
-                          height: hp(5),
-                          marginHorizontal: hp(1),
-                          flexDirection: 'row',
-                          justifyContent: 'space-between',
+                          height: hp(4.5),
+                          backgroundColor: '#E7E7E7',
+                          justifyContent: 'center',
+                          paddingLeft: hp(1),
                         }}>
-                        <View style={{justifyContent: 'center'}}>
-                          <Text style={styles.testname}>PF Own</Text>
-                        </View>
-                        <View style={{justifyContent: 'center'}}>
-                          <Text style={styles.textnum}>{item?.PF_OWN}</Text>
-                        </View>
+                        <Text style={styles.duction}>Deductions</Text>
                       </View>
-                      <View
-                        style={{height: 1, backgroundColor: '#DBDBDB'}}></View>
 
-                      <View
-                        style={{
-                          height: hp(5),
-                          marginHorizontal: hp(1),
-                          flexDirection: 'row',
-                          justifyContent: 'space-between',
-                        }}>
-                        <View style={{justifyContent: 'center'}}>
-                          <Text style={styles.testname}>EOBI Own</Text>
+                      <View>
+                        <View
+                          style={{
+                            height: hp(5),
+                            marginHorizontal: hp(1),
+                            flexDirection: 'row',
+                            justifyContent: 'space-between',
+                          }}>
+                          <View style={{justifyContent: 'center'}}>
+                            <Text style={styles.testname}>PF Own</Text>
+                          </View>
+                          <View style={{justifyContent: 'center'}}>
+                            <Text style={styles.textnum}>{item?.PF_OWN}</Text>
+                          </View>
                         </View>
-                        <View style={{justifyContent: 'center'}}>
-                          <Text style={styles.textnum}>{item?.EOBI_COMP}</Text>
-                        </View>
-                      </View>
-                      <View
-                        style={{height: 1, backgroundColor: '#DBDBDB'}}></View>
+                        <View
+                          style={{
+                            height: 1,
+                            backgroundColor: '#DBDBDB',
+                          }}></View>
 
-                      <View
-                        style={{
-                          height: hp(5),
-                          marginHorizontal: hp(1),
-                          flexDirection: 'row',
-                          justifyContent: 'space-between',
-                        }}>
-                        <View style={{justifyContent: 'center'}}>
-                          <Text style={styles.testname}>Income Tax</Text>
+                        <View
+                          style={{
+                            height: hp(5),
+                            marginHorizontal: hp(1),
+                            flexDirection: 'row',
+                            justifyContent: 'space-between',
+                          }}>
+                          <View style={{justifyContent: 'center'}}>
+                            <Text style={styles.testname}>EOBI Own</Text>
+                          </View>
+                          <View style={{justifyContent: 'center'}}>
+                            <Text style={styles.textnum}>
+                              {item?.EOBI_COMP}
+                            </Text>
+                          </View>
                         </View>
-                        <View style={{justifyContent: 'center'}}>
-                          <Text style={styles.textnum}>{item?.INCOME_TAX}</Text>
-                        </View>
-                      </View>
-                      <View
-                        style={{height: 1, backgroundColor: '#DBDBDB'}}></View>
+                        <View
+                          style={{
+                            height: 1,
+                            backgroundColor: '#DBDBDB',
+                          }}></View>
 
-                      <View
-                        style={{
-                          height: hp(5),
-                          marginHorizontal: hp(1),
-                          flexDirection: 'row',
-                          justifyContent: 'space-between',
-                        }}>
-                        <View style={{justifyContent: 'center'}}>
-                          <Text style={styles.testname}>
-                            Absent Deduction (Absent days)
-                          </Text>
+                        <View
+                          style={{
+                            height: hp(5),
+                            marginHorizontal: hp(1),
+                            flexDirection: 'row',
+                            justifyContent: 'space-between',
+                          }}>
+                          <View style={{justifyContent: 'center'}}>
+                            <Text style={styles.testname}>Income Tax</Text>
+                          </View>
+                          <View style={{justifyContent: 'center'}}>
+                            <Text style={styles.textnum}>
+                              {item?.INCOME_TAX}
+                            </Text>
+                          </View>
                         </View>
-                        <View style={{justifyContent: 'center'}}>
-                          <Text style={styles.textnum}>{item?.ABSENT_DED}</Text>
-                        </View>
-                      </View>
-                      <View
-                        style={{height: 1, backgroundColor: '#DBDBDB'}}></View>
+                        <View
+                          style={{
+                            height: 1,
+                            backgroundColor: '#DBDBDB',
+                          }}></View>
 
-                      <View
-                        style={{
-                          height: hp(5),
-                          marginHorizontal: hp(1),
-                          flexDirection: 'row',
-                          justifyContent: 'space-between',
-                        }}>
-                        <View style={{justifyContent: 'center'}}>
-                          <Text style={styles.testname}>Other Deduction</Text>
+                        <View
+                          style={{
+                            height: hp(5),
+                            marginHorizontal: hp(1),
+                            flexDirection: 'row',
+                            justifyContent: 'space-between',
+                          }}>
+                          <View style={{justifyContent: 'center'}}>
+                            <Text style={styles.testname}>
+                              Absent Deduction (Absent days)
+                            </Text>
+                          </View>
+                          <View style={{justifyContent: 'center'}}>
+                            <Text style={styles.textnum}>
+                              {item?.ABSENT_DED}
+                            </Text>
+                          </View>
                         </View>
-                        <View style={{justifyContent: 'center'}}>
-                          <Text style={styles.textnum}>{item?.OTH_DED}</Text>
-                        </View>
-                      </View>
-                      <View
-                        style={{height: 1, backgroundColor: '#DBDBDB'}}></View>
+                        <View
+                          style={{
+                            height: 1,
+                            backgroundColor: '#DBDBDB',
+                          }}></View>
 
-                      <View
-                        style={{
-                          height: hp(5),
-                          marginHorizontal: hp(1),
-                          flexDirection: 'row',
-                          justifyContent: 'space-between',
-                        }}>
-                        <View style={{justifyContent: 'center'}}>
-                          <Text style={styles.testname}>Total Deduction</Text>
+                        <View
+                          style={{
+                            height: hp(5),
+                            marginHorizontal: hp(1),
+                            flexDirection: 'row',
+                            justifyContent: 'space-between',
+                          }}>
+                          <View style={{justifyContent: 'center'}}>
+                            <Text style={styles.testname}>Other Deduction</Text>
+                          </View>
+                          <View style={{justifyContent: 'center'}}>
+                            <Text style={styles.textnum}>{item?.OTH_DED}</Text>
+                          </View>
                         </View>
-                        <View style={{justifyContent: 'center'}}>
-                          <Text style={styles.textnum}>{item?.TOTAL_DED}</Text>
-                        </View>
-                      </View>
-                      <View
-                        style={{height: 1, backgroundColor: '#DBDBDB'}}></View>
+                        <View
+                          style={{
+                            height: 1,
+                            backgroundColor: '#DBDBDB',
+                          }}></View>
 
-                      <View
-                        style={{
-                          height: hp(5),
-                          marginHorizontal: hp(1),
-                          flexDirection: 'row',
-                          justifyContent: 'space-between',
-                        }}>
-                        <View style={{justifyContent: 'center'}}>
-                          <Text style={styles.testname}>Net Salary</Text>
+                        <View
+                          style={{
+                            height: hp(5),
+                            marginHorizontal: hp(1),
+                            flexDirection: 'row',
+                            justifyContent: 'space-between',
+                          }}>
+                          <View style={{justifyContent: 'center'}}>
+                            <Text style={styles.testname}>Total Deduction</Text>
+                          </View>
+                          <View style={{justifyContent: 'center'}}>
+                            <Text style={styles.textnum}>
+                              {item?.TOTAL_DED}
+                            </Text>
+                          </View>
                         </View>
-                        <View style={{justifyContent: 'center'}}>
-                          <Text style={styles.textnum}>{item?.NET_SAL}</Text>
-                        </View>
-                      </View>
-                      <View
-                        style={{height: 1, backgroundColor: '#DBDBDB'}}></View>
+                        <View
+                          style={{
+                            height: 1,
+                            backgroundColor: '#DBDBDB',
+                          }}></View>
 
-                      <View
-                        style={{
-                          height: hp(5),
-                          marginHorizontal: hp(1),
-                          flexDirection: 'row',
-                          justifyContent: 'space-between',
-                        }}>
-                        <View style={{justifyContent: 'center'}}>
-                          <Text style={styles.testname}>Net Salary</Text>
+                        <View
+                          style={{
+                            height: hp(5),
+                            marginHorizontal: hp(1),
+                            flexDirection: 'row',
+                            justifyContent: 'space-between',
+                          }}>
+                          <View style={{justifyContent: 'center'}}>
+                            <Text style={styles.testname}>Net Salary</Text>
+                          </View>
+                          <View style={{justifyContent: 'center'}}>
+                            <Text style={styles.textnum}>{item?.NET_SAL}</Text>
+                          </View>
                         </View>
-                        <View style={{justifyContent: 'center'}}>
-                          <Text style={styles.textnum}>{item?.NET_SAL}</Text>
+                        <View
+                          style={{
+                            height: 1,
+                            backgroundColor: '#DBDBDB',
+                          }}></View>
+
+                        <View
+                          style={{
+                            height: hp(5),
+                            marginHorizontal: hp(1),
+                            flexDirection: 'row',
+                            justifyContent: 'space-between',
+                          }}>
+                          <View style={{justifyContent: 'center'}}>
+                            <Text style={styles.testname}>Net Salary</Text>
+                          </View>
+                          <View style={{justifyContent: 'center'}}>
+                            <Text style={styles.textnum}>{item?.NET_SAL}</Text>
+                          </View>
                         </View>
+                        <View
+                          style={{
+                            height: 1,
+                            backgroundColor: '#DBDBDB',
+                          }}></View>
                       </View>
-                      <View
-                        style={{height: 1, backgroundColor: '#DBDBDB'}}></View>
                     </View>
                   </View>
-                </View>
-              );
-            })}
+                );
+              })}
           </ScrollView>
           <View
             style={{
@@ -961,8 +1016,7 @@ const styles = EStyleSheet.create({
     fontSize: '0.7rem',
     fontFamily: fontFamily.ceraMedium,
   },
-  dropdown3RowChildStyle:{
-    marginLeft:hp(1.5)
-  }
- 
+  dropdown3RowChildStyle: {
+    marginLeft: hp(1.5),
+  },
 });

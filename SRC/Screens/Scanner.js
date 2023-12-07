@@ -2,6 +2,7 @@ import React, {useEffect, useState, useCallback, useRef} from 'react';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import Icon from 'react-native-fontawesome-pro';
 import QRCodeScanner from 'react-native-qrcode-scanner';
+import { StackActions} from '@react-navigation/native';
 import {
   SafeAreaView,
   StatusBar,
@@ -595,9 +596,14 @@ const Scanner = props => {
           {/* <View style={{flex:0.1}}></View> */}
           <TouchableOpacity
             activeOpacity={0.8}
-            onPress={() => {}}
-            style={{flex: 0.2, alignItems: 'center'}}>
-            <Menu name="home" size={hp(3)} color="#1C37A4" style={{}} />
+            onPress={() => props.navigation.dispatch(StackActions.replace('HomeScreen'))}
+            style={{flex: 0.2, paddingTop: hp(0.5), alignItems: 'center'}}>
+            <Menu
+              type="light"
+              name="home"
+              size={hp(3)}
+              color="#1C37A4"
+            />
           </TouchableOpacity>
           <TouchableOpacity
             activeOpacity={0.8}
@@ -644,7 +650,7 @@ const Scanner = props => {
           </TouchableOpacity>
           <TouchableOpacity
             activeOpacity={0.8}
-            onPress={() => navigation.navigate('Profile')}
+            onPress={() => props.navigation.navigate('Profile')}
             style={{flex: 0.2, alignItems: 'center', paddingTop: hp(0)}}>
             <Icon type="light" name="user-tie" size={hp(3)} color="#979797" />
           </TouchableOpacity>

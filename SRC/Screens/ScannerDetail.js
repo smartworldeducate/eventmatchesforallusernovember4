@@ -8,6 +8,7 @@ import {
   ActivityIndicator,
   SafeAreaView,
 } from 'react-native';
+import { StackActions} from '@react-navigation/native';
 import React, {useEffect, useState, useRef} from 'react';
 import Menu from 'react-native-vector-icons/AntDesign';
 import QRCodeScanner from 'react-native-qrcode-scanner';
@@ -414,7 +415,7 @@ const ScannerDetail = props => {
             <Icon type="light" name="user-tag" size={hp(3.5)} color="#979797" />
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => navigation.navigate('Profile')}
+            onPress={() => {}}
             style={{flex: 0.2, alignItems: 'center', paddingTop: hp(0)}}>
             <Icon type="light" name="user-tie" size={hp(3)} color="#979797" />
           </TouchableOpacity>

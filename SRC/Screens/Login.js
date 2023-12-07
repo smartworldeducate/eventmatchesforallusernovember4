@@ -1,12 +1,12 @@
-import React, {useEffect, useState} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import Modal from 'react-native-modal';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   GoogleSignin,
   statusCodes,
 } from '@react-native-google-signin/google-signin';
-import {loginUserHandle} from '../features/register/googleLoginSlice';
+import { loginUserHandle } from '../features/register/googleLoginSlice';
 import {
   SafeAreaView,
   StatusBar,
@@ -34,7 +34,7 @@ import {
   useNavigation,
   CommonActions,
 } from '@react-navigation/native';
-import {StackActions} from '@react-navigation/native';
+import { StackActions } from '@react-navigation/native';
 const Login = props => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
@@ -57,7 +57,7 @@ const Login = props => {
   async function saveData(value) {
     const jsonString = JSON.stringify(value);
     try {
-      await AsyncStorage.setItem("loginData", jsonString);
+      await AsyncStorage.setItem('loginData', jsonString);
       console.log('Data saved successfully.');
     } catch (error) {
       console.error('Error saving data:', error);
@@ -66,11 +66,11 @@ const Login = props => {
   const handleLogin = async () => {
     if (employeeId && employeePassword !== '') {
       var login_data = await dispatch(
-        loginUserHandle({employeeId: employeeId, password: employeePassword}),
+        loginUserHandle({ employeeId: employeeId, password: employeePassword }),
       );
-      const loginObj= Object.assign({}, ...login_data.payload)
-      saveData(loginObj)
-     console.log('login data on login screen',loginObj);
+      const loginObj = Object.assign({}, ...login_data.payload);
+      saveData(loginObj);
+      console.log('login data on login screen', loginObj);
       setData(loginObj);
       setLoding(true);
       if (login_data !== '') {
@@ -97,7 +97,7 @@ const Login = props => {
   useEffect(() => {
     GoogleSignin.configure({
       webClientId:
-        '941654580803-ng7pqk21th451gob5gfpv99ina8bohft.apps.googleusercontent.com',
+        '820650781605-l9l1fmj1tj0icic0ovkld3q2o8souslj.apps.googleusercontent.com',
     });
   }, []);
   const signinWithGoogle = async () => {
@@ -107,10 +107,10 @@ const Login = props => {
       const userInfo = await GoogleSignin.signIn();
       console.log(userInfo);
       // handleNavigate('HomeScreen');
-      const {id, name, email, givenName, photo} = userInfo?.user;
+      const { id, name, email, givenName, photo } = userInfo?.user;
       //  console.log("google data",glData.payload.data)
-      await storeData({google_id: id, photo: photo});
-      const glData = await dispatch(loginUser({email: email, google_id: id}));
+      await storeData({ google_id: id, photo: photo });
+      const glData = await dispatch(loginUser({ email: email, google_id: id }));
       // console.log("google data",glData.payload.data)
       // glData.payload.data ? props.navigation.navigate('Home') : props.navigation.navigate('Register')
       // setAnimodal(false)
@@ -160,16 +160,7 @@ const Login = props => {
       {animation && (
         <View>
           <Modal isVisible={animodal}>
-            <View
-              style={{
-                width: wp(30),
-                height: hp(15),
-                backgroundColor: '#EAFAF1',
-                borderRadius: hp(2),
-                justifyContent: 'center',
-                alignItems: 'center',
-                marginHorizontal: hp(15),
-              }}>
+            <View style={styles.modalView}>
               <View style={{}}>
                 <ActivityIndicator animating={animation} size={'large'} />
               </View>
@@ -181,13 +172,13 @@ const Login = props => {
         </View>
       )}
       <ImageBackground
-        source={{uri: 'appbg'}}
-        style={{flex: 1}}
+        source={{ uri: 'appbg' }}
+        style={{ flex: 1 }}
         resizeMode={'cover'}>
         <KeyboardAvoidingView
           behavior="position"
           keyboardVerticalOffset={keyboardVerticalOffset}>
-          <View style={{marginHorizontal: wp('5')}}>
+          <View style={{ marginHorizontal: wp('5') }}>
             <View
               style={{
                 marginTop: hp('8'),
@@ -195,15 +186,15 @@ const Login = props => {
                 alignItems: 'center',
               }}>
               <Image
-                source={{uri: 'logo'}}
-                style={{height: hp('25'), width: wp('50')}}
+                source={{ uri: 'logo' }}
+                style={{ height: hp('25'), width: wp('50') }}
                 resizeMode={'contain'}
               />
             </View>
 
-            <View style={{marginTop: hp('3'), marginBottom: hp('2')}}>
+            <View style={{ marginTop: hp('3'), marginBottom: hp('2') }}>
               <Text
-                style={{fontSize: hp('2.75'), color: colors.loginTextColor}}>
+                style={{ fontSize: hp('2.75'), color: colors.loginTextColor }}>
                 Login
               </Text>
             </View>
@@ -249,34 +240,12 @@ const Login = props => {
               <TouchableOpacity
                 activeOpacity={0.8}
                 onPress={handleLogin}
-                style={{
-                  height: hp('7'),
-                  width: wp('90'),
-                  backgroundColor: colors.whiteColor,
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  borderRadius: wp(10),
-                  shadowColor: '#000',
-                  shadowOffset: {width: 0, height: 12},
-                  shadowOpacity: 0.58,
-                  shadowRadius: 16,
-                  elevation: 7,
-                }}>
-                <Text style={{color: '#000'}}>LOGIN</Text>
+                style={styles.loginbtn}>
+                <Text style={{ color: '#000' }}>LOGIN</Text>
               </TouchableOpacity>
             </View>
 
-            <Text
-              style={{
-                textAlign: 'center',
-                fontSize: hp('2'),
-                marginVertical: hp('2'),
-                color: colors.greyColor,
-                fontStyle: 'normal',
-                fontWeight: '500',
-              }}>
-              OR
-            </Text>
+            <Text style={styles.orbtn}>OR</Text>
 
             <TouchableOpacity
               activeOpacity={0.8}
@@ -290,7 +259,7 @@ const Login = props => {
                     console.log(error);
                   })
               }>
-              <View style={{flex: 0.15, backgroundColor: 'white'}}></View>
+              <View style={{ flex: 0.15, backgroundColor: 'white' }}></View>
 
               <View
                 style={{
@@ -299,7 +268,7 @@ const Login = props => {
                   alignItems: 'center',
                 }}>
                 <Image
-                  source={{uri: 'google'}}
+                  source={{ uri: 'google' }}
                   style={{
                     height: hp('3.75'),
                     width: wp('7'),
@@ -308,16 +277,16 @@ const Login = props => {
                 />
               </View>
 
-              <View style={{flex: 0.5}}>
-                <Text style={{color: colors.loginTextColor, fontSize: hp('2')}}>
+              <View style={{ flex: 0.5 }}>
+                <Text style={{ color: colors.loginTextColor, fontSize: hp('2') }}>
                   {'Login with Google'}
                 </Text>
               </View>
 
-              <View style={{flex: 0.1, backgroundColor: 'pink'}}></View>
+              <View style={{ flex: 0.1, backgroundColor: 'pink' }}></View>
             </TouchableOpacity>
           </View>
-          <View style={{justifyContent: 'center', marginTop: hp(5)}}>
+          <View style={{ justifyContent: 'center', marginTop: hp(5) }}>
             <TouchableOpacity
               activeOpacity={0.8}
               onPress={() => handleNavigate('ForgotPassword')}
@@ -326,7 +295,7 @@ const Login = props => {
                 alignItems: 'center',
               }}>
               <Text
-                style={{color: colors.loginTextColor, fontSize: hp('1.75')}}>
+                style={{ color: colors.loginTextColor, fontSize: hp('1.75') }}>
                 Reset Password?
               </Text>
             </TouchableOpacity>
@@ -338,6 +307,36 @@ const Login = props => {
 };
 
 const styles = StyleSheet.create({
+  orbtn: {
+    textAlign: 'center',
+    fontSize: hp('2'),
+    marginVertical: hp('2'),
+    color: colors.greyColor,
+    fontStyle: 'normal',
+    fontWeight: '500',
+  },
+  loginbtn: {
+    height: hp('7'),
+    width: wp('90'),
+    backgroundColor: colors.whiteColor,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: wp(10),
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 12 },
+    shadowOpacity: 0.58,
+    shadowRadius: 16,
+    elevation: 7,
+  },
+  modalView: {
+    width: wp(30),
+    height: hp(15),
+    backgroundColor: '#EAFAF1',
+    borderRadius: hp(2),
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginHorizontal: hp(15),
+  },
   textInputView: {
     marginTop: hp('2'),
     justifyContent: 'center',

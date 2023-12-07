@@ -15,10 +15,11 @@ EStyleSheet.build({
 const App = () => {
   
   return (
+  
     <Provider store={store}>
-   
     <Routes/>
     </Provider>
+    
   );
 };
 

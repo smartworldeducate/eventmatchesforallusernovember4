@@ -48,10 +48,11 @@ export default function Card({item}) {
   const [animation, setAnimation] = useState(true);
   const [offset, setOffset] = useState(1); // Initial offset
   const [msDetail, setMsDetail] = useState(null);
-
+  const [activeLoder,setActiveLoder]=useState(false)
   const messagData = useSelector(state => state.empMessageState);
   async function getData(key) {
     try {
+      setActiveLoder(true)
       const value = await AsyncStorage.getItem(key);
       if (value !== null) {
         const parsedData = JSON.parse(value);
@@ -64,6 +65,7 @@ export default function Card({item}) {
         );
         setMsgData([...msgData, ...empMsg?.payload?.data]);
         setFilterData([...filterData, ...empMsg?.payload?.data]);
+        setActiveLoder(false)
         return value;
       } else {
         console.log('No data found for key:', key);
@@ -79,10 +81,6 @@ export default function Card({item}) {
       filterData?.filter(item =>
         item.MSG_SUBJECT.toLowerCase().includes(searchText.toLowerCase()),
       );
-    // console.log('filter data', filtered);
-
-    // console.log('filterdata', filterData);
-
     if (searchText == '') {
       getData('loginData');
     } else {
@@ -97,13 +95,10 @@ export default function Card({item}) {
   const detailMessagePress = async item => {
     setSelectedItemId(item);
     setVisible(true);
-
     const empMsg = await dispatch(
       detailMessageHandler({messageId: item?.MSG_ID}),
     );
-
     const dtmsg = Object.assign({}, ...empMsg?.payload?.data);
-    //  console.log('detail message',dtmsg)
     setMsDetail(dtmsg);
   };
 
@@ -222,7 +217,7 @@ export default function Card({item}) {
                       height: hp(6),
                       borderRadius: hp(50),
                     }}
-                    source={{uri: 'qasim'}}
+                    source={{uri: 'group'}}
                     resizeMode="cover"
                   />
                 </View>
@@ -335,6 +330,9 @@ export default function Card({item}) {
           horizontal={true}
           style={styles.container}
           showsHorizontalScrollIndicator={false}>
+             {activeLoder &&(<View style={{height:hp(20),width:wp(80),justifyContent:'center',alignItems:'center'}}>
+              <ActivityIndicator size='large' color='blue'/>
+              </View>)}
           {msgData &&
             msgData?.slice(0, 5).map((e, i) => {
               return (
@@ -361,7 +359,7 @@ export default function Card({item}) {
                             height: hp(3.5),
                             borderRadius: hp(50),
                           }}
-                          source={{uri: 'qasim'}}
+                          source={{uri: 'group'}}
                           resizeMode="cover"
                         />
                       </View>

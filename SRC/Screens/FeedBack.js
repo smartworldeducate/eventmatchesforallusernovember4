@@ -227,7 +227,7 @@ const FeedBack = props => {
             reviews={["Terrible", "Bad", "Meh", "OK", "good"]}
             onFinishRating={ratingCompleted}
             tintColor={'#f2f2f2'}
-            startingValue={rating}
+            startingValue={rData}
             ratingBackgroundColor={'#d9d9d9'}
           />
           {getAllRating && getAllRating?.user?.map((item, i) => {

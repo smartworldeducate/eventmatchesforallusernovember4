@@ -10,7 +10,6 @@ import SelectDropdown from 'react-native-select-dropdown';
 import MainHeader from '../Components/Headers/MainHeader';
 import Icon from 'react-native-fontawesome-pro';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
-
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -533,7 +532,7 @@ const Reportee = props => {
                         height: hp(3.5),
                         borderRadius: hp(50),
                       }}
-                      source={{uri: 'qasim'}}
+                      source={{uri: 'group'}}
                       resizeMode="cover"
                     />
                   </View>

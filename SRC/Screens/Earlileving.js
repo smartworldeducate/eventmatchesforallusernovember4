@@ -5,13 +5,16 @@ import {
   TextInput,
   TouchableOpacity,
   ScrollView,
+  Image
 } from 'react-native';
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import MainHeader from '../Components/Headers/MainHeader';
 import colors from '../Styles/colors';
-import {Div, ThemeProvider, Radio} from 'react-native-magnus';
+import { Div, ThemeProvider, Radio } from 'react-native-magnus';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import SelectDropdown from 'react-native-select-dropdown';
+import Ficon from 'react-native-fontawesome-pro';
+
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -22,8 +25,12 @@ import EStyleSheet from 'react-native-extended-stylesheet';
 import fontFamily from '../Styles/fontFamily';
 import ViewInputTwo from '../Components/ViewInputTwo';
 import Icon from 'react-native-fontawesome-pro';
+import { reporteeHandleFun } from '../features/reportee/createSlice';
+import { getLineMangerHandller } from '../features/lineManager/createSlice';
+import { useDispatch, useSelector } from 'react-redux';
 
 const EarliLeaving = props => {
+  const dispatch = useDispatch();
   const [fullDay, setFullDay] = useState(false);
   const [halfDay, setHalfDay] = useState(false);
   const [shortLeave, setShortLeave] = useState(false);
@@ -38,7 +45,55 @@ const EarliLeaving = props => {
   const [myDate, setMyDate] = useState('');
   const [dateTwo, setDateTwo] = useState('');
   const [dateThree, setDateThree] = useState('');
+  const [selectValue, setSelectValue] = useState(0);
+  const [selectLeave, setSelectLeave] = useState('');
+  const [reporteeData, setReporteeData] = useState([]);
+  const [empLength, setEmpLength] = useState('');
+  const [mangerData, setMangerData] = useState([])
   const reportee = ['Muhammad Qasim Ali Khan', 'Asad Numan Shahid'];
+  const userData = useSelector(state => state.reportee);
+
+
+  const lineMangerHandler = async () => {
+    try {
+      const lineMdata = await dispatch(getLineMangerHandller());
+      console.log('line manager data', lineMdata?.payload?.data);
+      if (lineMdata && lineMdata.payload && lineMdata.payload.data) {
+        console.log('line manager data inside dispatch', lineMdata?.payload?.data);
+        setMangerData(lineMdata?.payload?.data);
+      }
+      return lineMdata;
+    } catch (error) {
+      console.error('Error in reporteeHandler:', error);
+      throw error;
+    }
+  };
+  const reporteeHandler = async (val) => {
+    try {
+      // console.log('selected value', val);
+      const reportee = await dispatch(reporteeHandleFun(val));
+      if (reportee && reportee.payload && reportee.payload.data) {
+        console.log('reprtee dada inside dispatch', reportee.payload?.data);
+        setReporteeData(reportee.payload?.data);
+        setEmpLength(reportee.payload?.data?.length)
+      }
+      return reportee;
+    } catch (error) {
+      console.error('Error in reporteeHandler:', error);
+      throw error;
+    }
+  };
+
+  useEffect(() => {
+    setReporteeData(userData);
+    const rd = reporteeHandler({
+      reportingToId: selectValue ? selectValue : '18776'
+    });
+    setReporteeData(rd.payload?.data);
+    const lmd = lineMangerHandler();
+    console.log("linemanger data", lmd.payload?.data)
+    // setMangerData(lmd);
+  }, [selectValue]);
   //one
   const showDatePicker = () => {
     setDatePickerVisibility(true);
@@ -129,7 +184,7 @@ const EarliLeaving = props => {
     setWithOutPay(!withOutPay);
   };
   return (
-    <ScrollView style={{flex: 1, backgroundColor: '#F5F8FC'}}>
+    <ScrollView style={{ flex: 1, backgroundColor: '#F5F8FC' }}>
       <DateTimePickerModal
         isVisible={isTimePickerVisible}
         mode="time"
@@ -179,7 +234,7 @@ const EarliLeaving = props => {
             placeholder={'Tue, Jun 27, 2023'}
             placeholderColor={colors.loginTextColor}
             iconColor={colors.loginIconColor}
-            // style={styles.textInputCustomStyle}
+          // style={styles.textInputCustomStyle}
           />
         </View>
       </View>
@@ -201,7 +256,7 @@ const EarliLeaving = props => {
           placeholder={'Tue, Jun 27, 2023'}
           placeholderColor={colors.loginTextColor}
           iconColor={colors.loginIconColor}
-          // style={styles.textInputCustomStyle}
+        // style={styles.textInputCustomStyle}
         />
       </View>
       <View
@@ -222,7 +277,7 @@ const EarliLeaving = props => {
           placeholder={'8 Days'}
           placeholderColor={colors.loginTextColor}
           iconColor={colors.loginIconColor}
-          // style={styles.textInputCustomStyle}
+        // style={styles.textInputCustomStyle}
         />
       </View>
       <View
@@ -243,7 +298,7 @@ const EarliLeaving = props => {
           placeholder={'Departure'}
           placeholderColor={colors.loginTextColor}
           iconColor={colors.loginIconColor}
-          // style={styles.textInputCustomStyle}
+        // style={styles.textInputCustomStyle}
         />
       </View>
 
@@ -266,47 +321,56 @@ const EarliLeaving = props => {
             height: hp(15),
             textAlignVertical: 'top',
             paddingLeft: wp('3'),
+            color: '#000'
           }}
         />
       </View>
 
-      <View style={{marginHorizontal: hp(2.5), marginTop: hp(2)}}>
-        <SelectDropdown
-          data={reportee}
-          onSelect={(selectedItem, index) => {
-            console.log(selectedItem, index);
-          }}
-          defaultButtonText={'Muhammad Qasim Ali Khan'}
-          buttonTextAfterSelection={(selectedItem, index) => {
-            console.log(selectedItem);
-            return selectedItem;
-          }}
-          rowTextForSelection={(item, index) => {
-            return item;
-          }}
-          renderDropdownIcon={isOpened => {
-            return (
-              <View
-                style={{
-                  backgroundColor: '#FDEB13',
-                  height: hp(7),
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  width: 56,
-                  marginLeft: -8,
-                  borderRadius: 50,
-                }}>
-                <Icon type="light" name="user" color={'#444'} size={hp(3)} />
-              </View>
-            );
-          }}
-          buttonStyle={styles.dropdown1BtnStyle}
-          buttonTextStyle={styles.dropdown1BtnTxtStyle}
-          dropdownStyle={styles.dropdown1DropdownStyle}
-          rowStyle={styles.dropdown1RowStyle}
-          rowTextStyle={styles.dropdown1RowTxtStyle}
-          dropdownIconPosition={'left'}
-        />
+      <View style={{ height: hp('7'), marginVertical: hp('2'), marginHorizontal: hp('2.5'), elevation: 8, backgroundColor: "white", borderRadius: hp(50), flexDirection: 'row' }}>
+        <View
+          style={{
+            flex: 0.19,
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: '#FDEB13',
+            borderRadius: wp('10'),
+          }}>
+          <Ficon type="light" name='user' color='#000' size={25} />
+        </View>
+
+        <View style={{ flex: 0.80 }}>
+          <SelectDropdown
+            data={mangerData}
+            onSelect={(selectedItem, index) => {
+              setSelectValue(selectedItem?.EMPLOYEE_ID);
+            }}
+            defaultButtonText={'Muhammad Qasim Ali Khan'}
+            renderCustomizedButtonChild={(selectedItem, index) => {
+              return (
+                <Text style={styles.dropdown1BtnTxt}>{selectedItem ? selectedItem.EMP_NAME : ' Qasim Ali Khan'}</Text>
+              );
+            }}
+            renderCustomizedRowChild={(item, index) => {
+              return (
+                <View style={styles.dropdown1RowChildStyle}>
+                  <Image source={item.image} style={styles.dropdownRowImage} />
+                  <Text style={styles.dropdown1RowTxtStyle}>{item.EMP_NAME}</Text>
+                </View>
+              );
+            }}
+
+            buttonStyle={styles.dropdown1BtnStyle}
+            buttonTextStyle={styles.dropdown1BtnTxtStyle}
+            dropdownStyle={styles.dropdown1DropdownStyle}
+            rowStyle={styles.dropdown1RowStyle}
+            rowTextStyle={styles.dropdown1RowTxtStyle}
+            dropdownIconPosition={'left'}
+          />
+        </View>
+
+        <View style={{ flex: 0.23, justifyContent: 'center', alignItems: 'center', marginRight: hp(-1) }}>
+          <Ficon type="light" name="angles-up-down" color="#cdcdcd" size={20} />
+        </View>
       </View>
       <TouchableOpacity
         style={{
@@ -318,7 +382,7 @@ const EarliLeaving = props => {
 
           borderRadius: hp(50),
         }}>
-        <View style={{alignItems: 'center'}}>
+        <View style={{ alignItems: 'center' }}>
           <Text style={styles.submittext}>SUBMIT REQUEST</Text>
         </View>
       </TouchableOpacity>
@@ -393,33 +457,37 @@ const styles = EStyleSheet.create({
     fontWait: '500',
   },
   dropdown1BtnStyle: {
-    width: '100%',
+    width: wp('50'),
     height: hp(7),
-    backgroundColor: '#FFF',
-    borderRadius: 50,
-
-    elevation: 8,
+    backgroundColor: '#fff',
+    marginVertical: hp(0)
   },
-  dropdown1BtnTxtStyle: {
-    color: '#363636',
-    fontSize: '0.7rem',
+  dropdown1BtnTxt: {
+    justifyContent: 'center',
+    alignItems: 'center',
     fontFamily: fontFamily.ceraMedium,
-    textAlign: 'left',
+    fontSize: '0.7rem',
+    color: 'gray',
+    fontWaight: 700,
   },
   dropdown1DropdownStyle: {
+    width: wp('90'),
     backgroundColor: '#EFEFEF',
     marginTop: hp(-3.85),
+    marginLeft: hp(-7),
     borderRadius: hp(1.5),
   },
   dropdown1RowStyle: {
     backgroundColor: '#EFEFEF',
     borderBottomColor: '#C5C5C5',
-    width: wp(100),
+    width: wp(90),
   },
   dropdown1RowTxtStyle: {
-    color: '#444',
     textAlign: 'left',
-    color: '#363636',
+    color: 'gray',
     fontSize: '0.7rem',
-    fontFamily: fontFamily.ceraMedium,}
+    fontWaight: 500,
+    marginLeft: hp(1.5),
+    fontFamily: fontFamily.ceraMedium,
+  },
 });

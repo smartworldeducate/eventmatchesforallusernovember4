@@ -10,7 +10,15 @@ const colors = {
   lightSilver: "#E6E6E6",
   drakGrey: "#626161",
   btnColore:'#1C37A4',
-  appBackGroundColor:'#F5F8FC'
+  appBackGroundColor:'#F5F8FC',
+  profileName:'#363636',
+  darkColor:'#353535',
+  lightGray:'#979797',
+  notificatColore:'#343434',
+  btnBackGround:'#1C37A4',
+  btnColor:'#061D7A',
+  casulText:'#747474',
+  cardEmpName:'#6A6A6A',
   
 };
 
