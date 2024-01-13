@@ -46,6 +46,7 @@ import {wfhHandler} from '../features/wfh/createSlice';
 import {timelineHandler} from '../features/timeline/createSlice';
 import { profileHandler } from '../features/profile/createSlice';
 import { mevementHandler } from '../features/movement/createSlice';
+import { leaveBalanceHandler } from '../features/balanceleave/createSlice';
 const HomeScreen = props => {
   const dispatch = useDispatch();
   const [data, setData] = useState([]);
@@ -115,6 +116,9 @@ const HomeScreen = props => {
         );
         const movementData = await dispatch(
           mevementHandler({employee_id: parsedData?.EMPLOYEE_ID}),
+        );
+        const leaveBalanceData = await dispatch(
+          leaveBalanceHandler({employee_id: parsedData?.EMPLOYEE_ID}),
         );
         // console.log("testdata",movementData)
         // console.log("home profile Data",profileData?.payload?.data)
@@ -242,6 +246,7 @@ const HomeScreen = props => {
     setProfileState(false);
   };
   const tagHandler = () => {
+    // console.log("homelocal==",localData)
     props.navigation.navigate('Scanner', localData);
     setHomeState(false);
     setIndexState(false);

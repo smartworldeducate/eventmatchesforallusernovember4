@@ -50,6 +50,7 @@ export default function Card({item}) {
   const [msDetail, setMsDetail] = useState(null);
   const [activeLoder,setActiveLoder]=useState(false)
   const messagData = useSelector(state => state.empMessageState);
+  // console.log("card data",messagData)
   async function getData(key) {
     try {
       setActiveLoder(true)

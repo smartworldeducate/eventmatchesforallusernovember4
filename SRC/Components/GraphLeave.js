@@ -7,7 +7,11 @@ import {
 } from 'react-native-responsive-screen';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import fontFamily from '../Styles/fontFamily';
+import { useSelector } from 'react-redux';
 const GraphLeave = () => {
+  const leaveBalanceData=useSelector((state)=>state.leaveBalanceState)
+    console.log("graph data==",leaveBalanceData?.user)
+
   const [text, setText] = useState('');
   const pieData = [
     {value: 25, color: '#FFB243', gradientCenterColor: '#FFB243'},
@@ -57,7 +61,7 @@ const GraphLeave = () => {
             return (
               <View style={{justifyContent: 'center', alignItems: 'center'}}>
                 {text && (<Text style={styles.tousandlakh}>{text}</Text>)}
-                {!text && (<Text style={styles.tousandlakh}>35.25</Text>)}
+                {!text && (<Text style={styles.tousandlakh}>{leaveBalanceData?.user?.total_count}</Text>)}
                 <Text style={styles.gross}>gross salary</Text>
               </View>
             );

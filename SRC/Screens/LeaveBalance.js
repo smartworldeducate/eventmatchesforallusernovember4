@@ -10,58 +10,13 @@ import EStyleSheet from 'react-native-extended-stylesheet';
 import Pie from 'react-native-pie';
 import Icon from 'react-native-fontawesome-pro';
 import GraphLeave from '../Components/GraphLeave';
+import { useSelector } from 'react-redux';
+import { ScrollView } from 'react-native';
 
 const LeaveBalance = props => {
-  const data = [
-    {
-      id: 1,
-      iconName: 'island-tropical',
-      title: 'Casuals',
-      title1: '3 Pending Leaves',
-      date: '13/20',
-      colr: '#41CE68',
-    },
-    {
-      id: 2,
-      iconName: 'masks-theater',
-      title: 'Annuals',
-      title1: '1.25 Pending Leaves',
-      date: '6/15',
-      colr: '#B141CE',
-    },
-    {
-      id: 3,
-      iconName: 'temperature-half',
-      title: 'Sick',
-      title1: ' 0.25 Balance',
-      date: '10/9',
-      colr: '#CE5141',
-    },
-    {
-      id: 4,
-      iconName: 'calendar-range',
-      title: 'Long Leave',
-      title1: '0 Balance',
-      date: '0/0',
-      colr: '#4167C4',
-    },
-    {
-      id: 5,
-      iconName: 'kaaba',
-      title: 'Hajj',
-      title1: '15 Balance',
-      date: '15/15',
-      colr: '#41CEB4',
-    },
-    {
-      id: 6,
-      iconName: 'money-bill-wave',
-      title: 'Without Pay',
-      title1: '0 Balance Pending Leaves',
-      date: '0/0',
-      colr: '#7051CE',
-    },
-  ];
+  const leaveBalanceData=useSelector((state)=>state.leaveBalanceState)
+  console.log("leaveBalance data==",leaveBalanceData?.user)
+
   return (
     <>
       <View>
@@ -94,10 +49,10 @@ const LeaveBalance = props => {
           <GraphLeave />
         </View>
       </View>
-      <View style={{flex: 1, marginHorizontal: hp(2.5), marginTop: hp(2)}}>
-        {data.map((item, i) => {
+      <ScrollView style={{flex: 1, marginHorizontal: hp(2.5), marginTop: hp(2)}}>
+        {leaveBalanceData && leaveBalanceData?.user?.result?.map((item, i) => {
           return (
-            <>
+            <View key={i}>
               <View
                 style={{
                   flexDirection: 'row',
@@ -107,7 +62,7 @@ const LeaveBalance = props => {
                 key={i}>
                 <View
                   style={{
-                    height: hp(6),
+                    height: hp(5),
                     marginHorizontal: hp(1),
                     flexDirection: 'row',
                     justifyContent: 'space-between',
@@ -121,24 +76,24 @@ const LeaveBalance = props => {
                     <View style={{}}>
                       <Icon
                         type="light"
-                        name={item.iconName}
+                        name={item?.ICONNAME}
                         size={hp(3.5)}
-                        color={item.colr}
+                        color={item?.CLOR}
                       />
                     </View>
                     <View style={{paddingLeft: hp(1), marginTop: hp(-0.5)}}>
                       <View>
-                        <Text style={styles.testname}>{item.title}</Text>
+                        <Text style={styles.testname}>{item?.LEAVE_TYPE}</Text>
                       </View>
                       <View>
-                        <Text style={styles.desig}>{item.title1}</Text>
+                        <Text style={styles.desig}>{item?.PENDING} Pending Leaves</Text>
                       </View>
                     </View>
                   </View>
                 </View>
 
                 <View style={{justifyContent: 'center', alignItems: 'center'}}>
-                  <Text style={styles.timestyle}>{item.date}</Text>
+                  <Text style={styles.timestyle}>{item?.ENTL}/{item?.ENTL}</Text>
                 </View>
               </View>
               <View
@@ -147,10 +102,10 @@ const LeaveBalance = props => {
                   backgroundColor: '#DBDBDB',
                   marginTop: hp(1.5),
                 }}></View>
-            </>
+            </View>
           );
         })}
-      </View>
+      </ScrollView>
     </>
   );
 };

@@ -11,37 +11,7 @@ import {
 import fontFamily from '../Styles/fontFamily';
 import colors from '../Styles/colors';
 const ApplicationType = props => {
-  const [btColor, setBtColor] = useState(false);
-  const [btColor1, setBtColor1] = useState(false);
-  const [btColor2, setBtColor2] = useState(false);
-  const [btColor3, setBtColor3] = useState(false);
-  const btColorHandler = () => {
-    setBtColor1(false);
-    setBtColor2(false);
-    setBtColor3(false);
-    setBtColor(true);
-    props.navigation.navigate('Attendance');
-  };
-  const btColorHandler1 = () => {
-    setBtColor(false);
-    setBtColor1(true);
-    setBtColor2(false);
-    setBtColor3(false);
-  };
-  const btColorHandler2 = () => {
-    setBtColor(false);
-    setBtColor1(false);
-    setBtColor2(true);
-    setBtColor3(false);
-    props.navigation.navigate('LeaveHistory');
-  };
-  const btColorHandler3 = () => {
-    setBtColor(false);
-    setBtColor1(false);
-    setBtColor2(false);
-    setBtColor3(true);
-    props.navigation.navigate('LeaveBalance');
-  };
+
   return (
     <View style={{ flex: 1 }}>
       <View style={{ flex: hp(0.8) }}>
@@ -373,75 +343,7 @@ const ApplicationType = props => {
         </View>
       </View>
 
-      {/* <View
-        style={{
-          flax: hp(0.2),
-          height: hp(8),
-          flexDirection: 'row',
-          justifyContent: 'center',
-          alignContent: 'center',
-          alignItems: 'center',
-          backgroundColor: '#fff',
-        }}>
-        <TouchableOpacity
-          activeOpacity={0.8}
-          onPress={btColorHandler}
-          style={{ flex: 0.2, alignItems: 'center' }}>
-          <Menu
-            name="calendar"
-            size={hp(2.5)}
-            color={btColor == true ? '#1C37A4' : '#979797'}
-            style={{}}
-          />
-        </TouchableOpacity>
-        <TouchableOpacity
-          activeOpacity={0.8}
-          onPress={btColorHandler1}
-          style={{
-            flex: 0.2,
-            paddingTop: hp(0.5),
-            alignItems: 'center',
-            flexDirection: 'row',
-            paddingLeft: hp(1),
-          }}>
-          <View>
-            <Icon
-              name="paper-plane"
-              size={hp(2.5)}
-              color={btColor1 == true ? '#1C37A4' : '#979797'}
-            />
-          </View>
-          <View>
-            <Text
-              style={[
-                styles.btc,
-                { color: btColor1 == true ? '#1C37A4' : '#979797' },
-              ]}>
-              Apply
-            </Text>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity
-          activeOpacity={0.8}
-          style={{ flex: 0.2, alignItems: 'center' }}
-          onPress={btColorHandler2}>
-          <Icon
-            name="chart-simple"
-            size={hp(2.5)}
-            color={btColor2 == true ? '#1C37A4' : '#979797'}
-          />
-        </TouchableOpacity>
-        <TouchableOpacity
-          activeOpacity={0.8}
-          onPress={btColorHandler3}
-          style={{ flex: 0.2, alignItems: 'center', paddingTop: hp(0) }}>
-          <Icon
-            name="rectangle-history"
-            size={hp(2.5)}
-            color={btColor3 == true ? '#1C37A4' : '#979797'}
-          />
-        </TouchableOpacity>
-      </View> */}
+
     </View>
   );
 };

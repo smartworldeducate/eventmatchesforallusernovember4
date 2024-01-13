@@ -49,7 +49,7 @@ const Scanner = props => {
   const catData = useSelector(state => state.getAllCats);
   const dispatch = useDispatch();
   const param = props.route.params;
-  // console.log('lacalData data===', param);
+  console.log('lacalData data===', param);
   const [refreshing, setRefreshing] = useState(false);
   const [tagData, setTagData] = useState([]);
   const [catgory, setCategory] = useState([]);
@@ -67,22 +67,22 @@ const Scanner = props => {
     result: '',
   });
   const {scan, ScanResult, result} = state;
-
+  const scanner = useRef(null);
  
 
 
-  const scanner = useRef(null);
-  const handleZoomIn = () => {
-    if (scanner.current) {
-      scanner.current.zoomIn();
-    }
-  };
+  // const scanner = useRef(null);
+  // const handleZoomIn = () => {
+  //   if (scanner.current) {
+  //     scanner.current.zoomIn();
+  //   }
+  // };
 
-  const handleZoomOut = () => {
-    if (scanner.current) {
-      scanner.current.zoomOut();
-    }
-  };
+  // const handleZoomOut = () => {
+  //   if (scanner.current) {
+  //     scanner.current.zoomOut();
+  //   }
+  // };
   const onSuccess = async e => {
     const check = e.data.substring(0, 4);
     setState({
@@ -111,7 +111,7 @@ const Scanner = props => {
       const catData = await dispatch(getSingleTag({employee_id: param?.EMPLOYEE_ID}));
       await setTagData(catData?.payload?.data);
       setVisible(false);
-      // console.log('scan data', e.data);
+      console.log('scan data', param?.EMPLOYEE_ID);
       setModalState(true)
       
     }
@@ -596,7 +596,7 @@ const Scanner = props => {
           {/* <View style={{flex:0.1}}></View> */}
           <TouchableOpacity
             activeOpacity={0.8}
-            onPress={() => props.navigation.dispatch(StackActions.replace('HomeScreen'))}
+            onPress={() => props.navigation.navigate('HomeScreen')}
             style={{flex: 0.2, paddingTop: hp(0.5), alignItems: 'center'}}>
             <Menu
               type="light"

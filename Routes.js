@@ -66,7 +66,7 @@ function DrawerStack() {
       <Drawer.Screen name="Approcial" component={Approcial} />
       <Drawer.Screen name="Attendance" component={Attendance} />
       <Drawer.Screen name="Reportee" component={Reportee} />
-      {/* <Drawer.Screen name="Scanner" component={Scanner} /> */}
+      <Drawer.Screen name="Scanner" component={Scanner} />
       <Drawer.Screen name="Utility" component={Utility} />
 
     </Drawer.Navigator>
@@ -91,13 +91,18 @@ const BottomTabApplication = () => {
   return (
     <Tab.Navigator screenOptions={{
       headerShown: false,
-
+      tabBarStyle: {
+        display: 'flex',
+        position: 'absolute',
+        elevation: 5,
+        backgroundColor: '#fff',
+        height: 60,
+      },
     }}
       tabBarOptions={{
         showLabel: false,
         activeTintColor: 'blue',
         inactiveTintColor: 'gray',
-       
       }}
       >
       <Tab.Screen name="ApplicationTypeTab" component={ApplicationType} options={{
@@ -178,6 +183,7 @@ const Routes = () => {
         <Stack.Screen name="ScannerDetail" component={ScannerDetail} />
         <Stack.Screen name="Messages" component={Messages} />
         <Stack.Screen name="MovementLine" component={MovementLine} />
+        {/* <Stack.Screen name="Scanner" component={Scanner} /> */}
       </Stack.Navigator>
     </NavigationContainer>
   );
