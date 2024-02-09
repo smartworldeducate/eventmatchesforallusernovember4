@@ -1,5 +1,5 @@
 {
-  "name": "Beams",
+  "name": "EventMatches",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -38,7 +38,7 @@
     "@rneui/themed": "4.0.0-rc.8",
     "accordion-collapse-react-native": "1.1.1",
     "axios": "1.4.0",
-    "deprecated-react-native-prop-types": "4.2.1",
+    "deprecated-react-native-prop-types": "^4.2.1",
     "galio-framework": "0.8.0",
     "lottie-react-native": "6.2.0",
     "moment": "2.29.4",
@@ -59,6 +59,7 @@
     "react-native-htmlview": "0.17.0",
     "react-native-linear-gradient": "2.8.1",
     "react-native-magnus": "1.0.63",
+    "react-native-maps": "^1.10.0",
     "react-native-modal": "13.0.1",
     "react-native-modal-datetime-picker": "17.0.0",
     "react-native-paper": "5.10.4",

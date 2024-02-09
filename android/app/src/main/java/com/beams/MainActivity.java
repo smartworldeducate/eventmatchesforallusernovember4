@@ -1,4 +1,4 @@
-package com.newbeams;
+package com.eventmatches;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;

@@ -19,25 +19,6 @@ import LinearGradient from 'react-native-linear-gradient';
 import { useSelector } from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 const CustomDrawer = ({ navigation }) => {
-  const [localData, setLocalData] = useState(null);
-  const [data, setData] = useState([]);
-  const userData = useSelector(state => state.userLogin);
-  console.log('drawer data', userData?.user);
-  async function getData(key) {
-    try {
-      const value = await AsyncStorage.getItem(key);
-      if (value !== null) {
-        // console.log('Data retrieved successfully:', value);
-        const parsedData = JSON.parse(value);
-        setLocalData(parsedData);
-        return value;
-      } else {
-        console.log('No data found for key:', key);
-      }
-    } catch (error) {
-      console.error('Error retrieving data:', error);
-    }
-  }
 
   async function saveData() {
    console.log("logout")
@@ -47,15 +28,13 @@ const CustomDrawer = ({ navigation }) => {
     
   }
   // console.log(' drawer lacal data', localData?.EMP_PHOTO);
-  useEffect(() => {
-    getData('loginData');
-  }, []);
+
   return (
     <>
       <LinearGradient
         start={{ x: 1, y: 0 }}
         end={{ x: 0, y: 1 }}
-        colors={['#1C37A5', '#4D69DC']}
+        colors={['#0AA3F5', '#0A8DF5']}
         style={{ flex: 1 }}>
         <View
           style={{
@@ -103,13 +82,13 @@ const CustomDrawer = ({ navigation }) => {
               }}>
               <Image
                 style={{
-                  width: wp(14),
+                  width: '100%',
                   borderWidth: 1,
                   borderColor: 'gray',
-                  height: hp(7),
+                  height:'100%',
                   borderRadius: hp(50),
                 }}
-                source={{ uri: 'group' }}
+                source={{ uri: 'imgthree' }}
                 resizeMode="cover"
               />
             </TouchableOpacity>
@@ -138,117 +117,87 @@ const CustomDrawer = ({ navigation }) => {
               </View>
             </TouchableOpacity>
           </View>
-          <View style={styles.listnameStyle}>
-            <TouchableOpacity onPress={() => navigation.navigate('Attendance')}>
+          <View style={[styles.listnameStyle, { marginTop: hp(2) }]}>
+            <TouchableOpacity
+              onPress={() => navigation.navigate('AllEvents')}>
               <View style={{ flexDirection: 'row', marginLeft: hp(3) }}>
                 <View style={styles.homeleft}>
-                  <Text style={styles.textlistStyle}>Attendance</Text>
+                  <Text style={styles.textlistStyle}>Events</Text>
                 </View>
               </View>
             </TouchableOpacity>
           </View>
-          <View style={styles.listnameStyle}>
-            <TouchableOpacity onPress={() => navigation.navigate('Financial')}>
+          <View style={[styles.listnameStyle, { marginTop: hp(2) }]}>
+            <TouchableOpacity
+              onPress={() => navigation.navigate('Session')}>
               <View style={{ flexDirection: 'row', marginLeft: hp(3) }}>
                 <View style={styles.homeleft}>
-                  <Text style={styles.textlistStyle}>Financials</Text>
+                  <Text style={styles.textlistStyle}>Events Info</Text>
                 </View>
               </View>
             </TouchableOpacity>
           </View>
-          <View style={styles.listnameStyle}>
-            <TouchableOpacity onPress={() => navigation.navigate('TimeLine')}>
+          <View style={[styles.listnameStyle, { marginTop: hp(2) }]}>
+            <TouchableOpacity
+              onPress={() => navigation.navigate('Exibitor')}>
               <View style={{ flexDirection: 'row', marginLeft: hp(3) }}>
                 <View style={styles.homeleft}>
-                  <Text style={styles.textlistStyle}>Timeline</Text>
+                  <Text style={styles.textlistStyle}>Exhibitor</Text>
                 </View>
               </View>
             </TouchableOpacity>
           </View>
-          <View style={styles.listnameStyle}>
-            <TouchableOpacity onPress={() => navigation.navigate('Reportee')}>
+          <View style={[styles.listnameStyle, { marginTop: hp(2) }]}>
+            <TouchableOpacity
+              onPress={() => navigation.navigate('SpeakerList')}>
               <View style={{ flexDirection: 'row', marginLeft: hp(3) }}>
                 <View style={styles.homeleft}>
-                  <Text style={styles.textlistStyle}>Reportees</Text>
+                  <Text style={styles.textlistStyle}>Speaker</Text>
                 </View>
               </View>
             </TouchableOpacity>
           </View>
-          <View style={styles.listnameStyle}>
-            <TouchableOpacity onPress={() => navigation.navigate('Approcial')}>
+          <View style={[styles.listnameStyle, { marginTop: hp(2) }]}>
+            <TouchableOpacity
+              onPress={() => navigation.navigate('Attendees')}>
               <View style={{ flexDirection: 'row', marginLeft: hp(3) }}>
                 <View style={styles.homeleft}>
-                  <Text style={styles.textlistStyle}>Appraisal</Text>
+                  <Text style={styles.textlistStyle}>Attendees</Text>
                 </View>
               </View>
             </TouchableOpacity>
           </View>
-          <View style={styles.listnameStyle}>
-            <TouchableOpacity onPress={() => navigation.navigate('ChildBss')}>
+          <View style={[styles.listnameStyle, { marginTop: hp(2) }]}>
+            <TouchableOpacity
+              onPress={() => navigation.navigate('Scanner')}>
               <View style={{ flexDirection: 'row', marginLeft: hp(3) }}>
                 <View style={styles.homeleft}>
-                  <Text style={styles.textlistStyle}>Children in BSS</Text>
+                  <Text style={styles.textlistStyle}>Qr Code</Text>
                 </View>
               </View>
             </TouchableOpacity>
           </View>
-          <View style={styles.listnameStyle}>
-            <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
+          <View style={[styles.listnameStyle, { marginTop: hp(2) }]}>
+            <TouchableOpacity
+              onPress={() =>{}}>
               <View style={{ flexDirection: 'row', marginLeft: hp(3) }}>
                 <View style={styles.homeleft}>
-                  <Text style={styles.textlistStyle}>Index</Text>
+                  <Text style={styles.textlistStyle}>Logout</Text>
                 </View>
               </View>
             </TouchableOpacity>
           </View>
-          <View style={styles.listnameStyle}>
-            <TouchableOpacity onPress={() => navigation.navigate('FeedBack')}>
-              <View style={{ flexDirection: 'row', marginLeft: hp(3) }}>
-                <View style={styles.homeleft}>
-                  <Text style={styles.textlistStyle}>Feedback</Text>
-                </View>
-              </View>
-            </TouchableOpacity>
+        </View>
+        <View style={{flex:0.45,flexDirection:'row'}}>
+          <View style={{flex:0.15}}></View>
+          <View style={{flex:0.8}}>
+          <Image
+            style={{ width: '107%', height: '100%', paddingTop: hp(0) }}
+            source={{ uri: 'drawerimg' }}
+            resizeMode="contain"
+          />
           </View>
-          <View style={styles.listnameStyle}>
-            <TouchableOpacity onPress={() => navigation.navigate('Utility')}>
-              <View style={{ flexDirection: 'row', marginLeft: hp(3) }}>
-                <View style={styles.homeleft}>
-                  <Text style={styles.textlistStyle}>Utility</Text>
-                </View>
-              </View>
-            </TouchableOpacity>
-          </View>
-          <View style={{ flexDirection: 'row' }}>
-            <View>
-              <View style={styles.listnameStyle}>
-                <TouchableOpacity
-                  onPress={() => navigation.navigate('TestScreen')}>
-                  <View style={{ flexDirection: 'row', marginLeft: hp(3) }}>
-                    <View style={styles.homeleft}>
-                      <Text style={styles.textlistStyle}>Change Password</Text>
-                    </View>
-                  </View>
-                </TouchableOpacity>
-              </View>
-              <View style={styles.listnameStyle}>
-                <TouchableOpacity
-                  onPress={saveData}>
-                  <View style={{ flexDirection: 'row', marginLeft: hp(3) }}>
-                    <View style={styles.homeleft}>
-                      <Text style={styles.textlistStyle}>Logout</Text>
-                    </View>
-                  </View>
-                </TouchableOpacity>
-              </View>
-            </View>
-            <View>
-              <Image
-                style={{ width: wp(38), height: hp(20) }}
-                source={{ uri: 'dimg' }}
-              />
-            </View>
-          </View>
+       
         </View>
       </LinearGradient>
     </>
@@ -261,24 +210,24 @@ const styles = EStyleSheet.create({
   username: {
     fontSize: '0.7rem',
     color: '#fff',
-    fontWeight: '700',
+    fontWeight: '600',
     marginTop: hp(1),
-    fontFamily: fontFamily.ceraBold,
+    fontFamily: fontFamily.robotoBold,
     fontStyle: 'normal',
   },
   viewProfile: {
     fontSize: '0.5rem',
     color: '#FFF',
     fontSize: hp(1.5),
-    fontWeight: '500',
-    fontFamily: fontFamily.ceraMedium,
+    fontWeight: '400',
+    fontFamily: fontFamily.robotoMedium,
     fontStyle: 'normal',
   },
   textlistStyle: {
-    fontSize: '0.7rem',
+    fontSize: '0.8rem',
     color: '#fff',
-    fontWeight: '500',
-    fontFamily: fontFamily.ceraMedium,
+    fontWeight: '400',
+    fontFamily: fontFamily.robotoMedium,
     fontStyle: 'normal',
   },
   listnameStyle: { width: wp(50), height: hp(5), marginTop: hp(1) },

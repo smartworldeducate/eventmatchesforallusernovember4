@@ -15,33 +15,28 @@ import {
 } from 'react-native-responsive-screen';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import fontFamily from '../../Styles/fontFamily';
+import colors from '../../Styles/colors';
 
-const MainHeader = ({text, iconName, onpressBtn, rightIcon, yearText}) => {
+const MainHeader = ({text, iconName, onpressBtn, rightIcon, textcolor}) => {
   return (
     <>
-      <LinearGradient
-        start={{x: 0, y: 0}}
-        end={{x: 1, y: 0}}
-        colors={['#1C37A5', '#4D69DC']}
+      <View
         style={styles.mainHeader}>
         <StatusBar translucent backgroundColor="transparent" />
         <View style={styles.headerChild}>
           <TouchableOpacity
             onPress={onpressBtn}
-            style={{padding:10,marginTop:hp(-1)}}>
-            <Icon type="light" name={iconName} size={hp(2.5)} color="#fff" />
+            style={{flex:0.15}}
+            >
+            <Icon type="solid" name="arrow-left" size={hp(3)} color="#2CC2E4" />
           </TouchableOpacity>
-          <View style={{marginLeft: hp(-1.5)}}>
+          <View style={{flex:0.4,marginTop:hp(-0.5)}}>
             <Text style={styles.textstyle}>{text}</Text>
           </View>
-          <View style={{marginVertical: hp(0.5)}}>
-            {rightIcon && (
-              <Icon type="light" name={rightIcon} size={hp(2.5)} color="#fff" />
-            )}
-            {yearText && <Text style={styles.textstyle}>{yearText}</Text>}
+          <View style={{marginVertical: hp(0.3),flex:0.5}}>
           </View>
         </View>
-      </LinearGradient>
+      </View>
     </>
   );
 };
@@ -50,24 +45,22 @@ export default MainHeader;
 
 const styles = EStyleSheet.create({
   mainHeader: {
-    height: hp(12),
-    backgroundColor: '#1C37A4',
-    borderBottomRightRadius: hp(3),
-    borderBottomLeftRadius: hp(3),
+    flex:1,
+    marginTop:hp(2),
   },
   headerChild: {
     marginTop: hp(6),
     flexDirection: 'row',
-    width: wp(90),
+    
     justifyContent: 'space-between',
     marginHorizontal: hp(2.5),
   },
   textstyle: {
-    color: '#fff',
+    color:colors.blackColor,
     marginTop: hp(0),
-    fontSize: '0.9rem',
-    fontWeight: '500',
-    fontFamily: fontFamily.ceraMedium,
+    fontSize: hp(2.5),
+    fontWeight: '600',
+    fontFamily: fontFamily.robotoBold,
     fontStyle: 'normal',
   },
 });

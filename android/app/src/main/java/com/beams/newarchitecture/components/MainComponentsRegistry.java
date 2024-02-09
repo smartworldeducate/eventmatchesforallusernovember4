@@ -1,4 +1,4 @@
-package com.newbeams.newarchitecture.components;
+package com.eventmatches.newarchitecture.components;
 
 import com.facebook.jni.HybridData;
 import com.facebook.proguard.annotations.DoNotStrip;
