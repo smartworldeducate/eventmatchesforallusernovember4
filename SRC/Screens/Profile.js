@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   ScrollView,
   FlatList,
+  Linking,
 } from 'react-native';
 import React, {useState} from 'react';
 import MainHeader from '../Components/Headers/MainHeader';
@@ -18,6 +19,8 @@ import EStyleSheet from 'react-native-extended-stylesheet';
 import colors from '../Styles/colors';
 import fontFamily from '../Styles/fontFamily';
 const Profile = props => {
+  const {item} = props.route.params;
+  console.log('speaker detail==', item);
   const [abstract, setAbstract] = useState(true);
   const [speaker, setSpeaker] = useState(false);
   const [resurces, setResurces] = useState(false);
@@ -63,59 +66,111 @@ const Profile = props => {
   ];
   const renderItem = ({item, index}) => {
     return (
-      <View style={{ flex: 0.19, borderRadius: hp(3), borderWidth: 1, borderColor: '#cdcdcd', flexDirection: 'row',marginTop:hp(1.5) }}>
-      <View style={{ flex: 0.45, height: hp[(5)] }}>
-        {/* banertwo */}
-        <Image
-          style={{ width: '100%', height: '100%', paddingTop: hp(2), borderBottomLeftRadius: hp(2), borderTopLeftRadius: hp(2) }}
-          source={{ uri: item.image }}
-          resizeMode="contain"
-        />
-      </View>
-      <View style={{ flex: 0.55 }}>
-        <View style={{ marginHorizontal: hp(1.5), marginVertical: hp(1.5) }}>
-          <Text style={{ color:colors.lightBlack, fontWeight: '600', fontSize: hp(2),fontFamily:fontFamily.robotoBold }}>{item.headingText}</Text>
-          <Text style={{ color: 'gray', fontWeight: '300',fontFamily:fontFamily.robotoLight,fontSize: hp(2) }}>1{item.timetext}</Text>
-          <View style={{ marginTop: hp(0.7) }}>
-            <Text style={{ color: colors.lightBlue, fontWeight: '600',fontFamily:fontFamily.robotoBold,fontSize: hp(2) }}>Workshop</Text>
-          </View>
-          <View style={styles.headerImageSection}>
-            {data.slice(0, 7).map((item, i) => {
-
-              return (
-                <TouchableOpacity
-
-                  style={styles.imageList}
-                  key={i}>
-                  <Image
-                    style={styles.imgStyle}
-                    source={{ uri: item.image }}
-                    resizeMode="cover"
-                  />
-                </TouchableOpacity>
-              );
-
-            })}
-          </View>
-          <View style={{ flexDirection: 'row' }}>
-            <View style={{ flex: 0.6, flexDirection: 'row' }}>
-
-              <View style={{ flex: 0.3 }}>
-                <Icon type="light" name="location-dot" size={hp(2.5)} color="#2CC2E4" />
-              </View>
-
-              <View style={{ flex: 0.9 }}>
-                <Text style={{ color: colors.lightBlack}}>{item.locatoin}</Text>
-              </View>
+      <View
+        style={{
+          flex: 0.19,
+          borderRadius: hp(3),
+          borderWidth: 1,
+          borderColor: '#cdcdcd',
+          flexDirection: 'row',
+          marginTop: hp(1.5),
+        }}>
+        <View style={{flex: 0.45, height: hp[5]}}>
+          {/* banertwo */}
+          <Image
+            style={{
+              width: '100%',
+              height: '100%',
+              paddingTop: hp(2),
+              borderBottomLeftRadius: hp(2),
+              borderTopLeftRadius: hp(2),
+            }}
+            source={{uri: item.image}}
+            resizeMode="contain"
+          />
+        </View>
+        <View style={{flex: 0.55}}>
+          <View style={{marginHorizontal: hp(1.5), marginVertical: hp(1.5)}}>
+            <Text
+              style={{
+                color: colors.lightBlack,
+                fontWeight: '600',
+                fontSize: hp(2),
+                fontFamily: fontFamily.robotoBold,
+              }}>
+              {item.headingText}
+            </Text>
+            <Text
+              style={{
+                color: 'gray',
+                fontWeight: '300',
+                fontFamily: fontFamily.robotoLight,
+                fontSize: hp(2),
+              }}>
+              1{item.timetext}
+            </Text>
+            <View style={{marginTop: hp(0.7)}}>
+              <Text
+                style={{
+                  color: colors.lightBlue,
+                  fontWeight: '600',
+                  fontFamily: fontFamily.robotoBold,
+                  fontSize: hp(2),
+                }}>
+                Workshop
+              </Text>
             </View>
-            <View style={{ flex: 0.1 }}></View>
-            <TouchableOpacity style={{ justifyContent: 'center', alignItems: 'center', flex: 0.4, borderRadius: hp(0.9), borderColor: '#2CC2E4', borderWidth: 1, height: hp(5), marginTop: hp(-1.4), marginLeft: hp(-1), backgroundColor: '#2CC2E4',height:hp(4) }}>
-              <Text style={{ color: '#fff', fontWeight: '600' }}>Register</Text>
-            </TouchableOpacity>
+            <View style={styles.headerImageSection}>
+              {data.slice(0, 7).map((item, i) => {
+                return (
+                  <TouchableOpacity style={styles.imageList} key={i}>
+                    <Image
+                      style={styles.imgStyle}
+                      source={{uri: item.image}}
+                      resizeMode="cover"
+                    />
+                  </TouchableOpacity>
+                );
+              })}
+            </View>
+            <View style={{flexDirection: 'row'}}>
+              <View style={{flex: 0.6, flexDirection: 'row'}}>
+                <View style={{flex: 0.3}}>
+                  <Icon
+                    type="light"
+                    name="location-dot"
+                    size={hp(2.5)}
+                    color="#2CC2E4"
+                  />
+                </View>
+
+                <View style={{flex: 0.9}}>
+                  <Text style={{color: colors.lightBlack}}>
+                    {item.locatoin}
+                  </Text>
+                </View>
+              </View>
+              <View style={{flex: 0.1}}></View>
+              <TouchableOpacity
+                style={{
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  flex: 0.4,
+                  borderRadius: hp(0.9),
+                  borderColor: '#2CC2E4',
+                  borderWidth: 1,
+                  height: hp(5),
+                  marginTop: hp(-1.4),
+                  marginLeft: hp(-1),
+                  backgroundColor: '#2CC2E4',
+                  height: hp(4),
+                }}>
+                <Text style={{color: '#fff', fontWeight: '600'}}>Register</Text>
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
       </View>
-    </View>
     );
   };
 
@@ -141,117 +196,144 @@ const Profile = props => {
         translucent
         backgroundColor="transparent"
       />
-      <View style={{flex: 0.2}}>
+      <View style={{flex: 0.18}}>
         <MainHeader
           text={'Profile'}
           onpressBtn={() => props.navigation.goBack()}
         />
       </View>
-      {/* <View style={{flex: 0.05}}></View> */}
-      <View style={{flex: 0.37}}>
-        <View
-          style={{flex: 0.5, justifyContent: 'center', alignItems: 'center'}}>
-          <Image
-            style={{width: '100%', height: '100%', borderRadius: hp(0)}}
-            source={{uri: 'imgone'}}
-            resizeMode="contain"
-          />
-        </View>
+      <View style={{flex: 0.3}}>
         <View
           style={{
-            flex: 0.3,
-            justifyContent: 'center',
-            alignItems: 'center',
-            marginTop: hp(1),
-          }}>
-          <Text style={{color:colors.blackColor, fontSize: hp(3.3), fontWeight: '600',fontFamily:fontFamily.robotoBold}}>
-            Harmony Harbor
-          </Text>
-          <Text style={{color: colors.grayDescColor, fontSize: hp(2.5), fontWeight: '400',fontFamily:fontFamily.robotoMedium}}>
-            Design Wizard
-          </Text>
-        </View>
-        {/* <View style={{flex:0.1}}></View> */}
-        <View
-          style={{
-            flex: 0.3,
-            marginHorizontal: hp(2.5),
-            justifyContent: 'center',
-            marginVertical: hp(2),
+            flex: 0.71,
             flexDirection: 'row',
+            justifyContent: 'center',
             alignItems: 'center',
-            //   backgroundColor:'red'
           }}>
-          <TouchableOpacity
-            onPress={abstractHandler}
-            style={{
-              flex: 0.37,
-              borderRadius: hp(5),
-              borderWidth: 2,
-              borderColor: '#2CC2E4',
-              height: hp(6),
-              justifyContent: 'center',
-              alignItems: 'center',
-              backgroundColor: abstract ? '#2CC2E4' : '#fff',
-            }}>
-            <Text
+          <View style={{flex: 0.3}}></View>
+          <View style={{flex: 0.3}}>
+            <Image
               style={{
-                color: abstract ? '#fff' : '#2CC2E4',
-                fontSize: hp(2),
-                fontWeight: '600',
-                fontFamily:fontFamily.robotoBold
-              }}>
-              About
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={speakerHandler}
+                width: '100%',
+                height: '100%',
+                borderRadius: hp(0),
+                borderRadius: hp(50),
+              }}
+              source={{uri: item?.image_name}}
+              resizeMode="contain"
+            />
+          </View>
+
+          <View style={{flex: 0.3}}></View>
+        </View>
+        <View
+          style={{
+            flex: 0.29,
+            justifyContent: 'center',
+            alignItems: 'center',
+            marginTop: hp(2),
+          }}>
+          <Text
             style={{
-              flex: 0.37,
-              borderRadius: hp(5),
-              borderWidth: 2,
-              borderColor: '#2CC2E4',
-              height: hp(6),
-              justifyContent: 'center',
-              alignItems: 'center',
-              marginHorizontal: hp(1),
-              backgroundColor: speaker ? '#2CC2E4' : '#fff',
+              color: colors.blackColor,
+              fontSize: hp(2.8),
+              fontWeight: '600',
+              fontFamily: fontFamily.robotoBold,
             }}>
-            <Text
-              style={{
-                color: speaker ? '#fff' : '#2CC2E4',
-                fontSize: hp(2),
-                fontWeight: '600',
-                fontFamily:fontFamily.robotoBold
-              }}>
-              Profile
-            </Text>
-            {/* <Text style={{color:'#2CC2E4',fontSize:hp(1.3),fontWeight:'300'}}>8th, Nov 2022</Text> */}
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={resucesHandler}
+            {item?.speaker_name}
+          </Text>
+          <Text
             style={{
-              flex: 0.37,
-              borderRadius: hp(5),
-              borderWidth: 2,
-              borderColor: '#2CC2E4',
-              height: hp(6),
-              justifyContent: 'center',
-              alignItems: 'center',
-              backgroundColor: resurces ? '#2CC2E4' : '#fff',
+              color: colors.grayDescColor,
+              fontSize: hp(2),
+              fontWeight: '400',
+              fontFamily: fontFamily.robotoMedium,
             }}>
-            <Text
-              style={{
-                color: resurces ? '#fff' : '#2CC2E4',
-                fontSize: hp(2),
-                fontWeight: '600',
-                fontFamily:fontFamily.robotoBold
-              }}>
-              Session
-            </Text>
-          </TouchableOpacity>
+            {item?.designation}
+          </Text>
         </View>
       </View>
+      
+      <View
+        style={{
+          flex:0.12,
+          marginHorizontal: hp(2.5),
+          justifyContent: 'center',
+          marginVertical: hp(2),
+          flexDirection: 'row',
+          alignItems: 'center',
+          // backgroundColor:'green'
+        }}>
+        <TouchableOpacity
+          onPress={abstractHandler}
+          style={{
+            flex: 0.37,
+            borderRadius: hp(5),
+            borderWidth: 2,
+            borderColor: '#2CC2E4',
+            height: hp(6),
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: abstract ? '#2CC2E4' : '#fff',
+          }}>
+          <Text
+            style={{
+              color: abstract ? '#fff' : '#2CC2E4',
+              fontSize: hp(2),
+              fontWeight: '600',
+              fontFamily: fontFamily.robotoBold,
+            }}>
+            About
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={speakerHandler}
+          style={{
+            flex: 0.37,
+            borderRadius: hp(5),
+            borderWidth: 2,
+            borderColor: '#2CC2E4',
+            height: hp(6),
+            justifyContent: 'center',
+            alignItems: 'center',
+            marginHorizontal: hp(1),
+            backgroundColor: speaker ? '#2CC2E4' : '#fff',
+          }}>
+          <Text
+            style={{
+              color: speaker ? '#fff' : '#2CC2E4',
+              fontSize: hp(2),
+              fontWeight: '600',
+              fontFamily: fontFamily.robotoBold,
+            }}>
+            Profile
+          </Text>
+          {/* <Text style={{color:'#2CC2E4',fontSize:hp(1.3),fontWeight:'300'}}>8th, Nov 2022</Text> */}
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={resucesHandler}
+          style={{
+            flex: 0.37,
+            borderRadius: hp(5),
+            borderWidth: 2,
+            borderColor: '#2CC2E4',
+            height: hp(6),
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: resurces ? '#2CC2E4' : '#fff',
+          }}>
+          <Text
+            style={{
+              color: resurces ? '#fff' : '#2CC2E4',
+              fontSize: hp(2),
+              fontWeight: '600',
+              fontFamily: fontFamily.robotoBold,
+            }}>
+            Session
+          </Text>
+        </TouchableOpacity>
+      </View>
+
       {abstract && (
         <View style={{flex: 0.7, marginHorizontal: hp(3)}}>
           <ScrollView>
@@ -263,7 +345,7 @@ const Profile = props => {
                   fontWeight: '300',
                   lineHeight: hp(3),
                   letterSpacing: hp(0.1),
-                  fontFamily:fontFamily.robotoLight
+                  fontFamily: fontFamily.robotoLight,
                 }}>
                 Lörem ipsum resertad bylåns krosm ångerrösta, eftersom Monica
                 Björk. Mik sobel tektig. Valedes tetran, content provider.
@@ -293,19 +375,19 @@ const Profile = props => {
             <View style={{marginBottom: hp(1.5)}}>
               <Text
                 style={{
-                  color:colors.blackColor,
+                  color: colors.blackColor,
                   fontSize: hp(2),
                   fontWeight: '300',
-                  fontFamily:fontFamily.robotoLight
+                  fontFamily: fontFamily.robotoLight,
                 }}>
                 Name
               </Text>
               <Text
                 style={{
-                  color:colors.blackColor,
+                  color: colors.blackColor,
                   fontSize: hp(2.3),
                   fontWeight: '600',
-                  fontFamily:fontFamily.robotoBold
+                  fontFamily: fontFamily.robotoBold,
                 }}>
                 Harmony Harbor
               </Text>
@@ -313,10 +395,10 @@ const Profile = props => {
             <View style={{marginBottom: hp(1)}}>
               <Text
                 style={{
-                  color:colors.blackColor,
+                  color: colors.blackColor,
                   fontSize: hp(2),
                   fontWeight: '300',
-                  fontFamily:fontFamily.robotoLight
+                  fontFamily: fontFamily.robotoLight,
                 }}>
                 Age
               </Text>
@@ -325,7 +407,7 @@ const Profile = props => {
                   color: '#000',
                   fontSize: hp(2.3),
                   fontWeight: '600',
-                  fontFamily:fontFamily.robotoBold
+                  fontFamily: fontFamily.robotoBold,
                 }}>
                 32 Years
               </Text>
@@ -333,19 +415,19 @@ const Profile = props => {
             <View style={{marginBottom: hp(1)}}>
               <Text
                 style={{
-                  color:colors.blackColor,
+                  color: colors.blackColor,
                   fontSize: hp(2),
                   fontWeight: '300',
-                  fontFamily:fontFamily.robotoLight
+                  fontFamily: fontFamily.robotoLight,
                 }}>
                 Phone
               </Text>
               <Text
                 style={{
-                  color:colors.blackColor,
+                  color: colors.blackColor,
                   fontSize: hp(2.3),
                   fontWeight: '600',
-                  fontFamily:fontFamily.robotoBold
+                  fontFamily: fontFamily.robotoBold,
                 }}>
                 01225 465156
               </Text>
@@ -353,20 +435,19 @@ const Profile = props => {
             <View style={{marginBottom: hp(1)}}>
               <Text
                 style={{
-                  color:colors.blackColor,
+                  color: colors.blackColor,
                   fontSize: hp(2),
                   fontWeight: '300',
-                  fontFamily:fontFamily.robotoLight
-                  
+                  fontFamily: fontFamily.robotoLight,
                 }}>
                 Email
               </Text>
               <Text
                 style={{
-                  color:colors.blackColor,
+                  color: colors.blackColor,
                   fontSize: hp(2.3),
                   fontWeight: '600',
-                  fontFamily:fontFamily.robotoBold
+                  fontFamily: fontFamily.robotoBold,
                 }}>
                 harmony.harbor@email.com
               </Text>
@@ -374,19 +455,19 @@ const Profile = props => {
             <View style={{marginBottom: hp(1)}}>
               <Text
                 style={{
-                  color:colors.blackColor,
+                  color: colors.blackColor,
                   fontSize: hp(2),
                   fontWeight: '300',
-                  fontFamily:fontFamily.robotoLight
+                  fontFamily: fontFamily.robotoLight,
                 }}>
                 Industry
               </Text>
               <Text
                 style={{
-                  color:colors.blackColor,
+                  color: colors.blackColor,
                   fontSize: hp(2.3),
                   fontWeight: '600',
-                  fontFamily:fontFamily.robotoBold
+                  fontFamily: fontFamily.robotoBold,
                 }}>
                 Construction Contractors
               </Text>
@@ -394,19 +475,19 @@ const Profile = props => {
             <View style={{marginBottom: hp(1)}}>
               <Text
                 style={{
-                  color:colors.blackColor,
+                  color: colors.blackColor,
                   fontSize: hp(2),
                   fontWeight: '300',
-                  fontFamily:fontFamily.robotoLight
+                  fontFamily: fontFamily.robotoLight,
                 }}>
                 Location
               </Text>
               <Text
                 style={{
-                  color:colors.blackColor,
+                  color: colors.blackColor,
                   fontSize: hp(2.3),
                   fontWeight: '600',
-                  fontFamily:fontFamily.robotoBold
+                  fontFamily: fontFamily.robotoBold,
                 }}>
                 United Kingdom
               </Text>
@@ -414,19 +495,19 @@ const Profile = props => {
             <View style={{marginBottom: hp(1)}}>
               <Text
                 style={{
-                  color:colors.blackColor,
+                  color: colors.blackColor,
                   fontSize: hp(2),
                   fontWeight: '300',
-                  fontFamily:fontFamily.robotoLight
+                  fontFamily: fontFamily.robotoLight,
                 }}>
                 Address
               </Text>
               <Text
                 style={{
-                  color:colors.blackColor,
+                  color: colors.blackColor,
                   fontSize: hp(2.3),
                   fontWeight: '600',
-                  fontFamily:fontFamily.robotoBold
+                  fontFamily: fontFamily.robotoBold,
                 }}>
                 Rosewell Ct, Bath Avon, BA1 2AG
               </Text>
@@ -437,13 +518,11 @@ const Profile = props => {
 
       {resurces && (
         <View style={{flex: 0.7, marginHorizontal: hp(2.5)}}>
-         
-            <FlatList
-              data={cardData}
-              renderItem={renderItem}
-              keyExtractor={(item, index) => index.toString()}
-            />
-         
+          <FlatList
+            data={cardData}
+            renderItem={renderItem}
+            keyExtractor={(item, index) => index.toString()}
+          />
         </View>
       )}
 
@@ -455,34 +534,34 @@ const Profile = props => {
             flexDirection: 'row',
             marginTop: hp(1),
           }}>
-          <View style={{flex: 0.25}}>
+          <TouchableOpacity onPress={ ()=>{Linking.openURL('https://google.com')}} style={{flex: 0.25}}>
             <Image
               style={{width: '100%', height: '100%', paddingTop: hp(2)}}
               source={{uri: 'icon4'}}
               resizeMode="contain"
             />
-          </View>
-          <View style={{flex: 0.25}}>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={ ()=>{Linking.openURL(item?.facebook_url)}} style={{flex: 0.25}}>
             <Image
               style={{width: '100%', height: '100%', paddingTop: hp(2)}}
               source={{uri: 'icon3'}}
               resizeMode="contain"
             />
-          </View>
-          <View style={{flex: 0.25}}>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={ ()=>{Linking.openURL(item?.facebook_url)}} style={{flex: 0.25}}>
             <Image
               style={{width: '100%', height: '100%', paddingTop: hp(2)}}
               source={{uri: 'iconone'}}
               resizeMode="contain"
             />
-          </View>
-          <View style={{flex: 0.25}}>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={ ()=>{Linking.openURL(item?.twitter_url)}} style={{flex: 0.25}}>
             <Image
               style={{width: '100%', height: '100%', paddingTop: hp(2)}}
               source={{uri: 'icontwo'}}
               resizeMode="contain"
             />
-          </View>
+          </TouchableOpacity>
         </View>
       </View>
     </View>

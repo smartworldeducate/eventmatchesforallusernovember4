@@ -1,121 +1,297 @@
+import React, { useState } from 'react';
 import {
-    SafeAreaView,
-    StatusBar,
-    StyleSheet,
-    ImageBackground,
-    View,
-    Text,
-    Image,
-    TextInput,
-    TouchableOpacity,
-    ScrollView
+  SafeAreaView,
+  StatusBar,
+  StyleSheet,
+  ImageBackground,
+  View,
+  Text,
+  Image,
+  TextInput,
+  TouchableOpacity,
+  ScrollView,
+  ToastAndroid,
 } from 'react-native';
 import { Checkbox } from 'galio-framework';
 import {
-    widthPercentageToDP as wp,
-    heightPercentageToDP as hp,
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import Ficon from 'react-native-fontawesome-pro';
-import React, { useState } from 'react'
+import { useDispatch } from 'react-redux';
+import { registerUserHandler } from '../features/register/registerSlice';
 import ViewInput from '../Components/Headers/ViewInput';
 import fontFamily from '../Styles/fontFamily';
 import colors from '../Styles/colors';
 
 const RegisterScreen = (props) => {
-    const [firstName, setFirstName] = useState(null)
-    const [lasttName, setLastName] = useState(null)
-    const [gender, setGender] = useState(null)
-    const [email, setEmail] = useState(null)
-    const [phone, setPhone] = useState(null)
-    const [attendee, setAttendee] = useState(null)
-    const [password, setPassword] = useState(null)
-    const [confirmPass, setConfirmPass] = useState(null)
-    const [checkBox, setCheckBox] = useState(null)
-    return (
-        <View
-            style={{
-                flex: 1,
+  const dispatch = useDispatch();
+  const { email } = props.route.params;
+  const [firstName, setFirstName] = useState(null);
+  const [lasttName, setLastName] = useState(null);
+  const [phone, setPhone] = useState(null);
+  const [password, setPassword] = useState(null);
+  const [confirmPass, setConfirmPass] = useState(null);
+  const [checkBox, setCheckBox] = useState(null);
+  const [showPassword, setShowPassword] = useState(true);
+  const [showPasswordF, setShowPasswordf] = useState(true);
+  const [eyeType, setEyeType] = useState(false);
+  const [eyeTypef, setEyeTypef] = useState(false);
 
-            }}>
-            <StatusBar
-                barStyle={'default'}
-                translucent
-                backgroundColor="transparent"
-            />
-            <View style={{ flex: 1, zIndex: 1 }}>
-                <View style={{ flex: 0.2, marginTop: hp(-2.7) }}>
-                    <Image
-                        source={{ uri: 'vectortop' }}
-                        style={{ width: '100%', height: '100%' }}
-                        resizeMode={'contain'} />
-                </View>
+  const onPressShowPassword = () => {
+    setShowPassword(!showPassword);
+    setEyeType(!eyeType);
+  };
 
-                <ScrollView style={{ flex: 0.5, marginTop: hp(0), zIndex: 1, marginBottom: hp(5) }}>
+  const onPressShowPasswordf = () => {
+    setShowPasswordf(!showPasswordF);
+    setEyeTypef(!eyeTypef);
+  };
 
-                    <View style={{ marginHorizontal: hp(3.5), marginTop: hp(0) }}>
-                        <View style={{ height: hp(6), zIndex: 1 }}>
-                            <Text style={{ color: '#cdcdcd', fontWeight: '400', fontSize: hp(2.5),fontFamily:fontFamily.robotoMedium }}>
-                                To continue, we’ll need some more information for your accoun
-                            </Text>
-                        </View>
-                    </View>
-                    <View style={{ marginHorizontal: hp(3.5), marginTop: hp(0.3), marginBottom: hp(5) }}>
-                        <Text style={{ color:colors.blackColor, fontWeight: '600', fontSize: hp(2.5),fontFamily:fontFamily.robotoBold }}>abc.def@gmail.com</Text>
-                    </View>
-                    {/* firstname */}
-                    <ViewInput name={'First Name'} value={firstName} />
-                    {/* lastname */}
-                    <ViewInput name={'Last Name'} value={lasttName} />
+  const onPressHandler = (fieldName, fieldValue) => {
+    switch (fieldName) {
+      case 'First Name':
+        setFirstName(fieldValue);
+        break;
+      case 'Last Name':
+        setLastName(fieldValue);
+        break;
+      case 'Phone':
+        setPhone(fieldValue);
+        break;
+      case 'Password':
+        setPassword(fieldValue);
+        break;
+      case 'Confirm Password':
+        setConfirmPass(fieldValue);
+        break;
+      default:
+        break;
+    }
+  };
 
-                    {/* gender */}
-                    {/* <ViewInput name={'Gender'} value={gender} /> */}
+  const validatePassword = () => {
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    return passwordRegex.test(password);
+  };
 
+  const handleRegister = async () => {
+    if (!firstName || !lasttName || !phone || !password) {
+      ToastAndroid.showWithGravity(
+        'All fields are required',
+        ToastAndroid.LONG,
+        ToastAndroid.CENTER
+      );
+      return;
+    }
 
-                    {/* email address */}
-                    <ViewInput name={'Email Address'} value={email} />
+    if (!validatePassword()) {
+      ToastAndroid.showWithGravity(
+        'Password should be at least 8 characters long, include at least one number, both upper and lower case letters, and at least one special character.',
+        ToastAndroid.LONG,
+        ToastAndroid.CENTER
+      );
+      return;
+    }
 
-                    {/* phone */}
+    if (password !== confirmPass) {
+      ToastAndroid.showWithGravity(
+        'Password and Confirm Password do not match',
+        ToastAndroid.LONG,
+        ToastAndroid.CENTER
+      );
+      return;
+    }
 
-                    <ViewInput name={'Phone'} value={phone} />
+    const registerUser = await dispatch(
+      registerUserHandler({
+        first_name: firstName,
+        last_name: lasttName,
+        email:email,
+        phone: phone,
+        password: password,
+      })
+    );
 
-                    {/* attendance type */}
-                    {/* <ViewInput name={'Attendee Type'} value={attendee} /> */}
+    if (registerUser.payload.response.success === 1) {
+      props.navigation.navigate('Admins');
+    } else {
+      ToastAndroid.showWithGravity(
+        registerUser.payload.response.message,
+        ToastAndroid.LONG,
+        ToastAndroid.CENTER
+      );
+    }
+  };
 
-                    {/* password */}
-                    <ViewInput name={'Password'} value={password} />
-
-                    {/* confirm pass */}
-                    <ViewInput name={'Confirn Password'} value={confirmPass} />
-
-                    {/* check box */}
-                    <View style={{ marginHorizontal: hp(5), marginTop: hp(2.5) }}>
-                        <Checkbox checkboxStyle={{ size: hp(50) }} iconSize={50} color="#fff" label="Subscribe for future updates" />
-                    </View>
-                    {/* button continue */}
-
-                </ScrollView>
-                <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginHorizontal: hp(3.5), marginBottom: hp(-20),zIndex:1}}>
-                    <View></View>
-                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', justifyContent: 'center', alignItems: 'center' }}>
-                        <View style=
-                            {{ paddingRight: 10 }}>
-                            <Text style={{ color: '#262626ed', fontSize: hp(2.5), fontWeight: '600',fontFamily:fontFamily.robotoBold }}>Continue</Text>
-                        </View>
-                        <TouchableOpacity onPress={() => props.navigation.navigate("HomeScreen")} style={{ width: wp(13.5), height: hp(4.5), backgroundColor: '#2CC2E4', borderRadius: hp(1.5), justifyContent: 'center', alignItems: 'center' }}>
-                            <Ficon type="light" name="arrow-right" color="#FFFFFF" size={25} />
-                        </TouchableOpacity>
-
-                    </View>
-                </View>
-                <View style={{ flex: 0.3, marginLeft: hp(-25.5), marginTop: hp(4) }}>
-                    <Image
-                        source={{ uri: 'vectorbottom' }}
-                        style={{ height: hp(32) }}
-                        resizeMode={'contain'} />
-                </View>
-            </View>
+  return (
+    <View
+      style={{
+        flex: 1,
+      }}>
+      <StatusBar
+        barStyle={'default'}
+        translucent
+        backgroundColor="transparent"
+      />
+      <View style={{flex: 1}}>
+        <View style={{height: hp(13.9)}}>
+          <Image
+            source={{uri: 'vectortop'}}
+            style={{width: '100%', height: '100%'}}
+            resizeMode={'contain'}
+          />
         </View>
-    )
-}
 
-export default RegisterScreen
+        <ScrollView style={{}}>
+          <View
+            style={{
+              height: hp(7),
+              marginHorizontal: hp(3.5),
+              marginTop: hp(0),
+            }}>
+            <View style={{height: hp(6), zIndex: 1}}>
+              <Text
+                style={{
+                  color: '#cdcdcd',
+                  fontWeight: '400',
+                  fontSize: hp(2.5),
+                  fontFamily: fontFamily.robotoMedium,
+                }}>
+                To continue, we’ll need some more information for your accoun
+              </Text>
+            </View>
+          </View>
+          <View
+            style={{
+              height: hp(4),
+              marginHorizontal: hp(3.5),
+              marginTop: hp(0.3),
+              marginBottom: hp(1),
+            }}>
+            <Text
+              style={{
+                color: colors.blackColor,
+                fontWeight: '600',
+                fontSize: hp(2.5),
+                fontFamily: fontFamily.robotoBold,
+              }}>
+              {email}
+            </Text>
+          </View>
+          {/* firstname */}
+          <ViewInput
+            name={'First Name'}
+            value={firstName}
+            onPress={value => onPressHandler('First Name', value)}
+          />
+          {/* lastname */}
+          <ViewInput
+            name={'Last Name'}
+            value={lasttName}
+            onPress={value => onPressHandler('Last Name', value)}
+          />
+
+          {/* phone */}
+
+          <ViewInput
+            name={'Phone'}
+            value={phone}
+            onPress={value => onPressHandler('Phone', value)}
+            keyboardType={'numeric'}
+          />
+
+         
+
+          {/* password */}
+          <ViewInput
+            name={'Password'}
+            value={password}
+            onPress={value => onPressHandler('Password',value)}
+            iconRight={eyeType == true ? 'eye' : 'eye-slash'}
+            maxLength={25}
+            onPressShowPassword={onPressShowPassword}
+            secureTextEntry={showPassword}
+          />
+
+          {/* confirm pass */}
+          <ViewInput
+            name={'Confirn Password'}
+            value={confirmPass}
+            onPress={value => onPressHandler('Confirm Password', value)}
+            iconRight={eyeTypef == true ? 'eye' : 'eye-slash'}
+            maxLength={25}
+            onPressShowPassword={onPressShowPasswordf}
+            secureTextEntry={showPasswordF}
+          />
+
+          {/* check box */}
+          <View style={{marginHorizontal: hp(5), marginTop: hp(2.5)}}>
+            <Checkbox
+              checkboxStyle={{size: hp(50)}}
+              iconSize={50}
+              color="#2CC2E4"
+              label="Subscribe for future updates"
+            />
+          </View>
+          {/* button continue */}
+        </ScrollView>
+        <View style={{height: hp(20), marginLeft: hp(-40)}}>
+          <ImageBackground
+            source={{uri: 'vectorbottom'}}
+            style={{width: '100%', height: '100%'}}
+            resizeMode={'contain'}>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                marginHorizontal: hp(3.5),
+                marginTop: hp(6),
+              }}>
+              <View></View>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}>
+                <View style={{paddingRight: 10}}>
+                  <Text
+                    style={{
+                      color: '#262626ed',
+                      fontSize: hp(2.5),
+                      fontWeight: '600',
+                      fontFamily: fontFamily.robotoBold,
+                    }}>
+                    Continue
+                  </Text>
+                </View>
+                <TouchableOpacity
+                  onPress={handleRegister}
+                  style={{
+                    width: wp(13.5),
+                    height: hp(4.5),
+                    backgroundColor: '#2CC2E4',
+                    borderRadius: hp(1.5),
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}>
+                  <Ficon
+                    type="light"
+                    name="arrow-right"
+                    color="#FFFFFF"
+                    size={25}
+                  />
+                </TouchableOpacity>
+              </View>
+            </View>
+          </ImageBackground>
+        </View>
+      </View>
+    </View>
+  );
+
+};
+
+export default RegisterScreen;

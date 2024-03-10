@@ -6,23 +6,39 @@ import {
   TouchableOpacity,
   ScrollView,
   Image,
+  FlatList,
+  StyleSheet,
+  Linking
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
+import RenderHtml from 'react-native-render-html';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import MainHeader from '../Components/Headers/MainHeader';
 import SessionParagraphText from '../Components/SessionParagraphText';
+import {activityDetailHandler} from '../features/activitydetail/activityDetailSlice'
 import Icon from 'react-native-fontawesome-pro';
 import {color} from '@rneui/base';
 import fontFamily from '../Styles/fontFamily';
 import colors from '../Styles/colors';
+import { useDispatch, useSelector } from 'react-redux';
 const SessionProgramm = (props) => {
+  const dispatch=useDispatch();
+  const activityData=useSelector((state)=>state.acitivityState);
+  const event_id=activityData?.user?.userData?.event_id;
+  const {item} = props.route.params;
+  const detailData=useSelector((state)=>state.activityDetailState);
+    // console.log("detailData===",detailData?.user?.response?.detail);
+    const urlData=detailData?.user?.response?.detail[0];
+    console.log("url===",urlData);
   const [abstract, setAbstract] = useState(true);
   const [speaker, setSpeaker] = useState(false);
   const [resurces, setResurces] = useState(false);
-
+  useEffect(() => {
+    dispatch(activityDetailHandler({"event_id":event_id,"activity_id":item?.activity_id}));
+  }, []);
   const abstractHandler = () => {
     setAbstract(true);
     setSpeaker(false);
@@ -39,6 +55,111 @@ const SessionProgramm = (props) => {
     setResurces(true);
   };
 
+  const tagsStyles = {
+    body: {
+      whiteSpace: 'normal',
+      color: '#aaa',
+    },
+    div: {color: 'blue', fontSize:hp(1.8)},
+    p: {
+      color:colors.descBlack,
+      fontWeight:'400',
+      fontSize: hp(1.8),
+      lineHeight: hp(2.56),
+      fontFamily: fontFamily.robotoMedium,
+      textAlign:'left'
+    }, 
+    span: {color: 'green'}, 
+  };
+  const renderItem=({item,index})=>{
+    console.log("item speaker==",item?.speakers)
+   if(abstract){
+    return(
+      <View>
+         <RenderHtml
+                  contentWidth={400}
+                  source={{
+                    html: item
+                      ? '<p>' + item?.activity_desc + '</p>'
+                      : '',
+                  }}
+                  stylesheet={{color: 'blue'}}
+                  tagsStyles={tagsStyles}
+                />
+      </View>
+    )
+   }
+   if(speaker){
+    return (
+      <View>
+        {item.speakers.map((speaker, index) => (
+          <View key={index}>
+            <TouchableOpacity
+            onPress={() => props.navigation.navigate('Profile')}
+            style={{
+            flex: 1,
+            flexDirection: 'row',
+            height: hp(7),
+            borderRadius: hp(1),
+            borderWidth: 0.5,
+            borderColor: '#cdcdcd',
+            marginVertical: hp(1.5),
+          }}>
+          <View
+             style={{
+               flex: 0.16,
+               justifyContent: 'center',
+               paddingLeft: hp(0.7),
+               flexDirection:'row',
+               justifyContent:'center',
+               alignItems:'center'
+             }}>
+             <Image
+               style={{ width: '90%', height: '90%', paddingTop: hp(0),borderRadius:hp(50) }}
+               source={{ uri: speaker?.image_name }}
+               resizeMode="cover"
+             />
+          </View>
+          <View style={{justifyContent:'center',flex:0.64}}>
+             <Text
+               style={{
+                 color: colors.blackColor,
+                 paddingLeft: hp(1.5),
+                 fontSize: hp(2),
+                 fontWeight: '600',
+                 fontFamily: fontFamily.robotoBold,
+               }}>
+               {speaker.speaker_name}
+             </Text>
+             <Text
+               style={{
+                 color: colors.grayDescColor,
+                 fontSize: hp(2),
+                 paddingLeft: hp(1.5),
+                 fontWeight: '300',
+                 fontFamily: fontFamily.robotoLight,
+               }}>
+               {speaker?.designation}
+             </Text>
+             </View>
+             <View style={{flex:0.2,justifyContent: 'center',alignItems: 'center',}}>
+               <View style={{backgroundColor:'#2CC2E4',paddingHorizontal:hp(1.5),paddingVertical:hp(0.5),borderRadius:hp(1)}}>
+               <Icon
+                  type="light"
+                  name="arrow-right"
+                  size={hp(3)}
+                  color="#fff"
+                />
+               </View>
+             </View>
+           
+         </TouchableOpacity>
+          </View>
+        ))}
+      </View>
+    );
+    }
+  }
   return (
     <View style={{flex: 1}}>
       <StatusBar
@@ -68,18 +189,19 @@ const SessionProgramm = (props) => {
                 Session Details
               </Text>
             </View>
-            <View style={{flex: 0.17, justifyContent: 'center'}}>
+            <View style={{flex: 0.17, justifyContent: 'center',marginTop:hp(2)}}>
               <View
                 style={{
-                  width: hp(5),
-                  height: hp(4),
+                  width: hp(3.5),
+                  height: hp(3.5),
                   backgroundColor: '#2CC2E4',
                   marginHorizontal: hp(1),
                   borderRadius: hp(1),
                   justifyContent: 'center',
                   alignItems: 'center',
+                  
                 }}>
-                <Icon type="light" name="bookmark" size={hp(3)} color="#fff" />
+                <Icon type="light" name="bookmark" size={hp(2.5)} color="#fff" />
               </View>
             </View>
           </View>
@@ -96,9 +218,9 @@ const SessionProgramm = (props) => {
               Panel Discussion
             </Text>
             <Text
-              style={{color:colors.blackColor, fontSize: hp(3), fontWeight: '600',fontFamily:fontFamily.robotoBold}}
+              style={{color:colors.blackColor, fontSize: hp(2.5), fontWeight: '600',fontFamily:fontFamily.robotoBold}}
               numberOfLines={2}>
-              Mastering Events: A Beginner's Guide
+              {item?.activity_name}
             </Text>
           </View>
           <View
@@ -123,11 +245,11 @@ const SessionProgramm = (props) => {
               <View style={{flex: 0.75}}>
                 <Text
                   style={{color:colors.blackColor, fontSize: hp(2.5), fontWeight: '500',fontFamily:fontFamily.robotoMedium}}>
-                  December 14, 2021
+                  {item?.activity_date}
                 </Text>
                 <Text
                   style={{color:colors.descBlack, fontSize: hp(1.7), fontWeight: '400',fontFamily:fontFamily.robotoMedium}}>
-                  Tuesday, 4:00 - 09:00 PM
+                  Tuesday, {item?.start_time} - {item?.end_time}
                 </Text>
               </View>
             </View>
@@ -156,7 +278,7 @@ const SessionProgramm = (props) => {
                 </Text>
                 <Text
                   style={{color:colors.descBlack, fontSize: hp(1.7), fontWeight: '400',fontFamily:fontFamily.robotoMedium}}>
-                 DHA, Lahore
+                 {item?.location}
                 </Text>
               </View>
             </View>
@@ -239,500 +361,55 @@ const SessionProgramm = (props) => {
           </View>
           {abstract && (
             <View style={{flex: 0.7}}>
-              <ScrollView>
-                <View>
-                  <Text
-                    style={{
-                      color:colors.blackColor,
-                      fontSize: hp(2.3),
-                      fontWeight: '600',
-                      fontFamily:fontFamily.robotoBold
-                    }}>
-                    About Session
-                  </Text>
-                  <Text
-                    style={{
-                      color:colors.longDescColor,
-                      fontSize: hp(1.8),
-                      fontWeight: '300',
-                      lineHeight: hp(2.7),
-                      letterSpacing: hp(0.1),
-                      fontFamily:fontFamily.robotoLight
-                    }}>
-                    Lörem ipsum resertad bylåns krosm ångerrösta, eftersom
-                    Monica Björk. Mik sobel tektig. Valedes tetran, content
-                    provider. Intradäväpp tess, i biospesm meganing. Hånade
-                    accelerator idat: i doräbösm inte beböhet. Spertad nången.
-                    Georyr koras ifall soft landing transpol. Astrogt
-                    tetraronyten har fodokåhet. Euror dekrong utom begorade
-                    ultrav göra en labrador. Borade pason betenar augmented
-                    reality. Dor autobel diaskop däna väs. Pseudost preren
-                    soliga homoskapet och döl. Fad åligt har dår eller brexit.
-                    Räbel hypol. Nomofobi kron semifologi ifall semilig. Nepol
-                    vibyfoktig ock i stenokongar geod där. Tyl mikadiligen.
-                    Nirelig Birgit Ekström som besedir dälingar: dibåsamma
-                    parasport. Dor autobel diaskop däna väs. Pseudost preren
-                    soliga homoskapet och döl. Lörem ipsum resertad bylåns krosm
-                    ångerrösta, eftersom Monica Björk. Mik sobel tektig. Valedes
-                    tetran, content provider. Intradäväpp tess, i biospesm
-                    meganing. Hånade accelerator idat: i doräbösm inte beböhet.
-                    Spertad nången. Georyr koras ifall soft landing transpol.
-                    Astrogt tetraronyten har fodokåhet. Euror dekrong utom
-                    begorade ultrav göra en labrador. Borade pason betenar
-                    augmented reality. Dor autobel diaskop däna väs. Pseudost
-                    preren soliga homoskapet och döl. Fad åligt har dår eller
-                    brexit. Räbel hypol. Nomofobi kron semifologi ifall semilig.
-                    Nepol vibyfoktig ock i stenokongar geod där. Tyl
-                    mikadiligen. Nirelig Birgit Ekström som besedir dälingar:
-                    dibåsamma parasport. Dor autobel diaskop däna väs. Pseudost
-                    preren soliga homoskapet och döl.
-                  </Text>
-                </View>
-              </ScrollView>
+              <View style={{flex:0.2,paddingBottom:hp(1)}}>
+              <Text
+              style={{
+                color:colors.blackColor,
+                fontSize: hp(2.3),
+                fontWeight: '600',
+                fontFamily:fontFamily.robotoBold
+              }}>
+              About Session
+            </Text>
+            </View>
+            <View style={{flex:0.8}}>
+            <FlatList
+              data={detailData?.user?.response?.detail}
+              renderItem={renderItem}
+              keyExtractor={(item, index) => index.toString()}
+            />
+            </View>
             </View>
           )}
           {speaker && (
             <View style={{flex: 0.7}}>
-              <ScrollView>
-                <View>
-                  <Text
-                    style={{
-                      color: '#000',
-                      fontSize: hp(2.3),
-                      fontWeight: '600',
-                    }}>
-                    About Session
-                  </Text>
-                </View>
-                <TouchableOpacity
-                onPress={()=>props.navigation.navigate('Profile')}
+              <View style={{flex:0.2}}>
+                <Text
                   style={{
-                    flex: 0.2,
-                    flexDirection: 'row',
-                    // backgroundColor: 'green',
-                    height: hp(7),
-                    borderRadius: hp(1),
-                    borderWidth: 0.5,
-                    borderColor: '#cdcdcd',
-                    marginVertical: hp(1.5),
+                    color: '#000',
+                    fontSize: hp(2.3),
+                    fontWeight: '600',
                   }}>
-                  <View
-                    style={{
-                      flex: 0.15,
-                      justifyContent: 'center',
-                      paddingLeft: hp(1),
-                    }}>
-                    <Image
-                      style={{width: '90%', height: '80%', paddingTop: hp(0)}}
-                      source={{uri: 'imgtwo'}}
-                      resizeMode="cover"
-                    />
-                  </View>
-                  <View style={{flex: 0.7, justifyContent: 'center'}}>
-                    <Text
-                      style={{
-                        color:colors.blackColor,
-                        paddingLeft: hp(1.5),
-                        fontSize: hp(2),
-                        fontWeight: '600',
-                        fontFamily:fontFamily.robotoBold
-                      }}>
-                      TechExplorer
-                    </Text>
-                    <Text
-                      style={{
-                        color:colors.grayDescColor,
-                        fontSize: hp(2),
-                        paddingLeft: hp(1.5),
-                        fontWeight: '300',
-                        fontFamily:fontFamily.robotoLight
-                      }}>
-                      Chief Executive's, Owner
-                    </Text>
-                  </View>
-                  <View
-                    style={{
-                      flex: 0.2,
-                      justifyContent: 'center',
-                      alignItems: 'flex-end',
-                      paddingRight: hp(1),
-                    }}>
-                    <Icon
-                      type="light"
-                      name="arrow-right"
-                      size={hp(3)}
-                      color="#2CC2E4"
-                    />
-                  </View>
-                </TouchableOpacity>
-                <View
-                  style={{
-                    flex: 0.2,
-                    flexDirection: 'row',
-                    // backgroundColor: 'green',
-                    height: hp(7),
-                    borderRadius: hp(1),
-                    borderWidth: 0.5,
-                    borderColor: '#cdcdcd',
-                    marginVertical: hp(1.5),
-                  }}>
-                  <View
-                    style={{
-                      flex: 0.15,
-                      justifyContent: 'center',
-                      paddingLeft: hp(1),
-                    }}>
-                    <Image
-                      style={{width: '90%', height: '80%', paddingTop: hp(0)}}
-                      source={{uri: 'imgone'}}
-                      resizeMode="cover"
-                    />
-                  </View>
-                  <View style={{flex: 0.7, justifyContent: 'center'}}>
-                    <Text
-                      style={{
-                        color:colors.blackColor,
-                        paddingLeft: hp(1.5),
-                        fontSize: hp(2),
-                        fontWeight: '600',
-                        fontFamily:fontFamily.robotoBold
-                      }}>
-                      TechExplorer
-                    </Text>
-                    <Text
-                      style={{
-                        color:colors.grayDescColor,
-                        fontSize: hp(2),
-                        paddingLeft: hp(1.5),
-                        fontWeight: '300',
-                        fontFamily:fontFamily.robotoLight
-                      }}>
-                      Chief Executive's, Owner
-                    </Text>
-                  </View>
-                  <View
-                    style={{
-                      flex: 0.2,
-                      justifyContent: 'center',
-                      alignItems: 'flex-end',
-                      paddingRight: hp(1),
-                    }}>
-                    <Icon
-                      type="light"
-                      name="arrow-right"
-                      size={hp(3)}
-                      color="#2CC2E4"
-                    />
-                  </View>
-                </View>
-                <View
-                  style={{
-                    flex: 0.2,
-                    flexDirection: 'row',
-                    // backgroundColor: 'green',
-                    height: hp(7),
-                    borderRadius: hp(1),
-                    borderWidth: 0.5,
-                    borderColor: '#cdcdcd',
-                    marginVertical: hp(1.5),
-                  }}>
-                  <View
-                    style={{
-                      flex: 0.15,
-                      justifyContent: 'center',
-                      paddingLeft: hp(1),
-                    }}>
-                    <Image
-                      style={{width: '90%', height: '80%', paddingTop: hp(0)}}
-                      source={{uri: 'imgthree'}}
-                      resizeMode="cover"
-                    />
-                  </View>
-                  <View style={{flex: 0.7, justifyContent: 'center'}}>
-                    <Text
-                      style={{
-                        color:colors.blackColor,
-                        paddingLeft: hp(1.5),
-                        fontSize: hp(2),
-                        fontWeight: '600',
-                        fontFamily:fontFamily.robotoBold
-                      }}>
-                      TechExplorer
-                    </Text>
-                    <Text
-                      style={{
-                        color:colors.grayDescColor,
-                        fontSize: hp(2),
-                        paddingLeft: hp(1.5),
-                        fontWeight: '300',
-                        fontFamily:fontFamily.robotoLight
-                      }}>
-                      Chief Executive's, Owner
-                    </Text>
-                  </View>
-                  <View
-                    style={{
-                      flex: 0.2,
-                      justifyContent: 'center',
-                      alignItems: 'flex-end',
-                      paddingRight: hp(1),
-                    }}>
-                    <Icon
-                      type="light"
-                      name="arrow-right"
-                      size={hp(3)}
-                      color="#2CC2E4"
-                    />
-                  </View>
-                </View>
-                <View
-                  style={{
-                    flex: 0.2,
-                    flexDirection: 'row',
-                    // backgroundColor: 'green',
-                    height: hp(7),
-                    borderRadius: hp(1),
-                    borderWidth: 0.5,
-                    borderColor: '#cdcdcd',
-                    marginVertical: hp(1.5),
-                  }}>
-                  <View
-                    style={{
-                      flex: 0.15,
-                      justifyContent: 'center',
-                      paddingLeft: hp(1),
-                    }}>
-                    <Image
-                      style={{width: '90%', height: '80%', paddingTop: hp(0)}}
-                      source={{uri: 'imgfore'}}
-                      resizeMode="cover"
-                    />
-                  </View>
-                  <View style={{flex: 0.7, justifyContent: 'center'}}>
-                    <Text
-                      style={{
-                        color: '#000',
-                        paddingLeft: hp(1.5),
-                        fontSize: hp(2),
-                        fontWeight: '600',
-                      }}>
-                      TechExplorer
-                    </Text>
-                    <Text
-                      style={{
-                        color: 'gray',
-                        fontSize: hp(2),
-                        paddingLeft: hp(1.5),
-                        fontWeight: '300',
-                      }}>
-                      Chief Executive's, Owner
-                    </Text>
-                  </View>
-                  <View
-                    style={{
-                      flex: 0.2,
-                      justifyContent: 'center',
-                      alignItems: 'flex-end',
-                      paddingRight: hp(1),
-                    }}>
-                    <Icon
-                      type="light"
-                      name="arrow-right"
-                      size={hp(3)}
-                      color="#2CC2E4"
-                    />
-                  </View>
-                </View>
-                <View
-                  style={{
-                    flex: 0.2,
-                    flexDirection: 'row',
-                    // backgroundColor: 'green',
-                    height: hp(7),
-                    borderRadius: hp(1),
-                    borderWidth: 0.5,
-                    borderColor: '#cdcdcd',
-                    marginVertical: hp(1.5),
-                  }}>
-                  <View
-                    style={{
-                      flex: 0.15,
-                      justifyContent: 'center',
-                      paddingLeft: hp(1),
-                    }}>
-                    <Image
-                      style={{width: '90%', height: '80%', paddingTop: hp(0)}}
-                      source={{uri: 'imgthree'}}
-                      resizeMode="cover"
-                    />
-                  </View>
-                  <View style={{flex: 0.7, justifyContent: 'center'}}>
-                    <Text
-                      style={{
-                        color:colors.blackColor,
-                        paddingLeft: hp(1.5),
-                        fontSize: hp(2),
-                        fontWeight: '600',
-                        fontFamily:fontFamily.robotoBold
-                      }}>
-                      TechExplorer
-                    </Text>
-                    <Text
-                      style={{
-                        color:colors.grayDescColor,
-                        fontSize: hp(2),
-                        paddingLeft: hp(1.5),
-                        fontWeight: '300',
-                        fontFamily:fontFamily.robotoLight
-                      }}>
-                      Chief Executive's, Owner
-                    </Text>
-                  </View>
-                  <View
-                    style={{
-                      flex: 0.2,
-                      justifyContent: 'center',
-                      alignItems: 'flex-end',
-                      paddingRight: hp(1),
-                    }}>
-                    <Icon
-                      type="light"
-                      name="arrow-right"
-                      size={hp(3)}
-                      color="#2CC2E4"
-                    />
-                  </View>
-                </View>
-                <View
-                  style={{
-                    flex: 0.2,
-                    flexDirection: 'row',
-                    // backgroundColor: 'green',
-                    height: hp(7),
-                    borderRadius: hp(1),
-                    borderWidth: 0.5,
-                    borderColor: '#cdcdcd',
-                    marginVertical: hp(1.5),
-                  }}>
-                  <View
-                    style={{
-                      flex: 0.15,
-                      justifyContent: 'center',
-                      paddingLeft: hp(1),
-                    }}>
-                    <Image
-                      style={{width: '90%', height: '80%', paddingTop: hp(0)}}
-                      source={{uri: 'imgone'}}
-                      resizeMode="cover"
-                    />
-                  </View>
-                  <View style={{flex: 0.7, justifyContent: 'center'}}>
-                    <Text
-                      style={{
-                        color:colors.blackColor,
-                        paddingLeft: hp(1.5),
-                        fontSize: hp(2),
-                        fontWeight: '600',
-                        fontFamily:fontFamily.robotoBold
-                      }}>
-                      TechExplorer
-                    </Text>
-                    <Text
-                      style={{
-                        color:colors.grayDescColor,
-                        fontSize: hp(2),
-                        paddingLeft: hp(1.5),
-                        fontWeight: '300',
-                        fontFamily:fontFamily.robotoLight
-                      }}>
-                      Chief Executive's, Owner
-                    </Text>
-                  </View>
-                  <View
-                    style={{
-                      flex: 0.2,
-                      justifyContent: 'center',
-                      alignItems: 'flex-end',
-                      paddingRight: hp(1),
-                    }}>
-                    <Icon
-                      type="light"
-                      name="arrow-right"
-                      size={hp(3)}
-                      color="#2CC2E4"
-                    />
-                  </View>
-                </View>
-                <View
-                  style={{
-                    flex: 0.2,
-                    flexDirection: 'row',
-                    // backgroundColor: 'green',
-                    height: hp(7),
-                    borderRadius: hp(1),
-                    borderWidth: 0.5,
-                    borderColor: '#cdcdcd',
-                    marginVertical: hp(1.5),
-                  }}>
-                  <View
-                    style={{
-                      flex: 0.15,
-                      justifyContent: 'center',
-                      paddingLeft: hp(1),
-                    }}>
-                    <Image
-                      style={{width: '90%', height: '80%', paddingTop: hp(0)}}
-                      source={{uri: 'imgtwo'}}
-                      resizeMode="cover"
-                    />
-                  </View>
-                  <View style={{flex: 0.7, justifyContent: 'center'}}>
-                    <Text
-                      style={{
-                        color:colors.blackColor,
-                        paddingLeft: hp(1.5),
-                        fontSize: hp(2),
-                        fontWeight: '600',
-                        fontFamily:fontFamily.robotoBold
-                      }}>
-                      TechExplorer
-                    </Text>
-                    <Text
-                      style={{
-                        color:colors.grayDescColor,
-                        fontSize: hp(2),
-                        paddingLeft: hp(1.5),
-                        fontWeight: '300',
-                        fontFamily:fontFamily.robotoLight
-                      }}>
-                      Chief Executive's, Owner
-                    </Text>
-                  </View>
-                  <View
-                    style={{
-                      flex: 0.2,
-                      justifyContent: 'center',
-                      alignItems: 'flex-end',
-                      paddingRight: hp(1),
-                    }}>
-                    <Icon
-                      type="light"
-                      name="arrow-right"
-                      size={hp(3)}
-                      color="#2CC2E4"
-                    />
-                  </View>
-                </View>
-              </ScrollView>
+                  Moderator:
+                </Text>
+              </View>
+              <View style={{flex:0.8}}>
+              <FlatList
+              data={detailData?.user?.response?.detail}
+              renderItem={renderItem}
+              keyExtractor={(item, index) => index.toString()}
+            />
+            </View>
             </View>
           )}
           {resurces && (
-            <View style={{flex: 0.7, height: hp(30)}}>
-              <View style={{flex: 0.45, flexDirection: 'row'}}>
+            <View style={{flex: 0.7, height: hp(34),justifyContent:'center',alignItems:'center'}}>
+              <View style={{flex: 0.45, flexDirection: 'row',marginTop:hp(0),justifyContent:'center',alignItems:'center'}}>
                 <View
                   style={{
                     flex: 0.32,
-                    backgroundColor: '#2CC2E4',
+                    height:hp(13),
+                    backgroundColor: '#2CC2E433',
                     justifyContent: 'center',
                     alignItems: 'center',
                     borderRadius: hp(0.5),
@@ -741,14 +418,15 @@ const SessionProgramm = (props) => {
                     type="light"
                     name="file-pdf"
                     size={hp(5.5)}
-                    color="#fff"
+                    color="#2CC2E4"
                   />
                 </View>
                 <View style={{flex: 0.03, backgroundColor: '#fff'}}></View>
                 <View
                   style={{
                     flex: 0.32,
-                    backgroundColor: '#FF8B66',
+                    height:hp(13),
+                    backgroundColor: '#FF8B6633',
                     justifyContent: 'center',
                     alignItems: 'center',
                     borderRadius: hp(0.5),
@@ -757,38 +435,41 @@ const SessionProgramm = (props) => {
                     type="light"
                     name="file-word"
                     size={hp(5.5)}
-                    color="#fff"
+                    color="#FF8B66"
                   />
                 </View>
                 <View style={{flex: 0.03, backgroundColor: '#fff'}}></View>
                 <View
                   style={{
                     flex: 0.32,
-                    backgroundColor: '#00B6AA',
+                    height:hp(13),
+                    backgroundColor: '#00B6AA33',
                     justifyContent: 'center',
                     alignItems: 'center',
                     borderRadius: hp(0.5),
                   }}>
-                  <Icon type="light" name="image" size={hp(5.5)} color="#fff" />
+                  <Icon type="light" name="image" size={hp(5.5)} color="#00B6AA" />
                 </View>
               </View>
-              <View style={{flex: 0.04, backgroundColor: '#fff'}}></View>
+              <View style={{flex: 0.02, backgroundColor: '#fff'}}></View>
               <View style={{flex: 0.45, flexDirection: 'row'}}>
                 <View
                   style={{
                     flex: 0.32,
-                    backgroundColor: '#00B6AA',
+                    height:hp(13),
+                    backgroundColor: '#00B6AA33',
                     justifyContent: 'center',
                     alignItems: 'center',
                     borderRadius: hp(0.5),
                   }}>
-                  <Icon type="light" name="image" size={hp(5.5)} color="#fff" />
+                  <Icon type="light" name="image" size={hp(5.5)} color="#00B6AA" />
                 </View>
-                <View style={{flex: 0.03, backgroundColor: '#fff'}}></View>
+                <View style={{flex: 0.03}}></View>
                 <View
                   style={{
                     flex: 0.32,
-                    backgroundColor: '#2CC2E4',
+                    height:hp(13),
+                    backgroundColor: '#2CC2E433',
                     justifyContent: 'center',
                     alignItems: 'center',
                     borderRadius: hp(0.5),
@@ -797,14 +478,15 @@ const SessionProgramm = (props) => {
                     type="light"
                     name="file-pdf"
                     size={hp(5.5)}
-                    color="#fff"
+                    color="#2CC2E4"
                   />
                 </View>
-                <View style={{flex: 0.03, backgroundColor: '#fff'}}></View>
+                <View style={{flex: 0.03}}></View>
                 <View
                   style={{
                     flex: 0.32,
-                    backgroundColor: '#FF8B66',
+                    height:hp(13),
+                    backgroundColor: '#FF8B6633',
                     justifyContent: 'center',
                     alignItems: 'center',
                     borderRadius: hp(0.5),
@@ -813,16 +495,64 @@ const SessionProgramm = (props) => {
                     type="light"
                     name="file-word"
                     size={hp(5.5)}
-                    color="#fff"
+                    color="#FF8B66"
                   />
                 </View>
               </View>
+              
             </View>
+            
           )}
         </ScrollView>
+      </View>
+       <View style={{flex: 0.08, backgroundColor: '#fff',justifyContent:'center',alignItems:'center'}}>
+        <View
+          style={{
+            justifyContent: 'center',
+            alignItems: 'center',
+            flexDirection: 'row',
+            marginTop: hp(1),
+          }}>
+          <TouchableOpacity onPress={ ()=>{ Linking.openURL('https://google.com')}} style={{flex: 0.25}}>
+            <Image
+              style={{width: '100%', height: '100%', paddingTop: hp(2)}}
+              source={{uri: 'icon4'}}
+              resizeMode="contain"
+            />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={ ()=>{urlData?.facebook_url && Linking.openURL(urlData?.facebook_url)}} style={{flex: 0.25}}>
+            <Image
+              style={{width: '100%', height: '100%', paddingTop: hp(2)}}
+              source={{uri: 'icon3'}}
+              resizeMode="contain"
+            />
+          </TouchableOpacity>
+          <TouchableOpacity style={{flex: 0.25}}>
+            <Image
+              style={{width: '100%', height: '100%', paddingTop: hp(2)}}
+              source={{uri: 'iconone'}}
+              resizeMode="contain"
+            />
+          </TouchableOpacity>
+          <TouchableOpacity style={{flex: 0.25}}>
+            <Image
+              style={{width: '100%', height: '100%', paddingTop: hp(2)}}
+              source={{uri: 'icontwo'}}
+              resizeMode="contain"
+            />
+          </TouchableOpacity>
+        </View>
       </View>
     </View>
   );
 };
 
 export default SessionProgramm;
+
+
+
+const style=StyleSheet.create({
+  tagsStyles: {
+    color: '#292D32',
+  },
+})

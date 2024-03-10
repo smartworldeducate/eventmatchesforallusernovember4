@@ -1,8 +1,8 @@
 import { createSlice,createAsyncThunk } from "@reduxjs/toolkit";
-import { authService } from "./userService";
-export const registerUser=createAsyncThunk("auth/register",async(userData,thunkAPI)=>{
+import { alleventService } from "../allevents/alleventService";
+export const eventsListHandler=createAsyncThunk("all/events",async(userData,thunkAPI)=>{
     try {
-        return await authService.register(userData)
+        return await alleventService.eventListServices(userData)
     } catch (error) {
        return thunkAPI.rejectWithValue(error) 
     }
@@ -15,19 +15,19 @@ const initialState={
     isLoading:false,
     message:""
 }
-export const authSlice=createSlice({
-    name:'auth',
+export const eventsListSlice=createSlice({
+    name:'cratetag',
     initialState:initialState,
     reducers:{},
     extraReducers:(builder)=>{
-        builder.addCase(registerUser.pending,(state)=>{
+        builder.addCase(eventsListHandler.pending,(state)=>{
             state.isLoading=true
-        }).addCase(registerUser.fulfilled,(state,action)=>{
+        }).addCase(eventsListHandler.fulfilled,(state,action)=>{
             state.isLoading=false,
             state.isError=false,
             state.isSuccess=true,
-            state.message=action.payload
-        }).addCase(registerUser.rejected,(state,action)=>{
+            state.user=action.payload
+        }).addCase(eventsListHandler.rejected,(state,action)=>{
             state.isLoading=false,
             state.isError=true,
             state.isSuccess=false,
@@ -36,4 +36,4 @@ export const authSlice=createSlice({
     }
 })
 
-export default authSlice.reducer
+export default eventsListSlice.reducer

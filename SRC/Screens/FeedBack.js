@@ -7,7 +7,7 @@ import {
     widthPercentageToDP as wp,
     heightPercentageToDP as hp,
   } from 'react-native-responsive-screen';
-const FeedBack = () => {
+const FeedBack = (props) => {
     const [feedback,setFeedback]=useState('')
   return (
     <View style={{flex:1}}>

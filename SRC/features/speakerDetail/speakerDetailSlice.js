@@ -1,8 +1,8 @@
 import { createSlice,createAsyncThunk } from "@reduxjs/toolkit";
-import { userService } from "./adminService";
-export const listUser=createAsyncThunk("admin/userlist",async(userData,thunkAPI)=>{
+import { speakerDetailsService } from "../speakerDetail/speakerDetailService";
+export const speakerDetailHandler=createAsyncThunk("speaker/detail",async(userData,thunkAPI)=>{
     try {
-        return await userService.userList()
+        return await speakerDetailsService.speakerDetailServices(userData)
     } catch (error) {
        return thunkAPI.rejectWithValue(error) 
     }
@@ -15,19 +15,19 @@ const initialState={
     isLoading:false,
     message:""
 }
-export const userSlice=createSlice({
-    name:'auth',
+export const speakerDetailSlice=createSlice({
+    name:'cratetag',
     initialState:initialState,
     reducers:{},
     extraReducers:(builder)=>{
-        builder.addCase(listUser.pending,(state)=>{
+        builder.addCase(speakerDetailHandler.pending,(state)=>{
             state.isLoading=true
-        }).addCase(listUser.fulfilled,(state,action)=>{
+        }).addCase(speakerDetailHandler.fulfilled,(state,action)=>{
             state.isLoading=false,
             state.isError=false,
             state.isSuccess=true,
-            state.message=action.payload
-        }).addCase(listUser.rejected,(state,action)=>{
+            state.user=action.payload
+        }).addCase(speakerDetailHandler.rejected,(state,action)=>{
             state.isLoading=false,
             state.isError=true,
             state.isSuccess=false,
@@ -36,4 +36,4 @@ export const userSlice=createSlice({
     }
 })
 
-export default userSlice.reducer
+export default speakerDetailSlice.reducer

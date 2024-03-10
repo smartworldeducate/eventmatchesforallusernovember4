@@ -23,8 +23,12 @@ import colors from '../Styles/colors';
 import HeaderTop from '../Components/Headers/HeaderTop';
 import BtnThree from '../Components/BtnThree';
 import fontFamily from '../Styles/fontFamily';
-const HomeScreen = props => {
-
+import { useDispatch, useSelector } from 'react-redux';
+import { activityHomeHandler } from '../features/eventactivityhome/hactivitySlice';
+const HomeScreen = (props) => {
+const activityData=useSelector((state)=>state.acitivityState);
+const event_id=activityData?.user?.userData?.event_id;
+  console.log("homeactivityData==",activityData?.user?.responseData?.response?.activities['1']);
   const [dayone,setDayOne]=useState(true);
   const [daytwo,setDayTwo]=useState(false);
   const [daythree,setDayThree]=useState(false);
@@ -64,21 +68,21 @@ const HomeScreen = props => {
   ]
   const renderItem = ({item, index}) => {
     return (
-      <View style={{ flex: 0.19, borderRadius: hp(3), borderWidth: 1, borderColor: '#cdcdcd', flexDirection: 'row',marginTop:hp(1.5) }}>
+      <TouchableOpacity onPress={()=>props.navigation.navigate('Session',{item})} style={{ flex: 0.19, borderRadius: hp(3), borderWidth: 1, borderColor: '#cdcdcd', flexDirection: 'row',marginTop:hp(1.5) }}>
         <View style={{ flex: 0.45, height: hp[(5)] }}>
           {/* banertwo */}
           <Image
             style={{ width: '100%', height: '100%', paddingTop: hp(2), borderBottomLeftRadius: hp(2), borderTopLeftRadius: hp(2) }}
-            source={{ uri: item.image }}
+            source={{ uri:'banertwo'}}
             resizeMode="contain"
           />
         </View>
         <View style={{ flex: 0.55 }}>
           <View style={{ marginHorizontal: hp(1.5), marginVertical: hp(1.5) }}>
-            <Text style={{ color:colors.lightBlack, fontWeight: '600', fontSize: hp(2),fontFamily:fontFamily.robotoBold }}>{item.headingText}</Text>
-            <Text style={{ color: 'gray', fontWeight: '300',fontFamily:fontFamily.robotoLight,fontSize: hp(2) }}>1{item.timetext}</Text>
-            <View style={{ marginTop: hp(0.7) }}>
-              <Text style={{ color: colors.lightBlue, fontWeight: '600',fontFamily:fontFamily.robotoBold,fontSize: hp(2) }}>Workshop</Text>
+            <Text style={{ color:colors.lightBlack, fontWeight: '600', fontSize: hp(2),fontFamily:fontFamily.robotoBold }} ellipsizeMode={'tail'} numberOfLines={1}>{item?.activity_name}</Text>
+            <Text style={{ color: 'gray', fontWeight: '300',fontFamily:fontFamily.robotoLight,fontSize: hp(2) }}>{item?.start_time} - {item?.end_time}</Text>
+            <View style={{ marginTop: hp(0.7) }}>{}
+              <Text style={{ color: colors.lightBlue, fontWeight: '600',fontFamily:fontFamily.robotoBold,fontSize: hp(2) }}>{item?.activity_type}</Text>
             </View>
             <View style={styles.headerImageSection}>
               {data.slice(0, 7).map((item, i) => {
@@ -106,7 +110,7 @@ const HomeScreen = props => {
                 </View>
 
                 <TouchableOpacity style={{ flex: 0.9 }}>
-                  <Text style={{ color: colors.lightBlack}}>{item.locatoin}</Text>
+                  <Text style={{ color: colors.lightBlack}}>Bristol</Text>
                 </TouchableOpacity>
               </View>
               <View style={{ flex: 0.1 }}></View>
@@ -116,7 +120,7 @@ const HomeScreen = props => {
             </View>
           </View>
         </View>
-      </View>
+      </TouchableOpacity>
     );
   };
   return (
@@ -134,6 +138,7 @@ const HomeScreen = props => {
       <View style={{ flex: 0.2 }}>
         <HeaderTop
           onPressIcon={() => navigation.openDrawer()}
+          onflterPress={()=>props.navigation.navigate("Admins")}
         />
       </View>
 
@@ -154,22 +159,32 @@ const HomeScreen = props => {
             <Text style={{ color:dayone ? "#fff":"#2CC2E4", fontSize: hp(1.3), fontWeight: '300',fontFamily:fontFamily.robotoMedium  }}>8th, Nov 2022</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={dayTwoHandler} style={{ flex: 0.37, borderRadius: hp(5), height: hp(6), borderWidth: 1, borderColor: '#2CC2E4', justifyContent: 'center', alignItems: 'center', marginHorizontal: hp(1),backgroundColor:daytwo ? "#2CC2E4":"#fff", }}>
-            <Text style={{ color:daytwo ? "#fff":"#2CC2E4", fontSize: hp(2), fontWeight: '600',fontFamily:fontFamily.robotoBold }}>DAY 1</Text>
-            <Text style={{ color:daytwo ? "#fff":"#2CC2E4", fontSize: hp(1.3), fontWeight: '300',fontFamily:fontFamily.robotoMedium }}>8th, Nov 2022</Text>
+            <Text style={{ color:daytwo ? "#fff":"#2CC2E4", fontSize: hp(2), fontWeight: '600',fontFamily:fontFamily.robotoBold }}>DAY 2</Text>
+            <Text style={{ color:daytwo ? "#fff":"#2CC2E4", fontSize: hp(1.3), fontWeight: '300',fontFamily:fontFamily.robotoMedium }}>9th, Nov 2022</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={dayThreeHandler} style={{ flex: 0.37, borderRadius: hp(5), height: hp(6), borderWidth: 1, borderColor: '#2CC2E4', justifyContent: 'center', alignItems: 'center',backgroundColor:daythree ? "#2CC2E4":"#fff", }}>
             <Text style={{ color:daythree ? "#fff":"#2CC2E4", fontSize: hp(2), fontWeight: '600',fontFamily:fontFamily.robotoBold }}>DAY 3</Text>
-            <Text style={{ color:daythree ? "#fff":"#2CC2E4", fontSize: hp(1.3), fontWeight: '300',fontFamily:fontFamily.robotoMedium }}>8th, Nov 2022</Text>
+            <Text style={{ color:daythree ? "#fff":"#2CC2E4", fontSize: hp(1.3), fontWeight: '300',fontFamily:fontFamily.robotoMedium }}>10th, Nov 2022</Text>
           </TouchableOpacity>
         </View>
       </View>
 
       <View style={{ flex: 1}}>
-      <FlatList
-        data={cardData}
+        {dayone && ( <FlatList
+        data={activityData?.user?.responseData?.response?.activities['1']}
         renderItem={renderItem}
         keyExtractor={(item, index) => index.toString()}
-      />
+      />)}
+        {daytwo && ( <FlatList
+        data={activityData?.user?.responseData?.response?.activities['2']}
+        renderItem={renderItem}
+        keyExtractor={(item, index) => index.toString()}
+      />)}
+      {daythree && ( <FlatList
+        data={activityData?.user?.responseData?.response?.activities['3']}
+        renderItem={renderItem}
+        keyExtractor={(item, index) => index.toString()}
+      />)}
     </View>
       
     </SafeAreaView>

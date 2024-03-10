@@ -29,6 +29,7 @@ import Scanner from './SRC/Screens/Scanner';
 import MapScreen from './SRC/Screens/MapScreen';
 import FeedBack from './SRC/Screens/FeedBack';
 import { View } from 'react-native';
+import Admins from './SRC/Screens/Admin';
 
 const Drawer = createDrawerNavigator();
 const Tab = createBottomTabNavigator();
@@ -71,9 +72,9 @@ const BottomTabApplication = () => {
         component={HomeScreen}
         options={{
           tabBarIcon: ({color, size}) => (
-            <Icon type='light' name="house" size={hp(3)} color={color} />
+            <Icon type='light' name="person-chalkboard" size={hp(3)} color={color} />
           ),
-          tabBarLabel: 'Home',
+          tabBarLabel: 'Exibitor',
           tabBarLabelStyle: {
             fontSize: hp(1.8),
           },
@@ -109,13 +110,13 @@ const BottomTabApplication = () => {
         }}
       />
        <Tab.Screen
-        name="SessionProgrammTab"
-        component={SessionProgramm}
+        name="Attendees"
+        component={Attendees}
         options={{
           tabBarIcon: ({color, size}) => (
             <Icon type='light' name="clipboard-list-check" size={hp(3)} color={color} />
           ),
-          tabBarLabel: 'My Session',
+          tabBarLabel: 'Attendees',
           tabBarLabelStyle: {
             fontSize: hp(1.8),
           },
@@ -148,7 +149,15 @@ const Routes = () => {
         initialRouteName={'Splash'}
         screenOptions={{headerShown: false}}>
         <Stack.Screen name="Splash" component={Splash} />
-        <Stack.Screen name="Home" component={HomeScreen} />
+        {/* <Stack.Screen name="Home" component={HomeScreen} /> */}
+        {/* <Stack.Screen name="Home">
+        {props => (
+          <React.Fragment>
+            <HomeScreen {...props} />
+            <DrawerStack {...props} />
+          </React.Fragment>
+        )}
+      </Stack.Screen> */}
         <Stack.Screen name="NextScreen" component={NextScreen} />
         <Stack.Screen name="SigninScreen" component={SigninScreen} />
         <Stack.Screen name="SigninPassword" component={SigninPassword} />
@@ -162,6 +171,7 @@ const Routes = () => {
         <Stack.Screen name="Sponsor" component={Sponsor} />
         <Stack.Screen name="AllEvents" component={AllEvents} />
         <Stack.Screen name="FeedBack" component={FeedBack} />
+        <Stack.Screen name="Admins" component={Admins} />
         
       </Stack.Navigator>
     </NavigationContainer>

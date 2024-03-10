@@ -9,7 +9,7 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import { useNavigation } from '@react-navigation/native';
-const HeaderTop = ({ onPressIcon }) => {
+const HeaderTop = ({ onPressIcon,onflterPress }) => {
 
   const navigation = useNavigation();
   const handleNavigate = (routeName, clearStack, params) => {
@@ -52,7 +52,7 @@ const HeaderTop = ({ onPressIcon }) => {
         <TouchableOpacity
           activeOpacity={0.8}
           style={{ alignItems: 'flex-end', marginTop: hp(2) }}
-          onPress={() => { }}>
+          onPress={onflterPress}>
           <Image
             style={{ width: '70%', height: '70%', paddingTop: hp(2) }}
             source={{ uri: 'filter' }}

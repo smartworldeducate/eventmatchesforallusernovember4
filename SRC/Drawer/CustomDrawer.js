@@ -23,7 +23,7 @@ const CustomDrawer = ({ navigation }) => {
   async function saveData() {
    console.log("logout")
       await AsyncStorage.removeItem("loginData");
-      navigation.dispatch(StackActions.replace('Login'))
+      navigation.dispatch(StackActions.replace('SigninScreen'))
       
     
   }
@@ -117,7 +117,7 @@ const CustomDrawer = ({ navigation }) => {
               </View>
             </TouchableOpacity>
           </View>
-          <View style={[styles.listnameStyle, { marginTop: hp(2) }]}>
+          {/* <View style={[styles.listnameStyle, { marginTop: hp(2) }]}>
             <TouchableOpacity
               onPress={() => navigation.navigate('AllEvents')}>
               <View style={{ flexDirection: 'row', marginLeft: hp(3) }}>
@@ -126,8 +126,8 @@ const CustomDrawer = ({ navigation }) => {
                 </View>
               </View>
             </TouchableOpacity>
-          </View>
-          <View style={[styles.listnameStyle, { marginTop: hp(2) }]}>
+          </View> */}
+          {/* <View style={[styles.listnameStyle, { marginTop: hp(2) }]}>
             <TouchableOpacity
               onPress={() => navigation.navigate('Session')}>
               <View style={{ flexDirection: 'row', marginLeft: hp(3) }}>
@@ -136,7 +136,7 @@ const CustomDrawer = ({ navigation }) => {
                 </View>
               </View>
             </TouchableOpacity>
-          </View>
+          </View> */}
           <View style={[styles.listnameStyle, { marginTop: hp(2) }]}>
             <TouchableOpacity
               onPress={() => navigation.navigate('Exibitor')}>
@@ -179,7 +179,7 @@ const CustomDrawer = ({ navigation }) => {
           </View>
           <View style={[styles.listnameStyle, { marginTop: hp(2) }]}>
             <TouchableOpacity
-              onPress={() =>{}}>
+              onPress={saveData}>
               <View style={{ flexDirection: 'row', marginLeft: hp(3) }}>
                 <View style={styles.homeleft}>
                   <Text style={styles.textlistStyle}>Logout</Text>

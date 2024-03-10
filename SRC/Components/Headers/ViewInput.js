@@ -1,5 +1,5 @@
 import React from 'react';
-import {TextInput, View, Text, KeyboardAvoidingView, Platform} from 'react-native';
+import {TextInput, View, Text, KeyboardAvoidingView, Platform, TouchableOpacity} from 'react-native';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -7,11 +7,10 @@ import {
 import EStyleSheet from 'react-native-extended-stylesheet';
 import fontFamily from '../../Styles/fontFamily';
 import colors from '../../Styles/colors'
-const ViewInput = ({value, name}) => {
+import Icon from 'react-native-fontawesome-pro';
+const ViewInput = ({value, name,onPress,iconRight,maxLength,onPressShowPassword,keyboardType,onChange,secureTextEntry}) => {
   return (
-    <KeyboardAvoidingView style={styles.container}
-    behavior={Platform.OS === 'ios' ? 'padding' : 'height'} 
-    keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 100} >
+    
     <View>
       <View
         style={{
@@ -30,21 +29,29 @@ const ViewInput = ({value, name}) => {
           borderColor: '#cdcdcd',
           borderWidth: 1,
           height: hp(5.5),
+          flexDirection:'row'
         }}>
-        <View style={{paddingHorizontal: hp(1.5)}}>
+        <View style={{paddingHorizontal: hp(1.5),flex:0.85}}>
           <TextInput
             style={{color:colors.blackColor, fontSize: hp(1.6), fontWeight: '600',fontFamily:fontFamily.robotoBold}}
             placeholder={name}
+            onChangeText={onPress}
+            onChange={onChange}
             value={value}
             placeholderTextColor={'#cdcdcd'}
-            keyboardType="default" 
             autoCapitalize="none" 
             autoCorrect={false}
-            secureTextEntry={false}></TextInput>
+            maxLength={maxLength}
+            keyboardType={keyboardType}
+            secureTextEntry={secureTextEntry}
+            ></TextInput>
         </View>
+        <TouchableOpacity onPress={onPressShowPassword} style={{flex:0.15,justifyContent:'center',alignItems:'center'}}>
+            {iconRight ? <Icon type='light' name={iconRight} size={hp(2.5)} color='#000' /> : '' }
+        </TouchableOpacity>
       </View>
     </View>
-    </KeyboardAvoidingView>
+   
   );
 };
 export default ViewInput;

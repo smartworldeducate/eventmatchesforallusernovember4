@@ -23,10 +23,31 @@ import {color} from '@rneui/base';
 // import LoaderKit from 'react-native-loader-kit';
 
 const Splash = props => {
+  const [data, setData] = useState(null);
+  async function getData(key) {
+    try {
+      const value = await AsyncStorage.getItem(key);
+      if (value !== null) {
+        console.log('Data retrieved successfully:', value);
+        const parsedData = JSON.parse(value);
+        setData(parsedData);
+
+        // console.log('here is splash screen data', parsedData?.EMP_NAME);
+        if (parsedData) {
+          props.navigation.dispatch(StackActions.replace('Admins'))
+        }
+        return parsedData;
+      } else {
+        props.navigation.dispatch(StackActions.replace('NextScreen'));
+        // console.log('No data found for key:', key);
+      }
+    } catch (error) {
+      console.error('Error retrieving data:', error);
+    }
+  }
   useEffect(() => {
-    setTimeout(() => {
-      props.navigation.dispatch(StackActions.replace('NextScreen'));
-    }, 3000);
+      getData('loginData');
+      // props.navigation.dispatch(StackActions.replace('NextScreen'));
   }, []);
   return (
     <SafeAreaView
