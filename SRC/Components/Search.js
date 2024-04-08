@@ -9,25 +9,32 @@ import EStyleSheet from 'react-native-extended-stylesheet';
 import fontFamily from '../Styles/fontFamily';
 import colors from '../Styles/colors';
 
-const Search = () => {
+const Search = ({setSearchQuery}) => {
   const [searchData, setSearchData] = useState('');
+  const handleSearch = (text) => {
+    setSearchData(text);
+    setSearchQuery(text);
+  };
   return (
     <View
-      style={{flex: 1, marginHorizontal: hp(2.5), justifyContent: 'center'}}>
+      style={{flex: 1, marginHorizontal: hp(2.5),flexDirection:'row' }}>
       <TouchableOpacity activeOpacity={0.8} style={styles.homeSearch}>
-        <TextInput
+       
+       <View style={{flex:0.85}}>
+       <TextInput
           multiline={true}
           style={{marginHorizontal: hp(1.5), color: '#000'}}
           value={searchData}
-          onChangeText={text => setSearchData(text)}
+          onChangeText={(e)=>handleSearch(e)}
           returnKeyType={'done'}
           iconName={'user'}
-          placeholder={'Search Employee'}
+          placeholder={'Search Name'}
           placeholderColor={'gray'}
           iconColor={colors.loginIconColor}
           placeholderTextColor="#000"
           placeholderStyle={styles.plaseholderStyle}></TextInput>
-        <TouchableOpacity
+       </View>
+           <TouchableOpacity
           activeOpacity={0.8}
           style={styles.searchicon}
           onPress={() => {}}>
@@ -38,7 +45,7 @@ const Search = () => {
             color="#292D32"
           />
         </TouchableOpacity>
-      </TouchableOpacity>
+        </TouchableOpacity>
     </View>
   );
 };
@@ -48,21 +55,20 @@ export default Search;
 const styles = EStyleSheet.create({
   homeSearch: {
     flexDirection: 'row',
-    backgroundColor: '#F4F6F9',
+    flex:1,
+    backgroundColor: '#fff',
     justifyContent: 'space-between',
-    borderRadius: hp(5),
-    shadowColor: '#000',
-    shadowOpacity: 0.5,
-    shadowRadius: 4,
-    elevation: 4,
+    borderRadius: hp(50),
+      shadowColor: '#000',
+      shadowOpacity: 0.5,
+      shadowRadius: 4,
+      elevation: 4,height:hp(5),
+      height:hp(6)
+
+   
   },
 
-  homesearchView: {
-    flexDirection: 'row',
-    backgroundColor: 'green',
-  },
-
-  searchicon: {marginTop: hp(1.5), marginRight: hp(2)},
+  searchicon: {flex:0.15, borderRadius: hp(50),justifyContent:'center',alignItems: 'center'},
   placeholderStyle: {
     fontSize: hp(3),
     fontWeight: '300',

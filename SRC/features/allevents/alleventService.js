@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const eventListServices=async(userData)=>{
-    const response=await axios.post("https://dev-app.eventmatches.com/administrator/Api/eventList",userData,{
+    const response=await axios.post("https://app.eventmatches.com/administrator/Api/eventList",userData,{
         headers: {
             "Content-Type": "multipart/form-data"
         },

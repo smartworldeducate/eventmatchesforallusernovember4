@@ -1,4 +1,4 @@
-import { View, Text, StatusBar, TouchableOpacity, Image, FlatList, Modal, ActivityIndicator } from 'react-native';
+import { View, Text, StatusBar, TouchableOpacity, Image, FlatList, Modal, ActivityIndicator, ToastAndroid } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import MainHeader from '../Components/Headers/MainHeader';
 import BtnThree from '../Components/BtnThree';
@@ -13,11 +13,13 @@ import {
 } from 'react-native-responsive-screen';
 import { useDispatch, useSelector } from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-const PrevEvents = (props) => {
-  const {user_id} = props.route.params;
+const Events = (props) => {
+//   const {user_id} = props.route.params;
   const dispatch = useDispatch();
   const activityData=useSelector((state)=>state.acitivityState);
   const [data, setData] = useState(null);
+  const [loginData, setLoginData] = useState(null);
+  // console.log("userid==",data?.user_id)
   // 6502
   async function saveData(value) {
     const jsonString = JSON.stringify(value);
@@ -28,21 +30,56 @@ const PrevEvents = (props) => {
       console.error('Error saving data:', error);
     }
   }
+  async function getData(key) {
+    try {
+      const value = await AsyncStorage.getItem(key);
+      if (value !== null) {
+        console.log('Data retrieved successfully:', value);
+        const parsedData = JSON.parse(value);
+        setData(parsedData);
+        dispatch(pastEventHandler({"user_id":parsedData?.user_id}));
+        console.log('here is splash screen data', parsedData?.user_id);
+      } else {
+        console.log('No data found for key:', key);
+      }
+    } catch (error) {
+      console.error('Error retrieving data:', error);
+    }
+  }
+  // async function geLogintData(key) {
+  //   try {
+  //     const value = await AsyncStorage.getItem(key);
+  //     if (value !== null) {
+  //       // console.log('Data retrieved successfully:', value);
+  //       const parsedData = JSON.parse(value);
+  //       setLoginData(parsedData);
+  //     } 
+  //   } catch (error) {
+  //     console.error('Error retrieving data:', error);
+  //   }
+  // }
   const pastEventData=useSelector((state)=>state.pastEventState);
   console.log("pastEventData==",pastEventData?.user?.response?.events);
   useEffect(() => {
-    dispatch(pastEventHandler({"user_id":user_id}));
+    // geLogintData('loginData');
+    getData('userSession');
   }, []);
   const propHandler=(event_id)=>{
-    saveData({user_id:user_id,event_id:event_id});
+    // saveData({user_id:data?.user_id,event_id:event_id});
     if(event_id){
-     dispatch(activityHomeHandler({"event_id":event_id}));
-     if(activityData?.user?.responseData?.response?.success===1){
+    //  dispatch(activityHomeHandler({"event_id":event_id,user_id:data?.login_id}));
+    //  if(activityData?.user?.responseData?.response?.success===1){
       props.navigation.navigate('HomeScreen');
+    //  }else{
+    //   ToastAndroid.showWithGravity(
+    //     activityData?.user?.responseData?.response?.message,
+    //     ToastAndroid.LONG,
+    //     ToastAndroid.CENTER,
+    //   );
      }
-    }else{
-      console.log("something went wrong");
-    }
+    // }else{
+    //   console.log("something went wrong");
+    // }
   }
   const renderItem = ({item, index}) => {
     return (
@@ -74,11 +111,58 @@ const PrevEvents = (props) => {
             resizeMode="cover"
           /> 
           </View>
-          <View style={{flex:0.72,marginLeft:hp(1)}}>
-              <Text style={{color:colors.blackColor,fontSize:hp(2),flexWrap:'wrap',fontWeight:'500',fontFamily:fontFamily.robotoLight}} ellipsizeMode='tail' numberOfLines={1}>{item?.event_name}</Text>
-              <Text style={{color:colors.blackColor,fontSize:hp(2),flexWrap:'wrap',fontWeight:'500',fontFamily:fontFamily.robotoLight}}><Text style={{color:colors.blackColor,fontWeight:'500',fontFamily:fontFamily.robotoMedium}}>Start Date</Text> :{item?.start_date}</Text>
-              <Text style={{color:colors.blackColor,fontSize:hp(2),flexWrap:'wrap',fontWeight:'500',fontFamily:fontFamily.robotoLight}}><Text style={{color:colors.blackColor,fontWeight:'500',fontFamily:fontFamily.robotoMedium}}>End Date</Text> :  {item?.end_date}</Text>
-
+          <View style={{flex: 0.72, marginLeft: hp(1)}}>
+            <Text
+              style={{
+                color: colors.grayDescColor,
+                fontSize: hp(2),
+                flexWrap: 'wrap',
+                fontWeight: '500',
+                fontFamily: fontFamily.robotoLight,
+              }}
+              ellipsizeMode="tail"
+              numberOfLines={3}>
+              {item?.event_name}
+            </Text>
+            <Text
+              style={{
+                color: colors.grayDescColor,
+                fontSize: hp(1.8),
+                flexWrap: 'wrap',
+                fontWeight: '500',
+                fontFamily: fontFamily.robotoLight,
+                paddingTop:hp(0.5)
+              }}>
+              {/* <Text
+                style={{
+                  color: colors.descBlack,
+                  fontWeight: '500',
+                  fontSize: hp(1.7),
+                  fontFamily: fontFamily.robotoMedium,
+                }}>
+                Start Date
+              </Text>{' '} */}
+              {item?.start_date} - {item?.end_date}
+            </Text>
+            {/* <Text
+              style={{
+                color: colors.blackColor,
+                fontSize: hp(1.7),
+                flexWrap: 'wrap',
+                fontWeight: '500',
+                fontFamily: fontFamily.robotoLight,
+              }}>
+              <Text
+                style={{
+                  color: colors.blackColor,
+                  fontWeight: '500',
+                  fontSize: hp(1.7),
+                  fontFamily: fontFamily.robotoMedium,
+                }}>
+                End Date
+              </Text>{' '}
+              : {item?.end_date}
+            </Text> */}
           </View>
           <View style={{flex:0.08,justifyContent: 'flex-end'}}>
             <Icon type='light' name="arrow-down-right" size={hp(3)} color='#2CC2E4' />
@@ -107,7 +191,7 @@ const PrevEvents = (props) => {
         </View>
       </Modal>
      <View style={{flex:0.1,zIndex:1}}>
-     <MainHeader text={'Previous Events'} onpressBtn={() => props.navigation.goBack()}/>
+     <MainHeader text={'Events'} onpressBtn={() => props.navigation.goBack()}/>
      </View>
       
       <View style={{flex:0.06,justifyContent:'space-between',alignItems:'center',flexDirection:'row',marginHorizontal:hp(2.5),marginTop:hp(-2)}}>
@@ -123,4 +207,4 @@ const PrevEvents = (props) => {
   )
 }
 
-export default PrevEvents
+export default Events

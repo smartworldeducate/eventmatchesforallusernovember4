@@ -60,7 +60,7 @@ const styles = EStyleSheet.create({
     marginTop: hp(0),
     fontSize: hp(2.5),
     fontWeight: '600',
-    fontFamily: fontFamily.robotoBold,
+    fontFamily: fontFamily.robotoMedium,
     fontStyle: 'normal',
   },
 });

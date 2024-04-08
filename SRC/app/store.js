@@ -9,8 +9,12 @@ import userActivityReducer from '../features/useractivity/userActivitySlice';
 import activityDetailReducer from '../features/activitydetail/activityDetailSlice';
 import pastEventReducer from '../features/pastevents/pastEventSlice';
 import speakerReducer from '../features/speaker/speakerSlice';
-import speakerDetailReducer from '../features/speakerDetail/speakerDetailSlice'
-
+import speakerDetailReducer from '../features/speakerDetail/speakerDetailSlice';
+import feedBackReducer from '../features/feedback/feedBackSlice';
+import futureEventReducer from '../features/upcommingevents/upcomingEventSlice';
+import verifiEmailReducer from '../features/login/emailSlice';
+import verifiPasswordReducer from '../features/login/passwordSlice';
+import registerActivityReducer from '../features/registeractivity/registerActivitySlice'
 export const store=configureStore({
     reducer:{
         registerState:registerReducer,
@@ -23,6 +27,11 @@ export const store=configureStore({
         activityDetailState:activityDetailReducer,
         pastEventState:pastEventReducer,
         speakerState:speakerReducer,
-        speakerDetailState:speakerDetailReducer
+        speakerDetailState:speakerDetailReducer,
+        feedBackState:feedBackReducer,
+        futureEventState:futureEventReducer,
+        emailState:verifiEmailReducer,
+        passwordState:verifiPasswordReducer,
+        registerActivityState:registerActivityReducer
        }
 })

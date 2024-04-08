@@ -1,7 +1,7 @@
 import axios from "axios";
 
-const adminListServices=async(userData)=>{
-    const response=await axios.get("https://app.eventmatches.com/administrator/Api/adminList",userData,{
+const registerActivityServices=async(userData)=>{
+    const response=await axios.post("https://app.eventmatches.com/administrator/Api/registerActivity",userData,{
         headers: {
             "Content-Type": "multipart/form-data"
         },
@@ -15,6 +15,6 @@ const adminListServices=async(userData)=>{
 }
 
 
-export const adminService={
-    adminListServices
+export const registerActivityServicesService={
+    registerActivityServices
 }

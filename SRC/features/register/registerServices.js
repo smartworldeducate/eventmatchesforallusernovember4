@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const regiterServices=async(userData)=>{
-  const response=await axios.post("https://dev-app.eventmatches.com/administrator/Api/register",userData,{
+  const response=await axios.post("https://app.eventmatches.com/administrator/Api/register",userData,{
     headers: {
         "Content-Type": "multipart/form-data"
     },

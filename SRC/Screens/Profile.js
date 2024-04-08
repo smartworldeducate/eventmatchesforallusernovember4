@@ -8,9 +8,10 @@ import {
   FlatList,
   Linking,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import MainHeader from '../Components/Headers/MainHeader';
 import Icon from 'react-native-fontawesome-pro';
+import {speakerDetailHandler} from '../features/speakerDetail/speakerDetailSlice'
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -18,12 +19,21 @@ import {
 import EStyleSheet from 'react-native-extended-stylesheet';
 import colors from '../Styles/colors';
 import fontFamily from '../Styles/fontFamily';
+import { useDispatch, useSelector } from 'react-redux';
 const Profile = props => {
-  const {item} = props.route.params;
-  console.log('speaker detail==', item);
+  const dispatch = useDispatch();
+  const speakerDetailData=useSelector((state)=>state.speakerDetailState);
+  // console.log("dpeakerDetai==",speakerDetailData);
+  const {item,event_id} = props.route.params;
+  // console.log('speaker detail==', item,event_id);
   const [abstract, setAbstract] = useState(true);
   const [speaker, setSpeaker] = useState(false);
   const [resurces, setResurces] = useState(false);
+
+ 
+  useEffect(() => {
+    dispatch(speakerDetailHandler({"event_id":event_id,"speaker_id":item?.speaker_id}));
+  }, []);
   const data = [
     {id: 1, image: 'imgone'},
     {id: 2, image: 'imgtwo'},
@@ -64,115 +74,173 @@ const Profile = props => {
       btntext: 'Register',
     },
   ];
-  const renderItem = ({item, index}) => {
-    return (
-      <View
-        style={{
-          flex: 0.19,
-          borderRadius: hp(3),
-          borderWidth: 1,
-          borderColor: '#cdcdcd',
-          flexDirection: 'row',
-          marginTop: hp(1.5),
-        }}>
-        <View style={{flex: 0.45, height: hp[5]}}>
-          {/* banertwo */}
-          <Image
-            style={{
-              width: '100%',
-              height: '100%',
-              paddingTop: hp(2),
-              borderBottomLeftRadius: hp(2),
-              borderTopLeftRadius: hp(2),
-            }}
-            source={{uri: item.image}}
-            resizeMode="contain"
-          />
-        </View>
-        <View style={{flex: 0.55}}>
-          <View style={{marginHorizontal: hp(1.5), marginVertical: hp(1.5)}}>
-            <Text
-              style={{
-                color: colors.lightBlack,
-                fontWeight: '600',
-                fontSize: hp(2),
-                fontFamily: fontFamily.robotoBold,
-              }}>
-              {item.headingText}
-            </Text>
-            <Text
-              style={{
-                color: 'gray',
-                fontWeight: '300',
-                fontFamily: fontFamily.robotoLight,
-                fontSize: hp(2),
-              }}>
-              1{item.timetext}
-            </Text>
-            <View style={{marginTop: hp(0.7)}}>
-              <Text
-                style={{
-                  color: colors.lightBlue,
-                  fontWeight: '600',
-                  fontFamily: fontFamily.robotoBold,
-                  fontSize: hp(2),
-                }}>
-                Workshop
-              </Text>
-            </View>
-            <View style={styles.headerImageSection}>
-              {data.slice(0, 7).map((item, i) => {
-                return (
-                  <TouchableOpacity style={styles.imageList} key={i}>
-                    <Image
-                      style={styles.imgStyle}
-                      source={{uri: item.image}}
-                      resizeMode="cover"
-                    />
-                  </TouchableOpacity>
-                );
-              })}
-            </View>
-            <View style={{flexDirection: 'row'}}>
-              <View style={{flex: 0.6, flexDirection: 'row'}}>
-                <View style={{flex: 0.3}}>
-                  <Icon
-                    type="light"
-                    name="location-dot"
-                    size={hp(2.5)}
-                    color="#2CC2E4"
-                  />
-                </View>
+  // const renderItem = ({item, index}) => {
+  //   return (
+  //     <View
+  //       style={{
+  //         flex: 0.19,
+  //         borderRadius: hp(3),
+  //         borderWidth: 1,
+  //         borderColor: '#cdcdcd',
+  //         flexDirection: 'row',
+  //         marginTop: hp(1.5),
+  //       }}>
+  //       <View style={{flex: 0.45, height: hp[5]}}>
+  //         {/* banertwo */}
+  //         <Image
+  //           style={{
+  //             width: '100%',
+  //             height: '100%',
+  //             paddingTop: hp(2),
+  //             borderBottomLeftRadius: hp(2),
+  //             borderTopLeftRadius: hp(2),
+  //           }}
+  //           source={{uri: item.image}}
+  //           resizeMode="contain"
+  //         />
+  //       </View>
+  //       <View style={{flex: 0.55}}>
+  //         <View style={{marginHorizontal: hp(1.5), marginVertical: hp(1.5)}}>
+  //           <Text
+  //             style={{
+  //               color: colors.lightBlack,
+  //               fontWeight: '500',
+  //               fontSize: hp(2),
+  //               fontFamily: fontFamily.robotoMedium,
+  //             }}>
+  //             {item.headingText}
+  //           </Text>
+  //           <Text
+  //             style={{
+  //               color: 'gray',
+  //               fontWeight: '300',
+  //               fontFamily: fontFamily.robotoLight,
+  //               fontSize: hp(2),
+  //             }}>
+  //             1{item.timetext}
+  //           </Text>
+  //           <View style={{marginTop: hp(0.7)}}>
+  //             <Text
+  //               style={{
+  //                 color: colors.lightBlue,
+  //                 fontWeight: '500',
+  //                 fontFamily: fontFamily.robotoMedium,
+  //                 fontSize: hp(2),
+  //               }}>
+  //               Workshop
+  //             </Text>
+  //           </View>
+  //           <View style={styles.headerImageSection}>
+  //             {data.slice(0, 7).map((item, i) => {
+  //               return (
+  //                 <TouchableOpacity style={styles.imageList} key={i}>
+  //                   <Image
+  //                     style={styles.imgStyle}
+  //                     source={{uri: item.image}}
+  //                     resizeMode="cover"
+  //                   />
+  //                 </TouchableOpacity>
+  //               );
+  //             })}
+  //           </View>
+  //           <View style={{flexDirection: 'row'}}>
+  //             <View style={{flex: 0.6, flexDirection: 'row'}}>
+  //               <View style={{flex: 0.3}}>
+  //                 <Icon
+  //                   type="light"
+  //                   name="location-dot"
+  //                   size={hp(2.5)}
+  //                   color="#2CC2E4"
+  //                 />
+  //               </View>
 
-                <View style={{flex: 0.9}}>
-                  <Text style={{color: colors.lightBlack}}>
-                    {item.locatoin}
-                  </Text>
-                </View>
-              </View>
-              <View style={{flex: 0.1}}></View>
-              <TouchableOpacity
-                style={{
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  flex: 0.4,
-                  borderRadius: hp(0.9),
-                  borderColor: '#2CC2E4',
-                  borderWidth: 1,
-                  height: hp(5),
-                  marginTop: hp(-1.4),
-                  marginLeft: hp(-1),
-                  backgroundColor: '#2CC2E4',
-                  height: hp(4),
-                }}>
-                <Text style={{color: '#fff', fontWeight: '600'}}>Register</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        </View>
-      </View>
-    );
-  };
+  //               <View style={{flex: 0.9}}>
+  //                 <Text style={{color: colors.lightBlack}}>
+  //                   {item.locatoin}
+  //                 </Text>
+  //               </View>
+  //             </View>
+  //             <View style={{flex: 0.1}}></View>
+  //             <TouchableOpacity
+  //               style={{
+  //                 justifyContent: 'center',
+  //                 alignItems: 'center',
+  //                 flex: 0.4,
+  //                 borderRadius: hp(0.9),
+  //                 borderColor: '#2CC2E4',
+  //                 borderWidth: 1,
+  //                 height: hp(5),
+  //                 marginTop: hp(-1.4),
+  //                 marginLeft: hp(-1),
+  //                 backgroundColor: '#2CC2E4',
+  //                 height: hp(4),
+  //               }}>
+  //               <Text style={{color: '#fff', fontWeight: '600'}}>Register</Text>
+  //             </TouchableOpacity>
+  //           </View>
+  //         </View>
+  //       </View>
+  //     </View>
+  //   );
+  // };
+
+  // const renderItem = ({item, index}) => {
+  //   return (
+  //     <TouchableOpacity onPress={()=>props.navigation.navigate('Session',{item})} style={{ flex: 0.19, borderRadius: hp(3), borderWidth: 1, borderColor: '#cdcdcd', flexDirection: 'row',marginTop:hp(1.5) }}>
+  //       <View style={{ flex: 0.45, height: hp[(5)] }}>
+  //         {/* banertwo */}
+  //         <Image
+  //           style={{ width: '100%', height: '100%', paddingTop: hp(2), borderBottomLeftRadius: hp(2), borderTopLeftRadius: hp(2) }}
+  //           source={{ uri:'banertwo'}}
+  //           resizeMode="contain"
+  //         />
+  //       </View>
+  //       <View style={{ flex: 0.55 }}>
+  //         <View style={{ marginHorizontal: hp(1.5), marginVertical: hp(1.5) }}>
+  //           <Text style={{ color:colors.lightBlack, fontWeight: '500', fontSize: hp(2),fontFamily:fontFamily.robotoMedium }} ellipsizeMode={'tail'} numberOfLines={1}>{item?.activity_name}</Text>
+  //           <Text style={{ color: 'gray', fontWeight: '300',fontFamily:fontFamily.robotoLight,fontSize: hp(2) }}>{item?.start_time} - {item?.end_time}</Text>
+  //           <View style={{ marginTop: hp(0.7) }}>{}
+  //             <Text style={{ color: colors.lightBlue, fontWeight: '500',fontFamily:fontFamily.robotoMedium,fontSize: hp(2) }}>{item?.activity_type}</Text>
+  //           </View>
+  //           <View style={styles.headerImageSection}>
+  //             {data.slice(0, 7).map((item, i) => {
+
+  //               return (
+  //                 <TouchableOpacity
+
+  //                   style={styles.imageList}
+  //                   key={i}>
+  //                   <Image
+  //                     style={styles.imgStyle}
+  //                     source={{ uri: item.image }}
+  //                     resizeMode="cover"
+  //                   />
+  //                 </TouchableOpacity>
+  //               );
+
+  //             })}
+  //           </View>
+  //           <View style={{ flexDirection: 'row' }}>
+  //             <View style={{ flex: 0.6, flexDirection: 'row' }}>
+
+  //               <TouchableOpacity onPress={()=>props.navigation.navigate("MapScreen")} style={{ flex: 0.3 }}>
+  //                 <Icon type="light" name="location-dot" size={hp(2.5)} color="#2CC2E4" />
+  //               </TouchableOpacity>
+
+  //               <TouchableOpacity style={{ flex: 0.9 }}>
+  //                 <Text style={{ color: colors.lightBlack,fontFamily:fontFamily.robotoLight}}>Bristol</Text>
+  //               </TouchableOpacity>
+  //             </View>
+  //             <View style={{ flex: 0.1 }}></View>
+  //             <TouchableOpacity style={{ justifyContent: 'center', alignItems: 'center', flex: 0.4, borderRadius: hp(0.9), borderColor: '#2CC2E4', borderWidth: 1, height: hp(5), marginTop: hp(-1.4), marginLeft: hp(-1), backgroundColor: '#2CC2E4',height:hp(4) }}>
+  //               <Text style={{ color: '#fff', fontWeight: '500',fontFamily:fontFamily.robotoLight }}>Register</Text>
+  //             </TouchableOpacity>
+  //           </View>
+  //         </View>
+  //       </View>
+  //     </TouchableOpacity>
+  //   );
+  // };
 
   const abstractHandler = () => {
     setAbstract(true);
@@ -211,7 +279,7 @@ const Profile = props => {
             alignItems: 'center',
           }}>
           <View style={{flex: 0.3}}></View>
-          <View style={{flex: 0.3}}>
+          <View style={{flex: 0.31,borderRadius:hp(50),borderColor:'#cdcdcd',borderWidth:1}}>
             <Image
               style={{
                 width: '100%',
@@ -219,7 +287,7 @@ const Profile = props => {
                 borderRadius: hp(0),
                 borderRadius: hp(50),
               }}
-              source={{uri: item?.image_name}}
+              source={{uri:item?.image_name}}
               resizeMode="contain"
             />
           </View>
@@ -231,23 +299,25 @@ const Profile = props => {
             flex: 0.29,
             justifyContent: 'center',
             alignItems: 'center',
-            marginTop: hp(2),
+            paddingVertical: hp(0),
+            // backgroundColor:'red'
+            
           }}>
           <Text
             style={{
-              color: colors.blackColor,
-              fontSize: hp(2.8),
-              fontWeight: '600',
-              fontFamily: fontFamily.robotoBold,
+              color: colors.descBlack,
+              fontSize: hp(2.2),
+              fontWeight: '500',
+              fontFamily: fontFamily.robotoMedium,
             }}>
             {item?.speaker_name}
           </Text>
           <Text
             style={{
               color: colors.grayDescColor,
-              fontSize: hp(2),
-              fontWeight: '400',
-              fontFamily: fontFamily.robotoMedium,
+              fontSize: hp(1.7),
+              fontWeight: '500',
+              fontFamily: fontFamily.robotoLight,
             }}>
             {item?.designation}
           </Text>
@@ -269,9 +339,9 @@ const Profile = props => {
           style={{
             flex: 0.37,
             borderRadius: hp(5),
-            borderWidth: 2,
+            borderWidth: 1.5,
             borderColor: '#2CC2E4',
-            height: hp(6),
+            height: hp(5.5),
             justifyContent: 'center',
             alignItems: 'center',
             backgroundColor: abstract ? '#2CC2E4' : '#fff',
@@ -280,8 +350,8 @@ const Profile = props => {
             style={{
               color: abstract ? '#fff' : '#2CC2E4',
               fontSize: hp(2),
-              fontWeight: '600',
-              fontFamily: fontFamily.robotoBold,
+              fontWeight: '500',
+              fontFamily: fontFamily.robotoMedium,
             }}>
             About
           </Text>
@@ -291,9 +361,9 @@ const Profile = props => {
           style={{
             flex: 0.37,
             borderRadius: hp(5),
-            borderWidth: 2,
+            borderWidth: 1.5,
             borderColor: '#2CC2E4',
-            height: hp(6),
+            height: hp(5.5),
             justifyContent: 'center',
             alignItems: 'center',
             marginHorizontal: hp(1),
@@ -303,8 +373,8 @@ const Profile = props => {
             style={{
               color: speaker ? '#fff' : '#2CC2E4',
               fontSize: hp(2),
-              fontWeight: '600',
-              fontFamily: fontFamily.robotoBold,
+              fontWeight: '500',
+              fontFamily: fontFamily.robotoMedium,
             }}>
             Profile
           </Text>
@@ -315,9 +385,9 @@ const Profile = props => {
           style={{
             flex: 0.37,
             borderRadius: hp(5),
-            borderWidth: 2,
+            borderWidth: 1.5,
             borderColor: '#2CC2E4',
-            height: hp(6),
+            height: hp(5.5),
             justifyContent: 'center',
             alignItems: 'center',
             backgroundColor: resurces ? '#2CC2E4' : '#fff',
@@ -336,42 +406,33 @@ const Profile = props => {
 
       {abstract && (
         <View style={{flex: 0.7, marginHorizontal: hp(3)}}>
-          <ScrollView>
+            <View style={{justifyContent:'center',alignItems:'center',flex:0.1,height:hp(5)}}>
+            <Text style={{color:colors.grayDescColor,fontSize:hp(2)}}>No Data Available.</Text>
+          </View>
+          {/* <ScrollView>
             <View>
               <Text
                 style={{
-                  color: colors.blackColor,
-                  fontSize: hp(1.8),
+                  color:'#000',
+                  fontSize: hp(2),
                   fontWeight: '300',
                   lineHeight: hp(3),
-                  letterSpacing: hp(0.1),
+                  letterSpacing: hp(0.25),
                   fontFamily: fontFamily.robotoLight,
                 }}>
-                Lörem ipsum resertad bylåns krosm ångerrösta, eftersom Monica
-                Björk. Mik sobel tektig. Valedes tetran, content provider.
-                Intradäväpp tess, i biospesm meganing. Hånade accelerator idat:
-                i doräbösm inte beböhet. Spertad nången. Georyr koras ifall soft
-                landing transpol. Astrogt tetraronyten har fodokåhet. Euror
-                dekrong utom begorade ultrav göra en labrador. Borade pason
-                betenar augmented reality. Dor autobel diaskop däna väs.
-                Pseudost preren soliga homoskapet och döl. Fad åligt har dår
-                eller brexit. Räbel hypol. Nomofobi kron semifologi ifall
-                semilig. Nepol vibyfoktig ock i stenokongar geod där. Tyl
-                mikadiligen. Nirelig Birgit Ekström som besedir dälingar:
-                dibåsamma parasport. Dor autobel diaskop däna väs. Pseudost
-                preren soliga homoskapet och döl. Lörem ipsum resertad bylåns
-                krosm ångerrösta, eftersom Monica Björk. Mik sobel tektig.
-                Valedes tetran, content provider. Intradäväpp tess, i biospesm
-                meganing. Hånade accelerator idat: i doräbösm inte beböhet.
+                {item?.description}
               </Text>
             </View>
-          </ScrollView>
+          </ScrollView> */}
         </View>
       )}
 
       {speaker && (
         <View style={{flex: 0.7, marginHorizontal: hp(3)}}>
-          <ScrollView>
+          <View style={{justifyContent:'center',alignItems:'center',flex:0.1,height:hp(5)}}>
+            <Text style={{color:colors.grayDescColor,fontSize:hp(2)}}>No Data Available.</Text>
+          </View>
+          {/* <ScrollView>
             <View style={{marginBottom: hp(1.5)}}>
               <Text
                 style={{
@@ -512,17 +573,20 @@ const Profile = props => {
                 Rosewell Ct, Bath Avon, BA1 2AG
               </Text>
             </View>
-          </ScrollView>
+          </ScrollView> */}
         </View>
       )}
 
       {resurces && (
         <View style={{flex: 0.7, marginHorizontal: hp(2.5)}}>
-          <FlatList
+            <View style={{justifyContent:'center',alignItems:'center',flex:0.1,height:hp(5)}}>
+            <Text style={{color:colors.grayDescColor,fontSize:hp(2)}}>No Data Available.</Text>
+          </View>
+          {/* <FlatList
             data={cardData}
             renderItem={renderItem}
             keyExtractor={(item, index) => index.toString()}
-          />
+          /> */}
         </View>
       )}
 

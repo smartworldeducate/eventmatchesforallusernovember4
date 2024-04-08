@@ -9,6 +9,8 @@ import {
   TextInput,
   TouchableOpacity,
   ToastAndroid,
+  Modal,
+  ActivityIndicator,
 } from 'react-native';
 import {verifyPasswordHandler} from '../features/login/passwordSlice';
 import {
@@ -20,11 +22,12 @@ import React, {useState} from 'react';
 import ViewInput from '../Components/Headers/ViewInput';
 import fontFamily from '../Styles/fontFamily';
 import colors from '../Styles/colors';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {StackActions} from '@react-navigation/native';
 const SigninPassword = props => {
   const dispatch = useDispatch();
+  const passwordData=useSelector((state)=>state.passwordState);
   const {email} = props.route.params;
   console.log('param data', email);
   const [password, setPassword] = useState(null);
@@ -80,6 +83,17 @@ const SigninPassword = props => {
         translucent
         backgroundColor="transparent"
       />
+       <Modal
+        visible={passwordData?.isLoading}
+        transparent={true}
+        animationType="fade"
+      >
+        <View style={{flex:1,justifyContent: 'center', alignItems: 'center',backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
+        <View style={{width:wp(25),height:hp(12.5),backgroundColor: 'white',borderRadius:hp(1),justifyContent: 'center', alignItems: 'center' }}>
+          <ActivityIndicator size="large" color="#cdcdcd" />
+        </View>
+        </View>
+      </Modal>
       <View style={{flex: 1}}>
         <View style={{height: hp(14), marginTop: hp(-3)}}>
           <Image

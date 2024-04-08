@@ -34,30 +34,32 @@ const HeaderTop = ({ onPressIcon,onflterPress }) => {
       </View>
 
       <View style={{ flex: 0.2, justifyContent: 'center', paddingTop: hp(5), marginLeft: hp(-2.3) }}>
-        <Text style={{ color:colors.blackColor, fontSize: hp(2.5), fontWeight: '600',fontFamily:fontFamily.robotoBold }}>Home</Text>
+        <Text style={{ color:colors.blackColor, fontSize: hp(2.5), fontWeight: '600',fontFamily:fontFamily.robotoMedium }}>Home</Text>
       </View>
 
       <View style={{ flex: 0.2, justifyContent: 'center' }}></View>
 
-      <View style={{ flex: 0.2, justifyContent: 'center', paddingTop: hp(5) }}>
+      <View style={{ flex: 0.2, justifyContent: 'center', paddingTop: hp(5)}}>
         <TouchableOpacity
           activeOpacity={0.8}
-          style={{ alignItems: 'flex-end' }}
+          style={{ alignItems: 'flex-end',position:'relative' }}
           onPress={() => { }}>
-          <Icon type="light" name="bell" size={hp(3.5)} color="#2CC2E4" />
+            <View style={{height:hp(2),width:wp(4),borderRadius:hp(50),backgroundColor:'red',zIndex:1,position:'absolute',top:hp(-1),right:hp(-0.7)}}>
+              <View style={{justifyContent:'center',alignItems:'center',marginTop:hp(-0.3)}}>
+              <Text style={{color:'#fff',fontSize:hp(2)}}>2</Text>
+              </View>
+              
+            </View>
+          <Icon type="regular" name="bell" size={hp(3.5)} color="#2CC2E4" />
         </TouchableOpacity>
       </View>
 
       <View style={{ flex: 0.2, justifyContent: 'center', paddingTop: hp(5) }}>
         <TouchableOpacity
           activeOpacity={0.8}
-          style={{ alignItems: 'flex-end', marginTop: hp(2) }}
+          style={{ alignItems: 'flex-end', marginRight: hp(1) }}
           onPress={onflterPress}>
-          <Image
-            style={{ width: '70%', height: '70%', paddingTop: hp(2) }}
-            source={{ uri: 'filter' }}
-            resizeMode="cover"
-          />
+            <Icon type="regular" name="filter" size={hp(3.5)} color="#2CC2E4" />
         </TouchableOpacity>
       </View>
 

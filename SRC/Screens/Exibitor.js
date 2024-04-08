@@ -1,10 +1,11 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import fontFamily from '../Styles/fontFamily';
 import colors from '../Styles/colors';
+import {speakerHandler} from '../features/speaker/speakerSlice'
 import {
   View,
   Text,
@@ -13,108 +14,186 @@ import {
   StatusBar,
   TouchableOpacity,
   ScrollView,
+  FlatList,
+  Modal,
+  ActivityIndicator,
 } from 'react-native';
 import MainHeader from '../Components/Headers/MainHeader';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useDispatch, useSelector } from 'react-redux';
 const Exibitor = props => {
-  const [data, setData] = useState([
-    {
-      image: 'logoaws',
-      backgroundColor: '#AFAFAF',
-      name: 'Gold',
-      disc: 'Aws',
-      bgcolor: '#FFF3B3',
-      btnColor: '#FFD703',
-    },
-    {
-      image: 'logohonda',
-      backgroundColor: '#FFD700',
-      name: 'Walls',
-      disc: 'Channal',
-      bgcolor: '#ECECEC',
-      btnColor: '#C4C4C4',
-    },
-    {
-      image: 'nesle',
-      backgroundColor: '#FFD700',
-      name: 'nesle',
-      disc: 'Nesle',
-      bgcolor: '#F0D9C2',
-      btnColor: '#F9AB5D',
-    },
-    {
-      image: 'oodi',
-      backgroundColor: '#FFD700',
-      name: 'audi',
-      disc: 'Audi',
-      bgcolor: '#F0D9C2',
-      btnColor: '#F9AB5D',
-    },
-    {
-      image: 'logothree',
-      backgroundColor: '#FFD700',
-      name: 'adidas',
-      disc: 'Adidas',
-      bgcolor: '#FFF3B3',
-      btnColor: '#FFD703',
-    },
-    {
-      image: 'channal',
-      backgroundColor: '#FFD700',
-      name: 'channal',
-      disc: 'Channal',
-      bgcolor: '#FFF3B3',
-      btnColor: '#FFD703',
-    },
+  const dispatch = useDispatch();
+  const speakerData=useSelector((state)=>state.speakerState);
+  async function getData(key) {
+    try {
+      const value = await AsyncStorage.getItem(key);
+      if (value !== null) {
+        console.log('Data retrieved successfully:', value);
+        const parsedData = JSON.parse(value);
 
-    {
-      image: 'logoaws',
-      backgroundColor: '#AFAFAF',
-      name: 'Gold',
-      disc: 'Aws',
-      bgcolor: '#FFF3B3',
-      btnColor: '#FFD703',
-    },
-    {
-      image: 'logohonda',
-      backgroundColor: '#FFD700',
-      name: 'Walls',
-      disc: 'Channal',
-      bgcolor: '#ECECEC',
-      btnColor: '#C4C4C4',
-    },
-    {
-      image: 'nesle',
-      backgroundColor: '#FFD700',
-      name: 'nesle',
-      disc: 'Nesle',
-      bgcolor: '#F0D9C2',
-      btnColor: '#F9AB5D',
-    },
-    {
-      image: 'oodi',
-      backgroundColor: '#FFD700',
-      name: 'audi',
-      disc: 'Audi',
-      bgcolor: '#F0D9C2',
-      btnColor: '#F9AB5D',
-    },
-    {
-      image: 'logothree',
-      backgroundColor: '#FFD700',
-      name: 'adidas',
-      disc: 'Adidas',
-      bgcolor: '#FFF3B3',
-      btnColor: '#FFD703',
-    },
-    {
-      image: 'channal',
-      backgroundColor: '#FFD700',
-      name: 'channal',
-      disc: 'Channal',
-      bgcolor: '#FFF3B3',
-      btnColor: '#FFD703',
-    },
-  ]);
+        // setData(parsedData);
+        // {"user_id":parsedData.user_id,"event_id":parsedData.event_id,"type_id":1}
+        dispatch(speakerHandler({"user_id":parsedData.user_id,"event_id":parsedData.event_id,"type_id":2}));
+        console.log('here is feedback screen data', parsedData);
+        return parsedData;
+      } 
+    } catch (error) {
+      console.error('Error retrieving data:', error);
+    }
+  }
+  useEffect(() => {
+    getData('userSession');
+  }, []);
+  // const [data, setData] = useState([
+  //   {
+  //     image: 'logoaws',
+  //     backgroundColor: '#AFAFAF',
+  //     name: 'Gold',
+  //     disc: 'Aws',
+  //     bgcolor: '#FFF3B3',
+  //     btnColor: '#FFD703',
+  //   },
+  //   {
+  //     image: 'logohonda',
+  //     backgroundColor: '#FFD700',
+  //     name: 'Walls',
+  //     disc: 'Channal',
+  //     bgcolor: '#ECECEC',
+  //     btnColor: '#C4C4C4',
+  //   },
+  //   {
+  //     image: 'nesle',
+  //     backgroundColor: '#FFD700',
+  //     name: 'nesle',
+  //     disc: 'Nesle',
+  //     bgcolor: '#F0D9C2',
+  //     btnColor: '#F9AB5D',
+  //   },
+  //   {
+  //     image: 'oodi',
+  //     backgroundColor: '#FFD700',
+  //     name: 'audi',
+  //     disc: 'Audi',
+  //     bgcolor: '#F0D9C2',
+  //     btnColor: '#F9AB5D',
+  //   },
+  //   {
+  //     image: 'logothree',
+  //     backgroundColor: '#FFD700',
+  //     name: 'adidas',
+  //     disc: 'Adidas',
+  //     bgcolor: '#FFF3B3',
+  //     btnColor: '#FFD703',
+  //   },
+  //   {
+  //     image: 'channal',
+  //     backgroundColor: '#FFD700',
+  //     name: 'channal',
+  //     disc: 'Channal',
+  //     bgcolor: '#FFF3B3',
+  //     btnColor: '#FFD703',
+  //   },
+
+  //   {
+  //     image: 'logoaws',
+  //     backgroundColor: '#AFAFAF',
+  //     name: 'Gold',
+  //     disc: 'Aws',
+  //     bgcolor: '#FFF3B3',
+  //     btnColor: '#FFD703',
+  //   },
+  //   {
+  //     image: 'logohonda',
+  //     backgroundColor: '#FFD700',
+  //     name: 'Walls',
+  //     disc: 'Channal',
+  //     bgcolor: '#ECECEC',
+  //     btnColor: '#C4C4C4',
+  //   },
+  //   {
+  //     image: 'nesle',
+  //     backgroundColor: '#FFD700',
+  //     name: 'nesle',
+  //     disc: 'Nesle',
+  //     bgcolor: '#F0D9C2',
+  //     btnColor: '#F9AB5D',
+  //   },
+  //   {
+  //     image: 'oodi',
+  //     backgroundColor: '#FFD700',
+  //     name: 'audi',
+  //     disc: 'Audi',
+  //     bgcolor: '#F0D9C2',
+  //     btnColor: '#F9AB5D',
+  //   },
+  //   {
+  //     image: 'logothree',
+  //     backgroundColor: '#FFD700',
+  //     name: 'adidas',
+  //     disc: 'Adidas',
+  //     bgcolor: '#FFF3B3',
+  //     btnColor: '#FFD703',
+  //   },
+  //   {
+  //     image: 'channal',
+  //     backgroundColor: '#FFD700',
+  //     name: 'channal',
+  //     disc: 'Channal',
+  //     bgcolor: '#FFF3B3',
+  //     btnColor: '#FFD703',
+  //   },
+  // ]);
+
+  const renderItem = ({item, index}) => {
+    return (
+      <View style={[styles.card]} key={index}>
+      <TouchableOpacity
+        onPress={() => props.navigation.navigate('ExibitoeDetail')}
+        style={styles.cardImgWrapper}>
+        <Image
+          source={{uri:item?.image_name}}
+          resizeMode="contain"
+          style={styles.cardImg}
+        />
+      </TouchableOpacity>
+      <View
+        style={[styles.cardInfo, {backgroundColor:'#F9E79F'}]}>
+        <Text style={styles.cardTitle}>{item?.speaker_name}</Text>
+        <View style={{marginTop: hp(1.8), flexDirection: 'row'}}>
+          {/* <ExibitorBtn /> */}
+          <View style={{flex: 0.5}}></View>
+          <TouchableOpacity
+            onPress={() => props.navigation.navigate('Sponsor')}
+            style={{
+              flex: 0.5,
+              backgroundColor:'#F1C40F',
+              borderRadius: hp(1),
+              alignItems: 'center',
+              width: hp(10),
+              paddingVertical: hp(0.5),
+              marginTop: hp(1),
+              borderColor: '#5669FF',
+              marginBottom: hp(1),
+            }}>
+            <View
+              style={{flexDirection: 'column', alignItems: 'center'}}>
+              <Text
+                style={{
+                  color: '#fff',
+                  fontSize:hp(1.7),
+                  fontWeight: '500',
+                  fontFamily:fontFamily.robotoMedium
+                }}>
+                Sponsors
+              </Text>
+            </View>
+          </TouchableOpacity>
+        </View>
+      </View>
+    </View>
+    );
+  };
+
   return (
     <View style={{flex: 1}}>
       <StatusBar
@@ -122,6 +201,17 @@ const Exibitor = props => {
         translucent
         backgroundColor="transparent"
       />
+       <Modal
+        visible={speakerData?.isLoading}
+        transparent={true}
+        animationType="fade"
+      >
+        <View style={{flex:1,justifyContent: 'center', alignItems: 'center',backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
+        <View style={{width:wp(25),height:hp(12.5),backgroundColor: 'white',borderRadius:hp(1),justifyContent: 'center', alignItems: 'center' }}>
+          <ActivityIndicator size="large" color="#cdcdcd" />
+        </View>
+        </View>
+      </Modal>
       <View style={{flex: 0.1}}>
         <MainHeader
           text={'Exhibitor'}
@@ -129,56 +219,11 @@ const Exibitor = props => {
         />
       </View>
       <View style={{flex: 0.9, marginHorizontal: hp(2.5), marginTop: hp(3)}}>
-        <ScrollView>
-          {data.map((card, index) => {
-            return (
-              <View style={[styles.card]} key={index}>
-                <TouchableOpacity
-                  onPress={() => props.navigation.navigate('ExibitoeDetail')}
-                  style={styles.cardImgWrapper}>
-                  <Image
-                    source={{uri: card.image}}
-                    resizeMode="contain"
-                    style={styles.cardImg}
-                  />
-                </TouchableOpacity>
-                <View
-                  style={[styles.cardInfo, {backgroundColor: card.bgcolor}]}>
-                  <Text style={styles.cardTitle}>{card.disc}</Text>
-                  <View style={{marginTop: hp(1.8), flexDirection: 'row'}}>
-                    {/* <ExibitorBtn /> */}
-                    <View style={{flex: 0.5}}></View>
-                    <TouchableOpacity
-                      onPress={() => props.navigation.navigate('Sponsor')}
-                      style={{
-                        flex: 0.5,
-                        backgroundColor: card.btnColor,
-                        borderRadius: hp(1),
-                        alignItems: 'center',
-                        width: hp(10),
-                        paddingVertical: hp(0.5),
-                        marginTop: hp(1),
-                        borderColor: '#5669FF',
-                        marginBottom: hp(1),
-                      }}>
-                      <View
-                        style={{flexDirection: 'column', alignItems: 'center'}}>
-                        <Text
-                          style={{
-                            color: '#fff',
-                            fontSize: 15,
-                            fontWeight: '600',
-                          }}>
-                          {card.name}
-                        </Text>
-                      </View>
-                    </TouchableOpacity>
-                  </View>
-                </View>
-              </View>
-            );
-          })}
-        </ScrollView>
+      <FlatList
+          data={speakerData?.user?.response?.events}
+          renderItem={renderItem}
+          keyExtractor={(item, index) => index.toString()}
+        />
       </View>
     </View>
   );
@@ -231,10 +276,10 @@ const styles = StyleSheet.create({
     height: hp(12),
   },
   cardTitle: {
-    fontWeight: '600',
-    fontSize: 18,
-    color: colors.blackColor,
-    fontFamily:fontFamily.robotoBold
+    fontWeight: '500',
+    fontSize:hp(1.9),
+    color: colors.descBlack,
+    fontFamily:fontFamily.robotoMedium
   },
   cardDetails: {
     fontSize: hp(3),

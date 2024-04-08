@@ -20,7 +20,6 @@
     "@fortawesome/sharp-light-svg-icons": "6.4.2",
     "@fortawesome/sharp-regular-svg-icons": "6.4.2",
     "@fortawesome/sharp-solid-svg-icons": "6.4.2",
-    "@gorhom/bottom-sheet": "4.5.1",
     "@react-native-async-storage/async-storage": "1.19.3",
     "@react-native-community/art": "1.2.0",
     "@react-native-community/datetimepicker": "7.4.1",

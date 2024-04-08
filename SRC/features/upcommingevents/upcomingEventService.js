@@ -1,7 +1,7 @@
 import axios from "axios";
 
-const speakerServices=async(userData)=>{
-    const response=await axios.post("https://app.eventmatches.com/administrator/Api/speakersList",userData,{
+const futureEentServices=async(userData)=>{
+    const response=await axios.post("https://app.eventmatches.com/administrator/Api/futureEvents",userData,{
         headers: {
             "Content-Type": "multipart/form-data"
         },
@@ -15,6 +15,6 @@ const speakerServices=async(userData)=>{
 }
 
 
-export const speakersService={
-    speakerServices
+export const futureEventsService={
+    futureEentServices
 }

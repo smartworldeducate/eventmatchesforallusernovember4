@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const verifyPasswordServices=async(userData)=>{
-    const response=await axios.post("https://dev-app.eventmatches.com/administrator/Api/validate",userData,{
+    const response=await axios.post("https://app.eventmatches.com/administrator/Api/validate",userData,{
         headers: {
             "Content-Type": "multipart/form-data"
         },

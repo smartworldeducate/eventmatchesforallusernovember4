@@ -11,6 +11,8 @@ import {
   TouchableOpacity,
   ScrollView,
   ToastAndroid,
+  Modal,
+  ActivityIndicator,
 } from 'react-native';
 import { Checkbox } from 'galio-framework';
 import {
@@ -18,7 +20,7 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import Ficon from 'react-native-fontawesome-pro';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { registerUserHandler } from '../features/register/registerSlice';
 import ViewInput from '../Components/Headers/ViewInput';
 import fontFamily from '../Styles/fontFamily';
@@ -26,6 +28,7 @@ import colors from '../Styles/colors';
 
 const RegisterScreen = (props) => {
   const dispatch = useDispatch();
+  const registerData=useSelector((state)=>state.registerState);
   const { email } = props.route.params;
   const [firstName, setFirstName] = useState(null);
   const [lasttName, setLastName] = useState(null);
@@ -134,6 +137,17 @@ const RegisterScreen = (props) => {
         translucent
         backgroundColor="transparent"
       />
+       <Modal
+        visible={registerData?.isLoading}
+        transparent={true}
+        animationType="fade"
+      >
+        <View style={{flex:1,justifyContent: 'center', alignItems: 'center',backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
+        <View style={{width:wp(25),height:hp(12.5),backgroundColor: 'white',borderRadius:hp(1),justifyContent: 'center', alignItems: 'center' }}>
+          <ActivityIndicator size="large" color="#cdcdcd" />
+        </View>
+        </View>
+      </Modal>
       <View style={{flex: 1}}>
         <View style={{height: hp(13.9)}}>
           <Image

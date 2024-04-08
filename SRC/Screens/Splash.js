@@ -32,7 +32,7 @@ const Splash = props => {
         const parsedData = JSON.parse(value);
         setData(parsedData);
 
-        // console.log('here is splash screen data', parsedData?.EMP_NAME);
+        // console.log('here is splash screen data', parsedData);
         if (parsedData) {
           props.navigation.dispatch(StackActions.replace('Admins'))
         }

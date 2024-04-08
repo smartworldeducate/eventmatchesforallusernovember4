@@ -9,6 +9,8 @@ import {
   TextInput,
   TouchableOpacity,
   ToastAndroid,
+  Modal,
+  ActivityIndicator,
 } from 'react-native';
 import {
   widthPercentageToDP as wp,
@@ -19,11 +21,12 @@ import Ficon from 'react-native-fontawesome-pro';
 import React, {useState} from 'react';
 import ViewInput from '../Components/Headers/ViewInput';
 import fontFamily from '../Styles/fontFamily';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import colors from '../Styles/colors';
 import validator from 'validator';
 const SigninScreen = props => {
   const dispatch = useDispatch();
+  const emailData=useSelector((state)=>state.emailState);
   const [email, setEmail] = useState('');
   const [data,setData]=useState('');
   const onPressHandler = (fieldName, fieldValue) => {
@@ -62,6 +65,17 @@ const SigninScreen = props => {
         translucent
         backgroundColor="transparent"
       />
+       <Modal
+        visible={emailData?.isLoading}
+        transparent={true}
+        animationType="fade"
+      >
+        <View style={{flex:1,justifyContent: 'center', alignItems: 'center',backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
+        <View style={{width:wp(25),height:hp(12.5),backgroundColor: 'white',borderRadius:hp(1),justifyContent: 'center', alignItems: 'center' }}>
+          <ActivityIndicator size="large" color="#cdcdcd" />
+        </View>
+        </View>
+      </Modal>
       <View style={{flex: 1}}>
       <View style={{height: hp(14), marginTop: hp(-3)}}>
           <Image

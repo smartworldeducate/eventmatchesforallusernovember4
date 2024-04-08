@@ -12,6 +12,9 @@ import {
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import RenderHtml from 'react-native-render-html';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { BottomSheet } from '@rneui/themed';
+
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -26,6 +29,8 @@ import colors from '../Styles/colors';
 import { useDispatch, useSelector } from 'react-redux';
 const SessionProgramm = (props) => {
   const dispatch=useDispatch();
+  const [isVisible, setIsVisible] = useState(false);
+  const [isPoll, setIsPoll] = useState(false);
   const activityData=useSelector((state)=>state.acitivityState);
   const event_id=activityData?.user?.userData?.event_id;
   const {item} = props.route.params;
@@ -36,8 +41,25 @@ const SessionProgramm = (props) => {
   const [abstract, setAbstract] = useState(true);
   const [speaker, setSpeaker] = useState(false);
   const [resurces, setResurces] = useState(false);
+  async function getData(key) {
+    try {
+      const value = await AsyncStorage.getItem(key);
+      if (value !== null) {
+        console.log('Data retrieved successfully:', value);
+        const parsedData = JSON.parse(value);
+        // setData(parsedData);
+        console.log("session user==",parsedData?.event_id,)
+        dispatch(activityDetailHandler({"event_id":parsedData?.event_id,"activity_id":item?.activity_id}));
+        console.log('here is splash screen data', parsedData?.user_id);
+      } else {
+        console.log('No data found for key:', key);
+      }
+    } catch (error) {
+      console.error('Error retrieving data:', error);
+    }
+  }
   useEffect(() => {
-    dispatch(activityDetailHandler({"event_id":event_id,"activity_id":item?.activity_id}));
+    getData('userSession');
   }, []);
   const abstractHandler = () => {
     setAbstract(true);
@@ -72,7 +94,7 @@ const SessionProgramm = (props) => {
     span: {color: 'green'}, 
   };
   const renderItem=({item,index})=>{
-    console.log("item speaker==",item?.speakers)
+    // console.log("item speaker==",item?.speakers)
    if(abstract){
     return(
       <View>
@@ -167,6 +189,199 @@ const SessionProgramm = (props) => {
         translucent
         backgroundColor="transparent"
       />
+      {/* bottom steet start */}
+      <BottomSheet 
+          isVisible={isPoll} 
+          style={{
+            flex: 1,
+            backgroundColor: "white",
+            borderTopLeftRadius: hp(2),
+            borderTopRightRadius: hp(2),
+            marginTop: hp(30),
+            elevation: 8, // Add elevation for shadow effect
+            shadowColor: '#000', // Shadow color
+            shadowOffset: { width: 0, height: 6 }, // Increase the shadow offset for more shadow on top
+            shadowOpacity: 0.25, // Shadow opacity
+            shadowRadius: 6, // Increase shadow radius for a softer shadow
+            padding: 25 // Optional padding for content inside the BottomSheet
+          }}
+        >
+          <TouchableOpacity onPress={() => setIsPoll(false)} style={{flex:0.05,height:hp(2),justifyContent:'center',alignItems:'center'}}>
+            <Icon name='minus' size={hp(10)} color='#cdcdcd'/>
+          </TouchableOpacity>
+          <View style={{flex:0.1,height:hp(7),flexDirection:'row',alignItems:'center'}}>
+          <Text style={{color:colors.descBlack,fontSize:hp(3),fontFamily:fontFamily.robotoMedium,fontWeight:'400'}}>Poll Questions</Text>
+          </View>
+          <View style={{flex:0.1,height:hp(8),flexDirection:'row',alignItems:'center'}}>
+          <Text style={{marginTop:hp(1),color:colors.grayDescColor,fontSize:hp(2.5),fontFamily:fontFamily.robotoMedium,fontWeight:'400'}}>How was your experience?</Text>
+          </View>
+          <View style={{flex:0.1,height:hp(12),flexDirection:'row'}}>
+            <View style={{flex:0.18}}>
+              <View style={{flex:0.6,borderRadius:hp(0.2),borderWidth:1,borderColor:'#E4E6F6',justifyContent:'center',alignItems:'center'}}>
+                <Text style={{color:colors.descBlack,fontSize:hp(3),fontFamily:fontFamily.robotoMedium,fontWeight:'400'}}>
+                  1
+                </Text>
+              </View>
+              <View style={{flex:0.4,justifyContent:'center',alignItems:'center'}}>
+              <Text style={{color:colors.descBlack,fontSize:hp(2),fontFamily:fontFamily.robotoLight,fontWeight:'400'}}>
+                  Good
+                </Text>
+              </View>
+            </View>
+            <View style={{flex:0.025}}></View>
+            <View style={{flex:0.18}}>
+            <View style={{flex:0.6,borderRadius:hp(0.2),borderWidth:1,borderColor:'#E4E6F6',justifyContent:'center',alignItems:'center'}}>
+                <Text style={{color:colors.descBlack,fontSize:hp(3),fontFamily:fontFamily.robotoMedium,fontWeight:'400'}}>
+                  2
+                </Text>
+              </View>
+              <View style={{flex:0.4,justifyContent:'center',alignItems:'center'}}>
+              <Text style={{color:colors.descBlack,fontSize:hp(2),fontFamily:fontFamily.robotoLight,fontWeight:'400',flexWrap:'wrap'}}>
+              Excellen
+                </Text>
+              </View>
+            </View>
+            <View style={{flex:0.025}}></View>
+            <View style={{flex:0.18}}>
+            <View style={{flex:0.6,borderRadius:hp(0.2),borderWidth:1,borderColor:'#E4E6F6',justifyContent:'center',alignItems:'center'}}>
+                <Text style={{color:colors.descBlack,fontSize:hp(3),fontFamily:fontFamily.robotoMedium,fontWeight:'400'}}>
+                  3
+                </Text>
+              </View>
+              <View style={{flex:0.4,justifyContent:'center',alignItems:'center'}}>
+              <Text style={{color:colors.descBlack,fontSize:hp(2),fontFamily:fontFamily.robotoLight,fontWeight:'400'}}>
+              Bad
+                </Text>
+              </View>
+            </View>
+            <View style={{flex:0.025}}></View>
+            <View style={{flex:0.18}}>
+            <View style={{flex:0.6,borderRadius:hp(0.2),borderWidth:1,borderColor:'#E4E6F6',justifyContent:'center',alignItems:'center'}}>
+                <Text style={{color:colors.descBlack,fontSize:hp(3),fontFamily:fontFamily.robotoMedium,fontWeight:'400'}}>
+                  4
+                </Text>
+              </View>
+              <View style={{flex:0.4,justifyContent:'center',alignItems:'center'}}>
+              <Text style={{color:colors.descBlack,fontSize:hp(2),fontFamily:fontFamily.robotoLight,fontWeight:'400'}}>
+              Can Be Improved
+                </Text>
+              </View>
+            </View>
+            <View style={{flex:0.025}}></View>
+            <View style={{flex:0.18}}>
+            <View style={{flex:0.6,borderRadius:hp(0.2),borderWidth:1,borderColor:'#E4E6F6',justifyContent:'center',alignItems:'center',backgroundColor:'#E74133', elevation: 8, // Add elevation for shadow effect
+            shadowColor: '#000', // Shadow color
+            shadowOffset: { width: 0, height: 6 }, // Increase the shadow offset for more shadow on top
+            shadowOpacity: 0.25, // Shadow opacity
+            shadowRadius: 6}}>
+                <Text style={{color:'#fff',fontSize:hp(3),fontFamily:fontFamily.robotoMedium,fontWeight:'400'}}>
+                  5
+                </Text>
+              </View>
+              <View style={{flex:0.4,justifyContent:'center',alignItems:'center'}}>
+              <Text style={{color:colors.descBlack,fontSize:hp(2),fontFamily:fontFamily.robotoLight,fontWeight:'400'}}>
+              No Comment
+                </Text>
+              </View>
+            </View>
+
+          </View>
+          <View style={{flex:0.1,height:hp(8),flexDirection:'row',alignItems:'center'}}>
+          <Text style={{marginTop:hp(1),color:colors.grayDescColor,fontSize:hp(2.5),fontFamily:fontFamily.robotoMedium,fontWeight:'400'}}>How was your experience?</Text>
+          </View>
+          <View style={{flex:0.1,height:hp(12),flexDirection:'row'}}>
+            <View style={{flex:0.18}}>
+              <View style={{flex:0.6,borderRadius:hp(0.2),borderWidth:1,borderColor:'#E4E6F6',justifyContent:'center',alignItems:'center',backgroundColor:'#33E75B',elevation: 8, // Add elevation for shadow effect
+            shadowColor: '#000', // Shadow color
+            shadowOffset: { width: 0, height: 6 }, // Increase the shadow offset for more shadow on top
+            shadowOpacity: 0.25, // Shadow opacity
+            shadowRadius: 6,}}>
+                <Text style={{color:'#fff',fontSize:hp(3),fontFamily:fontFamily.robotoMedium,fontWeight:'400'}}>
+                  1
+                </Text>
+              </View>
+              <View style={{flex:0.4,justifyContent:'center',alignItems:'center'}}>
+              <Text style={{color:colors.descBlack,fontSize:hp(2),fontFamily:fontFamily.robotoLight,fontWeight:'400'}}>
+                  Good
+                </Text>
+              </View>
+            </View>
+            <View style={{flex:0.025}}></View>
+            <View style={{flex:0.18}}>
+            <View style={{flex:0.6,borderRadius:hp(0.2),borderWidth:1,borderColor:'#E4E6F6',justifyContent:'center',alignItems:'center'}}>
+                <Text style={{color:colors.descBlack,fontSize:hp(3),fontFamily:fontFamily.robotoMedium,fontWeight:'400'}}>
+                  2
+                </Text>
+              </View>
+              <View style={{flex:0.4,justifyContent:'center',alignItems:'center'}}>
+              <Text style={{color:colors.descBlack,fontSize:hp(2),fontFamily:fontFamily.robotoLight,fontWeight:'400',flexWrap:'wrap'}}>
+              Excellen
+                </Text>
+              </View>
+            </View>
+            <View style={{flex:0.025}}></View>
+            <View style={{flex:0.18}}>
+            <View style={{flex:0.6,borderRadius:hp(0.2),borderWidth:1,borderColor:'#E4E6F6',justifyContent:'center',alignItems:'center'}}>
+                <Text style={{color:colors.descBlack,fontSize:hp(3),fontFamily:fontFamily.robotoMedium,fontWeight:'400'}}>
+                  3
+                </Text>
+              </View>
+              <View style={{flex:0.4,justifyContent:'center',alignItems:'center'}}>
+              <Text style={{color:colors.descBlack,fontSize:hp(2),fontFamily:fontFamily.robotoLight,fontWeight:'400'}}>
+              Bad
+                </Text>
+              </View>
+            </View>
+            <View style={{flex:0.025}}></View>
+            <View style={{flex:0.18}}>
+            <View style={{flex:0.6,borderRadius:hp(0.2),borderWidth:1,borderColor:'#E4E6F6',justifyContent:'center',alignItems:'center'}}>
+                <Text style={{color:colors.descBlack,fontSize:hp(3),fontFamily:fontFamily.robotoMedium,fontWeight:'400'}}>
+                  4
+                </Text>
+              </View>
+              <View style={{flex:0.4,justifyContent:'center',alignItems:'center'}}>
+              <Text style={{color:colors.descBlack,fontSize:hp(2),fontFamily:fontFamily.robotoLight,fontWeight:'400'}}>
+              Can Be Improved
+                </Text>
+              </View>
+            </View>
+            <View style={{flex:0.025}}></View>
+            <View style={{flex:0.18}}>
+            <View style={{flex:0.6,borderRadius:hp(0.2),borderWidth:1,borderColor:'#E4E6F6',justifyContent:'center',alignItems:'center'}}>
+                <Text style={{color:colors.descBlack,fontSize:hp(3),fontFamily:fontFamily.robotoMedium,fontWeight:'400'}}>
+                  5
+                </Text>
+              </View>
+              <View style={{flex:0.4,justifyContent:'center',alignItems:'center'}}>
+              <Text style={{color:colors.descBlack,fontSize:hp(2),fontFamily:fontFamily.robotoLight,fontWeight:'400'}}>
+              No Comment
+                </Text>
+              </View>
+            </View>
+
+          </View>
+          <View style={{flex:0.1,flexDirection:'row',height:hp(5)}}></View>
+          <View style={{flex:0.1,flexDirection:'row',height:hp(8)}}>
+            <TouchableOpacity style={{flex:0.455,borderRadius:hp(1.5),justifyContent:'center',alignItems:'center',borderWidth:1,borderColor:'#cdcdcd'}}>
+              <View style={{justifyContent:'center',alignItems:'center',marginTop:hp(-1)}}>
+              <Text style={{marginTop:hp(1),color:colors.descBlack,fontSize:hp(2.5),fontFamily:fontFamily.robotoMedium,fontWeight:'400'}}>
+              Not now
+              </Text>
+              </View>
+            </TouchableOpacity>
+            <View style={{flex:0.08}}></View>
+            <TouchableOpacity style={{flex:0.455,borderRadius:hp(1.5),justifyContent:'center',alignItems:'center',backgroundColor:'#2CC2E4'}}>
+            <View style={{justifyContent:'center',alignItems:'center',marginTop:hp(-1)}}>
+              <Text style={{marginTop:hp(1),color:'#fff',fontSize:hp(2.5),fontFamily:fontFamily.robotoMedium,fontWeight:'400'}}>
+              Submit
+              </Text>
+              </View>
+            </TouchableOpacity>
+          </View>
+          
+        </BottomSheet>
+    
+      {/* bottom sheet end */}
       <View style={{flex: 0.35}}>
         <ImageBackground
           source={{uri: 'banertwo'}}
@@ -185,7 +400,7 @@ const SessionProgramm = (props) => {
             </TouchableOpacity>
             <View style={{flex: 0.7, justifyContent: 'center'}}>
               <Text
-                style={{color: '#fff', fontSize: hp(2.5), fontWeight: '600',fontFamily:fontFamily.robotoBold}}>
+                style={{color: '#fff', fontSize: hp(2.5), fontWeight: '500',fontFamily:fontFamily.robotoMedium}}>
                 Session Details
               </Text>
             </View>
@@ -211,14 +426,14 @@ const SessionProgramm = (props) => {
         <ScrollView>
           {/* <SessionParagraphText/> */}
 
-          <View style={{flex: 0.2, justifyContent: 'center'}}>
+          <View style={{flex: 0.2, justifyContent: 'center',paddingTop:hp(1.5)}}>
             <Text
-              style={{color:colors.grayDescColor, fontSize: hp(2.5), fontWeight: '300',fontFamily:fontFamily.robotoLight}}
+              style={{color:colors.grayDescColor, fontSize: hp(2.2), fontWeight: '300',fontFamily:fontFamily.robotoLight}}
               numberOfLines={1}>
               Panel Discussion
             </Text>
             <Text
-              style={{color:colors.blackColor, fontSize: hp(2.5), fontWeight: '600',fontFamily:fontFamily.robotoBold}}
+              style={{color:colors.descBlack, fontSize: hp(2.5), fontWeight: '500',fontFamily:fontFamily.robotoMedium,paddingTop:hp(1)}}
               numberOfLines={2}>
               {item?.activity_name}
             </Text>
@@ -228,27 +443,27 @@ const SessionProgramm = (props) => {
             <View style={{flexDirection: 'row', flex: 0.44}}>
               <View
                 style={{
-                  flex: 0.12,
-                  backgroundColor: '#cdcdcd',
+                  flex: 0.115,
+                  backgroundColor:'#E5E7E9',
                   borderRadius: hp(50),
                   justifyContent: 'center',
                   alignItems: 'center',
                 }}>
                 <Icon
-                  type="light"
-                  name="calendar-days"
-                  size={hp(3.5)}
+                  type="regular"
+                  name="calendar-check"
+                  size={hp(3)}
                   color="#2CC2E4"
                 />
               </View>
               <View style={{flex: 0.04}}></View>
               <View style={{flex: 0.75}}>
                 <Text
-                  style={{color:colors.blackColor, fontSize: hp(2.5), fontWeight: '500',fontFamily:fontFamily.robotoMedium}}>
+                  style={{color:colors.descBlack, fontSize: hp(2.2), fontWeight: '500',fontFamily:fontFamily.robotoMedium}}>
                   {item?.activity_date}
                 </Text>
                 <Text
-                  style={{color:colors.descBlack, fontSize: hp(1.7), fontWeight: '400',fontFamily:fontFamily.robotoMedium}}>
+                  style={{color:colors.descBlack, fontSize: hp(1.8), fontWeight: '400',fontFamily:fontFamily.robotoLight}}>
                   Tuesday, {item?.start_time} - {item?.end_time}
                 </Text>
               </View>
@@ -257,27 +472,27 @@ const SessionProgramm = (props) => {
               style={{flexDirection: 'row', flex: 0.44, marginTop: hp(1.5)}}>
               <View
                 style={{
-                  flex: 0.12,
-                  backgroundColor: '#cdcdcd',
+                  flex: 0.115,
+                  backgroundColor: '#E5E7E9',
                   borderRadius: hp(50),
                   justifyContent: 'center',
                   alignItems: 'center',
                 }}>
                 <Icon
-                  type="light"
+                  type="solid"
                   name="location-dot"
-                  size={hp(3.5)}
+                  size={hp(3)}
                   color="#2CC2E4"
                 />
               </View>
               <View style={{flex: 0.04}}></View>
               <View style={{flex: 0.75}}>
               <Text
-                  style={{color:colors.blackColor, fontSize: hp(2.5), fontWeight: '500',fontFamily:fontFamily.robotoMedium}}>
+                  style={{color:colors.descBlack, fontSize: hp(2.2), fontWeight: '500',fontFamily:fontFamily.robotoMedium}}>
                   Hall # 40
                 </Text>
                 <Text
-                  style={{color:colors.descBlack, fontSize: hp(1.7), fontWeight: '400',fontFamily:fontFamily.robotoMedium}}>
+                  style={{color:colors.descBlack, fontSize: hp(1.8), fontWeight: '400',fontFamily:fontFamily.robotoLight}}>
                  {item?.location}
                 </Text>
               </View>
@@ -297,9 +512,9 @@ const SessionProgramm = (props) => {
               style={{
                 flex: 0.37,
                 borderRadius: hp(5),
-                borderWidth: 2,
+                borderWidth: 1.5,
                 borderColor: '#2CC2E4',
-                height: hp(6),
+                height: hp(5.5),
                 justifyContent: 'center',
                 alignItems: 'center',
                 backgroundColor: abstract ? '#2CC2E4' : '#fff',
@@ -307,8 +522,9 @@ const SessionProgramm = (props) => {
               <Text
                 style={{
                   color: abstract ? '#fff' : '#2CC2E4',
-                  fontSize: hp(2),
-                  fontWeight: '600',
+                  fontSize: hp(1.8),
+                  fontWeight: '400',
+                  fontFamily:fontFamily.robotoMedium
                 }}>
                 Abstract
               </Text>
@@ -318,9 +534,9 @@ const SessionProgramm = (props) => {
               style={{
                 flex: 0.37,
                 borderRadius: hp(5),
-                borderWidth: 2,
+                borderWidth: 1.5,
                 borderColor: '#2CC2E4',
-                height: hp(6),
+                height: hp(5.5),
                 justifyContent: 'center',
                 alignItems: 'center',
                 marginHorizontal: hp(1),
@@ -330,7 +546,8 @@ const SessionProgramm = (props) => {
                 style={{
                   color: speaker ? '#fff' : '#2CC2E4',
                   fontSize: hp(2),
-                  fontWeight: '600',
+                  fontWeight: '400',
+                  fontFamily:fontFamily.robotoMedium
                 }}>
                 Speakers
               </Text>
@@ -341,9 +558,9 @@ const SessionProgramm = (props) => {
               style={{
                 flex: 0.37,
                 borderRadius: hp(5),
-                borderWidth: 2,
+                borderWidth: 1.5,
                 borderColor: '#2CC2E4',
-                height: hp(6),
+                height: hp(5.5),
                 justifyContent: 'center',
                 alignItems: 'center',
                 backgroundColor: resurces ? '#2CC2E4' : '#fff',
@@ -352,7 +569,8 @@ const SessionProgramm = (props) => {
                 style={{
                   color: resurces ? '#fff' : '#2CC2E4',
                   fontSize: hp(2),
-                  fontWeight: '600',
+                  fontWeight: '400',
+                  fontFamily:fontFamily.robotoMedium
                 }}>
                 Resources
               </Text>
@@ -366,10 +584,11 @@ const SessionProgramm = (props) => {
               style={{
                 color:colors.blackColor,
                 fontSize: hp(2.3),
-                fontWeight: '600',
-                fontFamily:fontFamily.robotoBold
+                fontWeight: '500',
+                fontFamily:fontFamily.robotoMedium
               }}>
-              About Session
+                {detailData?.user?.response?.detail ? ' About Session':'No Data Available.'}
+             
             </Text>
             </View>
             <View style={{flex:0.8}}>
@@ -383,14 +602,15 @@ const SessionProgramm = (props) => {
           )}
           {speaker && (
             <View style={{flex: 0.7}}>
-              <View style={{flex:0.2}}>
+              <View style={{flex:0.2,justifyContent:'center',alignItems:'center'}}>
                 <Text
                   style={{
-                    color: '#000',
+                    color:colors.grayDescColor,
                     fontSize: hp(2.3),
                     fontWeight: '600',
                   }}>
-                  Moderator:
+                  {urlData?.speakers?.length > 0 ? 'Moderator:':<Text style={{color:colors.grayDescColor,fontSize:hp(2),fontFamily:fontFamily.robotoMedium}}>No Resources Available</Text>}  
+                  
                 </Text>
               </View>
               <View style={{flex:0.8}}>
@@ -403,7 +623,10 @@ const SessionProgramm = (props) => {
             </View>
           )}
           {resurces && (
-            <View style={{flex: 0.7, height: hp(34),justifyContent:'center',alignItems:'center'}}>
+            <View style={{flex: 0.7, height: hp(34)}}>
+             
+
+            {detailData?.user?.response?.resources?.length > 0 ? (<>
               <View style={{flex: 0.45, flexDirection: 'row',marginTop:hp(0),justifyContent:'center',alignItems:'center'}}>
                 <View
                   style={{
@@ -498,7 +721,7 @@ const SessionProgramm = (props) => {
                     color="#FF8B66"
                   />
                 </View>
-              </View>
+              </View></>):<View style={{justifyContent:'center',alignItems:'center'}}><Text style={{color:colors.grayDescColor,fontSize:hp(2),fontFamily:fontFamily.robotoMedium}}>No Resources Available</Text></View>}  
               
             </View>
             
@@ -513,33 +736,51 @@ const SessionProgramm = (props) => {
             flexDirection: 'row',
             marginTop: hp(1),
           }}>
-          <TouchableOpacity onPress={ ()=>{ Linking.openURL('https://google.com')}} style={{flex: 0.25}}>
-            <Image
-              style={{width: '100%', height: '100%', paddingTop: hp(2)}}
-              source={{uri: 'icon4'}}
-              resizeMode="contain"
-            />
+          <TouchableOpacity onPress={ ()=>{ }} style={{flex: 0.25,justifyContent:'center',alignItems:'center'}}>
+          <View style={{marginBottom:hp(1)}}>
+            <Icon
+                  type="light"
+                  name="comment-question"
+                  size={hp(2.5)}
+                  color={colors.grayDescColor}
+                />
+                </View>
+                <Text style={{color:colors.grayDescColor}}>Ask</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={ ()=>{urlData?.facebook_url && Linking.openURL(urlData?.facebook_url)}} style={{flex: 0.25}}>
-            <Image
-              style={{width: '100%', height: '100%', paddingTop: hp(2)}}
-              source={{uri: 'icon3'}}
-              resizeMode="contain"
-            />
+          <TouchableOpacity onPress={ ()=>{}} style={{flex: 0.25,justifyContent:'center',alignItems:'center'}}>
+          <View style={{marginBottom:hp(1)}}>
+          <Icon
+                  
+                  type="light"
+                  name="ballot-check"
+                  size={hp(2.5)}
+                  color={colors.grayDescColor}
+                  
+                />
+          </View>
+                <Text style={{color:colors.grayDescColor}}>Evaluation</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={{flex: 0.25}}>
-            <Image
-              style={{width: '100%', height: '100%', paddingTop: hp(2)}}
-              source={{uri: 'iconone'}}
-              resizeMode="contain"
-            />
+          <TouchableOpacity style={{flex: 0.25,justifyContent:'center',alignItems:'center'}}>
+          <View style={{marginBottom:hp(1)}}>
+          <Icon
+                  type="light"
+                  name="globe-pointer"
+                  size={hp(2.5)}
+                  color={colors.grayDescColor}
+                />
+                </View>
+                <Text style={{color:colors.grayDescColor}}>Live</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={{flex: 0.25}}>
-            <Image
-              style={{width: '100%', height: '100%', paddingTop: hp(2)}}
-              source={{uri: 'icontwo'}}
-              resizeMode="contain"
-            />
+          <TouchableOpacity onPress={()=>setIsPoll(true)} style={{flex: 0.25,justifyContent:'center',alignItems:'center'}}>
+          <View style={{marginBottom:hp(1)}}>
+          <Icon
+                  type="light"
+                  name="poll-people"
+                  size={hp(2.5)}
+                  color={colors.grayDescColor}
+                />
+                </View>
+                <Text style={{color:colors.grayDescColor}}>Poll</Text>
           </TouchableOpacity>
         </View>
       </View>

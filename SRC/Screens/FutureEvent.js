@@ -2,7 +2,7 @@ import { View, Text, StatusBar, TouchableOpacity, Image, FlatList, Modal, Activi
 import React, { useEffect, useState } from 'react';
 import MainHeader from '../Components/Headers/MainHeader';
 import BtnThree from '../Components/BtnThree';
-import { pastEventHandler} from '../features/pastevents/pastEventSlice';
+import { futureEventHandler} from '../features/upcommingevents/upcomingEventSlice';
 import { activityHomeHandler } from '../features/eventactivityhome/hactivitySlice';
 import Icon from 'react-native-fontawesome-pro';
 import fontFamily from '../Styles/fontFamily';
@@ -13,7 +13,7 @@ import {
 } from 'react-native-responsive-screen';
 import { useDispatch, useSelector } from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-const PrevEvents = (props) => {
+const FutureEvents = (props) => {
   const {user_id} = props.route.params;
   const dispatch = useDispatch();
   const activityData=useSelector((state)=>state.acitivityState);
@@ -28,10 +28,11 @@ const PrevEvents = (props) => {
       console.error('Error saving data:', error);
     }
   }
-  const pastEventData=useSelector((state)=>state.pastEventState);
-  console.log("pastEventData==",pastEventData?.user?.response?.events);
+  
+  const futureEventData=useSelector((state)=>state.futureEventState);
+  console.log("futureEventData==",futureEventData?.user?.response?.events);
   useEffect(() => {
-    dispatch(pastEventHandler({"user_id":user_id}));
+    dispatch(futureEventHandler({"user_id":user_id}));
   }, []);
   const propHandler=(event_id)=>{
     saveData({user_id:user_id,event_id:event_id});
@@ -96,7 +97,7 @@ const PrevEvents = (props) => {
         backgroundColor="transparent"
       />
        <Modal
-        visible={pastEventData?.isLoading}
+        visible={futureEventData?.isLoading}
         transparent={true}
         animationType="fade"
       >
@@ -107,14 +108,14 @@ const PrevEvents = (props) => {
         </View>
       </Modal>
      <View style={{flex:0.1,zIndex:1}}>
-     <MainHeader text={'Previous Events'} onpressBtn={() => props.navigation.goBack()}/>
+     <MainHeader text={'Future Events'} onpressBtn={() => props.navigation.goBack()}/>
      </View>
       
       <View style={{flex:0.06,justifyContent:'space-between',alignItems:'center',flexDirection:'row',marginHorizontal:hp(2.5),marginTop:hp(-2)}}>
       </View>
       <View style={{flex:0.9}}>
       <FlatList
-          data={pastEventData?.user?.response?.events}
+          data={futureEventData?.user?.response?.events}
           renderItem={renderItem}
           keyExtractor={(item, index) => index.toString()}
         />
@@ -123,4 +124,4 @@ const PrevEvents = (props) => {
   )
 }
 
-export default PrevEvents
+export default FutureEvents

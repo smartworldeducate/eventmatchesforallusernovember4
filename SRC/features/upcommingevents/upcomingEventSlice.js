@@ -1,8 +1,8 @@
 import { createSlice,createAsyncThunk } from "@reduxjs/toolkit";
-import { activityHomeService } from "../eventactivityhome/hactivityService";
-export const activityHomeHandler=createAsyncThunk("all/activity",async(userData,thunkAPI)=>{
+import { futureEventsService } from "../upcommingevents/upcomingEventService";
+export const futureEventHandler=createAsyncThunk("future/event",async(userData,thunkAPI)=>{
     try {
-        return await activityHomeService.activityServices(userData)
+        return await futureEventsService.futureEentServices(userData)
     } catch (error) {
        return thunkAPI.rejectWithValue(error) 
     }
@@ -15,21 +15,19 @@ const initialState={
     isLoading:false,
     message:""
 }
-export const activitySlice=createSlice({
+export const futureEventSlice=createSlice({
     name:'cratetag',
     initialState:initialState,
-    reducers:{
-        resetState: (state) => initialState 
-    },
+    reducers:{},
     extraReducers:(builder)=>{
-        builder.addCase(activityHomeHandler.pending,(state)=>{
+        builder.addCase(futureEventHandler.pending,(state)=>{
             state.isLoading=true
-        }).addCase(activityHomeHandler.fulfilled,(state,action)=>{
+        }).addCase(futureEventHandler.fulfilled,(state,action)=>{
             state.isLoading=false,
             state.isError=false,
             state.isSuccess=true,
             state.user=action.payload
-        }).addCase(activityHomeHandler.rejected,(state,action)=>{
+        }).addCase(futureEventHandler.rejected,(state,action)=>{
             state.isLoading=false,
             state.isError=true,
             state.isSuccess=false,
@@ -38,6 +36,4 @@ export const activitySlice=createSlice({
     }
 })
 
-export const { resetState } = activitySlice.actions;
-
-export default activitySlice.reducer
+export default futureEventSlice.reducer

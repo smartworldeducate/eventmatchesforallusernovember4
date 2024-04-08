@@ -30,6 +30,11 @@ import MapScreen from './SRC/Screens/MapScreen';
 import FeedBack from './SRC/Screens/FeedBack';
 import { View } from 'react-native';
 import Admins from './SRC/Screens/Admin';
+import FutureEvents from './SRC/Screens/FutureEvent';
+import Events from './SRC/Screens/Events';
+import Qrcode from './SRC/Screens/Qrcode';
+import colors from './SRC/Styles/colors';
+import fontFamily from './SRC/Styles/fontFamily';
 
 const Drawer = createDrawerNavigator();
 const Tab = createBottomTabNavigator();
@@ -62,7 +67,20 @@ const BottomTabApplication = () => {
           position: 'absolute',
           elevation: 5,
           backgroundColor: '#fff',
-          height: 55,
+          height: 50,
+        },
+        tabStyle: {
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+        },
+        iconStyle: {
+          marginBottom: 1, // Adjust space between icon and label
+        },
+        labelStyle: {
+          fontSize: 55, // Adjust label font size
+          marginTop: 0,
+          color:colors.grayDescColor // Optionally, adjust margin between icon and label
         },
         tabBarActiveTintColor: '#2CC2E4', 
         tabBarInactiveTintColor: '#000000',
@@ -71,8 +89,8 @@ const BottomTabApplication = () => {
         name="HomeScreen"
         component={HomeScreen}
         options={{
-          tabBarIcon: ({color, size}) => (
-            <Icon type='light' name="person-chalkboard" size={hp(3)} color={color} />
+          tabBarIcon: ({color, size,focused}) => (
+            <Icon type='light' name="person-chalkboard" size={hp(3)} color={focused ? '#2CC2E4' : colors.grayDescColor} />
           ),
           tabBarLabel: 'Exibitor',
           tabBarLabelStyle: {
@@ -84,8 +102,8 @@ const BottomTabApplication = () => {
         name="Speaker"
         component={SpeakerList}
         options={{
-          tabBarIcon: ({color, size}) => (
-            <Icon type='light' name="user-tie" size={hp(3)} color={color} />
+          tabBarIcon: ({color, size,focused}) => (
+            <Icon type='light' name="user-tie" size={hp(2.5)} color={focused ? '#2CC2E4' : colors.grayDescColor} />
           ),
           tabBarLabel: 'Speaker',
           tabBarLabelStyle: {
@@ -97,37 +115,39 @@ const BottomTabApplication = () => {
         name="Scanner"
         component={Scanner}
         options={{
-          tabBarIcon: ({color, size}) => (
-           <View style={{backgroundColor:'#2CC2E4',width:wp(16),height:hp(8),justifyContent:'center',alignItems:'center',borderRadius:hp(50)}}>
-             <Icon type='light' name="qrcode" size={hp(3.5)} color={'#fff'} />
+          tabBarIcon: ({color, size,focused}) => (
+           <View style={{marginBottom:hp(1),backgroundColor:'#2CC2E4',width:wp(18),height:hp(9),justifyContent:'center',alignItems:'center',borderRadius:hp(50)}}>
+             <Icon type='light' name="qrcode" size={hp(4)} color={'#fff'} />
            </View>
           ),
           tabBarLabel: 'Scanner',
           tabBarLabelStyle: {
             fontSize: hp(1.8),
-            color:'#fff'
+            color:'#fff',
+            marginTop:hp(2.3)
           },
         }}
       />
        <Tab.Screen
-        name="Attendees"
-        component={Attendees}
+        name="My Sessions"
+        component={HomeScreen}
         options={{
-          tabBarIcon: ({color, size}) => (
-            <Icon type='light' name="clipboard-list-check" size={hp(3)} color={color} />
+          tabBarIcon: ({color, size,focused}) => (
+            <Icon type='light' name="clipboard-list-check" size={hp(2.5)} color={focused ? '#2CC2E4' : colors.grayDescColor} />
           ),
-          tabBarLabel: 'Attendees',
+          tabBarLabel: 'My Sessions',
           tabBarLabelStyle: {
             fontSize: hp(1.8),
           },
         }}
+        initialParams={{ apiIdentifier: 'mySessions' }}
       />
         <Tab.Screen
         name="FeedBack"
         component={FeedBack}
         options={{
-          tabBarIcon: ({color, size}) => (
-            <Icon type='light' name="message-smile" size={hp(3)} color={color} />
+          tabBarIcon: ({color, size,focused}) => (
+            <Icon type='light' name="message-smile" size={hp(2.5)} color={focused ? '#2CC2E4' : colors.grayDescColor}/>
           ),
           tabBarLabel: 'FeedBack',
           tabBarLabelStyle: {
@@ -172,6 +192,11 @@ const Routes = () => {
         <Stack.Screen name="AllEvents" component={AllEvents} />
         <Stack.Screen name="FeedBack" component={FeedBack} />
         <Stack.Screen name="Admins" component={Admins} />
+        <Stack.Screen name="MapScreen" component={MapScreen} />
+        <Stack.Screen name="FutureEvents" component={FutureEvents} />
+        <Stack.Screen name="Events" component={Events} />
+        <Stack.Screen name="Qrcode" component={Qrcode} />
+        
         
       </Stack.Navigator>
     </NavigationContainer>

@@ -13,6 +13,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+import fontFamily from '../Styles/fontFamily';
 const Sponsor = props => {
   return (
     <View style={{flex: 1}}>
@@ -42,7 +43,7 @@ const Sponsor = props => {
                 // backgroundColor: 'red',
                 justifyContent: 'center',
               }}>
-              <Text style={{color: '#000', fontSize: hp(3), fontWeight: '600'}}>
+              <Text style={{color: 'gray', fontSize: hp(2.5), fontWeight: '500',fontFamily:fontFamily.robotoMedium}}>
                 Dimond
               </Text>
               <View
@@ -132,8 +133,8 @@ const Sponsor = props => {
                 // backgroundColor: 'red',
                 justifyContent: 'center',
               }}>
-              <Text style={{color: '#000', fontSize: hp(3), fontWeight: '600'}}>
-                Dimond
+              <Text style={{color: '#FFD700', fontSize: hp(2.5), fontWeight: '500',fontFamily:fontFamily.robotoMedium}}>
+                Gold
               </Text>
               <View
                 style={{
@@ -222,8 +223,8 @@ const Sponsor = props => {
                 // backgroundColor: 'red',
                 justifyContent: 'center',
               }}>
-              <Text style={{color: '#000', fontSize: hp(3), fontWeight: '600'}}>
-                Dimond
+              <Text style={{color: 'silver', fontSize: hp(2.5), fontWeight: '500',fontFamily:fontFamily.robotoMedium}}>
+                Silver
               </Text>
               <View
                 style={{

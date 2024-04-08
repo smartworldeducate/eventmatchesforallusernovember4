@@ -1,5 +1,5 @@
 import {View, Text, Image, TouchableOpacity} from 'react-native';
-import React from 'react';
+import React, { useState } from 'react';
 import MainHeader from '../Components/Headers/MainHeader';
 import fontFamily from '../Styles/fontFamily';
 import colors from '../Styles/colors';
@@ -8,6 +8,18 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 const ExibitoeDetail = props => {
+  const [abstract,setAbsract]=useState(true);
+  const [booth,setBooth]=useState(false);
+
+  const absHandler=()=>{
+    setAbsract(true);
+    setBooth(false);
+  }
+  const boothHandler=()=>{
+    setAbsract(false);
+    setBooth(true);
+  }
+
   return (
     <View style={{flex: 1}}>
       <View style={{flex: 0.1}}>
@@ -30,7 +42,7 @@ const ExibitoeDetail = props => {
           justifyContent: 'center',
           marginHorizontal: hp(2.5),
         }}>
-        <Text style={{color:colors.blackColor, fontSize: hp(3), fontWeight: '600',fontFamily:fontFamily.robotoBold}}>
+        <Text style={{color:colors.blackColor, fontSize: hp(2.5), fontWeight: '500',fontFamily:fontFamily.robotoMedium}}>
           Nestle Corporation
         </Text>
       </View>
@@ -45,32 +57,35 @@ const ExibitoeDetail = props => {
           alignItems: 'center',
         }}>
         <TouchableOpacity
+        onPress={absHandler}
           style={{
             flex: 0.4,
-            borderColor: colors.lightBlue,
-            backgroundColor: colors.lightBlue,
+            borderColor:colors.lightBlue,
+            borderWidth:1,
+            backgroundColor:abstract ? colors.lightBlue:null,
             borderRadius: hp(10),
             height: hp(6.2),
             justifyContent: 'center',
             alignItems: 'center',
           }}>
-          <Text style={{color: '#fff', fontSize: hp(2), fontWeight: '400',fontFamily:fontFamily.robotoMedium}}>
+          <Text style={{color:abstract ? '#fff':'#2CC2E4', fontSize: hp(2), fontWeight: '400',fontFamily:fontFamily.robotoMedium}}>
             ABSTRACT
           </Text>
         </TouchableOpacity>
         <View style={{flex: 0.07}}></View>
         <TouchableOpacity
+        onPress={boothHandler}
           style={{
             flex: 0.4,
             borderColor: colors.lightBlue,
-            // backgroundColor: '#2CC2E4',
+            backgroundColor:booth ? colors.lightBlue:null,
             borderWidth:1,
             borderRadius: hp(10),
             height: hp(6.2),
             justifyContent: 'center',
             alignItems: 'center',
           }}>
-          <Text style={{color: '#2CC2E4', fontSize: hp(2), fontWeight: '400',fontFamily:fontFamily.robotoMedium}}>
+          <Text style={{color:booth ? '#fff':'#2CC2E4', fontSize: hp(2), fontWeight: '400',fontFamily:fontFamily.robotoMedium}}>
             BOOTH
           </Text>
         </TouchableOpacity>
@@ -81,13 +96,14 @@ const ExibitoeDetail = props => {
           style={{
             color: colors.longDescColor,
             fontSize: hp(2),
-            lineHeight: hp(2.8),
-            letterSpacing: hp(0.1),
+            lineHeight: hp(3),
+            letterSpacing: hp(0.2),
             fontWeight: '300',
             paddingVertical: hp(1),
+            fontFamily:fontFamily.robotoLight
             
           }}>
-          Enjoy your favorite dish and a lovely your friends and family and have
+          {/* Enjoy your favorite dish and a lovely your friends and family and have
           a great time. Food from local food trucks will be available for
           purchase. Enjoy your favorite dish and a lovely your friends and
           family and have a great time. Food from local food trucks will be
@@ -95,7 +111,7 @@ const ExibitoeDetail = props => {
           friends and family and have a great time. Food from local food trucks
           will be available for purchase. Enjoy your favorite dish and a lovely
           your friends and family and have a great time. Food from local food
-          trucks will be available for purchase.
+          trucks will be available for purchase. */}
         </Text>
       </View>
 

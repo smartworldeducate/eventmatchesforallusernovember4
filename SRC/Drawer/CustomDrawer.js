@@ -20,6 +20,12 @@ import { useSelector } from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 const CustomDrawer = ({ navigation }) => {
 
+  const navigatorHandler=(screen)=>{
+    navigation.navigate(screen);
+    navigation.closeDrawer();
+  }
+
+
   async function saveData() {
    console.log("logout")
       await AsyncStorage.removeItem("loginData");
@@ -72,13 +78,15 @@ const CustomDrawer = ({ navigation }) => {
               marginTop: hp(1),
             }}>
             <TouchableOpacity
-            onPress={()=>navigation.navigate('Profile')}
+            onPress={()=>navigatorHandler('Speaker')}
               style={{
-                width: wp(14),
-                height: hp(7),
+                width: wp(18),
+                height: hp(9),
                 backgroundColor: '#58D68D ',
                 borderRadius: hp(50),
                 marginRight: hp(3),
+                borderWidth:1,
+                borderColor:'#fff'
               }}>
               <Image
                 style={{
@@ -88,13 +96,13 @@ const CustomDrawer = ({ navigation }) => {
                   height:'100%',
                   borderRadius: hp(50),
                 }}
-                source={{ uri: 'imgthree' }}
-                resizeMode="cover"
+                source={{ uri: 'imgfive' }}
+                resizeMode="contain"
               />
             </TouchableOpacity>
-            <View style={{ marginLeft: hp(-2) }}>
+            <View style={{ marginLeft: hp(-2),marginTop:hp(1) }}>
               <View>
-                <Text style={styles.username}>Salman Ali</Text>
+                <Text style={styles.username}>Qasim Ali Khan</Text>
               </View>
               <View style={{ flexDirection: 'row', marginTop: hp(0) }}>
                 <View style={{ marginRight: hp(1) }}>
@@ -109,80 +117,117 @@ const CustomDrawer = ({ navigation }) => {
           </View>
           <View style={[styles.listnameStyle, { marginTop: hp(4) }]}>
             <TouchableOpacity
-              onPress={() => navigation.navigate('HomeScreenDrawer')}>
+              onPress={() => navigatorHandler('HomeScreenDrawer')}>
               <View style={{ flexDirection: 'row', marginLeft: hp(3) }}>
-                <View style={styles.homeleft}>
-                  <Text style={styles.textlistStyle}>Home</Text>
+                <View style={{}}>
+                <Icon type='light' name="house" size={hp(2.5)} color={'#fff'}  style={{marginTop:hp(1)}}/>   
+                </View>
+                <View>
+                <Text style={[styles.textlistStyle,{paddingLeft:hp(2)}]}>Home</Text>
                 </View>
               </View>
             </TouchableOpacity>
           </View>
-          {/* <View style={[styles.listnameStyle, { marginTop: hp(2) }]}>
+          <View style={[styles.listnameStyle, { marginTop: hp(1.5) }]}>
             <TouchableOpacity
-              onPress={() => navigation.navigate('AllEvents')}>
+              onPress={() => navigatorHandler('Events')}>
               <View style={{ flexDirection: 'row', marginLeft: hp(3) }}>
-                <View style={styles.homeleft}>
-                  <Text style={styles.textlistStyle}>Events</Text>
+                <View style={{}}>
+                <Icon type='light' name="calendar-star" size={hp(2.5)} color={'#fff'} />   
                 </View>
-              </View>
-            </TouchableOpacity>
-          </View> */}
-          {/* <View style={[styles.listnameStyle, { marginTop: hp(2) }]}>
-            <TouchableOpacity
-              onPress={() => navigation.navigate('Session')}>
-              <View style={{ flexDirection: 'row', marginLeft: hp(3) }}>
-                <View style={styles.homeleft}>
-                  <Text style={styles.textlistStyle}>Events Info</Text>
-                </View>
-              </View>
-            </TouchableOpacity>
-          </View> */}
-          <View style={[styles.listnameStyle, { marginTop: hp(2) }]}>
-            <TouchableOpacity
-              onPress={() => navigation.navigate('Exibitor')}>
-              <View style={{ flexDirection: 'row', marginLeft: hp(3) }}>
-                <View style={styles.homeleft}>
-                  <Text style={styles.textlistStyle}>Exhibitor</Text>
+                <View>
+                <Text style={[styles.textlistStyle,{paddingLeft:hp(2)}]}>Events</Text>
                 </View>
               </View>
             </TouchableOpacity>
           </View>
-          <View style={[styles.listnameStyle, { marginTop: hp(2) }]}>
+          <View style={[styles.listnameStyle, { marginTop: hp(1.5) }]}>
             <TouchableOpacity
-              onPress={() => navigation.navigate('SpeakerList')}>
+              onPress={() => navigatorHandler('Events')}>
               <View style={{ flexDirection: 'row', marginLeft: hp(3) }}>
-                <View style={styles.homeleft}>
-                  <Text style={styles.textlistStyle}>Speaker</Text>
+                <View style={{}}>
+                <Icon type='light' name="calendar-lines-pen" size={hp(2.5)} color={'#fff'} />   
+                </View>
+                <View>
+                <Text style={[styles.textlistStyle,{paddingLeft:hp(2)}]}>Events Info</Text>
                 </View>
               </View>
             </TouchableOpacity>
           </View>
-          <View style={[styles.listnameStyle, { marginTop: hp(2) }]}>
+          <View style={[styles.listnameStyle, { marginTop: hp(1.5) }]}>
             <TouchableOpacity
-              onPress={() => navigation.navigate('Attendees')}>
+              onPress={() => navigatorHandler('Exibitor')}>
               <View style={{ flexDirection: 'row', marginLeft: hp(3) }}>
-                <View style={styles.homeleft}>
-                  <Text style={styles.textlistStyle}>Attendees</Text>
+                <View style={{}}>
+                <Icon type='light' name="person-chalkboard"  size={hp(3.5)} color={'#fff'}/>   
+                </View>
+                <View>
+                <Text style={[styles.textlistStyle,{paddingLeft:hp(1.1)}]}>Exhibitor</Text>
                 </View>
               </View>
             </TouchableOpacity>
           </View>
-          <View style={[styles.listnameStyle, { marginTop: hp(2) }]}>
+          <View style={[styles.listnameStyle, { marginTop: hp(1.5) }]}>
             <TouchableOpacity
-              onPress={() => navigation.navigate('Scanner')}>
+              onPress={() => navigatorHandler('SpeakerList')}>
               <View style={{ flexDirection: 'row', marginLeft: hp(3) }}>
-                <View style={styles.homeleft}>
-                  <Text style={styles.textlistStyle}>Qr Code</Text>
+                <View style={{}}>
+                <Icon type='light' name="user-tie" size={hp(2.5)} color={'#fff'}/>  
+                </View>
+                <View>
+                <Text style={[styles.textlistStyle,{paddingLeft:hp(1.5)}]}> Speaker</Text>
                 </View>
               </View>
             </TouchableOpacity>
           </View>
-          <View style={[styles.listnameStyle, { marginTop: hp(2) }]}>
+          <View style={[styles.listnameStyle, { marginTop: hp(1.5) }]}>
+            <TouchableOpacity
+              onPress={() => navigatorHandler('Attendees')}>
+              <View style={{ flexDirection: 'row', marginLeft: hp(3) }}>
+                <View style={{}}>
+                <Icon type='light' name="users"  size={hp(3)} color={'#fff'}/>   
+                </View>
+                <View>
+                <Text style={[styles.textlistStyle,{paddingLeft:hp(1.5)}]}>Attendees</Text>
+                </View>
+              </View>
+            </TouchableOpacity>
+          </View>
+          <View style={[styles.listnameStyle, { marginTop: hp(1.5) }]}>
+            <TouchableOpacity
+              onPress={() => navigatorHandler('Attendees')}>
+              <View style={{ flexDirection: 'row', marginLeft: hp(3) }}>
+                <View style={{}}>
+                <Icon type='light' name="clipboard-list-check"  size={hp(2.5)} color={'#fff'}/>   
+                </View>
+                <View>
+                <Text style={[styles.textlistStyle,{paddingLeft:hp(2)}]}>Survey</Text>
+                </View>
+              </View>
+            </TouchableOpacity>
+          </View>
+          <View style={[styles.listnameStyle, { marginTop: hp(1.5) }]}>
+            <TouchableOpacity
+              onPress={() => navigatorHandler('Qrcode')}>
+              <View style={{ flexDirection: 'row', marginLeft: hp(3) }}>
+                <View style={{}}>
+                <Icon type='light' name="qrcode"  size={hp(2.5)} color={'#fff'}/>
+                </View>
+                <View>
+                <Text style={[styles.textlistStyle,{paddingLeft:hp(1.8)}]}>Qr Code</Text>
+                </View>
+              </View>
+            </TouchableOpacity>
+          </View>
+          <View style={[styles.listnameStyle, { marginTop: hp(1.5) }]}>
             <TouchableOpacity
               onPress={saveData}>
               <View style={{ flexDirection: 'row', marginLeft: hp(3) }}>
-                <View style={styles.homeleft}>
-                  <Text style={styles.textlistStyle}>Logout</Text>
+                <View style={{}}>
+                <Icon type='light' name="right-from-bracket"  size={hp(2.5)} color={'#fff'}/>
+                </View>
+                <View>
+                <Text style={[styles.textlistStyle,{paddingLeft:hp(1.8)}]}>Logout</Text>
                 </View>
               </View>
             </TouchableOpacity>
@@ -192,7 +237,7 @@ const CustomDrawer = ({ navigation }) => {
           <View style={{flex:0.15}}></View>
           <View style={{flex:0.8}}>
           <Image
-            style={{ width: '107%', height: '100%', paddingTop: hp(0) }}
+            style={{ width: '100%', height: '100%', paddingTop: hp(0) }}
             source={{ uri: 'drawerimg' }}
             resizeMode="contain"
           />
@@ -208,11 +253,11 @@ export default CustomDrawer;
 
 const styles = EStyleSheet.create({
   username: {
-    fontSize: '0.7rem',
+    fontSize: '0.85rem',
     color: '#fff',
     fontWeight: '600',
     marginTop: hp(1),
-    fontFamily: fontFamily.robotoBold,
+    fontFamily: fontFamily.robotoMedium,
     fontStyle: 'normal',
   },
   viewProfile: {
@@ -227,9 +272,10 @@ const styles = EStyleSheet.create({
     fontSize: '0.8rem',
     color: '#fff',
     fontWeight: '400',
-    fontFamily: fontFamily.robotoMedium,
+    fontFamily: fontFamily.robotoLight,
     fontStyle: 'normal',
+    
   },
   listnameStyle: { width: wp(50), height: hp(5), marginTop: hp(1) },
-  homeleft: { marginLeft: hp(0.5) },
+  homeleft: { marginLeft: hp(0.5),flexDirection:'row',backgroundColor:'red'},
 });

@@ -1,10 +1,12 @@
-import {View, Text, TouchableOpacity, Image, FlatList} from 'react-native';
-import React, {useEffect} from 'react';
+import {View, Text, TouchableOpacity, Image, FlatList, ActivityIndicator, Modal} from 'react-native';
+import React, {useEffect,useCallback} from 'react';
 import MainHeader from '../Components/Headers/MainHeader';
 import colors from '../Styles/colors';
 import fontFamily from '../Styles/fontFamily';
 import Icon from 'react-native-fontawesome-pro';
 import {adminListHandler} from '../features/adminlist/adminSlice';
+import { useFocusEffect } from '@react-navigation/native';
+import {activityHomeHandler,resetState} from '../features/eventactivityhome/hactivitySlice';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -12,8 +14,14 @@ import {
 import {useDispatch, useSelector} from 'react-redux';
 const Admins = props => {
   const adminList = useSelector(state => state.adminListState);
-  console.log('adminlist==', adminList?.user?.admins);
+  console.log('adminlist==', adminList?.isLoading);
   const dispatch = useDispatch();
+  useFocusEffect(
+    useCallback(() => {
+      dispatch(adminListHandler());
+      dispatch(resetState());
+    }, [])
+  )
   useEffect(() => {
     dispatch(adminListHandler());
   }, []);
@@ -42,9 +50,9 @@ const Admins = props => {
             paddingVertical: hp(1),
           }}>
           <Image
-            style={{width: '75%', height: '95%'}}
-            source={{uri: 'imgone'}}
-            resizeMode="cover"
+            style={{width: '75%', height: '95%',borderRadius:hp(1)}}
+            source={{uri: item?.image}}
+            resizeMode="contain"
           />
         </View>
         <View style={{flex: 0.7, justifyContent: 'center'}}>
@@ -53,12 +61,12 @@ const Admins = props => {
               color: colors.blackColor,
               paddingLeft: hp(0),
               fontSize: hp(2),
-              fontWeight: '600',
-              fontFamily: fontFamily.robotoBold,
+              fontWeight: '500',
+              fontFamily: fontFamily.robotoMedium,
             }}>
-            {item?.first_name}-{item?.last_name}
+            {item?.first_name} {item?.last_name}
           </Text>
-          <Text
+          {/* <Text
             style={{
               color: colors.grayDescColor,
               fontSize: hp(2),
@@ -67,7 +75,7 @@ const Admins = props => {
               fontFamily: fontFamily.robotoLight,
             }}>
             {item?.company_name}-{item?.user_id}
-          </Text>
+          </Text> */}
         </View>
         <View
           style={{
@@ -94,6 +102,19 @@ const Admins = props => {
   };
   return (
     <View style={{flex: 1}}>
+      
+      <Modal
+        visible={adminList?.isLoading}
+        transparent={true}
+        animationType="fade"
+      >
+        <View style={{flex:1,justifyContent: 'center', alignItems: 'center',backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
+        <View style={{width:wp(25),height:hp(12.5),backgroundColor: 'white',borderRadius:hp(1),justifyContent: 'center', alignItems: 'center' }}>
+          <ActivityIndicator size="large" color="#cdcdcd" />
+        </View>
+        </View>
+      </Modal>
+      
       <View style={{flex: 0.1}}>
         <MainHeader
           text={'Admins'}
@@ -107,6 +128,8 @@ const Admins = props => {
           renderItem={renderItem}
           keyExtractor={(item, index) => index.toString()}
         />
+        
+          
       </View>
     </View>
   );
