@@ -11,9 +11,9 @@ import {
   Modal,
   ActivityIndicator,
 } from 'react-native';
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 // import MainHeader from '../Components/Headers/MainHeader';
-import {speakerHandler} from '../features/speaker/speakerSlice';
+import {attendeeHandler} from '../features/attendees/attendeesSlice';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Search from '../Components/Search';
 import Icon from 'react-native-fontawesome-pro';
@@ -26,40 +26,45 @@ import {
 import EStyleSheet from 'react-native-extended-stylesheet';
 import fontFamily from '../Styles/fontFamily';
 import {useDispatch, useSelector} from 'react-redux';
+import { useFocusEffect } from '@react-navigation/native';
 const Attendees = props => {
   const [isVisible, setIsVisible] = useState(false);
   const [data, setData] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
   const dispatch = useDispatch();
-  const speakerData = useSelector(state => state.speakerState);
+  const speakerData = useSelector(state => state.attendeeState);
   // const urlData = speakerData?.user?.response?.events[0];
-  console.log('speakerd data===', speakerData?.user?.response?.events);
+  console.log('attendee data===', speakerData?.user?.response?.list);
   async function getData(key) {
     try {
       const value = await AsyncStorage.getItem(key);
       if (value !== null) {
-        console.log('Data retrieved successfully:', value);
+        // console.log('Data retrieved successfully:', value);
         const parsedData = JSON.parse(value);
         dispatch(
-          speakerHandler({
-            user_id: parsedData.user_id,
+          attendeeHandler({
             event_id: parsedData.event_id,
-            type_id: 1,
           }),
         );
-        console.log('here is feedback screen data', parsedData);
+        // console.log('here is feedback screen data', parsedData);
         return parsedData;
       }
     } catch (error) {
       console.error('Error retrieving data:', error);
     }
   }
+  useFocusEffect(
+    useCallback(() => {
+      getData('userSession');
+      // dispatch(resetState());
+    }, [])
+  )
   useEffect(() => {
     getData('userSession');
   }, []);
 
-  const filteredData = speakerData?.user?.response?.events?.filter(item =>
-    item.speaker_name.toLowerCase().includes(searchQuery.toLowerCase()),
+  const filteredData = speakerData?.user?.response?.list?.filter(item =>
+    item.first_name.toLowerCase().includes(searchQuery.toLowerCase()),
   );
 
   const renderItem = ({item, index}) => {
@@ -120,7 +125,7 @@ const Attendees = props => {
               fontWeight: '500',
               fontFamily: fontFamily.robotoMedium,
             }}>
-            {item?.speaker_name}
+            {item?.first_name}
           </Text>
           <Text
             style={{
@@ -131,7 +136,7 @@ const Attendees = props => {
               fontFamily: fontFamily.robotoLight,
               paddingTop:hp(1)
             }}>
-            {item?.designation}
+            {item?.last_name}
           </Text>
         </View>
         <View

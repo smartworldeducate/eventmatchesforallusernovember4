@@ -33,11 +33,11 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { activityHomeHandler } from '../features/eventactivityhome/hactivitySlice';
 const HomeScreen = (props) => {
   const { apiIdentifier } = props.route?.params || {};
-  console.log("apiIdentifier==",apiIdentifier);
+  // console.log("apiIdentifier==",apiIdentifier);
   const dispatch = useDispatch();
 const activityData=useSelector((state)=>state.acitivityState);
 const registerActivityData=useSelector((state)=>state.registerActivityState);
-console.log("activityData===",activityData);
+// console.log("activityData===",activityData);
   const activityDate=activityData?.user?.responseData?.response?.activities?.['1']
   const activitytwo=activityData?.user?.responseData?.response?.activities?.['2']
   const activitythree=activityData?.user?.responseData?.response?.activities?.['3']
@@ -46,6 +46,7 @@ console.log("activityData===",activityData);
   const [loginData, setLoginData] = useState(null);
   const [daytwo,setDayTwo]=useState(false);
   const [daythree,setDayThree]=useState(false);
+  const [isRegistered, setIsRegistered] = useState('');
   const navigation = useNavigation();
 //   console.log("admin==",adminData?.user_id,adminData?.event_id)
 // console.log("login user==",adminData?.login_id)
@@ -72,15 +73,25 @@ console.log("activityData===",activityData);
   useFocusEffect(
     useCallback(() => {
       getSessionData('userSession');
-    }, [])
+    }, [dispatch])
   )
 
   useEffect(() => {
     getSessionData('userSession');
-  }, []);
+  }, [dispatch]);
 
  const registerActivityFunction=(item)=>{
-  dispatch(registerActivityHandler({"activity_id":item?.activity_id,"admin_id":adminData?.user_id,"user_id":adminData?.login_id,"event_id":adminData?.event_id}));
+  const requestData = {
+    "activity_id": item?.activity_id,
+    "admin_id": adminData?.user_id,
+    "user_id": adminData?.login_id,
+    "event_id": adminData?.event_id,
+  };
+  if (item?.is_registered === 'Y') {
+    requestData.status = 'N';
+  }
+    dispatch(registerActivityHandler(requestData));
+    getSessionData('userSession');
   if(registerActivityData?.user?.success === 1){
     ToastAndroid.showWithGravity(
       registerActivityData?.user?.message,
@@ -89,6 +100,8 @@ console.log("activityData===",activityData);
     );
   }
  }
+
+
   const dayOneHandler=()=>{
     setDayOne(true)
     setDayTwo(false)
@@ -108,9 +121,9 @@ console.log("activityData===",activityData);
   }
 
   const data = [
-    { id: 1, image: 'imgone' },
-    { id: 2, image: 'imgtwo' },
-    { id: 3, image: 'imgfore' },
+    { id: 1, image: 'https:\/\/app.eventmatches.com\/admin\/uploads\/speakers\/371_1.jpg' },
+    { id: 2, image: 'https:\/\/app.eventmatches.com\/admin\/uploads\/speakers\/369_1.jpg' },
+    { id: 3, image: 'https:\/\/app.eventmatches.com\/admin\/uploads\/speakers\/370_1.jpg' },
 
   ];
 
@@ -146,12 +159,12 @@ console.log("activityData===",activityData);
 
                     style={styles.imageList}
                     key={i}>
-                    {/* <Image
+                    <Image
                       style={styles.imgStyle}
                       source={{ uri: item.image }}
                       resizeMode="cover"
-                    /> */}
-                    <View style={{height:hp(3),width:wp(6),borderRadius:hp(50),borderColor:"#fff",borderWidth:1}}></View>
+                    />
+                    {/* <View style={{height:hp(3),width:wp(6),borderRadius:hp(50),borderColor:"#fff",borderWidth:1}}></View> */}
                   </TouchableOpacity>
                 );
 
@@ -169,7 +182,7 @@ console.log("activityData===",activityData);
                 </TouchableOpacity>
               </View>
               <View style={{ flex: 0.1 }}></View>
-              <TouchableOpacity onPress={()=>registerActivityFunction(item)} style={{ justifyContent: 'center', alignItems: 'center', flex: 0.4, borderRadius: hp(0.9), borderColor: '#2CC2E4', borderWidth: 1, height: hp(5), marginTop: hp(-1.4), marginLeft: hp(-1), backgroundColor:item?.is_registered =='Y' ? '#555555':'#2CC2E4',height:hp(4),paddingHorizontal:hp(1) }}>
+              <TouchableOpacity onPress={()=>registerActivityFunction(item)} style={{ justifyContent: 'center', alignItems: 'center', flex: 0.4, borderRadius: hp(0.9), height: hp(5), marginTop: hp(-1.4), marginLeft: hp(-1), backgroundColor:item?.is_registered =='Y' ? '#555555':'#2CC2E4',height:hp(4),paddingHorizontal:hp(1) }}>
                 <Text style={{ color: '#fff', fontWeight: '500',fontFamily:fontFamily.robotoLight,fontSize:hp(1.5)}}>{item?.is_registered == 'Y' ? 'Un-Register':'Register'}</Text>
               </TouchableOpacity>
             </View>
@@ -201,7 +214,7 @@ console.log("activityData===",activityData);
         </View>
         </View>
       </Modal>
-      <View style={{ flex: 0.2 }}>
+      <View style={{ flex: 0.25 }}>
         <HeaderTop
           onPressIcon={() => navigation.openDrawer()}
           onflterPress={()=>props.navigation.navigate("Admins")}
@@ -216,7 +229,7 @@ console.log("activityData===",activityData);
         />
       </View>
 
-      <View style={{ flex: 0.1 }}>
+      <View style={{ flex: 0.11 }}>
         {/* <BtnThree/> */}
 
         {/* <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', paddingVertical: hp(2) }}>
@@ -234,21 +247,21 @@ console.log("activityData===",activityData);
           </TouchableOpacity>):'' }
          
         </View> */}
-        <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', paddingVertical: hp(2) }}>
+        <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
   {activityDate && (
-    <TouchableOpacity onPress={dayOneHandler} style={{ flex: 0.37, borderRadius: hp(5), height: hp(6), borderWidth:1, borderColor:dayone ? "#fff":"#2CC2E4", justifyContent: 'center', alignItems: 'center',backgroundColor:dayone ? "#2CC2E4":"#fff", }}>
+    <TouchableOpacity onPress={dayOneHandler} style={{ flex: 0.3, borderRadius: hp(5), height: hp(5), borderWidth:1, borderColor:dayone ? "#fff":"#2CC2E4", justifyContent: 'center', alignItems: 'center',backgroundColor:dayone ? "#2CC2E4":"#fff", }}>
       <Text style={{ color:dayone ? "#fff":"#2CC2E4",fontSize: hp(2), fontWeight: '400',fontFamily:fontFamily.robotoMedium }}>DAY 1</Text>
       <Text style={{ color:dayone ? "#fff":"#2CC2E4", fontSize: hp(1.3), fontWeight: '300',fontFamily:fontFamily.robotoMedium  }}>{activityDate[0]?.activity_date}</Text>
     </TouchableOpacity>
   )}
   {activitytwo && (
-    <TouchableOpacity onPress={dayTwoHandler} style={{ flex: 0.37, borderRadius: hp(5), height: hp(6), borderWidth: 1, borderColor: '#2CC2E4', justifyContent: 'center', alignItems: 'center', marginHorizontal: hp(1),backgroundColor:daytwo ? "#2CC2E4":"#fff", }}>
+    <TouchableOpacity onPress={dayTwoHandler} style={{ flex: 0.3, borderRadius: hp(5), height: hp(5), borderWidth: 1, borderColor: '#2CC2E4', justifyContent: 'center', alignItems: 'center', marginHorizontal: hp(1),backgroundColor:daytwo ? "#2CC2E4":"#fff", }}>
       <Text style={{ color:daytwo ? "#fff":"#2CC2E4", fontSize: hp(2), fontWeight: '400',fontFamily:fontFamily.robotoMedium }}>DAY 2</Text>
       <Text style={{ color:daytwo ? "#fff":"#2CC2E4", fontSize: hp(1.3), fontWeight: '300',fontFamily:fontFamily.robotoMedium }}>{activitytwo[0]?.activity_date}</Text>
     </TouchableOpacity>
   )}
   {activitythree && (
-    <TouchableOpacity onPress={dayThreeHandler} style={{ flex: 0.37, borderRadius: hp(5), height: hp(6), borderWidth: 1, borderColor: '#2CC2E4', justifyContent: 'center', alignItems: 'center',backgroundColor:daythree ? "#2CC2E4":"#fff", }}>
+    <TouchableOpacity onPress={dayThreeHandler} style={{ flex: 0.3, borderRadius: hp(5), height: hp(5), borderWidth: 1, borderColor: '#2CC2E4', justifyContent: 'center', alignItems: 'center',backgroundColor:daythree ? "#2CC2E4":"#fff", }}>
       <Text style={{ color:daythree ? "#fff":"#2CC2E4", fontSize: hp(2), fontWeight: '400',fontFamily:fontFamily.robotoMedium }}>DAY 3</Text>
       <Text style={{ color:daythree ? "#fff":"#2CC2E4", fontSize: hp(1.3), fontWeight: '300',fontFamily:fontFamily.robotoMedium }}>{activitythree[0]?.activity_date}</Text>
     </TouchableOpacity>

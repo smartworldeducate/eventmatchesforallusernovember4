@@ -221,6 +221,19 @@ const CustomDrawer = ({ navigation }) => {
           </View>
           <View style={[styles.listnameStyle, { marginTop: hp(1.5) }]}>
             <TouchableOpacity
+              onPress={() => navigatorHandler('Schedulemeeting')}>
+              <View style={{ flexDirection: 'row', marginLeft: hp(3) }}>
+                <View style={{}}>
+                <Icon type='light' name="screencast"  size={hp(2.5)} color={'#fff'}/>
+                </View>
+                <View>
+                <Text style={[styles.textlistStyle,{paddingLeft:hp(1.8)}]}>Meeting Schedule</Text>
+                </View>
+              </View>
+            </TouchableOpacity>
+          </View>
+          <View style={[styles.listnameStyle, { marginTop: hp(1.5),zIndex:9}]}>
+            <TouchableOpacity
               onPress={saveData}>
               <View style={{ flexDirection: 'row', marginLeft: hp(3) }}>
                 <View style={{}}>
@@ -233,11 +246,11 @@ const CustomDrawer = ({ navigation }) => {
             </TouchableOpacity>
           </View>
         </View>
-        <View style={{flex:0.45,flexDirection:'row'}}>
+        <View style={{flex:0.32,flexDirection:'row'}}>
           <View style={{flex:0.15}}></View>
           <View style={{flex:0.8}}>
           <Image
-            style={{ width: '100%', height: '100%', paddingTop: hp(0) }}
+            style={{ width: '100%', height: '100%', paddingTop: hp(5) }}
             source={{ uri: 'drawerimg' }}
             resizeMode="contain"
           />

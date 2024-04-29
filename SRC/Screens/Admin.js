@@ -25,81 +25,74 @@ const Admins = props => {
   useEffect(() => {
     dispatch(adminListHandler());
   }, []);
-  const renderItem = ({item, index}) => {
-    return (
-      <TouchableOpacity
-        onPress={() => props.navigation.navigate('AllEvents',{"user_id":item?.user_id})}
-        style={{
-          flex: 0.1,
-          flexDirection: 'row',
-          // backgroundColor: 'green',
-          height: hp(10.3),
-          borderRadius: hp(1),
-          borderWidth: 0.5,
-          borderColor: '#cdcdcd',
-          marginVertical: hp(1.3),
-          marginHorizontal: hp(2.5),
-        }}>
-        <View
-          style={{
-            flex: 0.29,
-            justifyContent: 'center',
-            alignItems: 'center',
-            // paddingLeft: hp(-1),
-            // backgroundColor:'green',
-            paddingVertical: hp(1),
-          }}>
-          <Image
-            style={{width: '75%', height: '95%',borderRadius:hp(1)}}
-            source={{uri: item?.image}}
-            resizeMode="contain"
-          />
-        </View>
-        <View style={{flex: 0.7, justifyContent: 'center'}}>
+
+const colorData=['#EBDEF0','#D6EAF8','#E5E8E8'];
+const renderItem = ({item, index}) => {
+  // Calculate the index of the color to use
+  const colorIndex = index % colorData.length;
+
+  return (
+    <TouchableOpacity
+      onPress={() => props.navigation.navigate('AllEvents',{"user_id":item?.user_id})}
+      style={{
+        flex: 0.1,
+        flexDirection: 'row',
+        backgroundColor: colorData[colorIndex], 
+        height: hp(25),
+        borderRadius: hp(1),
+        borderWidth: 0.5,
+        borderColor: '#cdcdcd',
+        marginVertical: hp(1.3),
+        marginHorizontal: hp(2.5),
+      }}>
+
+        <View style={{flex:1,margin:hp(2)}}>
+          <View style={{flex:0.63,flexDirection:'row'}}>
+              <View style={{flex:0.31,borderRadius:hp(50),borderWidth:1,borderColor:'#fff'}}>
+              <Image
+                  style={{width: '100%', height: '100%',borderRadius:hp(50)}}
+                  source={{uri: item?.image}}
+                  resizeMode="center"
+                />
+              </View>
+              <View style={{flex:0.4}}></View>
+              <View style={{flex:0.29,justifyContent:'center',marginTop:hp(0.8)}}>
+                  <View style={{flex:1,margin:hp(3),borderRadius:hp(50),borderWidth:1,borderColor:colors.descBlack,justifyContent:'center',alignItems:'center'}}>
+                  <Icon type="light" name="arrow-up-right" size={hp(3)} color="#000" />
+                  </View>
+              </View>
+          </View>
+          <View style={{flex:0.37,marginTop:hp(1)}}>
+          <View style={{flex:1, justifyContent: 'center'}}>
           <Text
             style={{
               color: colors.blackColor,
               paddingLeft: hp(0),
-              fontSize: hp(2),
-              fontWeight: '500',
-              fontFamily: fontFamily.robotoMedium,
+              fontSize: hp(3),
+              fontWeight: '700',
+              fontFamily: fontFamily.robotoBold,
             }}>
             {item?.first_name} {item?.last_name}
           </Text>
-          {/* <Text
+          <Text
             style={{
               color: colors.grayDescColor,
-              fontSize: hp(2),
               paddingLeft: hp(0),
-              fontWeight: '300',
-              fontFamily: fontFamily.robotoLight,
+              fontSize: hp(2),
+              fontWeight: '400',
+              fontFamily: fontFamily.robotoMedium,
             }}>
-            {item?.company_name}-{item?.user_id}
-          </Text> */}
+            {item?.company_name}
+          </Text>
         </View>
-        <View
-          style={{
-            flex: 0.2,
-            justifyContent: 'center',
-            alignItems: 'center',
-            paddingRight: hp(1),
-            // backgroundColor:'red',
-          }}>
-          <View
-            style={{
-              justifyContent: 'center',
-              alignItems: 'center',
-              backgroundColor: '#2CC2E4',
-              paddingHorizontal: hp(1.2),
-              paddingVertical: hp(0.5),
-              borderRadius: hp(1),
-            }}>
-            <Icon type="light" name="arrow-right" size={hp(3)} color="#fff" />
+        
           </View>
         </View>
-      </TouchableOpacity>
-    );
-  };
+        
+      {/* Content of the TouchableOpacity */}
+    </TouchableOpacity>
+  );
+};
   return (
     <View style={{flex: 1}}>
       

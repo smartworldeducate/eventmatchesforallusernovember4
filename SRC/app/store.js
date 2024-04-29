@@ -14,7 +14,9 @@ import feedBackReducer from '../features/feedback/feedBackSlice';
 import futureEventReducer from '../features/upcommingevents/upcomingEventSlice';
 import verifiEmailReducer from '../features/login/emailSlice';
 import verifiPasswordReducer from '../features/login/passwordSlice';
-import registerActivityReducer from '../features/registeractivity/registerActivitySlice'
+import registerActivityReducer from '../features/registeractivity/registerActivitySlice';
+import attendeeReducer from '../features/attendees/attendeesSlice';
+import meetingReducer from '../features/schedulemeeting/meetingSlice'
 export const store=configureStore({
     reducer:{
         registerState:registerReducer,
@@ -32,6 +34,8 @@ export const store=configureStore({
         futureEventState:futureEventReducer,
         emailState:verifiEmailReducer,
         passwordState:verifiPasswordReducer,
-        registerActivityState:registerActivityReducer
+        registerActivityState:registerActivityReducer,
+        attendeeState:attendeeReducer,
+        meetingState:meetingReducer
        }
 })

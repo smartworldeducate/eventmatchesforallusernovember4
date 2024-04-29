@@ -1,6 +1,5 @@
 import { View, Text, StyleSheet } from 'react-native'
 import React from 'react'
-import MapView from 'react-native-maps';
 import { WebView } from 'react-native-webview';
 import MainHeader from '../Components/Headers/MainHeader';
 import {
@@ -12,7 +11,7 @@ const MapScreen = (props) => {
     <View style={{flex:1}}>
       <View style={{flex: 0.1,marginBottom:hp(2)}}>
         <MainHeader
-          text={'Map'}
+          text={'Event Location'}
           onpressBtn={() => props.navigation.goBack()}
         />
       </View>

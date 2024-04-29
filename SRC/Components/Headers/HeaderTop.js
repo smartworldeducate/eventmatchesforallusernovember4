@@ -20,24 +20,21 @@ const HeaderTop = ({ onPressIcon,onflterPress }) => {
   };
   return (
     <View style={s.container}>
-      <View style={{ flex: 0.2, justifyContent: 'center', paddingTop: hp(4.5) }}>
+      <View style={{ flex: 0.1, justifyContent: 'center', paddingTop: hp(4.3),borderRadius:hp(50)}}>
         <TouchableOpacity
+        
           activeOpacity={0.8}
-          style={{ alignItems: 'flex-start', marginTop: hp(1) }}
+          style={{ flex:0.4, marginTop: hp(1),backgroundColor:colors.lightBlue,borderRadius:hp(50),justifyContent:'center',alignItems:'center'}}
           onPress={onPressIcon}>
-          <Image
-            style={{ width: '56%', height: '83%', paddingTop: hp(0) }}
-            source={{ uri: 'logo' }}
-            resizeMode="cover"
-          />
+            <Icon type="regular" name="bars-sort" size={hp(2.5)} color="#fff" />
         </TouchableOpacity>
       </View>
 
-      <View style={{ flex: 0.2, justifyContent: 'center', paddingTop: hp(5), marginLeft: hp(-2.3) }}>
+      <View style={{ flex: 0.2, justifyContent: 'center', paddingTop: hp(5), paddingLeft: hp(2.5) }}>
         <Text style={{ color:colors.blackColor, fontSize: hp(2.5), fontWeight: '600',fontFamily:fontFamily.robotoMedium }}>Home</Text>
       </View>
 
-      <View style={{ flex: 0.2, justifyContent: 'center' }}></View>
+      <View style={{ flex: 0.3, justifyContent: 'center' }}></View>
 
       <View style={{ flex: 0.2, justifyContent: 'center', paddingTop: hp(5)}}>
         <TouchableOpacity
@@ -50,7 +47,7 @@ const HeaderTop = ({ onPressIcon,onflterPress }) => {
               </View>
               
             </View>
-          <Icon type="regular" name="bell" size={hp(3.5)} color="#2CC2E4" />
+          <Icon type="regular" name="bell" size={hp(2.8)} color="#2CC2E4" />
         </TouchableOpacity>
       </View>
 
@@ -59,7 +56,7 @@ const HeaderTop = ({ onPressIcon,onflterPress }) => {
           activeOpacity={0.8}
           style={{ alignItems: 'flex-end', marginRight: hp(1) }}
           onPress={onflterPress}>
-            <Icon type="regular" name="filter" size={hp(3.5)} color="#2CC2E4" />
+            <Icon type="regular" name="filter" size={hp(2.8)} color="#2CC2E4" />
         </TouchableOpacity>
       </View>
 
@@ -74,8 +71,10 @@ const s = EStyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'row',
-    justifyContent: 'center',
-    height: hp(5)
+    // paddingTop:hp(1)
+    // justifyContent: 'center',
+    // height: hp(5),
+    // backgroundColor:'red'
 
   }
 })

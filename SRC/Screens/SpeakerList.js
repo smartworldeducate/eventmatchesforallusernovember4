@@ -8,7 +8,7 @@ import {
   Modal,
   ActivityIndicator,
 } from 'react-native';
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import MainHeader from '../Components/Headers/MainHeader';
 import Search from '../Components/Search';
 import Icon from 'react-native-fontawesome-pro';
@@ -22,6 +22,7 @@ import {
 import colors from '../Styles/colors';
 import fontFamily from '../Styles/fontFamily';
 import {useDispatch, useSelector} from 'react-redux';
+import { useFocusEffect } from '@react-navigation/native';
 const SpeakerList = props => {
   const dispatch = useDispatch();
   const speakerData = useSelector(state => state.speakerState);
@@ -33,10 +34,10 @@ const SpeakerList = props => {
     try {
       const value = await AsyncStorage.getItem(key);
       if (value !== null) {
-        console.log('Data retrieved successfully:', value);
+        // console.log('Data retrieved successfully:', value);
         const parsedData = JSON.parse(value);
         setData(parsedData);
-        console.log('user id and event_id===', parsedData);
+        // console.log('user id and event_id===', parsedData);
         // {"user_id":parsedData.user_id,"event_id":parsedData.event_id,"type_id":1}
         dispatch(
           speakerHandler({
@@ -45,13 +46,19 @@ const SpeakerList = props => {
             type_id: 1,
           }),
         );
-        console.log('here is feedback screen data', parsedData);
+        // console.log('here is feedback screen data', parsedData);
         return parsedData;
       }
     } catch (error) {
       console.error('Error retrieving data:', error);
     }
   }
+  useFocusEffect(
+    useCallback(() => {
+      getData('userSession');
+      // dispatch(resetState());
+    }, [])
+  )
   useEffect(() => {
     getData('userSession');
   }, []);

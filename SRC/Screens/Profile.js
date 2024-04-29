@@ -7,11 +7,14 @@ import {
   ScrollView,
   FlatList,
   Linking,
+  Modal,
+  ActivityIndicator,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import MainHeader from '../Components/Headers/MainHeader';
 import Icon from 'react-native-fontawesome-pro';
-import {speakerDetailHandler} from '../features/speakerDetail/speakerDetailSlice'
+import {speakerDetailHandler} from '../features/speakerDetail/speakerDetailSlice';
+import { registerActivityHandler } from '../features/registeractivity/registerActivitySlice';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -20,20 +23,78 @@ import EStyleSheet from 'react-native-extended-stylesheet';
 import colors from '../Styles/colors';
 import fontFamily from '../Styles/fontFamily';
 import { useDispatch, useSelector } from 'react-redux';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 const Profile = props => {
   const dispatch = useDispatch();
   const speakerDetailData=useSelector((state)=>state.speakerDetailState);
-  // console.log("dpeakerDetai==",speakerDetailData);
+  const registerActivityData=useSelector((state)=>state.registerActivityState);
+
+  // console.log("speakerDetaidetail==",speakerDetailData?.user?.response?.detail?.Default);
   const {item,event_id} = props.route.params;
-  // console.log('speaker detail==', item,event_id);
+  // console.log("item==",item);
   const [abstract, setAbstract] = useState(true);
   const [speaker, setSpeaker] = useState(false);
   const [resurces, setResurces] = useState(false);
+  const [activeTab, setActiveTab] = useState("Default");
+  const [tabData, setTabData] = useState([]);
+  const [adminData, setAdminData] = useState(null);
 
- 
+  // console.log("activeTab===",activeTab);
+
+
+  async function getSessionData(key) {
+    try {
+      const value = await AsyncStorage.getItem(key);
+      if (value !== null) {
+        // console.log('Data retrieved successfully:', value);
+        const parsedData = JSON.parse(value);
+        setAdminData(parsedData);
+        // dispatch(speakerDetailHandler({"user_id":parsedData?.login_id}));
+          dispatch(speakerDetailHandler({"user_id":54456}));
+        
+      } 
+    } catch (error) {
+      console.error('Error retrieving data:', error);
+    }
+  }
+
   useEffect(() => {
-    dispatch(speakerDetailHandler({"event_id":event_id,"speaker_id":item?.speaker_id}));
+    getSessionData('userSession');
   }, []);
+
+  const getTabData = (tabName) => {
+    // Fetch data from your detail object based on the tabName
+    return speakerDetailData?.user?.response?.detail?.[tabName];
+  }
+  const handleTabClick = (tabName) => {
+    console.log("activeTab===",tabName);
+    setActiveTab(tabName);
+    // Fetch data for the selected tab
+    const newData = getTabData(tabName); // Implement this function to fetch data based on tabName
+    setTabData(newData);
+  }
+
+  const registerActivityFunction=(item)=>{
+    const requestData = {
+      "activity_id": item?.activity_id,
+      "admin_id": adminData?.user_id,
+      "user_id": adminData?.login_id,
+      "event_id": adminData?.event_id,
+    };
+    if (item?.is_registered === 'Y') {
+      requestData.status = 'N';
+    }
+      dispatch(registerActivityHandler(requestData));
+      // getSessionData('userSession');
+    // if(registerActivityData?.user?.success === 1){
+    //   ToastAndroid.showWithGravity(
+    //     registerActivityData?.user?.message,
+    //     ToastAndroid.LONG,
+    //     ToastAndroid.CENTER,
+    //   );
+    // }
+   }
+
   const data = [
     {id: 1, image: 'imgone'},
     {id: 2, image: 'imgtwo'},
@@ -184,79 +245,187 @@ const Profile = props => {
   //   );
   // };
 
-  // const renderItem = ({item, index}) => {
-  //   return (
-  //     <TouchableOpacity onPress={()=>props.navigation.navigate('Session',{item})} style={{ flex: 0.19, borderRadius: hp(3), borderWidth: 1, borderColor: '#cdcdcd', flexDirection: 'row',marginTop:hp(1.5) }}>
-  //       <View style={{ flex: 0.45, height: hp[(5)] }}>
-  //         {/* banertwo */}
-  //         <Image
-  //           style={{ width: '100%', height: '100%', paddingTop: hp(2), borderBottomLeftRadius: hp(2), borderTopLeftRadius: hp(2) }}
-  //           source={{ uri:'banertwo'}}
-  //           resizeMode="contain"
-  //         />
-  //       </View>
-  //       <View style={{ flex: 0.55 }}>
-  //         <View style={{ marginHorizontal: hp(1.5), marginVertical: hp(1.5) }}>
-  //           <Text style={{ color:colors.lightBlack, fontWeight: '500', fontSize: hp(2),fontFamily:fontFamily.robotoMedium }} ellipsizeMode={'tail'} numberOfLines={1}>{item?.activity_name}</Text>
-  //           <Text style={{ color: 'gray', fontWeight: '300',fontFamily:fontFamily.robotoLight,fontSize: hp(2) }}>{item?.start_time} - {item?.end_time}</Text>
-  //           <View style={{ marginTop: hp(0.7) }}>{}
-  //             <Text style={{ color: colors.lightBlue, fontWeight: '500',fontFamily:fontFamily.robotoMedium,fontSize: hp(2) }}>{item?.activity_type}</Text>
-  //           </View>
-  //           <View style={styles.headerImageSection}>
-  //             {data.slice(0, 7).map((item, i) => {
+  const imglist = [
+    { id: 1, image: 'https:\/\/app.eventmatches.com\/admin\/uploads\/speakers\/371_1.jpg' },
+    { id: 2, image: 'https:\/\/app.eventmatches.com\/admin\/uploads\/speakers\/369_1.jpg' },
+    { id: 3, image: 'https:\/\/app.eventmatches.com\/admin\/uploads\/speakers\/370_1.jpg' },
+  ];
+  
 
-  //               return (
-  //                 <TouchableOpacity
+  const renderItemthree = ({item, index}) => {
+    return (
+      <TouchableOpacity onPress={()=>props.navigation.navigate('Session',{item})} style={{ flex: 0.19, borderRadius: hp(3), borderWidth:0.5, borderColor: '#cdcdcd', flexDirection: 'row',marginTop:hp(1.5) }}>
+        <View style={{ flex: 0.45, height: hp[(5)] }}>
+          {/* banertwo */}
+          <Image
+            style={{ width: '100%', height: '100%', paddingTop: hp(2), borderBottomLeftRadius: hp(2), borderTopLeftRadius: hp(2) }}
+            source={{ uri:'banertwo'}}
+            resizeMode="contain"
+          />
+        </View>
+        <View style={{ flex: 0.55 }}>
+          <View style={{ marginHorizontal: hp(1.5), marginVertical: hp(1.5) }}>
+            <Text style={{ color:colors.lightBlack, fontWeight: '500', fontSize: hp(2),fontFamily:fontFamily.robotoMedium }} ellipsizeMode={'tail'} numberOfLines={1}>{item?.activity_name}</Text>
+            <Text style={{ color: 'gray', fontWeight: '300',fontFamily:fontFamily.robotoLight,fontSize: hp(2) }}>{item?.start_time} - {item?.end_time}</Text>
+            <View style={{ marginTop: hp(0.7) }}>{}
+              <Text style={{ color: colors.lightBlue, fontWeight: '500',fontFamily:fontFamily.robotoMedium,fontSize: hp(2) }}>{item?.activity_type}</Text>
+            </View>
+            <View style={styles.headerImageSection}>
+              {data.slice(0, 7).map((item, i) => {
 
-  //                   style={styles.imageList}
-  //                   key={i}>
-  //                   <Image
-  //                     style={styles.imgStyle}
-  //                     source={{ uri: item.image }}
-  //                     resizeMode="cover"
-  //                   />
-  //                 </TouchableOpacity>
-  //               );
+                return (
+                  <TouchableOpacity
 
-  //             })}
-  //           </View>
-  //           <View style={{ flexDirection: 'row' }}>
-  //             <View style={{ flex: 0.6, flexDirection: 'row' }}>
+                    style={styles.imageList}
+                    key={i}>
+                    <Image
+                      style={styles.imgStyle}
+                      source={{ uri: item.image }}
+                      resizeMode="cover"
+                    />
+                    {/* <View style={{height:hp(3),width:wp(6),borderRadius:hp(50),borderColor:"#fff",borderWidth:1}}></View> */}
+                  </TouchableOpacity>
+                );
 
-  //               <TouchableOpacity onPress={()=>props.navigation.navigate("MapScreen")} style={{ flex: 0.3 }}>
-  //                 <Icon type="light" name="location-dot" size={hp(2.5)} color="#2CC2E4" />
-  //               </TouchableOpacity>
+              })}
+            </View>
+            <View style={{ flexDirection: 'row' }}>
+              <View style={{ flex: 0.6, flexDirection: 'row' }}>
 
-  //               <TouchableOpacity style={{ flex: 0.9 }}>
-  //                 <Text style={{ color: colors.lightBlack,fontFamily:fontFamily.robotoLight}}>Bristol</Text>
-  //               </TouchableOpacity>
-  //             </View>
-  //             <View style={{ flex: 0.1 }}></View>
-  //             <TouchableOpacity style={{ justifyContent: 'center', alignItems: 'center', flex: 0.4, borderRadius: hp(0.9), borderColor: '#2CC2E4', borderWidth: 1, height: hp(5), marginTop: hp(-1.4), marginLeft: hp(-1), backgroundColor: '#2CC2E4',height:hp(4) }}>
-  //               <Text style={{ color: '#fff', fontWeight: '500',fontFamily:fontFamily.robotoLight }}>Register</Text>
-  //             </TouchableOpacity>
-  //           </View>
-  //         </View>
-  //       </View>
-  //     </TouchableOpacity>
-  //   );
+                <TouchableOpacity onPress={()=>props.navigation.navigate("MapScreen")} style={{ flex: 0.3 }}>
+                  <Icon type="light" name="location-dot" size={hp(2.5)} color="#2CC2E4" />
+                </TouchableOpacity>
+
+                <TouchableOpacity style={{ flex: 0.9 }}>
+                  <Text style={{ color: colors.lightBlack,fontFamily:fontFamily.robotoLight}}></Text>
+                </TouchableOpacity>
+              </View>
+              <View style={{ flex: 0.1 }}></View>
+              <TouchableOpacity onPress={()=>registerActivityFunction(item)} style={{ justifyContent: 'center', alignItems: 'center', flex: 0.4, borderRadius: hp(0.9), height: hp(5), marginTop: hp(-1.4), marginLeft: hp(-1), backgroundColor:item?.is_registered =='Y' ? '#555555':'#2CC2E4',height:hp(4),paddingHorizontal:hp(1) }}>
+                <Text style={{ color: '#fff', fontWeight: '500',fontFamily:fontFamily.robotoLight,fontSize:hp(1.5)}}>{item?.is_registered == 'Y' ? 'Un-Register':'Register'}</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </TouchableOpacity>
+    );
+  };
+
+  // const abstractHandler = () => {
+  //   setAbstract(true);
+  //   setSpeaker(false);
+  //   setResurces(false);
   // };
 
-  const abstractHandler = () => {
-    setAbstract(true);
-    setSpeaker(false);
-    setResurces(false);
-  };
-  const speakerHandler = () => {
-    setAbstract(false);
-    setSpeaker(true);
-    setResurces(false);
-  };
-  const resucesHandler = () => {
-    setAbstract(false);
-    setSpeaker(false);
-    setResurces(true);
-  };
+  const renderItemProfile=({ item })=>{
+  return(
+    <View style={{marginBottom: hp(1.5)}}>
+              <Text
+                style={{
+                  color: colors.blackColor,
+                  fontSize: hp(2),
+                  fontWeight: '300',
+                  fontFamily: fontFamily.robotoLight,
+                }}>
+               {item?.field_title}
+              </Text>
+              <Text
+                style={{
+                  color: colors.blackColor,
+                  fontSize: hp(2),
+                  fontWeight: '500',
+                  fontFamily: fontFamily.robotoBold,
+                }}>
+                 {item?.field_value}
+              </Text>
+            </View>
+            
+  )}
+
+  const renderItemSession=({ item })=>{
+    return(
+      <TouchableOpacity onPress={()=>{}} style={{ flex: 0.19, borderRadius: hp(3), borderWidth:0.5, borderColor: '#cdcdcd', flexDirection: 'row',marginTop:hp(1.5) }}>
+      <View style={{ flex: 0.45, height: hp[(5)] }}>
+        {/* banertwo */}
+        <Image
+          style={{ width: '100%', height: '100%', paddingTop: hp(2), borderBottomLeftRadius: hp(2), borderTopLeftRadius: hp(2) }}
+          source={{ uri:'banertwo'}}
+          resizeMode="contain"
+        />
+      </View>
+      <View style={{ flex: 0.55 }}>
+        <View style={{ marginHorizontal: hp(1.5), marginVertical: hp(1.5) }}>
+          <Text style={{ color:colors.lightBlack, fontWeight: '500', fontSize: hp(2),fontFamily:fontFamily.robotoMedium }} ellipsizeMode={'tail'} numberOfLines={1}>{item?.activity_name}</Text>
+          <Text style={{ color: 'gray', fontWeight: '300',fontFamily:fontFamily.robotoLight,fontSize: hp(2) }}>{item?.start_time} - {item?.end_time}</Text>
+          <View style={{ marginTop: hp(0.7) }}>{}
+            <Text style={{ color: colors.lightBlue, fontWeight: '500',fontFamily:fontFamily.robotoMedium,fontSize: hp(2) }}>{item?.activity_type}</Text>
+          </View>
+          <View style={styles.headerImageSection}>
+            {imglist.slice(0, 7).map((item, i) => {
+
+              return (
+                <TouchableOpacity
+                  style={styles.imageList}
+                  key={i}>
+                  <Image
+                    style={styles.imgStyle}
+                    source={{ uri: item.image }}
+                    resizeMode="cover"
+                  />
+                  {/* <View style={{height:hp(3),width:wp(6),borderRadius:hp(50),borderColor:"#fff",borderWidth:1}}></View> */}
+                </TouchableOpacity>
+              );
+
+            })}
+          </View>
+          <View style={{ flexDirection: 'row' }}>
+            <View style={{ flex: 0.6, flexDirection: 'row' }}>
+
+              <TouchableOpacity onPress={()=>props.navigation.navigate("MapScreen")} style={{ flex: 0.3 }}>
+                <Icon type="light" name="location-dot" size={hp(2.5)} color="#2CC2E4" />
+              </TouchableOpacity>
+
+              <TouchableOpacity style={{ flex: 0.9 }}>
+                <Text style={{ color: colors.lightBlack,fontFamily:fontFamily.robotoLight}}></Text>
+              </TouchableOpacity>
+            </View>
+            <View style={{ flex: 0.1 }}></View>
+            <TouchableOpacity onPress={()=>registerActivityFunction(item)} style={{ justifyContent: 'center', alignItems: 'center', flex: 0.4, borderRadius: hp(0.9), height: hp(5), marginTop: hp(-1.4), marginLeft: hp(-1), backgroundColor:item?.is_registered =='Y' ? '#555555':'#2CC2E4',height:hp(4),paddingHorizontal:hp(0.5) }}>
+              <Text style={{ color: '#fff', fontWeight: '500',fontFamily:fontFamily.robotoLight,fontSize:hp(1.5)}}>{item?.is_registered == 'Y' ? 'Un-Register':'Register'}</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </View>
+    </TouchableOpacity>
+              
+    )}
+
+  const renderItem = ({ item }) => (
+    <TouchableOpacity
+          onPress={()=>handleTabClick(item)}
+          style={{
+           
+            paddingHorizontal:wp(4.5),
+            borderRadius: hp(5),
+            borderWidth: 1.5,
+            borderColor: '#2CC2E4',
+            height: hp(5),
+            justifyContent: 'center',
+            alignItems: 'center',
+            marginLeft:hp(1.2),
+            backgroundColor: activeTab === item  ? '#2CC2E4' : '#fff',
+          }}>
+          <Text
+            style={{
+              color: activeTab === item ? '#fff' : '#2CC2E4',
+              fontSize: hp(2),
+              fontWeight: '500',
+              fontFamily: fontFamily.robotoMedium,
+            }}>
+            {item}
+          </Text>
+        </TouchableOpacity>
+  );
   return (
     <View style={{flex: 1}}>
       <StatusBar
@@ -264,6 +433,17 @@ const Profile = props => {
         translucent
         backgroundColor="transparent"
       />
+       <Modal
+        visible={speakerDetailData?.isLoading || registerActivityData?.isLoading}
+        transparent={true}
+        animationType="fade"
+      >
+        <View style={{flex:1,justifyContent: 'center', alignItems: 'center',backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
+        <View style={{width:wp(25),height:hp(12.5),backgroundColor: 'white',borderRadius:hp(1),justifyContent: 'center', alignItems: 'center' }}>
+          <ActivityIndicator size="large" color="#cdcdcd" />
+        </View>
+        </View>
+      </Modal>
       <View style={{flex: 0.18}}>
         <MainHeader
           text={'Profile'}
@@ -279,6 +459,9 @@ const Profile = props => {
             alignItems: 'center',
           }}>
           <View style={{flex: 0.3}}></View>
+          <View style={{height:hp(3),width:wp(6),backgroundColor:colors.lightBlue,zIndex:1,position:'absolute',left:hp(29.5),top:hp(11),borderRadius:hp(50),justifyContent:'center',alignItems:'center'}}>
+              <Icon type='solid' name='pen' size={hp(1.6)} color='white' />
+          </View>
           <View style={{flex: 0.31,borderRadius:hp(50),borderColor:'#cdcdcd',borderWidth:1}}>
             <Image
               style={{
@@ -310,7 +493,7 @@ const Profile = props => {
               fontWeight: '500',
               fontFamily: fontFamily.robotoMedium,
             }}>
-            {item?.speaker_name}
+            {item&& item?.speaker_name || item?.first_name}
           </Text>
           <Text
             style={{
@@ -319,7 +502,7 @@ const Profile = props => {
               fontWeight: '500',
               fontFamily: fontFamily.robotoLight,
             }}>
-            {item?.designation}
+            {item && item?.designation || item?.last_name}
           </Text>
         </View>
       </View>
@@ -334,98 +517,38 @@ const Profile = props => {
           alignItems: 'center',
           // backgroundColor:'green'
         }}>
-        <TouchableOpacity
-          onPress={abstractHandler}
-          style={{
-            flex: 0.37,
-            borderRadius: hp(5),
-            borderWidth: 1.5,
-            borderColor: '#2CC2E4',
-            height: hp(5.5),
-            justifyContent: 'center',
-            alignItems: 'center',
-            backgroundColor: abstract ? '#2CC2E4' : '#fff',
-          }}>
-          <Text
-            style={{
-              color: abstract ? '#fff' : '#2CC2E4',
-              fontSize: hp(2),
-              fontWeight: '500',
-              fontFamily: fontFamily.robotoMedium,
-            }}>
-            About
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={speakerHandler}
-          style={{
-            flex: 0.37,
-            borderRadius: hp(5),
-            borderWidth: 1.5,
-            borderColor: '#2CC2E4',
-            height: hp(5.5),
-            justifyContent: 'center',
-            alignItems: 'center',
-            marginHorizontal: hp(1),
-            backgroundColor: speaker ? '#2CC2E4' : '#fff',
-          }}>
-          <Text
-            style={{
-              color: speaker ? '#fff' : '#2CC2E4',
-              fontSize: hp(2),
-              fontWeight: '500',
-              fontFamily: fontFamily.robotoMedium,
-            }}>
-            Profile
-          </Text>
-          {/* <Text style={{color:'#2CC2E4',fontSize:hp(1.3),fontWeight:'300'}}>8th, Nov 2022</Text> */}
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={resucesHandler}
-          style={{
-            flex: 0.37,
-            borderRadius: hp(5),
-            borderWidth: 1.5,
-            borderColor: '#2CC2E4',
-            height: hp(5.5),
-            justifyContent: 'center',
-            alignItems: 'center',
-            backgroundColor: resurces ? '#2CC2E4' : '#fff',
-          }}>
-          <Text
-            style={{
-              color: resurces ? '#fff' : '#2CC2E4',
-              fontSize: hp(2),
-              fontWeight: '600',
-              fontFamily: fontFamily.robotoBold,
-            }}>
-            Session
-          </Text>
-        </TouchableOpacity>
+           <FlatList
+              data={speakerDetailData?.user?.response?.detail?.tabs}
+              renderItem={renderItem}
+              keyExtractor={(item, index) => index.toString()}
+              horizontal={true} 
+              showsHorizontalScrollIndicator={false}
+            />
+
+
+        
       </View>
 
-      {abstract && (
+      
         <View style={{flex: 0.7, marginHorizontal: hp(3)}}>
-            <View style={{justifyContent:'center',alignItems:'center',flex:0.1,height:hp(5)}}>
-            <Text style={{color:colors.grayDescColor,fontSize:hp(2)}}>No Data Available.</Text>
-          </View>
-          {/* <ScrollView>
-            <View>
-              <Text
-                style={{
-                  color:'#000',
-                  fontSize: hp(2),
-                  fontWeight: '300',
-                  lineHeight: hp(3),
-                  letterSpacing: hp(0.25),
-                  fontFamily: fontFamily.robotoLight,
-                }}>
-                {item?.description}
-              </Text>
-            </View>
-          </ScrollView> */}
+        {activeTab !=="Sessions" && (
+            <FlatList
+              data={tabData && tabData}
+              renderItem={renderItemProfile}
+              keyExtractor={(item, index) => index.toString()}
+              showsVerticalScrollIndicator={false}
+            />
+          )}
+
+          {activeTab =="Sessions" && (
+            <FlatList
+              data={tabData && tabData}
+              renderItem={renderItemSession}
+              keyExtractor={(item, index) => index.toString()}
+            />
+          )}
         </View>
-      )}
+      
 
       {speaker && (
         <View style={{flex: 0.7, marginHorizontal: hp(3)}}>
@@ -582,11 +705,11 @@ const Profile = props => {
             <View style={{justifyContent:'center',alignItems:'center',flex:0.1,height:hp(5)}}>
             <Text style={{color:colors.grayDescColor,fontSize:hp(2)}}>No Data Available.</Text>
           </View>
-          {/* <FlatList
-            data={cardData}
-            renderItem={renderItem}
+          <FlatList
+            data={speakerDetailData?.user?.response?.detail?.[2]?.[1]}
+            renderItem={renderItemthree}
             keyExtractor={(item, index) => index.toString()}
-          /> */}
+          />
         </View>
       )}
 
@@ -656,4 +779,6 @@ const styles = EStyleSheet.create({
     alignItems: 'center',
     marginTop: hp(1),
   },
+
+  
 });

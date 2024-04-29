@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -21,6 +21,7 @@ import {
 import MainHeader from '../Components/Headers/MainHeader';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useDispatch, useSelector } from 'react-redux';
+import { useFocusEffect } from '@react-navigation/native';
 const Exibitor = props => {
   const dispatch = useDispatch();
   const speakerData=useSelector((state)=>state.speakerState);
@@ -41,6 +42,12 @@ const Exibitor = props => {
       console.error('Error retrieving data:', error);
     }
   }
+  useFocusEffect(
+    useCallback(() => {
+      getData('userSession');
+      // dispatch(resetState());
+    }, [])
+  )
   useEffect(() => {
     getData('userSession');
   }, []);

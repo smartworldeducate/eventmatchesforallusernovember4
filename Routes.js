@@ -35,6 +35,7 @@ import Events from './SRC/Screens/Events';
 import Qrcode from './SRC/Screens/Qrcode';
 import colors from './SRC/Styles/colors';
 import fontFamily from './SRC/Styles/fontFamily';
+import Schedulemeeting from './SRC/Screens/Schedulemeeting';
 
 const Drawer = createDrawerNavigator();
 const Tab = createBottomTabNavigator();
@@ -169,15 +170,6 @@ const Routes = () => {
         initialRouteName={'Splash'}
         screenOptions={{headerShown: false}}>
         <Stack.Screen name="Splash" component={Splash} />
-        {/* <Stack.Screen name="Home" component={HomeScreen} /> */}
-        {/* <Stack.Screen name="Home">
-        {props => (
-          <React.Fragment>
-            <HomeScreen {...props} />
-            <DrawerStack {...props} />
-          </React.Fragment>
-        )}
-      </Stack.Screen> */}
         <Stack.Screen name="NextScreen" component={NextScreen} />
         <Stack.Screen name="SigninScreen" component={SigninScreen} />
         <Stack.Screen name="SigninPassword" component={SigninPassword} />
@@ -196,6 +188,7 @@ const Routes = () => {
         <Stack.Screen name="FutureEvents" component={FutureEvents} />
         <Stack.Screen name="Events" component={Events} />
         <Stack.Screen name="Qrcode" component={Qrcode} />
+        <Stack.Screen name="Schedulemeeting" component={Schedulemeeting} />
         
         
       </Stack.Navigator>
