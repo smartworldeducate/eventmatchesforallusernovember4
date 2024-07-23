@@ -37,10 +37,10 @@ const HomeScreen = (props) => {
   const dispatch = useDispatch();
 const activityData=useSelector((state)=>state.acitivityState);
 const registerActivityData=useSelector((state)=>state.registerActivityState);
-// console.log("activityData===",activityData);
-  const activityDate=activityData?.user?.responseData?.response?.activities?.['1']
-  const activitytwo=activityData?.user?.responseData?.response?.activities?.['2']
-  const activitythree=activityData?.user?.responseData?.response?.activities?.['3']
+// console.log("activityData===",activityData?user);
+  const activityDate=activityData?.user?.responseData?.response?.activities?.['1'];
+  const activitytwo=activityData?.user?.responseData?.response?.activities?.['2'];
+  const activitythree=activityData?.user?.responseData?.response?.activities?.['3'];
   const [adminData, setAdminData] = useState(null);
   const [dayone,setDayOne]=useState(true);
   const [loginData, setLoginData] = useState(null);
@@ -57,11 +57,12 @@ const registerActivityData=useSelector((state)=>state.registerActivityState);
       if (value !== null) {
         // console.log('Data retrieved successfully:', value);
         const parsedData = JSON.parse(value);
+        console.log("parsedDataon home screen=====-=",parsedData);
         setAdminData(parsedData);
         if (apiIdentifier === 'mySessions') {
-          dispatch(activityHomeHandler({event_id: parsedData?.event_id,user_id:parsedData?.login_id,user_sessions_only:'Y'}));
+          dispatch(activityHomeHandler({event_id: parsedData?.event_id,user_id:parsedData?.event_user_id,user_sessions_only:'Y'}));
         }else{
-          dispatch(activityHomeHandler({event_id: parsedData?.event_id,user_id:parsedData?.login_id}));
+          dispatch(activityHomeHandler({event_id: parsedData?.event_id,user_id:parsedData?.event_user_id}));
         }
       } 
     } catch (error) {
@@ -84,7 +85,7 @@ const registerActivityData=useSelector((state)=>state.registerActivityState);
   const requestData = {
     "activity_id": item?.activity_id,
     "admin_id": adminData?.user_id,
-    "user_id": adminData?.login_id,
+    "user_id": adminData?.event_user_id,
     "event_id": adminData?.event_id,
   };
   if (item?.is_registered === 'Y') {
@@ -134,34 +135,35 @@ const registerActivityData=useSelector((state)=>state.registerActivityState);
     { id: 3, image: 'banertwo',headingText:'A Beginner s Guide',timetext:'10:00 - 11:00',locatoin:'Manchester',btntext:'Register' },
   ]
   const renderItem = ({item, index}) => {
+    console.log("image data===",item?.activity_speakers?.image_name);
     return (
       <TouchableOpacity onPress={()=>props.navigation.navigate('Session',{item})} style={{ flex: 0.19, borderRadius: hp(3), borderWidth:0.5, borderColor: '#cdcdcd', flexDirection: 'row',marginTop:hp(1.5) }}>
         <View style={{ flex: 0.45, height: hp[(5)] }}>
           {/* banertwo */}
           <Image
             style={{ width: '100%', height: '100%', paddingTop: hp(2), borderBottomLeftRadius: hp(2), borderTopLeftRadius: hp(2) }}
-            source={{ uri:'banertwo'}}
+            source={{ uri:item?.image_name}}
             resizeMode="contain"
           />
         </View>
         <View style={{ flex: 0.55 }}>
           <View style={{ marginHorizontal: hp(1.5), marginVertical: hp(1.5) }}>
-            <Text style={{ color:colors.lightBlack, fontWeight: '500', fontSize: hp(2),fontFamily:fontFamily.robotoMedium }} ellipsizeMode={'tail'} numberOfLines={1}>{item?.activity_name}</Text>
-            <Text style={{ color: 'gray', fontWeight: '300',fontFamily:fontFamily.robotoLight,fontSize: hp(2) }}>{item?.start_time} - {item?.end_time}</Text>
+            <Text style={{ color:colors.blackColor, fontWeight: 'bold', fontSize: hp(1.8),fontFamily:fontFamily.robotoBold }} ellipsizeMode={'tail'} numberOfLines={1}>{item?.activity_name}</Text>
+            <Text style={{ color: 'gray', fontWeight: 'normal',fontFamily:fontFamily.robotoMedium,fontSize: hp(2) }}>{item?.start_time} - {item?.end_time}</Text>
             <View style={{ marginTop: hp(0.7) }}>{}
-              <Text style={{ color: colors.lightBlue, fontWeight: '500',fontFamily:fontFamily.robotoMedium,fontSize: hp(2) }}>{item?.activity_type}</Text>
+              <Text style={{ color: colors.lightBlue, fontWeight: '500',fontFamily:fontFamily.robotoBold,fontSize: hp(2) }}>{item?.activity_type}</Text>
             </View>
             <View style={styles.headerImageSection}>
               {data.slice(0, 7).map((item, i) => {
 
                 return (
                   <TouchableOpacity
-
+                    onPress={()=>props.navigation.navigate('Attendees')}
                     style={styles.imageList}
                     key={i}>
                     <Image
                       style={styles.imgStyle}
-                      source={{ uri: item.image }}
+                      source={{ uri: item?.activity_speakers?.image_name }}
                       resizeMode="cover"
                     />
                     {/* <View style={{height:hp(3),width:wp(6),borderRadius:hp(50),borderColor:"#fff",borderWidth:1}}></View> */}
@@ -178,12 +180,12 @@ const registerActivityData=useSelector((state)=>state.registerActivityState);
                 </TouchableOpacity>
 
                 <TouchableOpacity style={{ flex: 0.9 }}>
-                  <Text style={{ color: colors.lightBlack,fontFamily:fontFamily.robotoLight}}></Text>
+                  <Text style={{ color: colors.lightBlack,fontFamily:fontFamily.robotoMedium}}>{item?.state_name}</Text>
                 </TouchableOpacity>
               </View>
               <View style={{ flex: 0.1 }}></View>
               <TouchableOpacity onPress={()=>registerActivityFunction(item)} style={{ justifyContent: 'center', alignItems: 'center', flex: 0.4, borderRadius: hp(0.9), height: hp(5), marginTop: hp(-1.4), marginLeft: hp(-1), backgroundColor:item?.is_registered =='Y' ? '#555555':'#2CC2E4',height:hp(4),paddingHorizontal:hp(1) }}>
-                <Text style={{ color: '#fff', fontWeight: '500',fontFamily:fontFamily.robotoLight,fontSize:hp(1.5)}}>{item?.is_registered == 'Y' ? 'Un-Register':'Register'}</Text>
+                <Text style={{ color: '#fff', fontWeight: '500',fontFamily:fontFamily.robotoMedium,fontSize:hp(1.5)}}>{item?.is_registered == 'Y' ? 'Un-Register':'Register'}</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -249,27 +251,27 @@ const registerActivityData=useSelector((state)=>state.registerActivityState);
         </View> */}
         <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
   {activityDate && (
-    <TouchableOpacity onPress={dayOneHandler} style={{ flex: 0.3, borderRadius: hp(5), height: hp(5), borderWidth:1, borderColor:dayone ? "#fff":"#2CC2E4", justifyContent: 'center', alignItems: 'center',backgroundColor:dayone ? "#2CC2E4":"#fff", }}>
-      <Text style={{ color:dayone ? "#fff":"#2CC2E4",fontSize: hp(2), fontWeight: '400',fontFamily:fontFamily.robotoMedium }}>DAY 1</Text>
+    <TouchableOpacity onPress={dayOneHandler} style={{ flex: 0.3, borderRadius: hp(5), height: hp(5.3), borderWidth:1, borderColor:dayone ? "#fff":"#2CC2E4", justifyContent: 'center', alignItems: 'center',backgroundColor:dayone ? "#2CC2E4":"#EBEEF2", }}>
+      <Text style={{ color:dayone ? "#fff":"#2CC2E4",fontSize: hp(2), fontWeight: '400',fontFamily:fontFamily.robotoBold }}>DAY 1</Text>
       <Text style={{ color:dayone ? "#fff":"#2CC2E4", fontSize: hp(1.3), fontWeight: '300',fontFamily:fontFamily.robotoMedium  }}>{activityDate[0]?.activity_date}</Text>
     </TouchableOpacity>
   )}
   {activitytwo && (
-    <TouchableOpacity onPress={dayTwoHandler} style={{ flex: 0.3, borderRadius: hp(5), height: hp(5), borderWidth: 1, borderColor: '#2CC2E4', justifyContent: 'center', alignItems: 'center', marginHorizontal: hp(1),backgroundColor:daytwo ? "#2CC2E4":"#fff", }}>
-      <Text style={{ color:daytwo ? "#fff":"#2CC2E4", fontSize: hp(2), fontWeight: '400',fontFamily:fontFamily.robotoMedium }}>DAY 2</Text>
+    <TouchableOpacity onPress={dayTwoHandler} style={{ flex: 0.3, borderRadius: hp(5), height: hp(5.3), borderWidth: 1, borderColor: '#2CC2E4', justifyContent: 'center', alignItems: 'center', marginHorizontal: hp(1),backgroundColor:daytwo ? "#2CC2E4":"#EBEEF2", }}>
+      <Text style={{ color:daytwo ? "#fff":"#2CC2E4", fontSize: hp(2), fontWeight: '400',fontFamily:fontFamily.robotoBold }}>DAY 2</Text>
       <Text style={{ color:daytwo ? "#fff":"#2CC2E4", fontSize: hp(1.3), fontWeight: '300',fontFamily:fontFamily.robotoMedium }}>{activitytwo[0]?.activity_date}</Text>
     </TouchableOpacity>
   )}
   {activitythree && (
-    <TouchableOpacity onPress={dayThreeHandler} style={{ flex: 0.3, borderRadius: hp(5), height: hp(5), borderWidth: 1, borderColor: '#2CC2E4', justifyContent: 'center', alignItems: 'center',backgroundColor:daythree ? "#2CC2E4":"#fff", }}>
-      <Text style={{ color:daythree ? "#fff":"#2CC2E4", fontSize: hp(2), fontWeight: '400',fontFamily:fontFamily.robotoMedium }}>DAY 3</Text>
+    <TouchableOpacity onPress={dayThreeHandler} style={{ flex: 0.3, borderRadius: hp(5), height: hp(5.3), borderWidth: 1, borderColor: '#2CC2E4', justifyContent: 'center', alignItems: 'center',backgroundColor:daythree ? "#2CC2E4":"#EBEEF2", }}>
+      <Text style={{ color:daythree ? "#fff":"#2CC2E4", fontSize: hp(2), fontWeight: '400',fontFamily:fontFamily.robotoBold }}>DAY 3</Text>
       <Text style={{ color:daythree ? "#fff":"#2CC2E4", fontSize: hp(1.3), fontWeight: '300',fontFamily:fontFamily.robotoMedium }}>{activitythree[0]?.activity_date}</Text>
     </TouchableOpacity>
   )}
 </View>
       </View>
 
-      <View style={{ flex: 1}}>
+      <View style={{ flex: 1,marginBottom:hp(10.5)}}>
         {dayone && ( <FlatList
         data={activityDate}
         renderItem={renderItem}

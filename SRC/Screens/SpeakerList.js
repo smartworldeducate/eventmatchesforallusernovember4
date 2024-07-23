@@ -25,6 +25,8 @@ import {useDispatch, useSelector} from 'react-redux';
 import { useFocusEffect } from '@react-navigation/native';
 const SpeakerList = props => {
   const dispatch = useDispatch();
+  // const {id} = props.route.params;
+  console.log("param data===",props.route.params?.id);
   const speakerData = useSelector(state => state.speakerState);
   const [data, setData] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
@@ -36,6 +38,8 @@ const SpeakerList = props => {
       if (value !== null) {
         // console.log('Data retrieved successfully:', value);
         const parsedData = JSON.parse(value);
+        console.log("parsedData=====-=",parsedData);
+
         setData(parsedData);
         // console.log('user id and event_id===', parsedData);
         // {"user_id":parsedData.user_id,"event_id":parsedData.event_id,"type_id":1}
@@ -71,7 +75,7 @@ const SpeakerList = props => {
     return (
       <TouchableOpacity
         onPress={() =>
-          props.navigation.navigate('Profile', {
+          props.navigation.navigate('SpeakerProfile', {
             item: item,
             event_id: data?.event_id,
           })
@@ -81,7 +85,7 @@ const SpeakerList = props => {
           flexDirection: 'row',
           // backgroundColor: 'green',
           height: hp(10.3),
-          borderRadius: hp(1),
+          borderRadius: hp(1.6),
           borderWidth: 0.5,
           borderColor: '#cdcdcd',
           marginVertical: hp(1.3),
@@ -126,43 +130,45 @@ const SpeakerList = props => {
             style={{
               color: colors.descBlack,
               paddingLeft: hp(0),
-              fontSize: hp(1.9),
-              fontWeight: '500',
-              fontFamily: fontFamily.robotoMedium,
+              fontSize: hp(1.8),
+              fontWeight: 'bold',
+              fontFamily: fontFamily.robotoBold,
             }}>
             {item?.speaker_name}
           </Text>
           <Text
             style={{
               color: colors.grayDescColor,
-              fontSize: hp(1.7),
+              fontSize: hp(1.5),
               paddingLeft: hp(0),
-              fontWeight: '300',
-              fontFamily: fontFamily.robotoLight,
+              fontWeight: '400',
+              fontFamily: fontFamily.robotoMedium,
               paddingTop:hp(1)
             }}>
             {item?.designation}
           </Text>
         </View>
         <View
+        style={{
+          flex: 0.2,
+          justifyContent: 'flex-end',
+          alignItems: 'flex-end',
+          paddingRight: hp(1),
+          // backgroundColor:'green'
+        }}>
+        <View
           style={{
-            flex: 0.2,
             justifyContent: 'center',
             alignItems: 'center',
-            paddingRight: hp(1),
+            // backgroundColor: '#2CC2E4',
+            paddingHorizontal: hp(1.2),
+            paddingVertical: hp(0.5),
+            borderRadius: hp(1),
+            // backgroundColor:colors.lightBlue
           }}>
-          <View
-            style={{
-              justifyContent: 'center',
-              alignItems: 'center',
-              backgroundColor: '#2CC2E4',
-              paddingHorizontal: hp(1.2),
-              paddingVertical: hp(0.5),
-              borderRadius: hp(1),
-            }}>
-            <Icon type="light" name="arrow-right" size={hp(3)} color="#fff" />
-          </View>
+          <Icon type="light" name="arrow-down-right" size={hp(3)} color="#2CC2E4" />
         </View>
+      </View>
       </TouchableOpacity>
     );
   };
@@ -194,7 +200,7 @@ const SpeakerList = props => {
       </Modal>
       <View style={{flex: 0.1}}>
         <MainHeader
-          text={'Speaker List'}
+          text={'Speaker'}
           onpressBtn={() => props.navigation.goBack()}
         />
       </View>
@@ -203,12 +209,22 @@ const SpeakerList = props => {
         <Search setSearchQuery={setSearchQuery} />
       </View>
 
-      <View style={{flex: 0.8}}>
-        <FlatList
+      <View style={{flex: props?.route?.params?.id ? 0.8:0.68}}>
+        {filteredData ?  <FlatList
           data={filteredData}
           renderItem={renderItem}
           keyExtractor={(item, index) => index.toString()}
-        />
+        />: <View style={{
+          flex: 0.15,
+          justifyContent:'center',
+          alignItems:'center',
+        }}>
+          <Text style={{color:colors.grayDescColor,fontSize:hp(2),
+          fontWeight:'400',
+          fontFamily:fontFamily.robotoMedium,fontStyle: 'italic'}}>
+            Speakers are currently unavailable.</Text>
+            </View> }
+       
       </View>
     </View>
   );

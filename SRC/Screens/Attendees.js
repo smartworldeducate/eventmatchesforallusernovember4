@@ -27,6 +27,7 @@ import EStyleSheet from 'react-native-extended-stylesheet';
 import fontFamily from '../Styles/fontFamily';
 import {useDispatch, useSelector} from 'react-redux';
 import { useFocusEffect } from '@react-navigation/native';
+import { Avatar } from 'react-native-elements';
 const Attendees = props => {
   const [isVisible, setIsVisible] = useState(false);
   const [data, setData] = useState(null);
@@ -68,97 +69,124 @@ const Attendees = props => {
   );
 
   const renderItem = ({item, index}) => {
+    const firstName = item?.first_name || '';
+    const lastName = item?.last_name || '';
+    
+    // Get the first letter of each name
+    const firstInitial = firstName.charAt(0).toUpperCase();
+    const lastInitial = lastName.charAt(0).toUpperCase();
+    
+    // Combine the initials
+    const avatarInitial = `${firstInitial}${lastInitial}`;
     return (
       <TouchableOpacity
-        onPress={() => props.navigation.navigate('Profile', {item})}
+      onPress={() =>
+        props.navigation.navigate('Profile', {
+          item: item,
+          event_id: data?.event_id,
+        })
+      }
+      style={{
+        flex: 0.4,
+        flexDirection: 'row',
+        // backgroundColor: 'green',
+        height: hp(10.3),
+        borderRadius: hp(1.6),
+        borderWidth: 0.5,
+        borderColor: '#cdcdcd',
+        marginVertical: hp(1.3),
+        marginHorizontal: hp(2.5),
+      }}>
+      <View
         style={{
-          flex: 0.4,
-          flexDirection: 'row',
-          // backgroundColor: 'green',
-          height: hp(10.3),
-          borderRadius: hp(1),
-          borderWidth: 0.5,
-          borderColor: '#cdcdcd',
-          marginVertical: hp(1.3),
-          marginHorizontal: hp(2.5),
+          flex: 0.29,
+          justifyContent: 'center',
+          alignItems: 'center',
+          paddingLeft: hp(-1),
+          // backgroundColor:'red',
+          paddingVertical: hp(1),
+          // borderRadius:hp(50),
+          // borderWidth:1,
+          // borderColor:'#cdcdcd',
+          // margin:hp(1)
         }}>
         <View
           style={{
-            flex: 0.29,
-            justifyContent: 'center',
-            alignItems: 'center',
-            paddingLeft: hp(-1),
-            // backgroundColor:'red',
-            paddingVertical: hp(1),
-            // borderRadius:hp(50),
-            // borderWidth:1,
-            // borderColor:'#cdcdcd',
-            // margin:hp(1)
+            borderRadius: hp(50),
+            // borderWidth: 1,
+            // borderColor: '#cdcdcd',
+            width: wp(15),
+            height: hp(7.5),
+            justifyContent:'center',
+            alignItems:'center',
+            backgroundColor:colors.lightBlue
           }}>
-          <View
+            <Avatar
+                  size="small"
+                  rounded
+                  title={avatarInitial}
+                  onPress={() => console.log("Works!")}
+                  activeOpacity={0.7}
+                  titleStyle={{ color: '#fff',fontSize: hp(2.5)  }}
+                />
+          {/* <Image
             style={{
+              width: '100%',
+              height: '100%',
+              paddingTop: hp(0),
               borderRadius: hp(50),
-              borderWidth: 1,
-              borderColor: '#cdcdcd',
-              width: wp(15),
-              height: hp(7.5),
-            }}>
-            <Image
-              style={{
-                width: '100%',
-                height: '100%',
-                paddingTop: hp(0),
-                borderRadius: hp(50),
-              }}
-              source={{uri: item?.image_name}}
-              resizeMode="cover"
-            />
-          </View>
+            }}
+            source={{uri: item?.image_name}}
+            resizeMode="contain"
+          /> */}
         </View>
-        <View
-          style={{flex: 0.7, justifyContent: 'center', paddingLeft: hp(0.5)}}>
-          <Text
-            style={{
-              color: colors.blackColor,
-              paddingLeft: hp(0),
-              fontSize: hp(1.9),
-              fontWeight: '500',
-              fontFamily: fontFamily.robotoMedium,
-            }}>
-            {item?.first_name}
-          </Text>
-          <Text
-            style={{
-              color: colors.grayDescColor,
-              fontSize: hp(1.7),
-              paddingLeft: hp(0),
-              fontWeight: '300',
-              fontFamily: fontFamily.robotoLight,
-              paddingTop:hp(1)
-            }}>
-            {item?.last_name}
-          </Text>
-        </View>
+      </View>
+      <View
+        style={{flex: 0.7, justifyContent: 'center', paddingLeft: hp(0.5)}}>
+        <Text
+          style={{
+            color: colors.descBlack,
+            paddingLeft: hp(0),
+            fontSize: hp(1.8),
+            fontWeight: 'bold',
+            fontFamily: fontFamily.robotoBold,
+          }}>
+          {item?.first_name} {item?.last_name}
+        </Text>
+        <Text
+          style={{
+            color: colors.grayDescColor,
+            fontSize: hp(1.5),
+            paddingLeft: hp(0),
+            fontWeight: '400',
+            fontFamily: fontFamily.robotoMedium,
+            paddingTop:hp(1)
+          }}>
+          {item?.organization_name}
+        </Text>
+      </View>
+      <View
+        style={{
+          flex: 0.2,
+          justifyContent: 'flex-end',
+          alignItems: 'flex-end',
+          paddingRight: hp(1),
+          // backgroundColor:'green'
+        }}>
         <View
           style={{
-            flex: 0.2,
             justifyContent: 'center',
             alignItems: 'center',
-            paddingRight: hp(1),
+            // backgroundColor: '#2CC2E4',
+            paddingHorizontal: hp(1.2),
+            paddingVertical: hp(0.5),
+            borderRadius: hp(1),
+            // backgroundColor:colors.lightBlue
           }}>
-          <View
-            style={{
-              justifyContent: 'center',
-              alignItems: 'center',
-              backgroundColor: '#2CC2E4',
-              paddingHorizontal: hp(1.2),
-              paddingVertical: hp(0.5),
-              borderRadius: hp(1),
-            }}>
-            <Icon type="light" name="arrow-right" size={hp(3)} color="#fff" />
-          </View>
+          <Icon type="light" name="arrow-down-right" size={hp(3)} color="#2CC2E4" />
         </View>
-      </TouchableOpacity>
+      </View>
+    </TouchableOpacity>
     );
   };
   return (

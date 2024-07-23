@@ -26,10 +26,12 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { pastEventHandler } from '../features/pastevents/pastEventSlice';
 import { futureEventHandler } from '../features/upcommingevents/upcomingEventSlice';
 import { useFocusEffect } from '@react-navigation/native';
-
+import axios from "axios";
+import { APIHEADER } from '../constants/const';
 const AllEvents = props => {
   const dispatch = useDispatch();
-  const {user_id} = props.route.params;
+  // const {user_id} = props.route.params;
+  const user_id=6570;
   // console.log("user id==",user_id);
   const [tbnState, setBtnState] = useState('All Events');
   const [data, setData] = useState(null);
@@ -43,15 +45,22 @@ const AllEvents = props => {
   const allevntsData = useSelector(state => state.alleventsState);
   const pastEventData=useSelector((state)=>state.pastEventState);
   const futureEventData=useSelector((state)=>state.futureEventState);
-  // console.log("futureEventData===",futureEventData)
+  const event_user_id=activityData?.user?.responseData?.response?.activities?.event_user_id;
+
+  // console.log("event_user_id===",event_user_id)
+
+
+  async function removeSaveDataFromAsyncStorage() {
+       await AsyncStorage.removeItem("userSession");
+   }
 
   async function saveData(value) {
     const jsonString = JSON.stringify(value);
     try {
       await AsyncStorage.setItem('userSession', jsonString);
-      console.log('Data saved successfully.');
+      props.navigation.navigate('HomeScreen');
     } catch (error) {
-      console.error('Error saving data:', error);
+      // console.error('Error saving data:', error);
     }
   }
 
@@ -59,29 +68,42 @@ const AllEvents = props => {
     try {
       const value = await AsyncStorage.getItem(key);
       if (value !== null) {
-        // console.log('Data retrieved successfully:', value);
+        console.log('Data retrieved successfully:', value);
         const parsedData = JSON.parse(value);
+        // console.log("login user id===",parsedData);
         setLoginData(parsedData);
       } 
     } catch (error) {
       console.error('Error retrieving data:', error);
     }
   }
+
+  useFocusEffect(
+    useCallback(() => {
+      removeSaveDataFromAsyncStorage('userSession');
+    }, [])
+  )
  
   useEffect(() => {
     geLogintData('loginData');
+    removeSaveDataFromAsyncStorage('userSession');
     dispatch(resetState());
     dispatch(eventsListHandler({user_id: user_id}));
   }, [btnone,btntwo,btnthree]);
-  const propHandler = (event_id) => {
-     saveData({user_id: user_id, event_id: event_id,login_id:loginData?.user_id});
-    if (event_id) {
-       dispatch(activityHomeHandler({event_id: event_id,user_id:loginData?.user_id}));
-      // if (activityData?.user?.responseData?.response?.success === 1) {
-        props.navigation.navigate('HomeScreen');
-    //   }
-    // } else {
-    //   console.log('something went wrong');
+  const propHandler =async (item) => {
+    if (item) {
+    dispatch(activityHomeHandler({event_id: item?.event_id,user_id:loginData?.user_id}));
+    const response=await axios.post("https://app.eventmatches.com/administrator/Api/eventActivities",{event_id: item?.event_id,user_id:loginData?.user_id},{
+      headers: {
+          api_key: APIHEADER.api_key,
+          api_secret:APIHEADER.api_secret,
+          "Content-Type": "multipart/form-data"
+      },
+    })
+    if(response.data?.response?.activities?.event_user_id){
+      const event_user_id=response.data?.response?.activities?.event_user_id;
+        await saveData({user_id: user_id, event_id: item?.event_id,login_id:loginData?.user_id,is_macher:item?.is_matchmaker,event_user_id:event_user_id});
+    }
      }
   };
   
@@ -120,8 +142,8 @@ const AllEvents = props => {
   };
   const renderItem = ({item, index}) => {
     return (
-      <TouchableOpacity
-        onPress={() => propHandler(item?.event_id)}
+      <TouchableOpacity activeOpacity={0.8}
+        onPress={() => propHandler(item)}
         style={[
           {
             marginHorizontal: hp(2.5),
@@ -149,23 +171,33 @@ const AllEvents = props => {
             <Image
               style={{width: '100%', height: '100%', borderRadius: hp(1)}}
               source={{uri: item?.logo ? item?.logo : 'groupfore'}}
-              resizeMode="cover"
+              resizeMode="center"
             />
           </View>
-          <View style={{flex: 0.72, marginLeft: hp(1)}}>
+          <View style={{flex: 0.72, marginLeft: hp(1.5)}}>
             <Text
               style={{
                 color: colors.grayDescColor,
                 fontSize: hp(2),
                 flexWrap: 'wrap',
-                fontWeight: '500',
-                fontFamily: fontFamily.robotoLight,
+                fontWeight: 'bold',
+                fontFamily: fontFamily.robotoBold,
               }}
               ellipsizeMode="tail"
               numberOfLines={3}>
               {item?.event_name}
             </Text>
-            <Text
+            <View style={{flexDirection:'row'}}>
+              <View style={{marginTop:hp(0.5),paddingLeft:hp(0)}}>
+              <Icon
+                  type="regular"
+                  name="calendar-check"
+                  size={hp(2)}
+                  color="#cdcdcd"
+                />
+              </View>
+           <View style={{paddingLeft:hp(1)}}>
+           <Text
               style={{
                 color: colors.grayDescColor,
                 fontSize: hp(1.8),
@@ -175,9 +207,10 @@ const AllEvents = props => {
                 paddingTop:hp(0.5)
               }}>
            
-              {item?.start_date} - {item?.end_date}
+            {item?.start_date} - {item?.end_date}
             </Text>
-          
+           </View>
+            </View>
           </View>
           <View style={{flex: 0.08, justifyContent: 'flex-end'}}>
             <Icon
@@ -197,7 +230,7 @@ const AllEvents = props => {
       <StatusBar barStyle={'default'} translucent backgroundColor="#2CC2E4" />
       
         <Modal
-        visible={allevntsData?.isLoading || pastEventData?.isLoading || futureEventData?.isLoading}
+        visible={allevntsData?.isLoading || pastEventData?.isLoading || futureEventData?.isLoading || activityData?.isLoading}
         transparent={true}
         animationType="fade">
         <View
@@ -243,7 +276,7 @@ const AllEvents = props => {
 
       {btnone && allevntsData?.user?.response?.success===0 && (
         <View style={{flex:0.1,height:hp(15),justifyContent:'center',alignItems:'center'}}>
-          <Text style={{color:colors.grayDescColor,fontSize:hp(2)}}>No Events Available.</Text>
+          <Text style={{color:colors.grayDescColor,fontSize:hp(2),fontStyle:'italic',fontFamily:fontFamily.robotoBold}}>No Events Available.</Text>
         </View>
       )}
        {btntwo && pastEventData?.user?.response?.success===0 && (
@@ -378,9 +411,9 @@ const ButtonSection = ({ currentHandler, seeAllHandler, seeAllState, events,ifev
       <Text
         style={{
           color: colors.blackColor,
-          fontSize:hp(2.3),
-          fontWeight: '600',
-          fontFamily: fontFamily.robotoMedium,
+          fontSize:hp(1.8),
+          fontWeight: 'bold',
+          fontFamily: fontFamily.robotoBold,
         }}>
         Current
       </Text>
@@ -395,9 +428,9 @@ const ButtonSection = ({ currentHandler, seeAllHandler, seeAllState, events,ifev
         }}>
        <View style={{flexDirection:'row'}}>
         <View style={{paddingRight:hp(0.5)}}>
-        <Text style={{color:colors.grayDescColor}}>See All</Text>
+        <Text style={{color:colors.grayDescColor, fontWeight: '400',fontFamily: fontFamily.robotoMedium}}>See All</Text>
         </View>
-      <View style={{marginTop:hp(0.5)}}>
+      <View style={{marginTop:hp(0.3)}}>
       <Icon
               type="solid"
               name="play"

@@ -16,25 +16,81 @@ import { Image } from 'react-native';
 import fontFamily from '../Styles/fontFamily';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import LinearGradient from 'react-native-linear-gradient';
-import { useSelector } from 'react-redux';
+import {getAppVersionHandler } from '../features/getappversion/getAppVersionSlice';
+import { getPrintBadgeHandler } from '../features/printerbadge/printerBadgeSlice'
+import { useDispatch, useSelector } from 'react-redux';
+import { Avatar } from 'react-native-elements';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import colors from '../Styles/colors';
 const CustomDrawer = ({ navigation }) => {
-
-  const navigatorHandler=(screen)=>{
-    navigation.navigate(screen);
+  const dispatch = useDispatch();
+  const [data, setData] = useState(null);
+  const [adminData, setAdminData] = useState(null);
+  const [awatar,setAwatar]=useState('');
+  const appVersionData=useSelector((state)=>state.appVersionState);
+  const getPrintBadgeData=useSelector((state)=>state.getPrintBadgeState);
+  // console.log("getPrintBadgeData===",getPrintBadgeData?.user?.response)
+  const navigatorHandler=(screen,id)=>{
+    navigation.navigate(screen,{"id":id});
     navigation.closeDrawer();
   }
 
+  async function getData(key) {
+    try {
+      const value = await AsyncStorage.getItem(key);
+      if (value !== null) {
+        console.log('Data retrieved successfully:', value);
+        const parsedData = JSON.parse(value);
+        // console.log("login data===",parsedData);
+        setData(parsedData);
+        const firstName = parsedData?.first_name || '';
+        const lastName = parsedData?.last_name || '';
+        
+        // Get the first letter of each name
+        const firstInitial = firstName.charAt(0).toUpperCase();
+        const lastInitial = lastName.charAt(0).toUpperCase();
+        
+        // Combine the initials
+        const avatarInitial = `${firstInitial}${lastInitial}`;
+        setAwatar(avatarInitial);
+        console.log('here is drawer screen data===', parsedData);
+      } else {
+        console.log('No data found for key:', key);
+      }
+    } catch (error) {
+      console.error('Error retrieving data:', error);
+    }
+  }
 
+  async function getSessionData(key) {
+    try {
+      const value = await AsyncStorage.getItem(key);
+      if (value !== null) {
+        // console.log('Data retrieved successfully:', value);
+        const parsedData = JSON.parse(value);
+        setAdminData(parsedData);
+      } 
+    } catch (error) {
+      console.error('Error retrieving data:', error);
+    }
+  }
+
+  useEffect(() => {
+    dispatch(getAppVersionHandler());
+    dispatch(getPrintBadgeHandler());
+    getData('loginData');
+    getSessionData('userSession');
+  }, []);
+  
   async function saveData() {
    console.log("logout")
       await AsyncStorage.removeItem("loginData");
+      await AsyncStorage.removeItem("userSession");
       navigation.dispatch(StackActions.replace('SigninScreen'))
       
     
   }
-  // console.log(' drawer lacal data', localData?.EMP_PHOTO);
-
+ 
   return (
     <>
       <LinearGradient
@@ -86,9 +142,20 @@ const CustomDrawer = ({ navigation }) => {
                 borderRadius: hp(50),
                 marginRight: hp(3),
                 borderWidth:1,
-                borderColor:'#fff'
+                borderColor:'#fff',
+                justifyContent:'center',
+                alignItems:'center',
+                backgroundColor:'#2980B9'
               }}>
-              <Image
+                <Avatar
+                  size="small"
+                  rounded
+                  title={awatar}
+                  onPress={() => console.log("Works!")}
+                  activeOpacity={0.7}
+                  titleStyle={{ color: '#fff',fontSize: hp(3)  }}
+                />
+              {/* <Image
                 style={{
                   width: '100%',
                   borderWidth: 1,
@@ -98,17 +165,17 @@ const CustomDrawer = ({ navigation }) => {
                 }}
                 source={{ uri: 'imgfive' }}
                 resizeMode="contain"
-              />
+              /> */}
             </TouchableOpacity>
             <View style={{ marginLeft: hp(-2),marginTop:hp(1) }}>
               <View>
-                <Text style={styles.username}>Qasim Ali Khan</Text>
+                <Text style={styles.username}>{data?.first_name} {data?.last_name}</Text>
               </View>
               <View style={{ flexDirection: 'row', marginTop: hp(0) }}>
                 <View style={{ marginRight: hp(1) }}>
                   <View style={{ flexDirection: 'row', marginTop: hp(0) }}>
                     <View style={{ marginRight: hp(1) }}>
-                      <Text style={styles.viewProfile}>View Profile</Text>
+                      <Text style={styles.viewProfile}>{data?.email}</Text>
                     </View>
                   </View>
                 </View>
@@ -117,17 +184,30 @@ const CustomDrawer = ({ navigation }) => {
           </View>
           <View style={[styles.listnameStyle, { marginTop: hp(4) }]}>
             <TouchableOpacity
-              onPress={() => navigatorHandler('HomeScreenDrawer')}>
+              onPress={() => navigatorHandler('Admins')}>
               <View style={{ flexDirection: 'row', marginLeft: hp(3) }}>
                 <View style={{}}>
-                <Icon type='light' name="house" size={hp(2.5)} color={'#fff'}  style={{marginTop:hp(1)}}/>   
+                <Icon type='light' name="user-tie" size={hp(2.5)} color={'#fff'}  style={{marginTop:hp(1)}}/>   
                 </View>
                 <View>
-                <Text style={[styles.textlistStyle,{paddingLeft:hp(2)}]}>Home</Text>
+                <Text style={[styles.textlistStyle,{paddingLeft:hp(2)}]}>Admins</Text>
                 </View>
               </View>
             </TouchableOpacity>
           </View>
+          {/* <View style={[styles.listnameStyle, { marginTop: hp(1.5) }]}>
+            <TouchableOpacity
+              onPress={() => navigatorHandler('Admins')}>
+              <View style={{ flexDirection: 'row', marginLeft: hp(3) }}>
+                <View style={{}}>
+                <Icon type='light' name="user-tie" size={hp(2.5)} color={'#fff'} />   
+                </View>
+                <View>
+                <Text style={[styles.textlistStyle,{paddingLeft:hp(2)}]}>Admins</Text>
+                </View>
+              </View>
+            </TouchableOpacity>
+          </View> */}
           <View style={[styles.listnameStyle, { marginTop: hp(1.5) }]}>
             <TouchableOpacity
               onPress={() => navigatorHandler('Events')}>
@@ -169,13 +249,13 @@ const CustomDrawer = ({ navigation }) => {
           </View>
           <View style={[styles.listnameStyle, { marginTop: hp(1.5) }]}>
             <TouchableOpacity
-              onPress={() => navigatorHandler('SpeakerList')}>
+              onPress={() => navigatorHandler('SpeakerList','Y')}>
               <View style={{ flexDirection: 'row', marginLeft: hp(3) }}>
                 <View style={{}}>
                 <Icon type='light' name="user-tie" size={hp(2.5)} color={'#fff'}/>  
                 </View>
                 <View>
-                <Text style={[styles.textlistStyle,{paddingLeft:hp(1.5)}]}> Speaker</Text>
+                <Text style={[styles.textlistStyle,{paddingLeft:hp(1.5)}]}> Speakers</Text>
                 </View>
               </View>
             </TouchableOpacity>
@@ -219,7 +299,7 @@ const CustomDrawer = ({ navigation }) => {
               </View>
             </TouchableOpacity>
           </View>
-          <View style={[styles.listnameStyle, { marginTop: hp(1.5) }]}>
+          {adminData?.is_macher == 'Y' && (<View style={[styles.listnameStyle, { marginTop: hp(1.5) }]}>
             <TouchableOpacity
               onPress={() => navigatorHandler('Schedulemeeting')}>
               <View style={{ flexDirection: 'row', marginLeft: hp(3) }}>
@@ -231,7 +311,35 @@ const CustomDrawer = ({ navigation }) => {
                 </View>
               </View>
             </TouchableOpacity>
+          </View>)}
+          <View style={[styles.listnameStyle, { marginTop: hp(1.5) }]}>
+            <TouchableOpacity
+              onPress={() => navigatorHandler('Matchmaking')}>
+              <View style={{ flexDirection: 'row', marginLeft: hp(3) }}>
+                <View style={{}}>
+                <Icon type='light' name="window-restore"  size={hp(2.5)} color={'#fff'}/>
+                </View>
+                <View>
+                <Text style={[styles.textlistStyle,{paddingLeft:hp(1.8)}]}>Matchmaking</Text>
+                </View>
+              </View>
+            </TouchableOpacity>
           </View>
+
+          <View style={[styles.listnameStyle, { marginTop: hp(1.5) }]}>
+            <TouchableOpacity
+              onPress={() => navigatorHandler('Printbadge')}>
+              <View style={{ flexDirection: 'row', marginLeft: hp(3) }}>
+                <View style={{}}>
+                <Icon type='light' name="print"  size={hp(2.5)} color={'#fff'}/>
+                </View>
+                <View>
+                <Text style={[styles.textlistStyle,{paddingLeft:hp(1.8)}]}>{getPrintBadgeData?.user?.response?.is_allowed=='Y' ? 'PrintBadge':''}</Text>
+                </View>
+              </View>
+            </TouchableOpacity>
+          </View>
+          
           <View style={[styles.listnameStyle, { marginTop: hp(1.5),zIndex:9}]}>
             <TouchableOpacity
               onPress={saveData}>
@@ -245,10 +353,31 @@ const CustomDrawer = ({ navigation }) => {
               </View>
             </TouchableOpacity>
           </View>
-        </View>
+          <View style={[styles.listnameStyle, { marginTop: hp(1.5),zIndex:9}]}>
+            <View>
+              <View style={{ flexDirection: 'row'}}>
+                <View style={{}}>
+                {/* <Icon type='light' name="right-from-bracket"  size={hp(2.5)} color={'#fff'}/> */}
+                </View>
+                <View>
+                <Text style={{marginLeft:hp(3)}}>Version:{appVersionData?.user?.response?.version}</Text>
+                </View>
+              </View>
+            </View>
+          </View>
+          
+            <View style={{zIndex:7,marginTop:hp(-2)}}>
+              <View style={{ flexDirection: 'row'}}>
+                <View>
+                <Text style={{marginLeft:hp(3),fontSize:hp(1.5)}}>{appVersionData?.user?.response?.message}</Text>
+                </View>
+              </View>
+            </View>
+          </View>
+        
         <View style={{flex:0.32,flexDirection:'row'}}>
-          <View style={{flex:0.15}}></View>
-          <View style={{flex:0.8}}>
+          <View style={{flex:0.4}}></View>
+          <View style={{flex:0.6}}>
           <Image
             style={{ width: '100%', height: '100%', paddingTop: hp(5) }}
             source={{ uri: 'drawerimg' }}
@@ -266,15 +395,15 @@ export default CustomDrawer;
 
 const styles = EStyleSheet.create({
   username: {
-    fontSize: '0.85rem',
+    fontSize: '0.75rem',
     color: '#fff',
-    fontWeight: '600',
+    fontWeight: 'bold',
     marginTop: hp(1),
-    fontFamily: fontFamily.robotoMedium,
+    fontFamily: fontFamily.robotoBold,
     fontStyle: 'normal',
   },
   viewProfile: {
-    fontSize: '0.5rem',
+    fontSize: '0.4rem',
     color: '#FFF',
     fontSize: hp(1.5),
     fontWeight: '400',
@@ -284,8 +413,8 @@ const styles = EStyleSheet.create({
   textlistStyle: {
     fontSize: '0.8rem',
     color: '#fff',
-    fontWeight: '400',
-    fontFamily: fontFamily.robotoLight,
+    fontWeight: '500',
+    fontFamily: fontFamily.robotoMedium,
     fontStyle: 'normal',
     
   },

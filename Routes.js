@@ -36,6 +36,14 @@ import Qrcode from './SRC/Screens/Qrcode';
 import colors from './SRC/Styles/colors';
 import fontFamily from './SRC/Styles/fontFamily';
 import Schedulemeeting from './SRC/Screens/Schedulemeeting';
+import SpeakerProfile from './SRC/Screens/SpeakerProfile';
+import Matchmaking from './SRC/Screens/MatchMaking';
+import SearchMeeting from './SRC/Screens/SearchMeeting';
+import Sechduleavailability from './SRC/Screens/SechduleAvailability';
+import Confirmdecline from './SRC/Screens/Confirmdecline';
+import Favroitmeeting from './SRC/Screens/Favroitmeeting';
+import Shortlist from './SRC/Screens/Shortlist';
+import Printbadge from './SRC/Screens/PrintBadge';
 
 const Drawer = createDrawerNavigator();
 const Tab = createBottomTabNavigator();
@@ -68,7 +76,10 @@ const BottomTabApplication = () => {
           position: 'absolute',
           elevation: 5,
           backgroundColor: '#fff',
-          height: 50,
+          height: 55,
+          marginBottom:hp(0),
+          fontFamily:fontFamily .robotoLight,
+          fontSize:hp(1.2)
         },
         tabStyle: {
           flexDirection: 'column',
@@ -79,7 +90,7 @@ const BottomTabApplication = () => {
           marginBottom: 1, // Adjust space between icon and label
         },
         labelStyle: {
-          fontSize: 55, // Adjust label font size
+          fontSize: hp(1.2), // Adjust label font size
           marginTop: 0,
           color:colors.grayDescColor // Optionally, adjust margin between icon and label
         },
@@ -96,6 +107,8 @@ const BottomTabApplication = () => {
           tabBarLabel: 'Exibitor',
           tabBarLabelStyle: {
             fontSize: hp(1.8),
+            fontWeight:'400',
+            fontFamily:fontFamily.robotoLight
           },
         }}
       />
@@ -109,23 +122,47 @@ const BottomTabApplication = () => {
           tabBarLabel: 'Speaker',
           tabBarLabelStyle: {
             fontSize: hp(1.8),
+            fontWeight:'400',
+            fontFamily:fontFamily.robotoLight
           },
         }}
+        initialParams={{ apiIdentifier: 'mySessions' }}
       />
       <Tab.Screen
         name="Scanner"
         component={Scanner}
         options={{
           tabBarIcon: ({color, size,focused}) => (
-           <View style={{marginBottom:hp(1),backgroundColor:'#2CC2E4',width:wp(18),height:hp(9),justifyContent:'center',alignItems:'center',borderRadius:hp(50)}}>
-             <Icon type='light' name="qrcode" size={hp(4)} color={'#fff'} />
-           </View>
+          <View style={[{
+            marginBottom: hp(1),
+            backgroundColor: '#2CC2E4',
+            width: wp(16),
+            height: hp(8),
+            justifyContent: 'center',
+            alignItems: 'center',
+            borderRadius: hp(50),
+            // Shadow properties
+            ...Platform.select({
+                ios: {
+                    shadowColor: '#000',
+                    shadowOffset: { width: 0, height: 2 },
+                    shadowOpacity: 0.3,
+                    shadowRadius: 2,
+                },
+                android: {
+                    elevation: 5,
+                },
+            })
+        }]}>
+            <Icon type='light' name="qrcode" size={hp(4)} color={'#fff'} />
+        </View>
           ),
           tabBarLabel: 'Scanner',
           tabBarLabelStyle: {
             fontSize: hp(1.8),
             color:'#fff',
-            marginTop:hp(2.3)
+            marginTop:hp(2.3),
+           
           },
         }}
       />
@@ -139,20 +176,24 @@ const BottomTabApplication = () => {
           tabBarLabel: 'My Sessions',
           tabBarLabelStyle: {
             fontSize: hp(1.8),
+            fontWeight:'400',
+            fontFamily:fontFamily.robotoLight
           },
         }}
         initialParams={{ apiIdentifier: 'mySessions' }}
       />
         <Tab.Screen
-        name="FeedBack"
+        name="Feedback"
         component={FeedBack}
         options={{
           tabBarIcon: ({color, size,focused}) => (
             <Icon type='light' name="message-smile" size={hp(2.5)} color={focused ? '#2CC2E4' : colors.grayDescColor}/>
           ),
-          tabBarLabel: 'FeedBack',
+          tabBarLabel: 'Feedback',
           tabBarLabelStyle: {
             fontSize: hp(1.8),
+            fontWeight:'400',
+            fontFamily:fontFamily.robotoLight
           },
         }}
       />
@@ -189,6 +230,15 @@ const Routes = () => {
         <Stack.Screen name="Events" component={Events} />
         <Stack.Screen name="Qrcode" component={Qrcode} />
         <Stack.Screen name="Schedulemeeting" component={Schedulemeeting} />
+        <Stack.Screen name="SpeakerProfile" component={SpeakerProfile} />
+        <Stack.Screen name="Matchmaking" component={Matchmaking} />
+        <Stack.Screen name="SearchMeeting" component={SearchMeeting} />
+        <Stack.Screen name="Sechduleavailability" component={Sechduleavailability} />
+        <Stack.Screen name="Confirmdecline" component={Confirmdecline} />
+        <Stack.Screen name="Favroitmeeting" component={Favroitmeeting} />
+        <Stack.Screen name="Shortlist" component={Shortlist} />
+        <Stack.Screen name="Printbadge" component={Printbadge} />
+        
         
         
       </Stack.Navigator>

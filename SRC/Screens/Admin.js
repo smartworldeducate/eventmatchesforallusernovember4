@@ -68,21 +68,21 @@ const renderItem = ({item, index}) => {
             style={{
               color: colors.blackColor,
               paddingLeft: hp(0),
-              fontSize: hp(3),
-              fontWeight: '700',
+              fontSize: hp(2.8),
+              fontWeight: 'bold',
               fontFamily: fontFamily.robotoBold,
             }}>
-            {item?.first_name} {item?.last_name}
+             {item?.company_name}
           </Text>
           <Text
             style={{
               color: colors.grayDescColor,
               paddingLeft: hp(0),
-              fontSize: hp(2),
-              fontWeight: '400',
+              fontSize: hp(1.4),
+              fontWeight: '300',
               fontFamily: fontFamily.robotoMedium,
             }}>
-            {item?.company_name}
+            {item?.first_name} {item?.last_name}
           </Text>
         </View>
         

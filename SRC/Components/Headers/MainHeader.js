@@ -28,9 +28,10 @@ const MainHeader = ({text, iconName, onpressBtn, rightIcon, textcolor}) => {
             onPress={onpressBtn}
             style={{flex:0.15}}
             >
-            <Icon type="solid" name="arrow-left" size={hp(3)} color="#2CC2E4" />
+            
+           {text !=='Admins' ? <Icon type="regular" name="arrow-left" size={hp(3)} color="#2CC2E4" /> :<Icon type="regular" name="house" size={hp(3)} color="#2CC2E4" />}
           </TouchableOpacity>
-          <View style={{flex:0.5,marginTop:hp(-0.5)}}>
+          <View style={{flex:0.6,marginTop:hp(-0.1)}}>
             <Text style={styles.textstyle}>{text}</Text>
           </View>
           <View style={{marginVertical: hp(0.3),flex:0.45}}>
@@ -60,7 +61,7 @@ const styles = EStyleSheet.create({
     marginTop: hp(0),
     fontSize: hp(2.5),
     fontWeight: '600',
-    fontFamily: fontFamily.robotoMedium,
+    fontFamily: fontFamily.robotoBold,
     fontStyle: 'normal',
   },
 });

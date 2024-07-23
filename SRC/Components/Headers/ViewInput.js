@@ -18,7 +18,7 @@ const ViewInput = ({value, name,onPress,iconRight,maxLength,onPressShowPassword,
           paddingBottom: 10,
           marginTop: hp(1.5),
         }}>
-        <Text style={{color:'#2C3A4B', fontWeight: '600', fontSize: hp(1.8),fontFamily:fontFamily.robotoBold}}>
+        <Text style={{color:'#2C3A4B', fontWeight: 'bold', fontSize: hp(1.6),fontFamily:fontFamily.robotoBold}}>
           {name}
         </Text>
       </View>
@@ -33,7 +33,7 @@ const ViewInput = ({value, name,onPress,iconRight,maxLength,onPressShowPassword,
         }}>
         <View style={{paddingHorizontal: hp(1.5),flex:0.85}}>
           <TextInput
-            style={{color:colors.blackColor, fontSize: hp(1.6), fontWeight: '600',fontFamily:fontFamily.robotoBold}}
+            style={{color:colors.blackColor, fontSize: hp(1.6), fontWeight: 'bold',fontFamily:fontFamily.robotoBold}}
             placeholder={name}
             onChangeText={onPress}
             onChange={onChange}

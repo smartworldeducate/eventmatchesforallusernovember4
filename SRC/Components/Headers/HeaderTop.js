@@ -22,16 +22,15 @@ const HeaderTop = ({ onPressIcon,onflterPress }) => {
     <View style={s.container}>
       <View style={{ flex: 0.1, justifyContent: 'center', paddingTop: hp(4.3),borderRadius:hp(50)}}>
         <TouchableOpacity
-        
           activeOpacity={0.8}
-          style={{ flex:0.4, marginTop: hp(1),backgroundColor:colors.lightBlue,borderRadius:hp(50),justifyContent:'center',alignItems:'center'}}
+          style={{ flex:0.48,backgroundColor:'red' ,marginTop: hp(1),backgroundColor:colors.lightBlue,borderRadius:hp(50),justifyContent:'center',alignItems:'center'}}
           onPress={onPressIcon}>
-            <Icon type="regular" name="bars-sort" size={hp(2.5)} color="#fff" />
+            <Icon type="solid" name="bars-sort" size={hp(2.3)} color="#fff" />
         </TouchableOpacity>
       </View>
 
       <View style={{ flex: 0.2, justifyContent: 'center', paddingTop: hp(5), paddingLeft: hp(2.5) }}>
-        <Text style={{ color:colors.blackColor, fontSize: hp(2.5), fontWeight: '600',fontFamily:fontFamily.robotoMedium }}>Home</Text>
+        <Text style={{ color:colors.blackColor, fontSize: hp(2.5), fontWeight: '600',fontFamily:fontFamily.robotoBold }}>Home</Text>
       </View>
 
       <View style={{ flex: 0.3, justifyContent: 'center' }}></View>
@@ -55,7 +54,7 @@ const HeaderTop = ({ onPressIcon,onflterPress }) => {
         <TouchableOpacity
           activeOpacity={0.8}
           style={{ alignItems: 'flex-end', marginRight: hp(1) }}
-          onPress={onflterPress}>
+          onPress={()=>{}}>
             <Icon type="regular" name="filter" size={hp(2.8)} color="#2CC2E4" />
         </TouchableOpacity>
       </View>

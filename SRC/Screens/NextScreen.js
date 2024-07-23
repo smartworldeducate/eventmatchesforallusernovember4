@@ -77,10 +77,10 @@ const NextScreen = props => {
                 marginTop: hp(4.5),
                 marginHorizontal: hp(2.5),
               }}>
-              <Text style={{color: '#fff', fontSize: hp(1.7),fontWeight:'400',fontFamily:fontFamily.robotoMedium}}>
+              <Text style={{color: '#fff',fontWeight:'400', fontSize: hp(2),fontWeight:'400',fontFamily:fontFamily.robotoMedium}}>
                 In publishing and graphic design, Lorem is a
               </Text>
-              <Text style={{color: '#fff', fontSize: hp(1.7),fontFamily:fontFamily.robotoMedium}}>
+              <Text style={{color: '#fff',fontWeight:'400', fontSize: hp(2),fontFamily:fontFamily.robotoMedium}}>
                 placeholder text commonly{' '}
               </Text>
             </View>
@@ -93,9 +93,9 @@ const NextScreen = props => {
               flexDirection: 'row',
               justifyContent: 'space-between',
             }}>
-            <View>
+            <TouchableOpacity onPress={handleSkip1}>
               <Text style={{color: '#fff', fontSize: hp(2.5)}}>SKIP</Text>
-            </View>
+            </TouchableOpacity>
             <TouchableOpacity onPress={handleSkip}>
               <Text style={{color: '#fff', fontSize: hp(2.5)}}>NEXT</Text>
             </TouchableOpacity>
@@ -134,10 +134,10 @@ const NextScreen = props => {
                 marginTop: hp(4.5),
                 marginHorizontal: hp(2.5),
               }}>
-              <Text style={{color: '#fff', fontSize: hp(1.7),fontFamily:fontFamily.robotoMedium}}>
+              <Text style={{color: '#fff',fontWeight:'400', fontSize: hp(2),fontFamily:fontFamily.robotoMedium}}>
                 In publishing and graphic design, Lorem
               </Text>
-              <Text style={{color: '#fff', fontSize: hp(1.7),fontFamily:fontFamily.robotoMedium}}>
+              <Text style={{color: '#fff',fontWeight:'400', fontSize: hp(2),fontFamily:fontFamily.robotoMedium}}>
                 is a placeholder text commonly
               </Text>
             </View>
@@ -150,9 +150,9 @@ const NextScreen = props => {
               flexDirection: 'row',
               justifyContent: 'space-between',
             }}>
-            <View>
+            <TouchableOpacity onPress={handleSkip1}>
               <Text style={{color: '#fff', fontSize: hp(2.5)}}>SKIP</Text>
-            </View>
+            </TouchableOpacity>
             <TouchableOpacity onPress={handleSkip2}>
               <Text style={{color: '#fff', fontSize: hp(2.5)}}>NEXT</Text>
             </TouchableOpacity>
@@ -191,10 +191,10 @@ const NextScreen = props => {
                 marginTop: hp(4.5),
                 marginHorizontal: hp(2.5),
               }}>
-              <Text style={{color: '#fff', fontSize: hp(1.7),fontFamily:fontFamily.robotoMedium}}>
+              <Text style={{color: '#fff',fontWeight:'400', fontSize: hp(2),fontFamily:fontFamily.robotoMedium}}>
                 In publishing and graphic design, Lorem is a
               </Text>
-              <Text style={{color: '#fff', fontSize: hp(1.7),fontFamily:fontFamily.robotoMedium}}>
+              <Text style={{color: '#fff',fontWeight:'400', fontSize: hp(2),fontFamily:fontFamily.robotoMedium}}>
                 placeholder text commonly
               </Text>
             </View>
@@ -207,9 +207,9 @@ const NextScreen = props => {
               flexDirection: 'row',
               justifyContent: 'space-between',
             }}>
-            <View>
+            <TouchableOpacity onPress={handleSkip1}>
               <Text style={{color: '#fff', fontSize: hp(2.5)}}>SKIP</Text>
-            </View>
+            </TouchableOpacity>
             <TouchableOpacity onPress={handleSkip1}>
               <Text style={{color: '#fff', fontSize: hp(2.5)}}>NEXT</Text>
             </TouchableOpacity>
@@ -239,6 +239,6 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: hp(2.5),
     fontWeight: '600',
-    fontFamily:fontFamily.robotoMedium
+    fontFamily:fontFamily.robotoBold
   },
 });

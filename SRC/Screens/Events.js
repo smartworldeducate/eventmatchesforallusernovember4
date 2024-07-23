@@ -64,9 +64,9 @@ const Events = (props) => {
     // geLogintData('loginData');
     getData('userSession');
   }, []);
-  const propHandler=(event_id)=>{
-    // saveData({user_id:data?.user_id,event_id:event_id});
-    if(event_id){
+  const propHandler=(item)=>{
+    saveData({user_id:loginData?.user_id, event_id:item?.event_id,login_id:loginData?.login_id,is_macher:item?.is_matchmaker});
+    if(item){
     //  dispatch(activityHomeHandler({"event_id":event_id,user_id:data?.login_id}));
     //  if(activityData?.user?.responseData?.response?.success===1){
       props.navigation.navigate('HomeScreen');
@@ -83,93 +83,86 @@ const Events = (props) => {
   }
   const renderItem = ({item, index}) => {
     return (
-      <TouchableOpacity onPress={()=>propHandler(item?.event_id)} style={[
-        { 
+      <TouchableOpacity
+      onPress={() => propHandler(item)}
+      style={[
+        {
           marginHorizontal: hp(2.5),
-          flex:1,
+          flex: 1,
           marginBottom: hp(2),
           height: hp(12),
-          flexDirection:'row',
+          flexDirection: 'row',
           backgroundColor: '#fff',
           borderRadius: hp(1),
           // Shadow styles
-          ...(Platform.OS === 'ios' ? {
-            shadowColor: '#000',
-            shadowOffset: { width: 0, height: 2 },
-            shadowOpacity: 0.25,
-            shadowRadius: 3.84,
-          } : {
-            elevation: 5,
-          })
-        }
+          ...(Platform.OS === 'ios'
+            ? {
+                shadowColor: '#000',
+                shadowOffset: {width: 0, height: 2},
+                shadowOpacity: 0.25,
+                shadowRadius: 3.84,
+              }
+            : {
+                elevation: 5,
+              }),
+        },
       ]}>
-        <View style={{flex:1,flexDirection:'row',margin:hp(1.5)}}>
-          <View style={{flex:0.3}}>
+      <View style={{flex: 1, flexDirection: 'row', margin: hp(1.5)}}>
+        <View style={{flex: 0.23}}>
           <Image
-            style={{ width: '100%', height: '100%',borderRadius:hp(1) }}
-            source={{ uri:item?.logo ? item?.logo:'groupfore'}}
+            style={{width: '100%', height: '100%', borderRadius: hp(1)}}
+            source={{uri: item?.logo ? item?.logo : 'groupfore'}}
             resizeMode="cover"
-          /> 
-          </View>
-          <View style={{flex: 0.72, marginLeft: hp(1)}}>
-            <Text
-              style={{
-                color: colors.grayDescColor,
-                fontSize: hp(2),
-                flexWrap: 'wrap',
-                fontWeight: '500',
-                fontFamily: fontFamily.robotoLight,
-              }}
-              ellipsizeMode="tail"
-              numberOfLines={3}>
-              {item?.event_name}
-            </Text>
-            <Text
-              style={{
-                color: colors.grayDescColor,
-                fontSize: hp(1.8),
-                flexWrap: 'wrap',
-                fontWeight: '500',
-                fontFamily: fontFamily.robotoLight,
-                paddingTop:hp(0.5)
-              }}>
-              {/* <Text
-                style={{
-                  color: colors.descBlack,
-                  fontWeight: '500',
-                  fontSize: hp(1.7),
-                  fontFamily: fontFamily.robotoMedium,
-                }}>
-                Start Date
-              </Text>{' '} */}
-              {item?.start_date} - {item?.end_date}
-            </Text>
-            {/* <Text
-              style={{
-                color: colors.blackColor,
-                fontSize: hp(1.7),
-                flexWrap: 'wrap',
-                fontWeight: '500',
-                fontFamily: fontFamily.robotoLight,
-              }}>
-              <Text
-                style={{
-                  color: colors.blackColor,
-                  fontWeight: '500',
-                  fontSize: hp(1.7),
-                  fontFamily: fontFamily.robotoMedium,
-                }}>
-                End Date
-              </Text>{' '}
-              : {item?.end_date}
-            </Text> */}
-          </View>
-          <View style={{flex:0.08,justifyContent: 'flex-end'}}>
-            <Icon type='light' name="arrow-down-right" size={hp(3)} color='#2CC2E4' />
+          />
+        </View>
+        <View style={{flex: 0.72, marginLeft: hp(1.5)}}>
+          <Text
+            style={{
+              color: colors.grayDescColor,
+              fontSize: hp(2),
+              flexWrap: 'wrap',
+              fontWeight: 'bold',
+              fontFamily: fontFamily.robotoBold,
+            }}
+            ellipsizeMode="tail"
+            numberOfLines={3}>
+            {item?.event_name}
+          </Text>
+          <View style={{flexDirection:'row'}}>
+            <View style={{marginTop:hp(0.5),paddingLeft:hp(0)}}>
+            <Icon
+                type="regular"
+                name="calendar-check"
+                size={hp(2)}
+                color="#cdcdcd"
+              />
+            </View>
+         <View style={{paddingLeft:hp(1)}}>
+         <Text
+            style={{
+              color: colors.grayDescColor,
+              fontSize: hp(1.8),
+              flexWrap: 'wrap',
+              fontWeight: '500',
+              fontFamily: fontFamily.robotoLight,
+              paddingTop:hp(0.5)
+            }}>
+         
+          {item?.start_date} - {item?.end_date}
+          </Text>
+         </View>
           </View>
         </View>
-        
-      </TouchableOpacity>
+        <View style={{flex: 0.08, justifyContent: 'flex-end'}}>
+          <Icon
+            type="light"
+            name="arrow-down-right"
+            size={hp(3)}
+            color="#2CC2E4"
+          />
+        </View>
+      </View>
+    </TouchableOpacity>
     );
   };
   return (

@@ -6,14 +6,13 @@ import EStyleSheet from 'react-native-extended-stylesheet';
 import colors from '../Styles/colors';
 import fontFamily from '../Styles/fontFamily';
 import MainHeader from '../Components/Headers/MainHeader';
-import { Dropdown } from 'react-native-element-dropdown';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Icon from 'react-native-fontawesome-pro';
-import { Avatar } from 'react-native-elements';// import { color } from '@rneui/base';
+import { Avatar } from 'react-native-elements';
 const Schedulemeeting = (props) => {
   const dispatch = useDispatch();
   const [value, setValue] = useState(false);
@@ -32,9 +31,7 @@ const Schedulemeeting = (props) => {
           // console.log('Data retrieved successfully:', value);
           const parsedData = JSON.parse(value);
           setAdminData(parsedData);
-          // dispatch(speakerDetailHandler({"user_id":parsedData?.login_id}));
             dispatch(meetingHandler({"user_id":54456,"event_id":776,"activity_id":2055}));
-          
         } 
       } catch (error) {
         console.error('Error retrieving data:', error);
@@ -44,18 +41,11 @@ const Schedulemeeting = (props) => {
       getSessionData('userSession');
     }, []);
 
-    // const renderItem = item => {
-    //   return (
-    //     <TouchableOpacity onPress={()=>handleChange(item)} style={styles.item}>
-    //       <Text style={styles.textItem}>{item?.activity_name}</Text>
-    //     </TouchableOpacity>
-    //   );
-    // };
-
     const handleChange=(item)=>{
       setData(item);
       setValue(false);
-      dispatch(meetingHandler({"user_id":54456,"event_id":776,"activity_id":item?.activity_id}));
+      // dispatch(meetingHandler({"user_id":adminData?.login_id,"event_id":adminData?.event_id,"activity_id":item?.activity_id}));
+      dispatch(meetingHandler({"user_id":54456,"event_id":776,"activity_id":2055}));
 
     }
   
@@ -102,10 +92,10 @@ const Schedulemeeting = (props) => {
               <Text
               style={{
                 color: colors.descBlack,
-                fontSize: hp(2),
+                fontSize: hp(1.9),
                 flexWrap: 'wrap',
-                fontWeight: '500',
-                fontFamily: fontFamily.robotoMedium,
+                fontWeight: 'bold',
+                fontFamily: fontFamily.robotoBold,
               }}
               ellipsizeMode="tail"
               numberOfLines={3}>
@@ -113,11 +103,11 @@ const Schedulemeeting = (props) => {
             </Text>
             <Text
               style={{
-                color: colors.lightBlack,
-                fontSize: hp(2),
+                color: colors.descBlack,
+                fontSize: hp(1.7),
                 flexWrap: 'wrap',
-                fontWeight: '300',
-                fontFamily: fontFamily.robotoLight,
+                fontWeight: '400',
+                fontFamily: fontFamily.robotoMedium,
                 paddingTop:hp(0)
               }}
               ellipsizeMode="tail"
@@ -135,19 +125,20 @@ const Schedulemeeting = (props) => {
             style={{
               color: colors.blackColor,
               paddingLeft: hp(0),
-              fontSize: hp(2),
-              fontWeight: '500',
-              fontFamily: fontFamily.robotoMedium,
+              fontSize: hp(1.9),
+              fontWeight: 'bold',
+              fontFamily: fontFamily.robotoBold,
+              paddingBottom:hp(0.5)
             }}>
             Senior program manager
           </Text>
           <Text
             style={{
-              color: colors.grayDescColor,
+              color: "#474747",
               paddingLeft: hp(0),
-              fontSize: hp(1.8),
-              fontWeight: '300',
-              fontFamily: fontFamily.robotoLight,
+              fontSize: hp(1.6),
+              fontWeight: '400',
+              fontFamily: fontFamily.robotoMedium,
             }}>
            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vitae purus orci viverra tristique.
           </Text>
@@ -162,11 +153,11 @@ const Schedulemeeting = (props) => {
            <View style={{paddingLeft:hp(1),marginTop:hp(-0.3)}}>
            <Text
             style={{
-              color: colors.lightBlack,
+              color: colors.blackColor,
               paddingLeft: hp(0),
-              fontSize: hp(2),
-              fontWeight: '300',
-              fontFamily: fontFamily.robotoLight,
+              fontSize: hp(1.8),
+              fontWeight: '400',
+              fontFamily: fontFamily.robotoMedium,
             }}>
               {item?.meeting_time}
           </Text>
@@ -178,11 +169,11 @@ const Schedulemeeting = (props) => {
            <View style={{paddingLeft:hp(1),marginTop:hp(-0.3)}}>
            <Text
             style={{
-              color: colors.lightBlack,
+              color: colors.blackColor,
               paddingLeft: hp(0),
-              fontSize: hp(2),
-              fontWeight: '300',
-              fontFamily: fontFamily.robotoLight,
+              fontSize: hp(1.8),
+              fontWeight: '400',
+              fontFamily: fontFamily.robotoMedium,
             }}>
               {item?.table_name}
           </Text>
@@ -243,7 +234,7 @@ const Schedulemeeting = (props) => {
           )
           })}
         </View> */}
-        <View style={[
+        <TouchableOpacity onPress={()=>setValue(false)} style={[
             styles.modalContainer,
             Platform.OS === 'android' ? styles.androidShadow : styles.iosShadow
           ]}>
@@ -252,7 +243,7 @@ const Schedulemeeting = (props) => {
                     <Text style={styles.textItem}>{item?.activity_name}</Text>
                 </TouchableOpacity>
             ))}
-        </View>
+        </TouchableOpacity>
         </View>
       </Modal>
       </View> 
@@ -331,7 +322,8 @@ const styles = EStyleSheet.create({
     height: hp(15),
     backgroundColor: '#fff',
     borderRadius: 10,
-    overflow: 'hidden', // This is important for iOS to clip the shadow correctly
+    overflow: 'hidden',
+    // backgroundColor:'red'
 },
 androidShadow: {
     elevation: 5, // Shadow for Android

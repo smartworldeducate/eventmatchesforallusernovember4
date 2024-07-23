@@ -12,13 +12,15 @@ import {
   Modal,
   ActivityIndicator,
 } from 'react-native';
+import DeviceInfo from 'react-native-device-info';
+import { getUniqueId, getManufacturer } from 'react-native-device-info';
 import {verifyPasswordHandler} from '../features/login/passwordSlice';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import Ficon from 'react-native-fontawesome-pro';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import ViewInput from '../Components/Headers/ViewInput';
 import fontFamily from '../Styles/fontFamily';
 import colors from '../Styles/colors';
@@ -33,8 +35,17 @@ const SigninPassword = props => {
   const [password, setPassword] = useState(null);
   const [showPassword, setShowPassword] = useState(true);
   const [eyeType, setEyeType] = useState(false);
+  const [deviceName, setDeviceName] = useState('');
+  const [deviceIdentifire, setDeviceIdentifire] = useState('');
+  const [deviceInfo, setDeviceInfo] = useState({
+    deviceType: '',
+    deviceId: '',
+    appToken: '',
+    deviceOSVersion: '',
+    appInstallVersion: ''
+  });
   const onPressShowPassword = () => {
-    console.log("dasjkas",showPassword)
+    // console.log("dasjkas",showPassword)
     setShowPassword(!showPassword);
     setEyeType(!eyeType);
   };
@@ -53,11 +64,11 @@ const SigninPassword = props => {
   const handleLogin = async () => {
     if (password) {
       const verifyUser = await dispatch(
-        verifyPasswordHandler({user_email: email, user_password: password}),
+        verifyPasswordHandler({user_email: email, user_password: password,device_token:deviceIdentifire,device_identifier:deviceInfo?.deviceId,auth_token:deviceInfo?.appToken,device_type:deviceInfo?.deviceType,device_name:deviceName,device_os:deviceInfo?.deviceOSVersion,app_installed_version:deviceInfo?.appInstallVersion}),
       );
       if (verifyUser?.payload?.response?.success === 1) {
         saveData(verifyUser?.payload?.response);
-        props.navigation.navigate('Admins');
+        props.navigation.navigate('AllEvents');
       } else {
         ToastAndroid.showWithGravity(
           verifyUser?.payload?.response?.message,
@@ -73,6 +84,34 @@ const SigninPassword = props => {
       );
     }
   };
+      console.log("appInstallVersion==",deviceInfo.appInstallVersion);
+
+  useEffect(() => {
+    const fetchDeviceInfo = async () => {
+      const deviceType = DeviceInfo.getDeviceType();
+      const deviceId = DeviceInfo.getDeviceId();
+      const appToken = '5E:8F:16:06:2E:A3:CD:2C:4A:0D:54:78:76:BA:A6:F3:8C:AB:F6:25'; 
+       DeviceInfo.getDeviceName().then((deviceName) => {
+        setDeviceName(deviceName);
+
+      });
+      DeviceInfo.getFingerprint().then((fingerprint) => {
+        setDeviceIdentifire(fingerprint);
+      });
+      const deviceOSVersion = DeviceInfo.getSystemVersion();
+      const appInstallVersion = DeviceInfo.getVersion();
+      setDeviceInfo({
+        deviceType,
+        deviceId,
+        appToken,
+        deviceOSVersion,
+        appInstallVersion
+      });
+    };
+
+    fetchDeviceInfo();
+  }, []);
+
   return (
     <View
       style={{
@@ -111,7 +150,7 @@ const SigninPassword = props => {
               marginTop: hp(-6),
             }}>
             <Image
-              source={{uri: 'eventmaches'}}
+              source={{uri: 'splashchange'}}
               style={{width: wp(46), height: hp(23)}}
               resizeMode={'contain'}
             />
@@ -123,7 +162,7 @@ const SigninPassword = props => {
                   color: '#cdcdcd',
                   fontWeight: '400',
                   fontSize: hp(2.5),
-                  fontFamily: fontFamily.robotoMedium,
+                  fontFamily: fontFamily.robotoBold,
                 }}>
                 Sign in as
               </Text>
@@ -133,8 +172,9 @@ const SigninPassword = props => {
             <Text
               style={{
                 color: colors.blackColor,
-                fontWeight: '600',
+                fontWeight: 'bold',
                 fontSize: hp(2.5),
+                fontFamily: fontFamily.robotoMedium,
               }}>
               {email}
             </Text>

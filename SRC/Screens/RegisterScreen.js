@@ -25,6 +25,7 @@ import { registerUserHandler } from '../features/register/registerSlice';
 import ViewInput from '../Components/Headers/ViewInput';
 import fontFamily from '../Styles/fontFamily';
 import colors from '../Styles/colors';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const RegisterScreen = (props) => {
   const dispatch = useDispatch();
@@ -40,6 +41,16 @@ const RegisterScreen = (props) => {
   const [showPasswordF, setShowPasswordf] = useState(true);
   const [eyeType, setEyeType] = useState(false);
   const [eyeTypef, setEyeTypef] = useState(false);
+
+  // async function saveData(value) {
+  //   const jsonString = JSON.stringify(value);
+  //   try {
+  //     await AsyncStorage.setItem("userrecord", jsonString);
+  //     console.log('Data saved successfully.');
+  //   } catch (error) {
+  //     console.error('Error saving data:', error);
+  //   }
+  // }
 
   const onPressShowPassword = () => {
     setShowPassword(!showPassword);
@@ -115,7 +126,7 @@ const RegisterScreen = (props) => {
         password: password,
       })
     );
-
+    // saveData({"first_name":firstName,"last_name":lasttName,"email":email})
     if (registerUser.payload.response.success === 1) {
       props.navigation.navigate('Admins');
     } else {
@@ -170,7 +181,7 @@ const RegisterScreen = (props) => {
                   color: '#cdcdcd',
                   fontWeight: '400',
                   fontSize: hp(2.5),
-                  fontFamily: fontFamily.robotoMedium,
+                  fontFamily: fontFamily.robotoBold,
                 }}>
                 To continue, we’ll need some more information for your accoun
               </Text>
@@ -186,7 +197,7 @@ const RegisterScreen = (props) => {
             <Text
               style={{
                 color: colors.blackColor,
-                fontWeight: '600',
+                fontWeight: 'bold',
                 fontSize: hp(2.5),
                 fontFamily: fontFamily.robotoBold,
               }}>

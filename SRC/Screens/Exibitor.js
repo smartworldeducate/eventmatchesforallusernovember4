@@ -166,7 +166,7 @@ const Exibitor = props => {
       <View
         style={[styles.cardInfo, {backgroundColor:'#F9E79F'}]}>
         <Text style={styles.cardTitle}>{item?.speaker_name}</Text>
-        <View style={{marginTop: hp(1.8), flexDirection: 'row'}}>
+        <View style={{marginTop: hp(4), flexDirection: 'row'}}>
           {/* <ExibitorBtn /> */}
           <View style={{flex: 0.5}}></View>
           <TouchableOpacity
@@ -187,9 +187,9 @@ const Exibitor = props => {
               <Text
                 style={{
                   color: '#fff',
-                  fontSize:hp(1.7),
-                  fontWeight: '500',
-                  fontFamily:fontFamily.robotoMedium
+                  fontSize:hp(0.9),
+                  fontWeight: 'bold',
+                  fontFamily:fontFamily.robotoBold
                 }}>
                 Sponsors
               </Text>
@@ -283,10 +283,10 @@ const styles = StyleSheet.create({
     height: hp(12),
   },
   cardTitle: {
-    fontWeight: '500',
-    fontSize:hp(1.9),
+    fontWeight: 'bold',
+    fontSize:hp(1.8),
     color: colors.descBlack,
-    fontFamily:fontFamily.robotoMedium
+    fontFamily:fontFamily.robotoBold
   },
   cardDetails: {
     fontSize: hp(3),

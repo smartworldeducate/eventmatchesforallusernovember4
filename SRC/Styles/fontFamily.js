@@ -40,12 +40,12 @@ const fontFamily = {
     robotoBold:
     Platform.OS === 'android' ? 'Roboto-Bold' : 'Roboto-Bold',
 
-    robotoThin:
-    Platform.OS === 'android' ? 'Roboto-Thin' : 'Roboto-Thin',
+    // robotoThin:
+    // Platform.OS === 'android' ? 'Roboto-Thin' : 'Roboto-Thin',
 
 
-    robotoRegular:
-    Platform.OS === 'android' ? 'Roboto-Regular' : 'Roboto-Regular',
+    // robotoRegular:
+    // Platform.OS === 'android' ? 'Roboto-Regular' : 'Roboto-Regular',
 
     
   

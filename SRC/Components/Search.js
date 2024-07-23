@@ -8,6 +8,7 @@ import {
 import EStyleSheet from 'react-native-extended-stylesheet';
 import fontFamily from '../Styles/fontFamily';
 import colors from '../Styles/colors';
+import { color } from '@rneui/base';
 
 const Search = ({setSearchQuery}) => {
   const [searchData, setSearchData] = useState('');
@@ -28,10 +29,10 @@ const Search = ({setSearchQuery}) => {
           onChangeText={(e)=>handleSearch(e)}
           returnKeyType={'done'}
           iconName={'user'}
-          placeholder={'Search Name'}
+          placeholder={'Search'}
           placeholderColor={'gray'}
           iconColor={colors.loginIconColor}
-          placeholderTextColor="#000"
+          placeholderTextColor="gray"
           placeholderStyle={styles.plaseholderStyle}></TextInput>
        </View>
            <TouchableOpacity
@@ -56,7 +57,7 @@ const styles = EStyleSheet.create({
   homeSearch: {
     flexDirection: 'row',
     flex:1,
-    backgroundColor: '#fff',
+    backgroundColor: '#F4F6F9',
     justifyContent: 'space-between',
     borderRadius: hp(50),
       shadowColor: '#000',
@@ -70,9 +71,10 @@ const styles = EStyleSheet.create({
 
   searchicon: {flex:0.15, borderRadius: hp(50),justifyContent:'center',alignItems: 'center'},
   placeholderStyle: {
-    fontSize: hp(3),
-    fontWeight: '300',
-    fontFamily: fontFamily.ceraLight,
+    fontSize: hp(1.4),
+    fontWeight: '400',
+    fontFamily: fontFamily.robotoMedium,
     fontStyle: 'normal',
+    color:colors.grayDescColor
   },
 });

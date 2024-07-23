@@ -36,11 +36,11 @@ const SigninScreen = props => {
   const handleLogin = async () => {
     if (validator.isEmail(email)) {
       const verifyEmail = await dispatch(verifyEmailHandler({"user_email":email}));
-      console.log("data==",verifyEmail?.payload?.response?.success);
+      // console.log("data==",verifyEmail?.payload?.response?.success);
       if(verifyEmail?.payload?.response?.success===1){
         props.navigation.navigate("SigninPassword",{email});
        }else{
-        props.navigation.navigate("RegisterScreen",{email});
+        // props.navigation.navigate("RegisterScreen",{email});
         ToastAndroid.showWithGravity(
           verifyEmail?.payload?.response?.message,
           ToastAndroid.LONG,
@@ -93,7 +93,7 @@ const SigninScreen = props => {
               marginTop: hp(-6),
             }}>
             <Image
-              source={{uri: 'eventmaches'}}
+              source={{uri: 'splashchange'}}
               style={{width: wp(46), height: hp(23)}}
               resizeMode={'contain'}
             />
@@ -131,7 +131,7 @@ const SigninScreen = props => {
                 style={{
                   color: '#262626ed',
                   fontSize: hp(2.5),
-                  fontWeight: '600',
+                  fontWeight: 'bold',
                   fontFamily: fontFamily.robotoBold,
                 }}>
                 Continue

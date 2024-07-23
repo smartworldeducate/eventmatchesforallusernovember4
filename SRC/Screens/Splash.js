@@ -34,7 +34,7 @@ const Splash = props => {
 
         // console.log('here is splash screen data', parsedData);
         if (parsedData) {
-          props.navigation.dispatch(StackActions.replace('Admins'))
+          props.navigation.dispatch(StackActions.replace('AllEvents'))
         }
         return parsedData;
       } else {
@@ -64,7 +64,7 @@ const Splash = props => {
       <View style={{flex: 0.4}}>
         <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
           <Image
-            source={{uri: 'splash'}}
+            source={{uri: 'splashchange'}}
             style={{width: '70%', height: '70%'}}
             resizeMode={'contain'}
           />

@@ -1,4 +1,4 @@
-package com.eventmatches.newarchitecture.modules;
+package com.ccsclientwbec.newarchitecture.modules;
 
 import com.facebook.jni.HybridData;
 import com.facebook.react.ReactPackage;

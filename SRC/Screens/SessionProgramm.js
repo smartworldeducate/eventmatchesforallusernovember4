@@ -84,9 +84,10 @@ const SessionProgramm = (props) => {
     },
     div: {color: 'blue', fontSize:hp(1.8)},
     p: {
-      color:colors.descBlack,
+      paddingTop:0,
+      color:"#394452",
       fontWeight:'400',
-      fontSize: hp(1.8),
+      fontSize: hp(1.7),
       lineHeight: hp(2.56),
       fontFamily: fontFamily.robotoMedium,
       textAlign:'left'
@@ -384,23 +385,24 @@ const SessionProgramm = (props) => {
       {/* bottom sheet end */}
       <View style={{flex: 0.35}}>
         <ImageBackground
-          source={{uri: 'banertwo'}}
-          style={{width: '100%', height: '100%'}}>
+          source={{uri:item?.image_name}}
+          style={{width: '100%', height: '100%'}} resizeMode='stretch'>
           <View style={{flex: 0.15, zIndex: 1}}></View>
           <View
-            style={{flex: 0.2, marginHorizontal: hp(0), flexDirection: 'row'}}>
+            style={{flex: 0.2, marginHorizontal: hp(0), flexDirection: 'row',marginTop:hp(1)}}>
             <TouchableOpacity
             onPress={() => props.navigation.goBack()}
               style={{
                 flex: 0.13,
                 justifyContent: 'center',
                 alignItems: 'center',
+                marginTop:hp(1.5)
               }}>
               <Icon type="light" name="arrow-left" size={hp(3)} color="#fff" />
             </TouchableOpacity>
-            <View style={{flex: 0.7, justifyContent: 'center'}}>
+            <View style={{flex: 0.7, justifyContent: 'center',marginTop:hp(1)}}>
               <Text
-                style={{color: '#fff', fontSize: hp(2.5), fontWeight: '500',fontFamily:fontFamily.robotoMedium}}>
+                style={{color: '#fff', fontSize: hp(2.5), fontWeight: '500',fontFamily:fontFamily.robotoBold}}>
                 Session Details
               </Text>
             </View>
@@ -416,7 +418,7 @@ const SessionProgramm = (props) => {
                   alignItems: 'center',
                   
                 }}>
-                <Icon type="light" name="bookmark" size={hp(2.5)} color="#fff" />
+                <Icon type="light" name="bookmark" size={hp(2)} color="#fff" />
               </View>
             </View>
           </View>
@@ -428,12 +430,12 @@ const SessionProgramm = (props) => {
 
           <View style={{flex: 0.2, justifyContent: 'center',paddingTop:hp(1.5)}}>
             <Text
-              style={{color:colors.grayDescColor, fontSize: hp(2.2), fontWeight: '300',fontFamily:fontFamily.robotoLight}}
+              style={{color:colors.grayDescColor, fontSize: hp(2.2), fontWeight: '400',fontFamily:fontFamily.robotoMedium}}
               numberOfLines={1}>
               Panel Discussion
             </Text>
             <Text
-              style={{color:colors.descBlack, fontSize: hp(2.5), fontWeight: '500',fontFamily:fontFamily.robotoMedium,paddingTop:hp(1)}}
+              style={{color:colors.descBlack, fontSize: hp(2.5), fontWeight: 'bold',fontFamily:fontFamily.robotoBold,paddingTop:hp(1),paddingBottom:hp(1.5)}}
               numberOfLines={2}>
               {item?.activity_name}
             </Text>
@@ -443,7 +445,7 @@ const SessionProgramm = (props) => {
             <View style={{flexDirection: 'row', flex: 0.44}}>
               <View
                 style={{
-                  flex: 0.115,
+                  flex: 0.1,
                   backgroundColor:'#E5E7E9',
                   borderRadius: hp(50),
                   justifyContent: 'center',
@@ -452,18 +454,18 @@ const SessionProgramm = (props) => {
                 <Icon
                   type="regular"
                   name="calendar-check"
-                  size={hp(3)}
+                  size={hp(2)}
                   color="#2CC2E4"
                 />
               </View>
               <View style={{flex: 0.04}}></View>
               <View style={{flex: 0.75}}>
                 <Text
-                  style={{color:colors.descBlack, fontSize: hp(2.2), fontWeight: '500',fontFamily:fontFamily.robotoMedium}}>
+                  style={{color:colors.descBlack, fontSize: hp(1.8), fontWeight: 'bold',fontFamily:fontFamily.robotoBold}}>
                   {item?.activity_date}
                 </Text>
                 <Text
-                  style={{color:colors.descBlack, fontSize: hp(1.8), fontWeight: '400',fontFamily:fontFamily.robotoLight}}>
+                  style={{color:colors.descBlack, fontSize: hp(1.6), fontWeight: '400',fontFamily:fontFamily.robotoBold}}>
                   Tuesday, {item?.start_time} - {item?.end_time}
                 </Text>
               </View>
@@ -472,7 +474,7 @@ const SessionProgramm = (props) => {
               style={{flexDirection: 'row', flex: 0.44, marginTop: hp(1.5)}}>
               <View
                 style={{
-                  flex: 0.115,
+                  flex: 0.1,
                   backgroundColor: '#E5E7E9',
                   borderRadius: hp(50),
                   justifyContent: 'center',
@@ -481,18 +483,18 @@ const SessionProgramm = (props) => {
                 <Icon
                   type="solid"
                   name="location-dot"
-                  size={hp(3)}
+                  size={hp(2)}
                   color="#2CC2E4"
                 />
               </View>
               <View style={{flex: 0.04}}></View>
               <View style={{flex: 0.75}}>
               <Text
-                  style={{color:colors.descBlack, fontSize: hp(2.2), fontWeight: '500',fontFamily:fontFamily.robotoMedium}}>
+                  style={{color:colors.descBlack, fontSize: hp(1.8), fontWeight: 'bold',fontFamily:fontFamily.robotoBold}}>
                   Hall # 40
                 </Text>
                 <Text
-                  style={{color:colors.descBlack, fontSize: hp(1.8), fontWeight: '400',fontFamily:fontFamily.robotoLight}}>
+                  style={{color:colors.descBlack, fontSize: hp(1.6), fontWeight: '400',fontFamily:fontFamily.robotoBold}}>
                  {item?.location}
                 </Text>
               </View>
@@ -510,21 +512,21 @@ const SessionProgramm = (props) => {
             <TouchableOpacity
               onPress={abstractHandler}
               style={{
-                flex: 0.37,
+                flex: 0.33,
                 borderRadius: hp(5),
                 borderWidth: 1.5,
                 borderColor: '#2CC2E4',
-                height: hp(5.5),
+                height: hp(5),
                 justifyContent: 'center',
                 alignItems: 'center',
-                backgroundColor: abstract ? '#2CC2E4' : '#fff',
+                backgroundColor: abstract ? '#2CC2E4' : '#EBEEF2',
               }}>
               <Text
                 style={{
                   color: abstract ? '#fff' : '#2CC2E4',
                   fontSize: hp(1.8),
-                  fontWeight: '400',
-                  fontFamily:fontFamily.robotoMedium
+                  fontWeight: 'bold',
+                  fontFamily:fontFamily.robotoBold
                 }}>
                 Abstract
               </Text>
@@ -532,22 +534,22 @@ const SessionProgramm = (props) => {
             <TouchableOpacity
               onPress={speakerHandler}
               style={{
-                flex: 0.37,
+                flex: 0.33,
                 borderRadius: hp(5),
                 borderWidth: 1.5,
                 borderColor: '#2CC2E4',
-                height: hp(5.5),
+                height: hp(5),
                 justifyContent: 'center',
                 alignItems: 'center',
                 marginHorizontal: hp(1),
-                backgroundColor: speaker ? '#2CC2E4' : '#fff',
+                backgroundColor: speaker ? '#2CC2E4' : '#EBEEF2',
               }}>
               <Text
                 style={{
                   color: speaker ? '#fff' : '#2CC2E4',
-                  fontSize: hp(2),
-                  fontWeight: '400',
-                  fontFamily:fontFamily.robotoMedium
+                  fontSize: hp(1.8),
+                  fontWeight: 'bold',
+                  fontFamily:fontFamily.robotoBold
                 }}>
                 Speakers
               </Text>
@@ -556,21 +558,21 @@ const SessionProgramm = (props) => {
             <TouchableOpacity
               onPress={resucesHandler}
               style={{
-                flex: 0.37,
+                flex: 0.33,
                 borderRadius: hp(5),
                 borderWidth: 1.5,
                 borderColor: '#2CC2E4',
-                height: hp(5.5),
+                height: hp(5),
                 justifyContent: 'center',
                 alignItems: 'center',
-                backgroundColor: resurces ? '#2CC2E4' : '#fff',
+                backgroundColor: resurces ? '#2CC2E4' : '#EBEEF2',
               }}>
               <Text
                 style={{
                   color: resurces ? '#fff' : '#2CC2E4',
-                  fontSize: hp(2),
-                  fontWeight: '400',
-                  fontFamily:fontFamily.robotoMedium
+                  fontSize: hp(1.8),
+                  fontWeight: 'bold',
+                  fontFamily:fontFamily.robotoBold
                 }}>
                 Resources
               </Text>
@@ -583,9 +585,9 @@ const SessionProgramm = (props) => {
               <Text
               style={{
                 color:colors.blackColor,
-                fontSize: hp(2.3),
-                fontWeight: '500',
-                fontFamily:fontFamily.robotoMedium
+                fontSize: hp(2),
+                fontWeight: 'bold',
+                fontFamily:fontFamily.robotoBold
               }}>
                 {detailData?.user?.response?.detail ? ' About Session':'No Data Available.'}
              
@@ -741,11 +743,11 @@ const SessionProgramm = (props) => {
             <Icon
                   type="light"
                   name="comment-question"
-                  size={hp(2.5)}
-                  color={colors.grayDescColor}
+                  size={hp(2)}
+                  color={colors.descBlack}
                 />
                 </View>
-                <Text style={{color:colors.grayDescColor}}>Ask</Text>
+                <Text style={{color:colors.descBlack,fontSize:hp(1.5),fontWeight:'400',fontStyle:fontFamily.robotoMedium}}>Ask</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={ ()=>{}} style={{flex: 0.25,justifyContent:'center',alignItems:'center'}}>
           <View style={{marginBottom:hp(1)}}>
@@ -753,34 +755,34 @@ const SessionProgramm = (props) => {
                   
                   type="light"
                   name="ballot-check"
-                  size={hp(2.5)}
-                  color={colors.grayDescColor}
+                  size={hp(2)}
+                  color={colors.descBlack}
                   
                 />
           </View>
-                <Text style={{color:colors.grayDescColor}}>Evaluation</Text>
+                <Text style={{color:colors.descBlack,fontSize:hp(1.5),fontWeight:'400',fontStyle:fontFamily.robotoMedium}}>Evaluation</Text>
           </TouchableOpacity>
           <TouchableOpacity style={{flex: 0.25,justifyContent:'center',alignItems:'center'}}>
           <View style={{marginBottom:hp(1)}}>
           <Icon
                   type="light"
                   name="globe-pointer"
-                  size={hp(2.5)}
-                  color={colors.grayDescColor}
+                  size={hp(2)}
+                  color={colors.descBlack}
                 />
                 </View>
-                <Text style={{color:colors.grayDescColor}}>Live</Text>
+                <Text style={{color:colors.descBlack,fontSize:hp(1.5),fontWeight:'400',fontStyle:fontFamily.robotoMedium}}>Live</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={()=>setIsPoll(true)} style={{flex: 0.25,justifyContent:'center',alignItems:'center'}}>
           <View style={{marginBottom:hp(1)}}>
           <Icon
                   type="light"
-                  name="poll-people"
-                  size={hp(2.5)}
-                  color={colors.grayDescColor}
+                  name="square-poll-vertical"
+                  size={hp(2)}
+                  color={colors.descBlack}
                 />
                 </View>
-                <Text style={{color:colors.grayDescColor}}>Poll</Text>
+                <Text style={{color:colors.descBlack,fontSize:hp(1.5),fontWeight:'400',fontStyle:fontFamily.robotoMedium}}>Poll</Text>
           </TouchableOpacity>
         </View>
       </View>
