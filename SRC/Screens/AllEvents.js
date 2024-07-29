@@ -149,10 +149,12 @@ const AllEvents = props => {
             marginHorizontal: hp(2.5),
             flex: 1,
             marginBottom: hp(2),
-            height: hp(12),
+            height: hp(13.5),
             flexDirection: 'row',
             backgroundColor: '#fff',
             borderRadius: hp(1),
+            paddingVertical:hp(0),
+            // backgroundColor:'red',
             // Shadow styles
             ...(Platform.OS === 'ios'
               ? {
@@ -196,7 +198,7 @@ const AllEvents = props => {
                   color="#cdcdcd"
                 />
               </View>
-           <View style={{paddingLeft:hp(1)}}>
+           <View style={{paddingLeft:hp(1),paddingBottom:hp(0.5)}}>
            <Text
               style={{
                 color: colors.grayDescColor,
@@ -217,7 +219,7 @@ const AllEvents = props => {
               type="light"
               name="arrow-down-right"
               size={hp(3)}
-              color="#2CC2E4"
+              color="#832D8E"
             />
           </View>
         </View>
@@ -227,7 +229,7 @@ const AllEvents = props => {
 
   return (
     <View style={{flex: 1}}>
-      <StatusBar barStyle={'default'} translucent backgroundColor="#2CC2E4" />
+      <StatusBar barStyle={'default'} translucent backgroundColor="#832D8E" />
       
         <Modal
         visible={allevntsData?.isLoading || pastEventData?.isLoading || futureEventData?.isLoading || activityData?.isLoading}

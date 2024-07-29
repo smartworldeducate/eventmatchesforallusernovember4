@@ -43,6 +43,11 @@ const CustomDrawer = ({ navigation }) => {
         const parsedData = JSON.parse(value);
         // console.log("login data===",parsedData);
         setData(parsedData);
+        dispatch(getPrintBadgeHandler({
+          user_id: parsedData?.event_user_id,
+          event_id: parsedData?.event_id,
+          admin_id: parsedData?.user_id,
+        }));
         const firstName = parsedData?.first_name || '';
         const lastName = parsedData?.last_name || '';
         
@@ -77,7 +82,7 @@ const CustomDrawer = ({ navigation }) => {
 
   useEffect(() => {
     dispatch(getAppVersionHandler());
-    dispatch(getPrintBadgeHandler());
+    // dispatch(getPrintBadgeHandler());
     getData('loginData');
     getSessionData('userSession');
   }, []);
@@ -96,7 +101,7 @@ const CustomDrawer = ({ navigation }) => {
       <LinearGradient
         start={{ x: 1, y: 0 }}
         end={{ x: 0, y: 1 }}
-        colors={['#0AA3F5', '#0A8DF5']}
+        colors={['#832D8E', '#832D8E']}
         style={{ flex: 1 }}>
         <View
           style={{
@@ -138,14 +143,14 @@ const CustomDrawer = ({ navigation }) => {
               style={{
                 width: wp(18),
                 height: hp(9),
-                backgroundColor: '#58D68D ',
+                backgroundColor: '#58D68D',
                 borderRadius: hp(50),
                 marginRight: hp(3),
                 borderWidth:1,
                 borderColor:'#fff',
                 justifyContent:'center',
                 alignItems:'center',
-                backgroundColor:'#2980B9'
+                backgroundColor:'#FFF',
               }}>
                 <Avatar
                   size="small"
@@ -153,25 +158,15 @@ const CustomDrawer = ({ navigation }) => {
                   title={awatar}
                   onPress={() => console.log("Works!")}
                   activeOpacity={0.7}
-                  titleStyle={{ color: '#fff',fontSize: hp(3)  }}
+                  titleStyle={{ color: colors.lightBlue,fontSize: hp(3)  }}
                 />
-              {/* <Image
-                style={{
-                  width: '100%',
-                  borderWidth: 1,
-                  borderColor: 'gray',
-                  height:'100%',
-                  borderRadius: hp(50),
-                }}
-                source={{ uri: 'imgfive' }}
-                resizeMode="contain"
-              /> */}
+             
             </TouchableOpacity>
             <View style={{ marginLeft: hp(-2),marginTop:hp(1) }}>
               <View>
                 <Text style={styles.username}>{data?.first_name} {data?.last_name}</Text>
               </View>
-              <View style={{ flexDirection: 'row', marginTop: hp(0) }}>
+              <View style={{ flexDirection: 'row', marginTop: hp(0.5) }}>
                 <View style={{ marginRight: hp(1) }}>
                   <View style={{ flexDirection: 'row', marginTop: hp(0) }}>
                     <View style={{ marginRight: hp(1) }}>
@@ -182,33 +177,8 @@ const CustomDrawer = ({ navigation }) => {
               </View>
             </View>
           </View>
+          
           <View style={[styles.listnameStyle, { marginTop: hp(4) }]}>
-            <TouchableOpacity
-              onPress={() => navigatorHandler('Admins')}>
-              <View style={{ flexDirection: 'row', marginLeft: hp(3) }}>
-                <View style={{}}>
-                <Icon type='light' name="user-tie" size={hp(2.5)} color={'#fff'}  style={{marginTop:hp(1)}}/>   
-                </View>
-                <View>
-                <Text style={[styles.textlistStyle,{paddingLeft:hp(2)}]}>Admins</Text>
-                </View>
-              </View>
-            </TouchableOpacity>
-          </View>
-          {/* <View style={[styles.listnameStyle, { marginTop: hp(1.5) }]}>
-            <TouchableOpacity
-              onPress={() => navigatorHandler('Admins')}>
-              <View style={{ flexDirection: 'row', marginLeft: hp(3) }}>
-                <View style={{}}>
-                <Icon type='light' name="user-tie" size={hp(2.5)} color={'#fff'} />   
-                </View>
-                <View>
-                <Text style={[styles.textlistStyle,{paddingLeft:hp(2)}]}>Admins</Text>
-                </View>
-              </View>
-            </TouchableOpacity>
-          </View> */}
-          <View style={[styles.listnameStyle, { marginTop: hp(1.5) }]}>
             <TouchableOpacity
               onPress={() => navigatorHandler('Events')}>
               <View style={{ flexDirection: 'row', marginLeft: hp(3) }}>
@@ -334,7 +304,7 @@ const CustomDrawer = ({ navigation }) => {
                 <Icon type='light' name="print"  size={hp(2.5)} color={'#fff'}/>
                 </View>
                 <View>
-                <Text style={[styles.textlistStyle,{paddingLeft:hp(1.8)}]}>{getPrintBadgeData?.user?.response?.is_allowed=='Y' ? 'PrintBadge':''}</Text>
+                <Text style={[styles.textlistStyle,{paddingLeft:hp(1.8)}]}>{getPrintBadgeData?.user?.response?.is_allowed=='Y' ? 'Print Badge':''}</Text>
                 </View>
               </View>
             </TouchableOpacity>
@@ -353,6 +323,7 @@ const CustomDrawer = ({ navigation }) => {
               </View>
             </TouchableOpacity>
           </View>
+          
           <View style={[styles.listnameStyle, { marginTop: hp(1.5),zIndex:9}]}>
             <View>
               <View style={{ flexDirection: 'row'}}>
@@ -360,7 +331,7 @@ const CustomDrawer = ({ navigation }) => {
                 {/* <Icon type='light' name="right-from-bracket"  size={hp(2.5)} color={'#fff'}/> */}
                 </View>
                 <View>
-                <Text style={{marginLeft:hp(3)}}>Version:{appVersionData?.user?.response?.version}</Text>
+                <Text style={{marginLeft:hp(3),color:'#fff'}}>Version:{appVersionData?.user?.response?.version}</Text>
                 </View>
               </View>
             </View>
@@ -369,7 +340,7 @@ const CustomDrawer = ({ navigation }) => {
             <View style={{zIndex:7,marginTop:hp(-2)}}>
               <View style={{ flexDirection: 'row'}}>
                 <View>
-                <Text style={{marginLeft:hp(3),fontSize:hp(1.5)}}>{appVersionData?.user?.response?.message}</Text>
+                <Text style={{marginLeft:hp(3),fontSize:hp(1.5),color:'#fff'}}>{appVersionData?.user?.response?.version < '1.0' ? appVersionData?.user?.response?.message :'' }</Text>
                 </View>
               </View>
             </View>

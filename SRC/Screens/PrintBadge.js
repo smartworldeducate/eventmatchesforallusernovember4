@@ -49,19 +49,78 @@ const Printbadge = props => {
 
       <View style={{flex: 0.1, zIndex: 1}}>
         <MainHeader
-          text={'Printbadge'}
+          text={'Print Badge'}
           onpressBtn={() => props.navigation.goBack()}
         />
       </View>
 
-      <View style={{flex: 0.9, justifyContent: 'center', alignItems: 'center'}}>
+      <View style={{flex: 0.6, justifyContent: 'center', alignItems: 'center'}}>
         <View
           style={{
-            flex: 0.2,
+            flex: 0.4,
             width: hp(40),
             justifyContent: 'center',
             alignItems: 'center',
+            borderColor:'#cdcdcd',
+            borderWidth:hp(0.2),
+            paddingHorizontal:hp(2.5),
+            borderRadius:hp(1)
+            
           }}>
+            <View style={{flex:0.5,justifyContent:'center',alignItems:'center'}}>
+              <Text style={{
+                color: colors.lightBlue,
+                fontSize: hp(2),
+                fontFamily: fontFamily.robotoMedium,
+                fontWeight: '400',
+              }}>Please click the Print button   below to print  your badge</Text>
+            </View>
+            <View style={{flex:0.1}}></View>
+          <TouchableOpacity
+            onPress={handlePrint}
+            style={{
+              height: hp(8),
+              width: hp(30),
+              borderWidth: 1,
+              borderColor: '#cdcdcd',
+              justifyContent: 'center',
+              alignItems: 'center',
+              borderRadius: hp(1),
+              borderColor:colors.lightBlue,
+              borderWidth:hp(0.1),
+              // backgroundColor: colors.lightBlue,
+            }}>
+            <Text
+              style={{
+                color: colors.lightBlue,
+                fontSize: hp(3),
+                fontFamily: fontFamily.robotoMedium,
+                fontWeight: '400',
+              }}>
+              Print
+            </Text>
+          </TouchableOpacity>
+        </View>
+
+        {/* <View
+          style={{
+            flex: 0.3,
+            width: hp(40),
+            justifyContent: 'center',
+            alignItems: 'center',
+            borderColor:colors.lightBlue,
+            borderWidth:hp(0.2),
+            marginTop:hp(2.5),
+            paddingHorizontal:hp(2.5)
+          }}>
+             <View style={{flex:0.5,justifyContent:'center',alignItems:'center'}}>
+              <Text style={{
+                color: colors.lightBlue,
+                fontSize: hp(2),
+                fontFamily: fontFamily.robotoMedium,
+                fontWeight: '400',
+              }}>Please click the Print button   below to print  your badge</Text>
+            </View>
           <TouchableOpacity
             onPress={handlePrint}
             style={{
@@ -81,10 +140,10 @@ const Printbadge = props => {
                 fontFamily: fontFamily.robotoMedium,
                 fontWeight: '400',
               }}>
-              Print
+              Preview
             </Text>
           </TouchableOpacity>
-        </View>
+        </View> */}
       </View>
     </View>
   );

@@ -8,7 +8,7 @@ const Qrcode = (props) => {
   const [data, setData] = useState('');
   const dispatch = useDispatch();
   const qrcodeData = useSelector(state => state.qrState);
-    console.log("qrcodeData data===",qrcodeData?.user?.response?.detail?.qr_path);
+    // console.log("qrcodeData data===",qrcodeData?.user?.response?.detail?.qr_path);
 
   async function getData(key) {
     try {

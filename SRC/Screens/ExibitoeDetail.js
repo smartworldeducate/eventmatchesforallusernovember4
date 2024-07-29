@@ -68,7 +68,7 @@ const ExibitoeDetail = props => {
             justifyContent: 'center',
             alignItems: 'center',
           }}>
-          <Text style={{color:abstract ? '#fff':'#2CC2E4', fontSize: hp(2), fontWeight: '400',fontFamily:fontFamily.robotoMedium}}>
+          <Text style={{color:abstract ? '#fff':'#832D8E', fontSize: hp(2), fontWeight: '400',fontFamily:fontFamily.robotoMedium}}>
             ABSTRACT
           </Text>
         </TouchableOpacity>
@@ -85,7 +85,7 @@ const ExibitoeDetail = props => {
             justifyContent: 'center',
             alignItems: 'center',
           }}>
-          <Text style={{color:booth ? '#fff':'#2CC2E4', fontSize: hp(2), fontWeight: '400',fontFamily:fontFamily.robotoMedium}}>
+          <Text style={{color:booth ? '#fff':'#832D8E', fontSize: hp(2), fontWeight: '400',fontFamily:fontFamily.robotoMedium}}>
             BOOTH
           </Text>
         </TouchableOpacity>

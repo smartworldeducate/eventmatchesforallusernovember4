@@ -166,7 +166,7 @@ const SessionProgramm = (props) => {
              </Text>
              </View>
              <View style={{flex:0.2,justifyContent: 'center',alignItems: 'center',}}>
-               <View style={{backgroundColor:'#2CC2E4',paddingHorizontal:hp(1.5),paddingVertical:hp(0.5),borderRadius:hp(1)}}>
+               <View style={{backgroundColor:'#832D8E',paddingHorizontal:hp(1.5),paddingVertical:hp(0.5),borderRadius:hp(1)}}>
                <Icon
                   type="light"
                   name="arrow-right"
@@ -371,7 +371,7 @@ const SessionProgramm = (props) => {
               </View>
             </TouchableOpacity>
             <View style={{flex:0.08}}></View>
-            <TouchableOpacity style={{flex:0.455,borderRadius:hp(1.5),justifyContent:'center',alignItems:'center',backgroundColor:'#2CC2E4'}}>
+            <TouchableOpacity style={{flex:0.455,borderRadius:hp(1.5),justifyContent:'center',alignItems:'center',backgroundColor:'#832D8E'}}>
             <View style={{justifyContent:'center',alignItems:'center',marginTop:hp(-1)}}>
               <Text style={{marginTop:hp(1),color:'#fff',fontSize:hp(2.5),fontFamily:fontFamily.robotoMedium,fontWeight:'400'}}>
               Submit
@@ -411,7 +411,7 @@ const SessionProgramm = (props) => {
                 style={{
                   width: hp(3.5),
                   height: hp(3.5),
-                  backgroundColor: '#2CC2E4',
+                  backgroundColor: '#832D8E',
                   marginHorizontal: hp(1),
                   borderRadius: hp(1),
                   justifyContent: 'center',
@@ -455,7 +455,7 @@ const SessionProgramm = (props) => {
                   type="regular"
                   name="calendar-check"
                   size={hp(2)}
-                  color="#2CC2E4"
+                  color="#832D8E"
                 />
               </View>
               <View style={{flex: 0.04}}></View>
@@ -484,7 +484,7 @@ const SessionProgramm = (props) => {
                   type="solid"
                   name="location-dot"
                   size={hp(2)}
-                  color="#2CC2E4"
+                  color="#832D8E"
                 />
               </View>
               <View style={{flex: 0.04}}></View>
@@ -515,15 +515,15 @@ const SessionProgramm = (props) => {
                 flex: 0.33,
                 borderRadius: hp(5),
                 borderWidth: 1.5,
-                borderColor: '#2CC2E4',
+                borderColor: '#832D8E',
                 height: hp(5),
                 justifyContent: 'center',
                 alignItems: 'center',
-                backgroundColor: abstract ? '#2CC2E4' : '#EBEEF2',
+                backgroundColor: abstract ? '#832D8E' : '#EBEEF2',
               }}>
               <Text
                 style={{
-                  color: abstract ? '#fff' : '#2CC2E4',
+                  color: abstract ? '#fff' : '#832D8E',
                   fontSize: hp(1.8),
                   fontWeight: 'bold',
                   fontFamily:fontFamily.robotoBold
@@ -537,23 +537,23 @@ const SessionProgramm = (props) => {
                 flex: 0.33,
                 borderRadius: hp(5),
                 borderWidth: 1.5,
-                borderColor: '#2CC2E4',
+                borderColor: '#832D8E',
                 height: hp(5),
                 justifyContent: 'center',
                 alignItems: 'center',
                 marginHorizontal: hp(1),
-                backgroundColor: speaker ? '#2CC2E4' : '#EBEEF2',
+                backgroundColor: speaker ? '#832D8E' : '#EBEEF2',
               }}>
               <Text
                 style={{
-                  color: speaker ? '#fff' : '#2CC2E4',
+                  color: speaker ? '#fff' : '#832D8E',
                   fontSize: hp(1.8),
                   fontWeight: 'bold',
                   fontFamily:fontFamily.robotoBold
                 }}>
                 Speakers
               </Text>
-              {/* <Text style={{color:'#2CC2E4',fontSize:hp(1.3),fontWeight:'300'}}>8th, Nov 2022</Text> */}
+              {/* <Text style={{color:'#832D8E',fontSize:hp(1.3),fontWeight:'300'}}>8th, Nov 2022</Text> */}
             </TouchableOpacity>
             <TouchableOpacity
               onPress={resucesHandler}
@@ -561,22 +561,22 @@ const SessionProgramm = (props) => {
                 flex: 0.33,
                 borderRadius: hp(5),
                 borderWidth: 1.5,
-                borderColor: '#2CC2E4',
+                borderColor: '#832D8E',
                 height: hp(5),
                 justifyContent: 'center',
                 alignItems: 'center',
-                backgroundColor: resurces ? '#2CC2E4' : '#EBEEF2',
+                backgroundColor: resurces ? '#832D8E' : '#EBEEF2',
               }}>
               <Text
                 style={{
-                  color: resurces ? '#fff' : '#2CC2E4',
+                  color: resurces ? '#fff' : '#832D8E',
                   fontSize: hp(1.8),
                   fontWeight: 'bold',
                   fontFamily:fontFamily.robotoBold
                 }}>
                 Resources
               </Text>
-              {/* <Text style={{color:'#2CC2E4',fontSize:hp(1.3),fontWeight:'300'}}>8th, Nov 2022</Text> */}
+              {/* <Text style={{color:'#832D8E',fontSize:hp(1.3),fontWeight:'300'}}>8th, Nov 2022</Text> */}
             </TouchableOpacity>
           </View>
           {abstract && (
@@ -643,7 +643,7 @@ const SessionProgramm = (props) => {
                     type="light"
                     name="file-pdf"
                     size={hp(5.5)}
-                    color="#2CC2E4"
+                    color="#832D8E"
                   />
                 </View>
                 <View style={{flex: 0.03, backgroundColor: '#fff'}}></View>
@@ -703,7 +703,7 @@ const SessionProgramm = (props) => {
                     type="light"
                     name="file-pdf"
                     size={hp(5.5)}
-                    color="#2CC2E4"
+                    color="#832D8E"
                   />
                 </View>
                 <View style={{flex: 0.03}}></View>

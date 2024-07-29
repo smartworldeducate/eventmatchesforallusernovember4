@@ -147,27 +147,7 @@ const renderItem = ({item, index}) => {
           renderItem={renderItembody}
           keyExtractor={(item, index) => index.toString()}
         />
-      {/* <View
-        style={{
-          height: hp(5),
-          marginHorizontal: hp(2),
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-        }}>
-        <View style={{justifyContent: 'center'}}>
-          <Text style={styles.testname}>{item?.start_time} - {item?.end_time}</Text>
-        </View>
-        <View style={{justifyContent: 'center'}}>
-          <ToggleSwitch
-            isOn={item?.available}
-            onColor="#ABEBC6"
-            offColor="#CCD1D1"
-            labelStyle={{ color: "black", fontWeight: "900" }}
-            size="medium"
-            onToggle={() => toggleSwitch(index)}
-          />
-        </View>
-      </View> */}
+     
       </CollapseBody>
     </Collapse>
   </View>

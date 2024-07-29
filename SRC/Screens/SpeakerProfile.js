@@ -9,6 +9,7 @@ import {
     Linking,
     Modal,
     ActivityIndicator,
+    ToastAndroid,
   } from 'react-native';
   import React, {useEffect, useState} from 'react';
   import MainHeader from '../Components/Headers/MainHeader';
@@ -30,7 +31,7 @@ import {
     const dispatch = useDispatch();
     const speakerDetailData=useSelector((state)=>state.myDetailState);
   
-    console.log("speakerDetaidetail==",speakerDetailData?.user?.response?.events[0]);
+    // console.log("speakerDetaidetail==",speakerDetailData?.user?.response?.events[0]);
     const {item,event_id} = props.route.params;
     // console.log("item==",item);
     const [abstract, setAbstract] = useState(true);
@@ -71,6 +72,19 @@ import {
       // Fetch data for the selected tab
       const newData = getTabData(tabName); // Implement this function to fetch data based on tabName
       setTabData(newData);
+    }
+
+    const openUrlHandler=(item)=>{
+      if(item !==''){
+        Linking.openURL(item);
+      }else{
+        ToastAndroid.showWithGravity(
+         "No Url found",
+          ToastAndroid.LONG,
+          ToastAndroid.CENTER,
+        );
+      }
+      
     }
   
     const tagsStyles = {
@@ -184,7 +198,7 @@ import {
             // alignItems: 'center',
             // backgroundColor:'green'
           }}>
-            {/* <Text style={{}}>{speakerDetailData?.user?.response?.events[0]?.speaker_detail}</Text> */}
+            <ScrollView>
             <RenderHtml
                   contentWidth={400}
                   source={{
@@ -195,6 +209,7 @@ import {
                   stylesheet={{color: 'blue'}}
                   tagsStyles={tagsStyles}
                 />
+                </ScrollView>
         </View>
   
         <View style={{flex: 0.1, backgroundColor: '#fff'}}>
@@ -205,28 +220,28 @@ import {
               flexDirection: 'row',
               marginTop: hp(1),
             }}>
-            <TouchableOpacity onPress={ ()=>{Linking.openURL('https://google.com')}} style={{flex: 0.25}}>
+            <TouchableOpacity onPress={()=>{}} style={{flex: 0.25}}>
               <Image
                 style={{width: '100%', height: '100%', paddingTop: hp(2)}}
                 source={{uri: 'icon4'}}
                 resizeMode="contain"
               />
             </TouchableOpacity>
-            <TouchableOpacity onPress={ ()=>{Linking.openURL(item?.facebook_url)}} style={{flex: 0.25}}>
+            <TouchableOpacity onPress={ ()=>openUrlHandler(item?.facebook_url)} style={{flex: 0.25}}>
               <Image
                 style={{width: '100%', height: '100%', paddingTop: hp(2)}}
                 source={{uri: 'icon3'}}
                 resizeMode="contain"
               />
             </TouchableOpacity>
-            <TouchableOpacity onPress={ ()=>{Linking.openURL(item?.facebook_url)}} style={{flex: 0.25}}>
+            <TouchableOpacity onPress={ ()=>{}} style={{flex: 0.25}}>
               <Image
                 style={{width: '100%', height: '100%', paddingTop: hp(2)}}
                 source={{uri: 'iconone'}}
                 resizeMode="contain"
               />
             </TouchableOpacity>
-            <TouchableOpacity onPress={ ()=>{Linking.openURL(item?.twitter_url)}} style={{flex: 0.25}}>
+            <TouchableOpacity onPress={ ()=>openUrlHandler(item?.twitter_url)} style={{flex: 0.25}}>
               <Image
                 style={{width: '100%', height: '100%', paddingTop: hp(2)}}
                 source={{uri: 'icontwo'}}

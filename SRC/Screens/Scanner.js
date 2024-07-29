@@ -193,7 +193,7 @@ const Scanner = props => {
                     fontFamily: fontFamily.robotoMedium,
                     fontWeight: '400',}}>{scanPostData?.user?.response?.message}</Text>
             {/* <ActivityIndicator size="large" color="#cdcdcd" /> */}
-            <TouchableOpacity onPress={closeAndNavigateHandler} style={{backgroundColor:'#2CC2E4',borderRadius:hp(50),width:hp(10),height:hp(4.5),justifyContent:'center',alignItems:'center',position:'relative',top:hp(7)}}>
+            <TouchableOpacity onPress={closeAndNavigateHandler} style={{backgroundColor:'#832D8E',borderRadius:hp(50),width:hp(10),height:hp(4.5),justifyContent:'center',alignItems:'center',position:'relative',top:hp(7)}}>
             {/* <Icon
                   type="light"
                   name="xmark"
@@ -232,7 +232,7 @@ const Scanner = props => {
                   justifyContent: 'center',
                   alignItems: 'center',
                   borderRadius: hp(1),
-                  backgroundColor:'#2CC2E4'
+                  backgroundColor:'#832D8E'
                 }}>
                 <Text
                   style={{

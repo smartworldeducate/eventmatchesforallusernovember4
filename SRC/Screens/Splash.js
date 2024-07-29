@@ -75,7 +75,7 @@ const Splash = props => {
           style={{width: 50, height: 50}}
           name={'BallSpinFadeLoader'}
           size={60}
-          color={'#2CC2E4'}
+          color={'#832D8E'}
         /> */}
       </View>
     </SafeAreaView>

@@ -69,7 +69,7 @@ const Events = (props) => {
     if(item){
     //  dispatch(activityHomeHandler({"event_id":event_id,user_id:data?.login_id}));
     //  if(activityData?.user?.responseData?.response?.success===1){
-      props.navigation.navigate('HomeScreen');
+      // props.navigation.navigate('HomeScreen');
     //  }else{
     //   ToastAndroid.showWithGravity(
     //     activityData?.user?.responseData?.response?.message,
@@ -84,7 +84,7 @@ const Events = (props) => {
   const renderItem = ({item, index}) => {
     return (
       <TouchableOpacity
-      onPress={() => propHandler(item)}
+      onPress={() => {}}
       style={[
         {
           marginHorizontal: hp(2.5),
@@ -158,7 +158,7 @@ const Events = (props) => {
             type="light"
             name="arrow-down-right"
             size={hp(3)}
-            color="#2CC2E4"
+            color="#832D8E"
           />
         </View>
       </View>

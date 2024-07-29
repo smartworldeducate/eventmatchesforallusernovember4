@@ -255,7 +255,7 @@ const RegisterScreen = (props) => {
             <Checkbox
               checkboxStyle={{size: hp(50)}}
               iconSize={50}
-              color="#2CC2E4"
+              color="#832D8E"
               label="Subscribe for future updates"
             />
           </View>
@@ -297,7 +297,7 @@ const RegisterScreen = (props) => {
                   style={{
                     width: wp(13.5),
                     height: hp(4.5),
-                    backgroundColor: '#2CC2E4',
+                    backgroundColor: '#832D8E',
                     borderRadius: hp(1.5),
                     justifyContent: 'center',
                     alignItems: 'center',

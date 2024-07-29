@@ -16,6 +16,7 @@ import {
   Image,
   TouchableOpacity,
 } from 'react-native';
+import colors from '../Styles/colors';
 const NextScreen = props => {
   const swiperRef = useRef(null);
   const handleSkip = () => {
@@ -53,7 +54,7 @@ const NextScreen = props => {
           <View
             style={{
               width: wp(100),
-              backgroundColor: '#2CC2E4',
+              backgroundColor: colors.lightBlue,
               height: hp(40),
               marginTop: hp(-34),
               borderTopLeftRadius: hp(4.5),
@@ -109,7 +110,7 @@ const NextScreen = props => {
           <View
             style={{
               width: wp(100),
-              backgroundColor: '#2CC2E4',
+              backgroundColor: colors.lightBlue,
               height: hp(40),
               marginTop: hp(-34),
               borderTopLeftRadius: hp(4.5),
@@ -166,7 +167,7 @@ const NextScreen = props => {
           <View
             style={{
               width: wp(100),
-              backgroundColor: '#2CC2E4',
+              backgroundColor: colors.lightBlue,
               height: hp(40),
               marginTop: hp(-34),
               borderTopLeftRadius: hp(4.5),
