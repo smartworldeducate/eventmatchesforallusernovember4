@@ -59,7 +59,7 @@ const Events = (props) => {
   //   }
   // }
   const pastEventData=useSelector((state)=>state.pastEventState);
-  console.log("pastEventData==",pastEventData?.user?.response?.events);
+  // console.log("pastEventData==",pastEventData?.user?.response?.events);
   useEffect(() => {
     // geLogintData('loginData');
     getData('userSession');

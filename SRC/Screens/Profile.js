@@ -203,8 +203,9 @@ const Profile = props => {
   )}
 
   const renderItemSession=({ item })=>{
+    console.log("session profile--",item);
     return(
-      <TouchableOpacity onPress={()=>props.navigation.navigate('Session',{item})} style={{ flex: 0.19, borderRadius: hp(3), borderWidth:0.5, borderColor: '#cdcdcd', flexDirection: 'row',marginTop:hp(1.5) }}>
+      <TouchableOpacity activeOpacity={8} onPress={()=>props.navigation.navigate('Session',{item})} style={{ flex: 0.19, borderRadius: hp(3), borderWidth:0.5, borderColor: '#cdcdcd', flexDirection: 'row',marginTop:hp(1.5) }}>
         <View style={{ flex: 0.45, height: hp[(5)] }}>
           {/* banertwo */}
           <Image
@@ -259,7 +260,8 @@ const Profile = props => {
         </View>
       </TouchableOpacity>
               
-    )}
+    )
+  }
 
   const renderItem = ({ item }) => (
     <TouchableOpacity

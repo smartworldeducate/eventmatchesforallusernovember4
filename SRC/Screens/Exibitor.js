@@ -25,6 +25,7 @@ import { useFocusEffect } from '@react-navigation/native';
 const Exibitor = props => {
   const dispatch = useDispatch();
   const speakerData=useSelector((state)=>state.speakerState);
+  console.log("speakerDa==",speakerData?.user?.response);
   async function getData(key) {
     try {
       const value = await AsyncStorage.getItem(key);
@@ -34,7 +35,7 @@ const Exibitor = props => {
 
         // setData(parsedData);
         // {"user_id":parsedData.user_id,"event_id":parsedData.event_id,"type_id":1}
-        dispatch(speakerHandler({"user_id":parsedData.user_id,"event_id":parsedData.event_id,"type_id":2}));
+        dispatch(speakerHandler({"user_id":parsedData.user_id,"event_id":parsedData.event_id,"type_id":3}));
         console.log('here is feedback screen data', parsedData);
         return parsedData;
       } 
@@ -51,111 +52,12 @@ const Exibitor = props => {
   useEffect(() => {
     getData('userSession');
   }, []);
-  // const [data, setData] = useState([
-  //   {
-  //     image: 'logoaws',
-  //     backgroundColor: '#AFAFAF',
-  //     name: 'Gold',
-  //     disc: 'Aws',
-  //     bgcolor: '#FFF3B3',
-  //     btnColor: '#FFD703',
-  //   },
-  //   {
-  //     image: 'logohonda',
-  //     backgroundColor: '#FFD700',
-  //     name: 'Walls',
-  //     disc: 'Channal',
-  //     bgcolor: '#ECECEC',
-  //     btnColor: '#C4C4C4',
-  //   },
-  //   {
-  //     image: 'nesle',
-  //     backgroundColor: '#FFD700',
-  //     name: 'nesle',
-  //     disc: 'Nesle',
-  //     bgcolor: '#F0D9C2',
-  //     btnColor: '#F9AB5D',
-  //   },
-  //   {
-  //     image: 'oodi',
-  //     backgroundColor: '#FFD700',
-  //     name: 'audi',
-  //     disc: 'Audi',
-  //     bgcolor: '#F0D9C2',
-  //     btnColor: '#F9AB5D',
-  //   },
-  //   {
-  //     image: 'logothree',
-  //     backgroundColor: '#FFD700',
-  //     name: 'adidas',
-  //     disc: 'Adidas',
-  //     bgcolor: '#FFF3B3',
-  //     btnColor: '#FFD703',
-  //   },
-  //   {
-  //     image: 'channal',
-  //     backgroundColor: '#FFD700',
-  //     name: 'channal',
-  //     disc: 'Channal',
-  //     bgcolor: '#FFF3B3',
-  //     btnColor: '#FFD703',
-  //   },
-
-  //   {
-  //     image: 'logoaws',
-  //     backgroundColor: '#AFAFAF',
-  //     name: 'Gold',
-  //     disc: 'Aws',
-  //     bgcolor: '#FFF3B3',
-  //     btnColor: '#FFD703',
-  //   },
-  //   {
-  //     image: 'logohonda',
-  //     backgroundColor: '#FFD700',
-  //     name: 'Walls',
-  //     disc: 'Channal',
-  //     bgcolor: '#ECECEC',
-  //     btnColor: '#C4C4C4',
-  //   },
-  //   {
-  //     image: 'nesle',
-  //     backgroundColor: '#FFD700',
-  //     name: 'nesle',
-  //     disc: 'Nesle',
-  //     bgcolor: '#F0D9C2',
-  //     btnColor: '#F9AB5D',
-  //   },
-  //   {
-  //     image: 'oodi',
-  //     backgroundColor: '#FFD700',
-  //     name: 'audi',
-  //     disc: 'Audi',
-  //     bgcolor: '#F0D9C2',
-  //     btnColor: '#F9AB5D',
-  //   },
-  //   {
-  //     image: 'logothree',
-  //     backgroundColor: '#FFD700',
-  //     name: 'adidas',
-  //     disc: 'Adidas',
-  //     bgcolor: '#FFF3B3',
-  //     btnColor: '#FFD703',
-  //   },
-  //   {
-  //     image: 'channal',
-  //     backgroundColor: '#FFD700',
-  //     name: 'channal',
-  //     disc: 'Channal',
-  //     bgcolor: '#FFF3B3',
-  //     btnColor: '#FFD703',
-  //   },
-  // ]);
-
+  
   const renderItem = ({item, index}) => {
     return (
       <View style={[styles.card]} key={index}>
       <TouchableOpacity
-        onPress={() => props.navigation.navigate('ExibitoeDetail')}
+        onPress={() => props.navigation.navigate('ExibitoeDetail',{item})}
         style={styles.cardImgWrapper}>
         <Image
           source={{uri:item?.image_name}}
@@ -169,7 +71,7 @@ const Exibitor = props => {
         <View style={{marginTop: hp(4), flexDirection: 'row'}}>
           {/* <ExibitorBtn /> */}
           <View style={{flex: 0.5}}></View>
-          <TouchableOpacity
+          {/* <TouchableOpacity
             onPress={() => props.navigation.navigate('Sponsor')}
             style={{
               flex: 0.5,
@@ -194,7 +96,7 @@ const Exibitor = props => {
                 Sponsors
               </Text>
             </View>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
       </View>
     </View>
@@ -226,6 +128,11 @@ const Exibitor = props => {
         />
       </View>
       <View style={{flex: 0.9, marginHorizontal: hp(2.5), marginTop: hp(3)}}>
+      {speakerData?.user?.response?.success===0 && (
+          <View style={{flex:0.1,height:hp(15),justifyContent:'center',alignItems:'center'}}>
+            <Text style={{color:colors.grayDescColor,fontSize:hp(2),fontStyle:'italic',fontFamily:fontFamily.robotoBold}}>No Data Available.</Text>
+          </View>
+        )} 
       <FlatList
           data={speakerData?.user?.response?.events}
           renderItem={renderItem}

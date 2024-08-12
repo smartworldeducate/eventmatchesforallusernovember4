@@ -37,7 +37,7 @@ const SessionProgramm = (props) => {
   const detailData=useSelector((state)=>state.activityDetailState);
     // console.log("detailData===",detailData?.user?.response?.detail);
     const urlData=detailData?.user?.response?.detail[0];
-    console.log("url===",urlData);
+    // console.log("url===",urlData);
   const [abstract, setAbstract] = useState(true);
   const [speaker, setSpeaker] = useState(false);
   const [resurces, setResurces] = useState(false);

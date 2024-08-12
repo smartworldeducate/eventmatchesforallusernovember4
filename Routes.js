@@ -44,6 +44,7 @@ import Confirmdecline from './SRC/Screens/Confirmdecline';
 import Favroitmeeting from './SRC/Screens/Favroitmeeting';
 import Shortlist from './SRC/Screens/Shortlist';
 import Printbadge from './SRC/Screens/PrintBadge';
+import Exibitornew from './SRC/Screens/Exibitornew';
 
 const Drawer = createDrawerNavigator();
 const Tab = createBottomTabNavigator();
@@ -238,6 +239,7 @@ const Routes = () => {
         <Stack.Screen name="Favroitmeeting" component={Favroitmeeting} />
         <Stack.Screen name="Shortlist" component={Shortlist} />
         <Stack.Screen name="Printbadge" component={Printbadge} />
+        {/* <Stack.Screen name="Exibitornew" component={Exibitornew} /> */}
         
         
         

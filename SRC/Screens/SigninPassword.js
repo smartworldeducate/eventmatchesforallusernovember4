@@ -31,7 +31,7 @@ const SigninPassword = props => {
   const dispatch = useDispatch();
   const passwordData=useSelector((state)=>state.passwordState);
   const {email} = props.route.params;
-  console.log('param data', email);
+  // console.log('param data', email);
   const [password, setPassword] = useState(null);
   const [showPassword, setShowPassword] = useState(true);
   const [eyeType, setEyeType] = useState(false);
@@ -56,7 +56,7 @@ const SigninPassword = props => {
     const jsonString = JSON.stringify(value);
     try {
       await AsyncStorage.setItem("loginData", jsonString);
-      console.log('Data saved successfully.');
+      // console.log('Data saved successfully.');
     } catch (error) {
       console.error('Error saving data:', error);
     }

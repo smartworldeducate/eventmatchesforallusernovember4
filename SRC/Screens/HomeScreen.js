@@ -4,6 +4,7 @@ import Menu from 'react-native-vector-icons/Entypo';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-fontawesome-pro';
+import VersionCheck from 'react-native-version-check';
 
 import {
   Image,
@@ -16,7 +17,9 @@ import {
   Modal,
   ActivityIndicator,
   ActivityIndicatorBase,
-  ToastAndroid
+  ToastAndroid,
+  Alert,
+  Linking
 } from 'react-native';
 import {
   widthPercentageToDP as wp,
@@ -103,6 +106,34 @@ const registerActivityData=useSelector((state)=>state.registerActivityState);
  }
 
 
+ useEffect(() => {
+  const checkForUpdate = async () => {
+    const currentVersion = '1.02';
+    const latestVersion = '1.03';
+
+    if (latestVersion > currentVersion) {
+      Alert.alert(
+        'Update Required',
+        'Please update the app to the latest version to continue.',
+        [
+          {
+            text: 'Update Now',
+            onPress: () => {
+              VersionCheck.getStoreUrl({ appID: 'com.ccsclientwbec' }).then(url => {
+                Linking.openURL(url);
+              });
+            },
+          },
+        ],
+        { cancelable: false }
+      );
+    }
+  };
+
+  checkForUpdate();
+}, []);
+
+
   const dayOneHandler=()=>{
     setDayOne(true)
     setDayTwo(false)
@@ -128,12 +159,12 @@ const registerActivityData=useSelector((state)=>state.registerActivityState);
 
   ];
 
-  const cardData=[
-    { id: 1, image: 'banertwo',headingText:'A Beginner s Guide',timetext:'10:00 - 11:00',locatoin:'Manchester',btntext:'Register' },
-    { id: 2, image: 'cardtwo',headingText:'Simple Tips for Success',timetext:'11:00 - 12:00',locatoin:'Glasgow',btntext:'Un-Register' },
-    { id: 3, image: 'cardone',headingText:'Your Event Success For',timetext:'13:00 - 14:00',locatoin:'Bristol',btntext:'Register' },
-    { id: 3, image: 'banertwo',headingText:'A Beginner s Guide',timetext:'10:00 - 11:00',locatoin:'Manchester',btntext:'Register' },
-  ]
+  // const cardData=[
+  //   { id: 1, image: 'banertwo',headingText:'A Beginner s Guide',timetext:'10:00 - 11:00',locatoin:'Manchester',btntext:'Register' },
+  //   { id: 2, image: 'cardtwo',headingText:'Simple Tips for Success',timetext:'11:00 - 12:00',locatoin:'Glasgow',btntext:'Un-Register' },
+  //   { id: 3, image: 'cardone',headingText:'Your Event Success For',timetext:'13:00 - 14:00',locatoin:'Bristol',btntext:'Register' },
+  //   { id: 3, image: 'banertwo',headingText:'A Beginner s Guide',timetext:'10:00 - 11:00',locatoin:'Manchester',btntext:'Register' },
+  // ]
   const renderItem = ({item, index}) => {
     // console.log("image data===",item?.activity_speakers?.image_name);
     return (

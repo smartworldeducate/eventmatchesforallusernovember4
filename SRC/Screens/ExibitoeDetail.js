@@ -8,6 +8,7 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 const ExibitoeDetail = props => {
+  const {item} = props.route.params;
   const [abstract,setAbsract]=useState(true);
   const [booth,setBooth]=useState(false);
 
@@ -24,16 +25,16 @@ const ExibitoeDetail = props => {
     <View style={{flex: 1}}>
       <View style={{flex: 0.1}}>
         <MainHeader
-          text={'Exibitor'}
+          text={'Exibitor Detail'}
           onpressBtn={() => props.navigation.goBack()}
         />
       </View>
       <View style={{flex: 0.02}}></View>
-      <View style={{flex: 0.2, backgroundColor: 'red'}}>
+      <View style={{flex: 0.2}}>
         <Image
           style={{width: '100%', height: '100%'}}
-          source={{uri: 'banerone'}}
-          resizeMode="contain"
+          source={{uri: item?.image_name ? item?.image_name : 'banerone'}}
+          resizeMode="cover"
         />
       </View>
       <View
@@ -43,7 +44,7 @@ const ExibitoeDetail = props => {
           marginHorizontal: hp(2.5),
         }}>
         <Text style={{color:colors.blackColor, fontSize: hp(2.5), fontWeight: '500',fontFamily:fontFamily.robotoMedium}}>
-          Nestle Corporation
+          {item?.speaker_name}
         </Text>
       </View>
 
@@ -116,41 +117,50 @@ const ExibitoeDetail = props => {
       </View>
 
       <View style={{flex: 0.07, backgroundColor: '#fff'}}>
-        <View
+      <View
           style={{
             justifyContent: 'center',
             alignItems: 'center',
             flexDirection: 'row',
             marginTop: hp(1),
           }}>
-          <View style={{flex: 0.25}}>
+            
+          <TouchableOpacity onPress={()=>{}} style={{flex: 0.25}}>
             <Image
               style={{width: '100%', height: '100%', paddingTop: hp(2)}}
               source={{uri: 'icon4'}}
               resizeMode="contain"
             />
-          </View>
-          <View style={{flex: 0.25}}>
+          </TouchableOpacity>
+        
+          
+          <TouchableOpacity onPress={()=>{}} style={{flex: 0.25}}>
             <Image
               style={{width: '100%', height: '100%', paddingTop: hp(2)}}
               source={{uri: 'icon3'}}
               resizeMode="contain"
             />
-          </View>
-          <View style={{flex: 0.25}}>
+          </TouchableOpacity>
+          
+          
+          <TouchableOpacity onPress={()=>{}} style={{flex: 0.25}}>
             <Image
               style={{width: '100%', height: '100%', paddingTop: hp(2)}}
               source={{uri: 'iconone'}}
               resizeMode="contain"
             />
-          </View>
-          <View style={{flex: 0.25}}>
+          </TouchableOpacity>
+          
+          
+            <TouchableOpacity onPress={()=>{}} style={{flex: 0.25}}>
             <Image
               style={{width: '100%', height: '100%', paddingTop: hp(2)}}
               source={{uri: 'icontwo'}}
               resizeMode="contain"
             />
-          </View>
+          </TouchableOpacity>
+          
+        
         </View>
       </View>
     </View>

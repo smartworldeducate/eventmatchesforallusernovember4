@@ -45,7 +45,7 @@ const NextScreen = props => {
         translucent
         backgroundColor="transparent"
       />
-      <Swiper style={styles.wrapper} showsButtons={false} ref={swiperRef}>
+      <Swiper style={styles.wrapper} showsButtons={false} ref={swiperRef} activeDot={<View style={{backgroundColor:'#fff',width:8,height:8,borderRadius:4}}></View>}>
         <View style={styles.slide1}>
           <ImageBackground
             source={{uri: 'firstbaner'}}

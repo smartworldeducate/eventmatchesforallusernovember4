@@ -16,14 +16,16 @@ import { Avatar } from 'react-native-elements';
 const Schedulemeeting = (props) => {
   const dispatch = useDispatch();
   const [value, setValue] = useState(false);
-  const [adminData, setAdminData] = useState(null);
+  const [adminData, setAdminData] = useState([]);
+  const allevntsData = useSelector(state => state.alleventsState);
+console.log("allevntsData===",allevntsData?.user?.response?.events);
   const [data, setData] = useState({
     "activity_id": "2055",
     "activity_name": "Business Matchmaker"
 });
   const meetingReportData=useSelector((state)=>state.meetingState);
   // const data=meetingReportData?.user?.response?.detail?.event_activities
-    console.log("meetingReportData==",meetingReportData?.user?.response?.detail?.event_activities);
+    // console.log("meetingReportData==",meetingReportData?.user?.response?.detail?.event_activities);
     async function getSessionData(key) {
       try {
         const value = await AsyncStorage.getItem(key);
@@ -31,7 +33,21 @@ const Schedulemeeting = (props) => {
           // console.log('Data retrieved successfully:', value);
           const parsedData = JSON.parse(value);
           setAdminData(parsedData);
-            dispatch(meetingHandler({"user_id":54456,"event_id":776,"activity_id":2055}));
+            dispatch(meetingHandler({"user_id":parsedData?.event_user_id,"event_id":parsedData?.event_id,"activity_id":2055}));
+        } 
+      } catch (error) {
+        console.error('Error retrieving data:', error);
+      }
+    }
+    async function getActivityData(key) {
+      try {
+        const value = await AsyncStorage.getItem(key);
+        if (value !== null) {
+          // console.log('Data retrieved successfully:', value);
+          const parsedData = JSON.parse(value);
+          console.log('parsedData:', parsedData?.activity);
+
+          setAdminData(parsedData?.activity);
         } 
       } catch (error) {
         console.error('Error retrieving data:', error);
@@ -39,17 +55,26 @@ const Schedulemeeting = (props) => {
     }
     useEffect(() => {
       getSessionData('userSession');
+      getActivityData('saveActivity');
+
     }, []);
 
     const handleChange=(item)=>{
       setData(item);
       setValue(false);
       // dispatch(meetingHandler({"user_id":adminData?.login_id,"event_id":adminData?.event_id,"activity_id":item?.activity_id}));
-      dispatch(meetingHandler({"user_id":54456,"event_id":776,"activity_id":2055}));
+      dispatch(meetingHandler({"user_id":adminData?.event_user_id,"event_id":adminData?.event_id,"activity_id":data?.activity_id}));
 
     }
   
     const colorData=['#EBDEF0','#D6EAF8','#E5E8E8'];
+
+    const renderItemActivity=({item ,index})=>{
+      return(
+      <TouchableOpacity onPress={() => handleChange(item)} style={styles.item}>
+        <Text style={styles.textItem}>{item?.activity_name}</Text>
+      </TouchableOpacity>)
+    }
 
   const renderItemFlatlist=({ item ,index})=>{
     const words = item?.meeting_with.split(' ');
@@ -63,7 +88,7 @@ const Schedulemeeting = (props) => {
         flex: 0.1,
         flexDirection: 'row',
         backgroundColor: colorData[colorIndex], 
-        height: hp(23),
+        height: hp(18),
         borderRadius: hp(1),
         borderWidth: 0.5,
         borderColor: '#cdcdcd',
@@ -73,12 +98,7 @@ const Schedulemeeting = (props) => {
 
         <View style={{flex:1,margin:hp(1)}}>
           <View style={{flex:0.3,flexDirection:'row',margin:hp(1)}}>
-              <View style={{flex:0.135,justifyContent:'center',alignItems:'center',borderRadius:hp(50),backgroundColor:'#fff'}}>
-              {/* <Image
-                  style={{width: '100%', height: '100%',borderRadius:hp(1),borderRadius:hp(50)}}
-                  source={{uri:'banerone'}}
-                  resizeMode="cover"
-                /> */}
+              <View style={{flex:0.135,justifyContent:'center',alignItems:'center',borderRadius:hp(50),backgroundColor:'#fff',height:hp(5.2)}}>
                 <Avatar
                   size="small"
                   rounded
@@ -115,37 +135,8 @@ const Schedulemeeting = (props) => {
               {item?.meeting_with_company_name}
             </Text>
               </View>
-              <View style={{flex:0.135,justifyContent:'center',alignItems:'center',borderRadius:hp(50),backgroundColor:'#fff'}}>
-              <Icon type="light" name="bookmark" size={hp(2)} color="#555555" />
-             </View>
+             
           </View>
-          <View style={{flex:0.35,marginTop:hp(1),justifyContent:'center',marginTop:hp(-0.1)}}>
-          <View style={{flex:1, justifyContent: 'center',margin:hp(1)}}>
-          <Text
-            style={{
-              color: colors.blackColor,
-              paddingLeft: hp(0),
-              fontSize: hp(1.9),
-              fontWeight: 'bold',
-              fontFamily: fontFamily.robotoBold,
-              paddingBottom:hp(0.5)
-            }}>
-            Senior program manager
-          </Text>
-          <Text
-            style={{
-              color: "#474747",
-              paddingLeft: hp(0),
-              fontSize: hp(1.6),
-              fontWeight: '400',
-              fontFamily: fontFamily.robotoMedium,
-            }}>
-           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vitae purus orci viverra tristique.
-          </Text>
-        </View>
-        
-          </View>
-
           <View style={{flex:0.37,marginTop:hp(1),justifyContent:'center'}}>
           <View style={{flex:1,margin:hp(1)}}>
             <View style={{flexDirection:'row'}}>
@@ -226,23 +217,16 @@ const Schedulemeeting = (props) => {
         animationType="fade"
       >
         <View style={{flex:1,justifyContent: 'center', alignItems: 'center',marginTop:hp(-50) ,zIndex:1}}>
-        {/* <View style={{width:wp(90),height:hp(15),backgroundColor: '#fff'}}>
-          {meetingReportData?.user?.response?.detail?.event_activities?.map((item)=>{
-            return( <TouchableOpacity onPress={()=>handleChange(item)} style={styles.item}>
-            <Text style={styles.textItem}>{item?.activity_name}</Text>
-          </TouchableOpacity>
-          )
-          })}
-        </View> */}
+       
         <TouchableOpacity onPress={()=>setValue(false)} style={[
             styles.modalContainer,
             Platform.OS === 'android' ? styles.androidShadow : styles.iosShadow
           ]}>
-            {meetingReportData?.user?.response?.detail?.event_activities?.map((item) => (
-                <TouchableOpacity onPress={() => handleChange(item)} style={styles.item}>
-                    <Text style={styles.textItem}>{item?.activity_name}</Text>
-                </TouchableOpacity>
-            ))}
+             <FlatList
+            data={adminData && adminData}
+            renderItem={renderItemActivity}
+            keyExtractor={(item, index) => index.toString()}
+          />
         </TouchableOpacity>
         </View>
       </Modal>
@@ -319,10 +303,11 @@ const styles = EStyleSheet.create({
 
   modalContainer: {
     width: wp(90),
-    height: hp(15),
+    height: hp(30),
     backgroundColor: '#fff',
     borderRadius: 10,
     overflow: 'hidden',
+    marginTop:hp(15)
     // backgroundColor:'red'
 },
 androidShadow: {

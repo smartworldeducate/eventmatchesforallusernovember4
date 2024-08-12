@@ -92,8 +92,6 @@ const CustomDrawer = ({ navigation }) => {
       await AsyncStorage.removeItem("loginData");
       await AsyncStorage.removeItem("userSession");
       navigation.dispatch(StackActions.replace('SigninScreen'))
-      
-    
   }
  
   return (
@@ -180,7 +178,7 @@ const CustomDrawer = ({ navigation }) => {
           
           <View style={[styles.listnameStyle, { marginTop: hp(4) }]}>
             <TouchableOpacity
-              onPress={() => navigatorHandler('Events')}>
+              onPress={() => navigatorHandler('AllEvents')}>
               <View style={{ flexDirection: 'row', marginLeft: hp(3) }}>
                 <View style={{}}>
                 <Icon type='light' name="calendar-star" size={hp(2.5)} color={'#fff'} />   
@@ -191,19 +189,7 @@ const CustomDrawer = ({ navigation }) => {
               </View>
             </TouchableOpacity>
           </View>
-          <View style={[styles.listnameStyle, { marginTop: hp(1.5) }]}>
-            <TouchableOpacity
-              onPress={() => navigatorHandler('Events')}>
-              <View style={{ flexDirection: 'row', marginLeft: hp(3) }}>
-                <View style={{}}>
-                <Icon type='light' name="calendar-lines-pen" size={hp(2.5)} color={'#fff'} />   
-                </View>
-                <View>
-                <Text style={[styles.textlistStyle,{paddingLeft:hp(2)}]}>Events Info</Text>
-                </View>
-              </View>
-            </TouchableOpacity>
-          </View>
+         
           <View style={[styles.listnameStyle, { marginTop: hp(1.5) }]}>
             <TouchableOpacity
               onPress={() => navigatorHandler('Exibitor')}>
@@ -245,13 +231,13 @@ const CustomDrawer = ({ navigation }) => {
           </View>
           <View style={[styles.listnameStyle, { marginTop: hp(1.5) }]}>
             <TouchableOpacity
-              onPress={() => navigatorHandler('Attendees')}>
+              onPress={() => navigatorHandler('Sponsor')}>
               <View style={{ flexDirection: 'row', marginLeft: hp(3) }}>
                 <View style={{}}>
                 <Icon type='light' name="clipboard-list-check"  size={hp(2.5)} color={'#fff'}/>   
                 </View>
                 <View>
-                <Text style={[styles.textlistStyle,{paddingLeft:hp(2)}]}>Survey</Text>
+                <Text style={[styles.textlistStyle,{paddingLeft:hp(2)}]}>Sponsors</Text>
                 </View>
               </View>
             </TouchableOpacity>
@@ -340,7 +326,7 @@ const CustomDrawer = ({ navigation }) => {
             <View style={{zIndex:7,marginTop:hp(-2)}}>
               <View style={{ flexDirection: 'row'}}>
                 <View>
-                <Text style={{marginLeft:hp(3),fontSize:hp(1.5),color:'#fff'}}>{appVersionData?.user?.response?.version < '1.0' ? appVersionData?.user?.response?.message :'' }</Text>
+                <Text style={{marginLeft:hp(3),fontSize:hp(1.5),color:'#fff'}}>{appVersionData?.user?.response?.version < '1.03' ? appVersionData?.user?.response?.message :'' }</Text>
                 </View>
               </View>
             </View>
