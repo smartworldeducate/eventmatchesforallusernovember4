@@ -34,12 +34,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import { registerActivityHandler } from '../features/registeractivity/registerActivitySlice';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { activityHomeHandler } from '../features/eventactivityhome/hactivitySlice';
+import { getAppVersionHandler } from '../features/getappversion/getAppVersionSlice';
 const HomeScreen = (props) => {
   const { apiIdentifier } = props.route?.params || {};
   // console.log("apiIdentifier==",apiIdentifier);
   const dispatch = useDispatch();
 const activityData=useSelector((state)=>state.acitivityState);
 const registerActivityData=useSelector((state)=>state.registerActivityState);
+const appVersionData=useSelector((state)=>state.appVersionState);
+
 // console.log("activityData===",activityData?user);
   const activityDate=activityData?.user?.responseData?.response?.activities?.['1'];
   const activitytwo=activityData?.user?.responseData?.response?.activities?.['2'];
@@ -108,10 +111,10 @@ const registerActivityData=useSelector((state)=>state.registerActivityState);
 
  useEffect(() => {
   const checkForUpdate = async () => {
-    const currentVersion = '1.02';
-    const latestVersion = '1.03';
+    const apiVersion = appVersionData?.user?.response?.version;
+    const appVersion = '1.03';
 
-    if (latestVersion > currentVersion) {
+    if (apiVersion >= appVersion) {
       Alert.alert(
         'Update Required',
         'Please update the app to the latest version to continue.',

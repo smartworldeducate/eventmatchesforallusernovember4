@@ -26,7 +26,7 @@ import { useFocusEffect } from '@react-navigation/native';
 const SpeakerList = props => {
   const dispatch = useDispatch();
   // const {id} = props.route.params;
-  console.log("param data===",props.route.params?.id);
+  // console.log("param data===",props.route.params?.id);
   const speakerData = useSelector(state => state.speakerState);
   const [data, setData] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
@@ -38,7 +38,7 @@ const SpeakerList = props => {
       if (value !== null) {
         // console.log('Data retrieved successfully:', value);
         const parsedData = JSON.parse(value);
-        console.log("parsedData=====-=",parsedData);
+        // console.log("parsedData=====-=",parsedData);
 
         setData(parsedData);
         // console.log('user id and event_id===', parsedData);
@@ -200,7 +200,7 @@ const SpeakerList = props => {
       </Modal>
       <View style={{flex: 0.1}}>
         <MainHeader
-          text={'Speaker'}
+          text={'Speaker List'}
           onpressBtn={() => props.navigation.goBack()}
         />
       </View>

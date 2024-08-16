@@ -25,7 +25,7 @@ import { useFocusEffect } from '@react-navigation/native';
 const Exibitor = props => {
   const dispatch = useDispatch();
   const speakerData=useSelector((state)=>state.speakerState);
-  console.log("speakerDa==",speakerData?.user?.response);
+  // console.log("speakerDa==",speakerData?.user?.response);
   async function getData(key) {
     try {
       const value = await AsyncStorage.getItem(key);

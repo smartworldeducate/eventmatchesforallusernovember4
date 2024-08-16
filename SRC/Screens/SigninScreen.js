@@ -64,10 +64,10 @@ const SigninScreen = props => {
 
   useEffect(() => {
     const checkForUpdate = async () => {
-      const currentVersion = '1.02';
-      const latestVersion = '1.03';
+      const apiVersion = appVersionData?.user?.response?.version;
+      const appVersion = '1.03';
 
-      if (latestVersion > currentVersion) {
+      if (apiVersion >= appVersion) {
         Alert.alert(
           'Update Required',
           'Please update the app to the latest version to continue.',

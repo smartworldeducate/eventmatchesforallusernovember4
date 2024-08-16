@@ -454,7 +454,7 @@ const Profile = props => {
       )}
 
       <View style={{flex: 0.1, backgroundColor: '#fff'}}>
-        <View
+        {/* <View
           style={{
             justifyContent: 'center',
             alignItems: 'center',
@@ -498,7 +498,7 @@ const Profile = props => {
           </TouchableOpacity>
           
         
-        </View>
+        </View> */}
       </View>
     </View>
   );

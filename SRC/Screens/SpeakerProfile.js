@@ -221,32 +221,35 @@ import {
               marginTop: hp(1),
             }}>
             <TouchableOpacity onPress={()=>{}} style={{flex: 0.25}}>
-              <Image
+              {/* <Image
                 style={{width: '100%', height: '100%', paddingTop: hp(2)}}
                 source={{uri: 'icon4'}}
                 resizeMode="contain"
-              />
+              /> */}
             </TouchableOpacity>
             <TouchableOpacity onPress={ ()=>openUrlHandler(item?.facebook_url)} style={{flex: 0.25}}>
-              <Image
+            {item?.facebook_url &&  <Image
                 style={{width: '100%', height: '100%', paddingTop: hp(2)}}
                 source={{uri: 'icon3'}}
                 resizeMode="contain"
-              />
+              />}
+             
             </TouchableOpacity>
             <TouchableOpacity onPress={ ()=>{}} style={{flex: 0.25}}>
-              <Image
+            {item?.googleplus_url &&  <Image
                 style={{width: '100%', height: '100%', paddingTop: hp(2)}}
                 source={{uri: 'iconone'}}
                 resizeMode="contain"
-              />
+              />} 
+             
             </TouchableOpacity>
             <TouchableOpacity onPress={ ()=>openUrlHandler(item?.twitter_url)} style={{flex: 0.25}}>
-              <Image
+            {item?.twitter_url &&  <Image
                 style={{width: '100%', height: '100%', paddingTop: hp(2)}}
                 source={{uri: 'icontwo'}}
                 resizeMode="contain"
-              />
+              />}
+             
             </TouchableOpacity>
           </View>
         </View>

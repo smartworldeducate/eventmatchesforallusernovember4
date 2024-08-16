@@ -20,9 +20,13 @@ import {
   CommonActions,
 } from '@react-navigation/native';
 import {color} from '@rneui/base';
+import { getAppVersionHandler } from '../features/getappversion/getAppVersionSlice';
+import { useDispatch } from 'react-redux';
 // import LoaderKit from 'react-native-loader-kit';
 
 const Splash = props => {
+  const dispatch = useDispatch();
+
   const [data, setData] = useState(null);
   async function getData(key) {
     try {
@@ -46,6 +50,7 @@ const Splash = props => {
     }
   }
   useEffect(() => {
+    dispatch(getAppVersionHandler());
       getData('loginData');
       // props.navigation.dispatch(StackActions.replace('NextScreen'));
   }, []);

@@ -17,45 +17,54 @@ const Schedulemeeting = (props) => {
   const dispatch = useDispatch();
   const [value, setValue] = useState(false);
   const [adminData, setAdminData] = useState([]);
-  const allevntsData = useSelector(state => state.alleventsState);
-console.log("allevntsData===",allevntsData?.user?.response?.events);
+  const [activityData, setActivityData] = useState([]);
+  // const allevntsData = useSelector(state => state.alleventsState);
+// console.log("allevntsData===",allevntsData?.user?.response?.events);
   const [data, setData] = useState({
     "activity_id": "2055",
     "activity_name": "Business Matchmaker"
 });
   const meetingReportData=useSelector((state)=>state.meetingState);
   // const data=meetingReportData?.user?.response?.detail?.event_activities
-    // console.log("meetingReportData==",meetingReportData?.user?.response?.detail?.event_activities);
-    async function getSessionData(key) {
+    // console.log("meetingReportData==",meetingReportData?.user?.response);
+    async function getSessionData() {
       try {
-        const value = await AsyncStorage.getItem(key);
+        const value = await AsyncStorage.getItem('userSession');
+        const activityData = await AsyncStorage.getItem('saveActivity');
         if (value !== null) {
-          // console.log('Data retrieved successfully:', value);
+          console.log('Data retrieved successfully:', value);
           const parsedData = JSON.parse(value);
+          const activity = JSON.parse(activityData);
+          console.log('activityData:', activity?.activity[0]?.activity_id);
+          setActivityData(activity?.activity);
+          setData(activity?.activity[0]);
           setAdminData(parsedData);
-            dispatch(meetingHandler({"user_id":parsedData?.event_user_id,"event_id":parsedData?.event_id,"activity_id":2055}));
-        } 
-      } catch (error) {
-        console.error('Error retrieving data:', error);
-      }
-    }
-    async function getActivityData(key) {
-      try {
-        const value = await AsyncStorage.getItem(key);
-        if (value !== null) {
-          // console.log('Data retrieved successfully:', value);
-          const parsedData = JSON.parse(value);
-          console.log('parsedData:', parsedData?.activity);
+            dispatch(meetingHandler({"user_id":parsedData?.event_user_id,"event_id":parsedData?.event_id,"activity_id":activity?.activity[0]?.activity_id}));
+            // getActivityData('saveActivity');
 
-          setAdminData(parsedData?.activity);
         } 
       } catch (error) {
         console.error('Error retrieving data:', error);
       }
     }
+    // async function getActivityData(key) {
+    //   try {
+    //     const value = await AsyncStorage.getItem(key);
+    //     if (value !== null) {
+    //       // console.log('Data retrieved successfully:', value);
+    //       const parsedData = JSON.parse(value);
+    //       console.log('parsedData:', parsedData?.activity);
+
+    //       setAdminData(parsedData?.activity);
+    //       dispatch(meetingHandler({"user_id":parsedData?.event_user_id,"event_id":parsedData?.event_id,"activity_id":data?.activity_id}));
+
+    //     } 
+    //   } catch (error) {
+    //     console.error('Error retrieving data:', error);
+    //   }
+    // }
     useEffect(() => {
-      getSessionData('userSession');
-      getActivityData('saveActivity');
+      getSessionData();
 
     }, []);
 
@@ -63,7 +72,7 @@ console.log("allevntsData===",allevntsData?.user?.response?.events);
       setData(item);
       setValue(false);
       // dispatch(meetingHandler({"user_id":adminData?.login_id,"event_id":adminData?.event_id,"activity_id":item?.activity_id}));
-      dispatch(meetingHandler({"user_id":adminData?.event_user_id,"event_id":adminData?.event_id,"activity_id":data?.activity_id}));
+      dispatch(meetingHandler({"user_id":adminData?.event_user_id,"event_id":adminData?.event_id,"activity_id":item?.activity_id}));
 
     }
   
@@ -78,7 +87,6 @@ console.log("allevntsData===",allevntsData?.user?.response?.events);
 
   const renderItemFlatlist=({ item ,index})=>{
     const words = item?.meeting_with.split(' ');
-
     // Take the first letter of each word and join them together
     const avatarInitial = words.map(word => word[0].toUpperCase()).join('');
     const colorIndex = index % colorData.length;
@@ -223,7 +231,7 @@ console.log("allevntsData===",allevntsData?.user?.response?.events);
             Platform.OS === 'android' ? styles.androidShadow : styles.iosShadow
           ]}>
              <FlatList
-            data={adminData && adminData}
+            data={activityData && activityData}
             renderItem={renderItemActivity}
             keyExtractor={(item, index) => index.toString()}
           />
@@ -232,6 +240,11 @@ console.log("allevntsData===",allevntsData?.user?.response?.events);
       </Modal>
       </View> 
       <View style={{flex:0.75}}>
+      {meetingReportData?.user?.response?.success===0 && (
+          <View style={{flex:0.1,height:hp(15),justifyContent:'center',alignItems:'center'}}>
+            <Text style={{color:colors.grayDescColor,fontSize:hp(2),fontStyle:'italic',fontFamily:fontFamily.robotoBold}}>No Data Available.</Text>
+          </View>
+        )} 
           <FlatList
             data={meetingReportData?.user?.response?.detail?.meeting_plan}
             renderItem={renderItemFlatlist}

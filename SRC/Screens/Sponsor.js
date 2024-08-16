@@ -25,7 +25,7 @@ import colors from '../Styles/colors';
 const Sponsor = props => {
   const dispatch = useDispatch();
   const speakerData = useSelector(state => state.speakerState);
-  console.log('sponsor 2===', speakerData?.user?.response);
+  // console.log('sponsor 2===', speakerData?.user?.response);
   async function getData(key) {
     try {
       const value = await AsyncStorage.getItem(key);

@@ -189,20 +189,6 @@ const CustomDrawer = ({ navigation }) => {
               </View>
             </TouchableOpacity>
           </View>
-         
-          <View style={[styles.listnameStyle, { marginTop: hp(1.5) }]}>
-            <TouchableOpacity
-              onPress={() => navigatorHandler('Exibitor')}>
-              <View style={{ flexDirection: 'row', marginLeft: hp(3) }}>
-                <View style={{}}>
-                <Icon type='light' name="person-chalkboard"  size={hp(3.5)} color={'#fff'}/>   
-                </View>
-                <View>
-                <Text style={[styles.textlistStyle,{paddingLeft:hp(1.1)}]}>Exhibitor</Text>
-                </View>
-              </View>
-            </TouchableOpacity>
-          </View>
           <View style={[styles.listnameStyle, { marginTop: hp(1.5) }]}>
             <TouchableOpacity
               onPress={() => navigatorHandler('SpeakerList','Y')}>
@@ -218,13 +204,13 @@ const CustomDrawer = ({ navigation }) => {
           </View>
           <View style={[styles.listnameStyle, { marginTop: hp(1.5) }]}>
             <TouchableOpacity
-              onPress={() => navigatorHandler('Attendees')}>
+              onPress={() => navigatorHandler('Exibitor')}>
               <View style={{ flexDirection: 'row', marginLeft: hp(3) }}>
                 <View style={{}}>
-                <Icon type='light' name="users"  size={hp(3)} color={'#fff'}/>   
+                <Icon type='light' name="person-chalkboard"  size={hp(3.5)} color={'#fff'}/>   
                 </View>
                 <View>
-                <Text style={[styles.textlistStyle,{paddingLeft:hp(1.5)}]}>Attendees</Text>
+                <Text style={[styles.textlistStyle,{paddingLeft:hp(1.1)}]}>Exhibitors</Text>
                 </View>
               </View>
             </TouchableOpacity>
@@ -238,6 +224,19 @@ const CustomDrawer = ({ navigation }) => {
                 </View>
                 <View>
                 <Text style={[styles.textlistStyle,{paddingLeft:hp(2)}]}>Sponsors</Text>
+                </View>
+              </View>
+            </TouchableOpacity>
+          </View>
+          <View style={[styles.listnameStyle, { marginTop: hp(1.5) }]}>
+            <TouchableOpacity
+              onPress={() => navigatorHandler('Attendees')}>
+              <View style={{ flexDirection: 'row', marginLeft: hp(3) }}>
+                <View style={{}}>
+                <Icon type='light' name="users"  size={hp(3)} color={'#fff'}/>   
+                </View>
+                <View>
+                <Text style={[styles.textlistStyle,{paddingLeft:hp(1.5)}]}>Attendees</Text>
                 </View>
               </View>
             </TouchableOpacity>
@@ -326,7 +325,7 @@ const CustomDrawer = ({ navigation }) => {
             <View style={{zIndex:7,marginTop:hp(-2)}}>
               <View style={{ flexDirection: 'row'}}>
                 <View>
-                <Text style={{marginLeft:hp(3),fontSize:hp(1.5),color:'#fff'}}>{appVersionData?.user?.response?.version < '1.03' ? appVersionData?.user?.response?.message :'' }</Text>
+                <Text style={{marginLeft:hp(3),fontSize:hp(1.5),color:'#fff'}}>{appVersionData?.user?.response?.version >= '1.03' ? appVersionData?.user?.response?.message :'' }</Text>
                 </View>
               </View>
             </View>
