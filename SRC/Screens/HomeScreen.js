@@ -45,6 +45,7 @@ const appVersionData=useSelector((state)=>state.appVersionState);
 
 // console.log("activityData===",activityData?user);
   const activityDate=activityData?.user?.responseData?.response?.activities?.['1'];
+  // console.log("activityDate=====",activityDate);
   const activitytwo=activityData?.user?.responseData?.response?.activities?.['2'];
   const activitythree=activityData?.user?.responseData?.response?.activities?.['3'];
   const [adminData, setAdminData] = useState(null);
@@ -112,7 +113,7 @@ const appVersionData=useSelector((state)=>state.appVersionState);
  useEffect(() => {
   const checkForUpdate = async () => {
     const apiVersion = appVersionData?.user?.response?.version;
-    const appVersion = '1.04';
+    const appVersion = '1.06';
 
     if (apiVersion >= appVersion) {
       Alert.alert(
@@ -240,7 +241,7 @@ const appVersionData=useSelector((state)=>state.appVersionState);
         translucent
         backgroundColor="transparent"
       />
-       <Modal
+       {/* <Modal
         visible={activityData?.isLoading || registerActivityData?.isLoading}
         transparent={true}
         animationType="fade"
@@ -250,7 +251,7 @@ const appVersionData=useSelector((state)=>state.appVersionState);
           <ActivityIndicator size="large" color="#cdcdcd" />
         </View>
         </View>
-      </Modal>
+      </Modal> */}
       <View style={{ flex: 0.25 }}>
         <HeaderTop
           onPressIcon={() => navigation.openDrawer()}
@@ -260,9 +261,9 @@ const appVersionData=useSelector((state)=>state.appVersionState);
 
       <View style={{ flex: 0.3 }}>
         <Image
-          style={{ width: '100%', height: '90%', borderRadius: hp(1.5) }}
-          source={{ uri: 'groupfore' }}
-          resizeMode="cover"
+          style={{ width: '100%', height: '95%', borderRadius: hp(1.5) }}
+          source={{ uri:adminData ? adminData?.header_image:'groupfore' }}
+          resizeMode="contain"
         />
       </View>
 

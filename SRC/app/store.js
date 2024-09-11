@@ -31,6 +31,8 @@ import favroitStarReducer from '../features/favroitmeeting/favroitMeetingSlice';
 import scanerPostReducer from '../features/scanerpostdata/scanerPostSlice';
 import getAppVersionReducer from '../features/getappversion/getAppVersionSlice';
 import getPrintBadgeReducer from '../features/printerbadge/printerBadgeSlice'
+import sponserReducer from '../features/sponser/sponserSlice'
+import exibitorReducer from '../features/exibitor/exibitorSlice'
 export const store=configureStore({
     reducer:{
         registerState:registerReducer,
@@ -64,6 +66,8 @@ export const store=configureStore({
         favStarState:favroitStarReducer,
         scanPostState:scanerPostReducer,
         appVersionState:getAppVersionReducer,
-        getPrintBadgeState:getPrintBadgeReducer
+        getPrintBadgeState:getPrintBadgeReducer,
+        sponserState:sponserReducer,
+        exibitorState:exibitorReducer
        }
 })

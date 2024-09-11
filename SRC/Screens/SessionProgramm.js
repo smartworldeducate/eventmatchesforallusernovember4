@@ -31,13 +31,14 @@ const SessionProgramm = (props) => {
   const dispatch=useDispatch();
   const [isVisible, setIsVisible] = useState(false);
   const [isPoll, setIsPoll] = useState(false);
+  const [data, setData] = useState('');
   const activityData=useSelector((state)=>state.acitivityState);
   const event_id=activityData?.user?.userData?.event_id;
   const {item} = props.route.params;
   const detailData=useSelector((state)=>state.activityDetailState);
-    // console.log("detailData===",detailData?.user?.response?.detail);
-    const urlData=detailData?.user?.response?.detail[0];
-    // console.log("url===",urlData?.resources);
+    // console.log("detailData===",detailData?.user?.response?.success===1 ? 'salman':'umair');
+    const urlData=detailData?.user?.response?.success===1 ? detailData?.user?.response?.detail[0] : '';
+    // console.log("url===",urlData);
   const [abstract, setAbstract] = useState(true);
   const [speaker, setSpeaker] = useState(false);
   const [resurces, setResurces] = useState(false);
@@ -45,10 +46,10 @@ const SessionProgramm = (props) => {
     try {
       const value = await AsyncStorage.getItem(key);
       if (value !== null) {
-        console.log('Data retrieved successfully:', value);
+        // console.log('Data retrieved successfully:', value);
         const parsedData = JSON.parse(value);
-        // setData(parsedData);
-        // console.log("session user==",parsedData?.event_id,)
+        setData(parsedData);
+        // console.log("session user==",parsedData)
         dispatch(activityDetailHandler({"event_id":parsedData?.event_id,"activity_id":item?.activity_id}));
         // console.log('user session data===', parsedData);
       } else {
@@ -61,6 +62,7 @@ const SessionProgramm = (props) => {
   useEffect(() => {
     getData('userSession');
   }, []);
+
   const abstractHandler = () => {
     setAbstract(true);
     setSpeaker(false);
@@ -214,202 +216,10 @@ const SessionProgramm = (props) => {
         translucent
         backgroundColor="transparent"
       />
-      {/* bottom steet start */}
-      {/* <BottomSheet 
-          isVisible={isPoll} 
-          style={{
-            flex: 1,
-            backgroundColor: "white",
-            borderTopLeftRadius: hp(2),
-            borderTopRightRadius: hp(2),
-            marginTop: hp(30),
-            elevation: 8, // Add elevation for shadow effect
-            shadowColor: '#000', // Shadow color
-            shadowOffset: { width: 0, height: 6 }, // Increase the shadow offset for more shadow on top
-            shadowOpacity: 0.25, // Shadow opacity
-            shadowRadius: 6, // Increase shadow radius for a softer shadow
-            padding: 25 // Optional padding for content inside the BottomSheet
-          }}
-        >
-          <TouchableOpacity onPress={() => setIsPoll(false)} style={{flex:0.05,height:hp(2),justifyContent:'center',alignItems:'center'}}>
-            <Icon name='minus' size={hp(10)} color='#cdcdcd'/>
-          </TouchableOpacity>
-          <View style={{flex:0.1,height:hp(7),flexDirection:'row',alignItems:'center'}}>
-          <Text style={{color:colors.descBlack,fontSize:hp(3),fontFamily:fontFamily.robotoMedium,fontWeight:'400'}}>Poll Questions</Text>
-          </View>
-          <View style={{flex:0.1,height:hp(8),flexDirection:'row',alignItems:'center'}}>
-          <Text style={{marginTop:hp(1),color:colors.grayDescColor,fontSize:hp(2.5),fontFamily:fontFamily.robotoMedium,fontWeight:'400'}}>How was your experience?</Text>
-          </View>
-          <View style={{flex:0.1,height:hp(12),flexDirection:'row'}}>
-            <View style={{flex:0.18}}>
-              <View style={{flex:0.6,borderRadius:hp(0.2),borderWidth:1,borderColor:'#E4E6F6',justifyContent:'center',alignItems:'center'}}>
-                <Text style={{color:colors.descBlack,fontSize:hp(3),fontFamily:fontFamily.robotoMedium,fontWeight:'400'}}>
-                  1
-                </Text>
-              </View>
-              <View style={{flex:0.4,justifyContent:'center',alignItems:'center'}}>
-              <Text style={{color:colors.descBlack,fontSize:hp(2),fontFamily:fontFamily.robotoLight,fontWeight:'400'}}>
-                  Good
-                </Text>
-              </View>
-            </View>
-            <View style={{flex:0.025}}></View>
-            <View style={{flex:0.18}}>
-            <View style={{flex:0.6,borderRadius:hp(0.2),borderWidth:1,borderColor:'#E4E6F6',justifyContent:'center',alignItems:'center'}}>
-                <Text style={{color:colors.descBlack,fontSize:hp(3),fontFamily:fontFamily.robotoMedium,fontWeight:'400'}}>
-                  2
-                </Text>
-              </View>
-              <View style={{flex:0.4,justifyContent:'center',alignItems:'center'}}>
-              <Text style={{color:colors.descBlack,fontSize:hp(2),fontFamily:fontFamily.robotoLight,fontWeight:'400',flexWrap:'wrap'}}>
-              Excellen
-                </Text>
-              </View>
-            </View>
-            <View style={{flex:0.025}}></View>
-            <View style={{flex:0.18}}>
-            <View style={{flex:0.6,borderRadius:hp(0.2),borderWidth:1,borderColor:'#E4E6F6',justifyContent:'center',alignItems:'center'}}>
-                <Text style={{color:colors.descBlack,fontSize:hp(3),fontFamily:fontFamily.robotoMedium,fontWeight:'400'}}>
-                  3
-                </Text>
-              </View>
-              <View style={{flex:0.4,justifyContent:'center',alignItems:'center'}}>
-              <Text style={{color:colors.descBlack,fontSize:hp(2),fontFamily:fontFamily.robotoLight,fontWeight:'400'}}>
-              Bad
-                </Text>
-              </View>
-            </View>
-            <View style={{flex:0.025}}></View>
-            <View style={{flex:0.18}}>
-            <View style={{flex:0.6,borderRadius:hp(0.2),borderWidth:1,borderColor:'#E4E6F6',justifyContent:'center',alignItems:'center'}}>
-                <Text style={{color:colors.descBlack,fontSize:hp(3),fontFamily:fontFamily.robotoMedium,fontWeight:'400'}}>
-                  4
-                </Text>
-              </View>
-              <View style={{flex:0.4,justifyContent:'center',alignItems:'center'}}>
-              <Text style={{color:colors.descBlack,fontSize:hp(2),fontFamily:fontFamily.robotoLight,fontWeight:'400'}}>
-              Can Be Improved
-                </Text>
-              </View>
-            </View>
-            <View style={{flex:0.025}}></View>
-            <View style={{flex:0.18}}>
-            <View style={{flex:0.6,borderRadius:hp(0.2),borderWidth:1,borderColor:'#E4E6F6',justifyContent:'center',alignItems:'center',backgroundColor:'#E74133', elevation: 8, // Add elevation for shadow effect
-            shadowColor: '#000', // Shadow color
-            shadowOffset: { width: 0, height: 6 }, // Increase the shadow offset for more shadow on top
-            shadowOpacity: 0.25, // Shadow opacity
-            shadowRadius: 6}}>
-                <Text style={{color:'#fff',fontSize:hp(3),fontFamily:fontFamily.robotoMedium,fontWeight:'400'}}>
-                  5
-                </Text>
-              </View>
-              <View style={{flex:0.4,justifyContent:'center',alignItems:'center'}}>
-              <Text style={{color:colors.descBlack,fontSize:hp(2),fontFamily:fontFamily.robotoLight,fontWeight:'400'}}>
-              No Comment
-                </Text>
-              </View>
-            </View>
-
-          </View>
-          <View style={{flex:0.1,height:hp(8),flexDirection:'row',alignItems:'center'}}>
-          <Text style={{marginTop:hp(1),color:colors.grayDescColor,fontSize:hp(2.5),fontFamily:fontFamily.robotoMedium,fontWeight:'400'}}>How was your experience?</Text>
-          </View>
-          <View style={{flex:0.1,height:hp(12),flexDirection:'row'}}>
-            <View style={{flex:0.18}}>
-              <View style={{flex:0.6,borderRadius:hp(0.2),borderWidth:1,borderColor:'#E4E6F6',justifyContent:'center',alignItems:'center',backgroundColor:'#33E75B',elevation: 8, // Add elevation for shadow effect
-            shadowColor: '#000', // Shadow color
-            shadowOffset: { width: 0, height: 6 }, // Increase the shadow offset for more shadow on top
-            shadowOpacity: 0.25, // Shadow opacity
-            shadowRadius: 6,}}>
-                <Text style={{color:'#fff',fontSize:hp(3),fontFamily:fontFamily.robotoMedium,fontWeight:'400'}}>
-                  1
-                </Text>
-              </View>
-              <View style={{flex:0.4,justifyContent:'center',alignItems:'center'}}>
-              <Text style={{color:colors.descBlack,fontSize:hp(2),fontFamily:fontFamily.robotoLight,fontWeight:'400'}}>
-                  Good
-                </Text>
-              </View>
-            </View>
-            <View style={{flex:0.025}}></View>
-            <View style={{flex:0.18}}>
-            <View style={{flex:0.6,borderRadius:hp(0.2),borderWidth:1,borderColor:'#E4E6F6',justifyContent:'center',alignItems:'center'}}>
-                <Text style={{color:colors.descBlack,fontSize:hp(3),fontFamily:fontFamily.robotoMedium,fontWeight:'400'}}>
-                  2
-                </Text>
-              </View>
-              <View style={{flex:0.4,justifyContent:'center',alignItems:'center'}}>
-              <Text style={{color:colors.descBlack,fontSize:hp(2),fontFamily:fontFamily.robotoLight,fontWeight:'400',flexWrap:'wrap'}}>
-              Excellen
-                </Text>
-              </View>
-            </View>
-            <View style={{flex:0.025}}></View>
-            <View style={{flex:0.18}}>
-            <View style={{flex:0.6,borderRadius:hp(0.2),borderWidth:1,borderColor:'#E4E6F6',justifyContent:'center',alignItems:'center'}}>
-                <Text style={{color:colors.descBlack,fontSize:hp(3),fontFamily:fontFamily.robotoMedium,fontWeight:'400'}}>
-                  3
-                </Text>
-              </View>
-              <View style={{flex:0.4,justifyContent:'center',alignItems:'center'}}>
-              <Text style={{color:colors.descBlack,fontSize:hp(2),fontFamily:fontFamily.robotoLight,fontWeight:'400'}}>
-              Bad
-                </Text>
-              </View>
-            </View>
-            <View style={{flex:0.025}}></View>
-            <View style={{flex:0.18}}>
-            <View style={{flex:0.6,borderRadius:hp(0.2),borderWidth:1,borderColor:'#E4E6F6',justifyContent:'center',alignItems:'center'}}>
-                <Text style={{color:colors.descBlack,fontSize:hp(3),fontFamily:fontFamily.robotoMedium,fontWeight:'400'}}>
-                  4
-                </Text>
-              </View>
-              <View style={{flex:0.4,justifyContent:'center',alignItems:'center'}}>
-              <Text style={{color:colors.descBlack,fontSize:hp(2),fontFamily:fontFamily.robotoLight,fontWeight:'400'}}>
-              Can Be Improved
-                </Text>
-              </View>
-            </View>
-            <View style={{flex:0.025}}></View>
-            <View style={{flex:0.18}}>
-            <View style={{flex:0.6,borderRadius:hp(0.2),borderWidth:1,borderColor:'#E4E6F6',justifyContent:'center',alignItems:'center'}}>
-                <Text style={{color:colors.descBlack,fontSize:hp(3),fontFamily:fontFamily.robotoMedium,fontWeight:'400'}}>
-                  5
-                </Text>
-              </View>
-              <View style={{flex:0.4,justifyContent:'center',alignItems:'center'}}>
-              <Text style={{color:colors.descBlack,fontSize:hp(2),fontFamily:fontFamily.robotoLight,fontWeight:'400'}}>
-              No Comment
-                </Text>
-              </View>
-            </View>
-
-          </View>
-          <View style={{flex:0.1,flexDirection:'row',height:hp(5)}}></View>
-          <View style={{flex:0.1,flexDirection:'row',height:hp(8)}}>
-            <TouchableOpacity style={{flex:0.455,borderRadius:hp(1.5),justifyContent:'center',alignItems:'center',borderWidth:1,borderColor:'#cdcdcd'}}>
-              <View style={{justifyContent:'center',alignItems:'center',marginTop:hp(-1)}}>
-              <Text style={{marginTop:hp(1),color:colors.descBlack,fontSize:hp(2.5),fontFamily:fontFamily.robotoMedium,fontWeight:'400'}}>
-              Not now
-              </Text>
-              </View>
-            </TouchableOpacity>
-            <View style={{flex:0.08}}></View>
-            <TouchableOpacity style={{flex:0.455,borderRadius:hp(1.5),justifyContent:'center',alignItems:'center',backgroundColor:'#832D8E'}}>
-            <View style={{justifyContent:'center',alignItems:'center',marginTop:hp(-1)}}>
-              <Text style={{marginTop:hp(1),color:'#fff',fontSize:hp(2.5),fontFamily:fontFamily.robotoMedium,fontWeight:'400'}}>
-              Submit
-              </Text>
-              </View>
-            </TouchableOpacity>
-          </View>
-          
-        </BottomSheet> */}
-    
-      {/* bottom sheet end */}
+     
       <View style={{flex: 0.35}}>
         <ImageBackground
-          source={{uri:item?.image_name}}
+          source={{uri:item?.image_name_header}}
           style={{width: '100%', height: '100%'}} resizeMode='stretch'>
           <View style={{flex: 0.15, zIndex: 1}}></View>
           <View
@@ -655,12 +465,13 @@ const SessionProgramm = (props) => {
                 <View style={{flex:0.2,justifyContent:'center',alignItems:'center'}}>
                 <Text
                   style={{
-                    color:colors.blackColor,
+                    color:colors.grayDescColor,
                     fontSize: hp(2.5),
                     fontWeight: '600',
-                    fontFamily:fontFamily.robotoBold
+                    fontFamily:fontFamily.robotoBold,
+                    fontStyle:'italic'
                   }}>
-                    Resurces
+                    No data available
                   
                 </Text>
               </View>
@@ -689,64 +500,10 @@ const SessionProgramm = (props) => {
           )}
         </ScrollView>
       </View>
-       {/* <View style={{flex: 0.08, backgroundColor: '#fff',justifyContent:'center',alignItems:'center'}}>
-        <View
-          style={{
-            justifyContent: 'center',
-            alignItems: 'center',
-            flexDirection: 'row',
-            marginTop: hp(1),
-          }}>
-          <TouchableOpacity onPress={ ()=>{ }} style={{flex: 0.25,justifyContent:'center',alignItems:'center'}}>
-          <View style={{marginBottom:hp(1)}}>
-            <Icon
-                  type="light"
-                  name="comment-question"
-                  size={hp(2)}
-                  color={colors.descBlack}
-                />
-                </View>
-                <Text style={{color:colors.descBlack,fontSize:hp(1.5),fontWeight:'400',fontStyle:fontFamily.robotoMedium}}>Ask</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={ ()=>{}} style={{flex: 0.25,justifyContent:'center',alignItems:'center'}}>
-          <View style={{marginBottom:hp(1)}}>
-          <Icon
-                  
-                  type="light"
-                  name="ballot-check"
-                  size={hp(2)}
-                  color={colors.descBlack}
-                  
-                />
-          </View>
-                <Text style={{color:colors.descBlack,fontSize:hp(1.5),fontWeight:'400',fontStyle:fontFamily.robotoMedium}}>Evaluation</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={{flex: 0.25,justifyContent:'center',alignItems:'center'}}>
-          <View style={{marginBottom:hp(1)}}>
-          <Icon
-                  type="light"
-                  name="globe-pointer"
-                  size={hp(2)}
-                  color={colors.descBlack}
-                />
-                </View>
-                <Text style={{color:colors.descBlack,fontSize:hp(1.5),fontWeight:'400',fontStyle:fontFamily.robotoMedium}}>Live</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={()=>setIsPoll(true)} style={{flex: 0.25,justifyContent:'center',alignItems:'center'}}>
-          <View style={{marginBottom:hp(1)}}>
-          <Icon
-                  type="light"
-                  name="square-poll-vertical"
-                  size={hp(2)}
-                  color={colors.descBlack}
-                />
-                </View>
-                <Text style={{color:colors.descBlack,fontSize:hp(1.5),fontWeight:'400',fontStyle:fontFamily.robotoMedium}}>Poll</Text>
-          </TouchableOpacity>
-        </View>
-      </View> */}
+      
     </View>
   );
+
 };
 
 export default SessionProgramm;

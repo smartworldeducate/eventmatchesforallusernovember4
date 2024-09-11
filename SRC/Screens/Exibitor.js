@@ -22,33 +22,34 @@ import MainHeader from '../Components/Headers/MainHeader';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useDispatch, useSelector } from 'react-redux';
 import { useFocusEffect } from '@react-navigation/native';
+import { exibitorHandler } from '../features/exibitor/exibitorSlice';
 const Exibitor = props => {
   const dispatch = useDispatch();
-  const speakerData=useSelector((state)=>state.speakerState);
+  const speakerData=useSelector((state)=>state.exibitorState);
   // console.log("speakerDa==",speakerData?.user?.response);
   async function getData(key) {
     try {
       const value = await AsyncStorage.getItem(key);
       if (value !== null) {
-        console.log('Data retrieved successfully:', value);
+        // console.log('Data retrieved successfully:', value);
         const parsedData = JSON.parse(value);
 
         // setData(parsedData);
         // {"user_id":parsedData.user_id,"event_id":parsedData.event_id,"type_id":1}
-        dispatch(speakerHandler({"user_id":parsedData.event_user_id,"event_id":parsedData.event_id,"type_id":3}));
-        console.log('here is feedback screen data', parsedData);
-        return parsedData;
+        dispatch(exibitorHandler({"user_id":parsedData.event_user_id,"event_id":parsedData.event_id,"type_id":3}));
+        // console.log('here is feedback screen data', parsedData);
+        // return parsedData;
       } 
     } catch (error) {
       console.error('Error retrieving data:', error);
     }
   }
-  useFocusEffect(
-    useCallback(() => {
-      getData('userSession');
-      // dispatch(resetState());
-    }, [])
-  )
+  // useFocusEffect(
+  //   useCallback(() => {
+  //     getData('userSession');
+  //     // dispatch(resetState());
+  //   }, [])
+  // )
   useEffect(() => {
     getData('userSession');
   }, []);
@@ -110,7 +111,7 @@ const Exibitor = props => {
         translucent
         backgroundColor="transparent"
       />
-       <Modal
+       {/* <Modal
         visible={speakerData?.isLoading}
         transparent={true}
         animationType="fade"
@@ -120,7 +121,7 @@ const Exibitor = props => {
           <ActivityIndicator size="large" color="#cdcdcd" />
         </View>
         </View>
-      </Modal>
+      </Modal> */}
       <View style={{flex: 0.1}}>
         <MainHeader
           text={'Exhibitor'}

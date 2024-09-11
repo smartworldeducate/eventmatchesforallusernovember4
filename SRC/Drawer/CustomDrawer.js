@@ -326,7 +326,7 @@ const CustomDrawer = ({ navigation }) => {
             <View style={{zIndex:7,marginTop:hp(-2)}}>
               <View style={{ flexDirection: 'row'}}>
                 <View>
-                <Text style={{marginLeft:hp(3),fontSize:hp(1.5),color:'#fff'}}>{appVersionData?.user?.response?.version >= '1.04' ? appVersionData?.user?.response?.message :'' }</Text>
+                <Text style={{marginLeft:hp(3),fontSize:hp(1.5),color:'#fff'}}>{appVersionData?.user?.response?.version >= '1.06' ? appVersionData?.user?.response?.message :'' }</Text>
                 </View>
               </View>
             </View>

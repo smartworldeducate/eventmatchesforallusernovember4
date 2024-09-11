@@ -22,9 +22,10 @@ import {useDispatch, useSelector} from 'react-redux';
 import {useFocusEffect} from '@react-navigation/native';
 import {speakerHandler} from '../features/speaker/speakerSlice';
 import colors from '../Styles/colors';
+import { sponserHandler } from '../features/sponser/sponserSlice';
 const Sponsor = props => {
   const dispatch = useDispatch();
-  const speakerData = useSelector(state => state.speakerState);
+  const speakerData = useSelector(state => state.sponserState);
   // console.log('sponsor 2===', speakerData?.user?.response);
   async function getData(key) {
     try {
@@ -36,7 +37,7 @@ const Sponsor = props => {
         // setData(parsedData);
         // {"user_id":parsedData.user_id,"event_id":parsedData.event_id,"type_id":1}
         dispatch(
-          speakerHandler({
+          sponserHandler({
             user_id: parsedData.user_id,
             event_id: parsedData.event_id,
             type_id: 2,
@@ -49,12 +50,12 @@ const Sponsor = props => {
       console.error('Error retrieving data:', error);
     }
   }
-  useFocusEffect(
-    useCallback(() => {
-      getData('userSession');
-      // dispatch(resetState());
-    }, []),
-  );
+  // useFocusEffect(
+  //   useCallback(() => {
+  //     getData('userSession');
+  //     // dispatch(resetState());
+  //   }, []),
+  // );
   useEffect(() => {
     getData('userSession');
   }, []);

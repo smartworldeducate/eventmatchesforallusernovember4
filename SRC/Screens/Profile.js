@@ -210,7 +210,7 @@ const Profile = props => {
           {/* banertwo */}
           <Image
             style={{ width: '100%', height: '100%', paddingTop: hp(2), borderBottomLeftRadius: hp(2), borderTopLeftRadius: hp(2) }}
-            source={{ uri:'banertwo'}}
+            source={{ uri:item ? item?.image_name:'banertwo'}}
             resizeMode="contain"
           />
         </View>
@@ -252,9 +252,9 @@ const Profile = props => {
                 </TouchableOpacity>
               </View>
               <View style={{ flex: 0.1 }}></View>
-              <TouchableOpacity onPress={()=>registerActivityFunction(item)} style={{ justifyContent: 'center', alignItems: 'center', flex: 0.4, borderRadius: hp(0.9), height: hp(5), marginTop: hp(-1.4), marginLeft: hp(-1), backgroundColor:item?.is_registered =='Y' ? '#555555':'#832D8E',height:hp(4),paddingHorizontal:hp(1) }}>
+              {/* <TouchableOpacity onPress={()=>registerActivityFunction(item)} style={{ justifyContent: 'center', alignItems: 'center', flex: 0.4, borderRadius: hp(0.9), height: hp(5), marginTop: hp(-1.4), marginLeft: hp(-1), backgroundColor:item?.is_registered =='Y' ? '#555555':'#832D8E',height:hp(4),paddingHorizontal:hp(1) }}>
                 <Text style={{ color: '#fff', fontWeight: '500',fontFamily:fontFamily.robotoMedium,fontSize:hp(1.5)}}>{item?.is_registered == 'Y' ? 'Un-Register':'Register'}</Text>
-              </TouchableOpacity>
+              </TouchableOpacity> */}
             </View>
           </View>
         </View>
@@ -327,16 +327,16 @@ const Profile = props => {
           {/* <View style={{height:hp(3),width:wp(6),backgroundColor:colors.lightBlue,zIndex:1,position:'absolute',left:hp(29.5),top:hp(11),borderRadius:hp(50),justifyContent:'center',alignItems:'center'}}>
               <Icon type='solid' name='pen' size={hp(1.6)} color='white' />
           </View> */}
-          <View style={{flex: 0.31,height:hp(15),borderRadius:hp(50),backgroundColor:colors.lightBlue,justifyContent:'center',alignItems:'center'}}>
-          <Avatar
+          <View style={{flex: 0.31,height:hp(15),borderRadius:hp(50),justifyContent:'center',alignItems:'center'}}>
+          {/* <Avatar
                   size="large"
                   rounded
                   title={avatarInitial}
                   onPress={() => console.log("Works!")}
                   activeOpacity={0.7}
                   titleStyle={{ color: '#fff',fontSize: hp(5.5)  }}
-                />
-            {/* <Image
+                /> */}
+            <Image
               style={{
                 width: '100%',
                 height: '100%',
@@ -345,7 +345,7 @@ const Profile = props => {
               }}
               source={{uri:item?.image_name}}
               resizeMode="contain"
-            /> */}
+            />
           </View>
 
           <View style={{flex: 0.3}}></View>
