@@ -160,13 +160,13 @@ const SpeakerList = props => {
           style={{
             justifyContent: 'center',
             alignItems: 'center',
-            // backgroundColor: '#832D8E',
+            // backgroundColor: '#2CC2E4',
             paddingHorizontal: hp(1.2),
             paddingVertical: hp(0.5),
             borderRadius: hp(1),
             // backgroundColor:colors.lightBlue
           }}>
-          <Icon type="light" name="arrow-down-right" size={hp(3)} color="#832D8E" />
+          <Icon type="light" name="arrow-down-right" size={hp(3)} color="#2CC2E4" />
         </View>
       </View>
       </TouchableOpacity>

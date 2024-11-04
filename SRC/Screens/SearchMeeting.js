@@ -273,7 +273,7 @@ const SearchMeeting = props => {
                   type={item?.fav_status === 'Y' ? 'solid' : 'regular'}
                   name="star"
                   size={hp(2.5)}
-                  color="#832D8E"
+                  color="#2CC2E4"
                 />
               </TouchableOpacity>
               {/* <View
@@ -381,7 +381,7 @@ const SearchMeeting = props => {
               }}>
               <Text
                 style={{
-                  color: '#832D8E',
+                  color: '#2CC2E4',
                   fontSize: hp(1.6),
                   fontWeight: '400',
                   fontFamily: fontFamily.robotoMedium,
@@ -396,7 +396,7 @@ const SearchMeeting = props => {
               style={{
                 flex: 0.3,
                 flexDirection: 'row',
-                backgroundColor: '#832D8E',
+                backgroundColor: '#2CC2E4',
                 paddingHorizontal: 8,
                 paddingVertical: 4,
                 justifyContent: 'center',
@@ -722,7 +722,7 @@ const SearchMeeting = props => {
           <TouchableOpacity
             onPress={() => props.navigation.goBack()}
             style={{flex: 0.15}}>
-            <Icon type="solid" name="arrow-left" size={hp(3)} color="#832D8E" />
+            <Icon type="solid" name="arrow-left" size={hp(3)} color="#2CC2E4" />
           </TouchableOpacity>
           <View style={{flex: 0.8, marginTop: hp(-0.5)}}>
             <Text style={styles.textstyle}>Search Meeting</Text>
@@ -758,7 +758,7 @@ const SearchMeeting = props => {
                   type="regular"
                   name="filter"
                   size={hp(3)}
-                  color="#832D8E"
+                  color="#2CC2E4"
                 />
               </View>
             </View>

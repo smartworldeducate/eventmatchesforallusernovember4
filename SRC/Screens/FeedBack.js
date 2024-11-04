@@ -122,7 +122,7 @@ const FeedBack = (props) => {
               </View>
             </TouchableOpacity>
             <View style={{flex:0.08}}></View>
-            <TouchableOpacity onPress={submitFeedHandler} style={{flex:0.455,borderRadius:hp(1.5),justifyContent:'center',alignItems:'center',backgroundColor:'#832D8E'}}>
+            <TouchableOpacity onPress={submitFeedHandler} style={{flex:0.455,borderRadius:hp(1.5),justifyContent:'center',alignItems:'center',backgroundColor:'#2CC2E4'}}>
             <View style={{justifyContent:'center',alignItems:'center',marginTop:hp(-1)}}>
               <Text style={{marginTop:hp(1),color:'#fff',fontSize:hp(2.5),fontFamily:fontFamily.robotoMedium,fontWeight:'400'}}>
               Submit

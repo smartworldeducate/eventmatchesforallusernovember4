@@ -100,7 +100,7 @@ const CustomDrawer = ({ navigation }) => {
       <LinearGradient
         start={{ x: 1, y: 0 }}
         end={{ x: 0, y: 1 }}
-        colors={['#832D8E', '#832D8E']}
+        colors={['#2CC2E4', '#2CC2E4']}
         style={{ flex: 1 }}>
         <View
           style={{
@@ -326,7 +326,7 @@ const CustomDrawer = ({ navigation }) => {
             <View style={{zIndex:7,marginTop:hp(-2)}}>
               <View style={{ flexDirection: 'row'}}>
                 <View>
-                <Text style={{marginLeft:hp(3),fontSize:hp(1.5),color:'#fff'}}>{appVersionData?.user?.response?.version >= '1.06' ? appVersionData?.user?.response?.message :'' }</Text>
+                <Text style={{marginLeft:hp(3),fontSize:hp(1.5),color:'#fff'}}>{appVersionData?.user?.response?.version >= '1.08' ? appVersionData?.user?.response?.message :'' }</Text>
                 </View>
               </View>
             </View>

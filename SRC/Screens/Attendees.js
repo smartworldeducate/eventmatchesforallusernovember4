@@ -178,13 +178,13 @@ const Attendees = props => {
           style={{
             justifyContent: 'center',
             alignItems: 'center',
-            // backgroundColor: '#832D8E',
+            // backgroundColor: '#2CC2E4',
             paddingHorizontal: hp(1.2),
             paddingVertical: hp(0.5),
             borderRadius: hp(1),
             // backgroundColor:colors.lightBlue
           }}>
-          <Icon type="light" name="arrow-down-right" size={hp(3)} color="#832D8E" />
+          <Icon type="light" name="arrow-down-right" size={hp(3)} color="#2CC2E4" />
         </View>
       </View>
     </TouchableOpacity>
@@ -513,7 +513,7 @@ const Attendees = props => {
                 flex: 0.499,
                 borderRadius: hp(0.5),
                 height: hp(8),
-                backgroundColor: '#832D8E',
+                backgroundColor: '#2CC2E4',
                 justifyContent: 'center',
                 alignItems: 'center',
                 borderWidth: 1,
@@ -562,7 +562,7 @@ const Attendees = props => {
           <TouchableOpacity
             onPress={() => props.navigation.goBack()}
             style={{flex: 0.15}}>
-            <Icon type="solid" name="arrow-left" size={hp(3)} color="#832D8E" />
+            <Icon type="solid" name="arrow-left" size={hp(3)} color="#2CC2E4" />
           </TouchableOpacity>
           <View style={{flex: 0.4, marginTop: hp(-0.5)}}>
             <Text style={styles.textstyle}>Attendees</Text>
@@ -579,7 +579,7 @@ const Attendees = props => {
             <View
               style={{
                 flex: 0.55,
-                backgroundColor: '#832D8E',
+                backgroundColor: '#2CC2E4',
                 height: hp(5),
                 borderRadius: hp(8),
                 flexDirection: 'row',
@@ -599,7 +599,7 @@ const Attendees = props => {
                   type="solid"
                   name="bars-filter"
                   size={hp(3)}
-                  color="#832D8E"
+                  color="#2CC2E4"
                 />
               </View>
               <View

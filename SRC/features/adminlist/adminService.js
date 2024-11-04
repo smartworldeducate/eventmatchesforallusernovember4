@@ -8,9 +8,7 @@ const adminListServices=async(userData)=>{
             "Content-Type": "multipart/form-data"
         },
       })
-    // console.log("userdata==",userData);
     if(response){
-        // console.log("verify email response",response?.data);
         return response?.data;
         
     }

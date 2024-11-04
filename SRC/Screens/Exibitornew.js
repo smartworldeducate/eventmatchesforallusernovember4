@@ -127,7 +127,7 @@ const Exibitornew = props => {
                 type="light"
                 name="arrow-down-right"
                 size={hp(3)}
-                color="#832D8E"
+                color="#2CC2E4"
               />
             </View>
           </View>
@@ -137,7 +137,7 @@ const Exibitornew = props => {
   
     return (
       <View style={{flex: 1}}>
-        <StatusBar barStyle={'default'} translucent backgroundColor="#832D8E" />
+        <StatusBar barStyle={'default'} translucent backgroundColor="#2CC2E4" />
         
           <Modal
           visible={speakerData?.isLoading}

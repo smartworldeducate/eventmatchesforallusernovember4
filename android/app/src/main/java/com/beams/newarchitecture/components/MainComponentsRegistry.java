@@ -1,4 +1,4 @@
-package com.ccsclientwbec.newarchitecture.components;
+package com.ccsmatches.newarchitecture.components;
 
 import com.facebook.jni.HybridData;
 import com.facebook.proguard.annotations.DoNotStrip;

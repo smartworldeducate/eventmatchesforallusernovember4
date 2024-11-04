@@ -1360,7 +1360,7 @@ const Confirmdecline = props => {
           style={{
             flex: 0.475,
             height: hp(7),
-            backgroundColor: '#832D8E',
+            backgroundColor: '#2CC2E4',
             justifyContent: 'center',
             alignItems: 'center',
             borderRadius: hp(1),
@@ -1384,7 +1384,7 @@ const Confirmdecline = props => {
           <TouchableOpacity
             onPress={() => props.navigation.goBack()}
             style={{flex: 0.15}}>
-            <Icon type="solid" name="arrow-left" size={hp(3)} color="#832D8E" />
+            <Icon type="solid" name="arrow-left" size={hp(3)} color="#2CC2E4" />
           </TouchableOpacity>
           <View style={{flex: 0.8, marginTop: hp(-0.4)}}>
             <Text style={styles.textstyle}>Confirm / Decline</Text>
@@ -1420,7 +1420,7 @@ const Confirmdecline = props => {
                   type="regular"
                   name="filter"
                   size={hp(3)}
-                  color="#832D8E"
+                  color="#2CC2E4"
                 />
               </View>
             </View>

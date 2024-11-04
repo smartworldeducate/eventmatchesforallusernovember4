@@ -81,7 +81,7 @@ const PrevEvents = (props) => {
 
           </View>
           <View style={{flex:0.08,justifyContent: 'flex-end'}}>
-            <Icon type='light' name="arrow-down-right" size={hp(3)} color='#832D8E' />
+            <Icon type='light' name="arrow-down-right" size={hp(3)} color='#2CC2E4' />
           </View>
         </View>
         

@@ -8,9 +8,7 @@ const eventListServices=async(userData)=>{
             "Content-Type": "multipart/form-data"
         },
       })
-    // console.log("userdata==",userData);
     if(response){
-        // console.log("allevents data response",response?.data);
         return response?.data;
         
     }

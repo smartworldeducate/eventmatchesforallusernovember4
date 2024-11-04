@@ -170,7 +170,7 @@ const SessionProgramm = (props) => {
              </Text>
              </View>
              <View style={{flex:0.2,justifyContent: 'center',alignItems: 'center',}}>
-               <View style={{backgroundColor:'#832D8E',paddingHorizontal:hp(1.5),paddingVertical:hp(0.5),borderRadius:hp(1)}}>
+               <View style={{backgroundColor:'#2CC2E4',paddingHorizontal:hp(1.5),paddingVertical:hp(0.5),borderRadius:hp(1)}}>
                <Icon
                   type="light"
                   name="arrow-right"
@@ -245,7 +245,7 @@ const SessionProgramm = (props) => {
                 style={{
                   width: hp(3.5),
                   height: hp(3.5),
-                  backgroundColor: '#832D8E',
+                  backgroundColor: '#2CC2E4',
                   marginHorizontal: hp(1),
                   borderRadius: hp(1),
                   justifyContent: 'center',
@@ -289,7 +289,7 @@ const SessionProgramm = (props) => {
                   type="regular"
                   name="calendar-check"
                   size={hp(2)}
-                  color="#832D8E"
+                  color="#2CC2E4"
                 />
               </View>
               <View style={{flex: 0.04}}></View>
@@ -318,7 +318,7 @@ const SessionProgramm = (props) => {
                   type="solid"
                   name="location-dot"
                   size={hp(2)}
-                  color="#832D8E"
+                  color="#2CC2E4"
                 />
               </View>
               <View style={{flex: 0.04}}></View>
@@ -349,15 +349,15 @@ const SessionProgramm = (props) => {
                 flex: 0.33,
                 borderRadius: hp(5),
                 borderWidth: 1.5,
-                borderColor: '#832D8E',
+                borderColor: '#2CC2E4',
                 height: hp(5),
                 justifyContent: 'center',
                 alignItems: 'center',
-                backgroundColor: abstract ? '#832D8E' : '#EBEEF2',
+                backgroundColor: abstract ? '#2CC2E4' : '#EBEEF2',
               }}>
               <Text
                 style={{
-                  color: abstract ? '#fff' : '#832D8E',
+                  color: abstract ? '#fff' : '#2CC2E4',
                   fontSize: hp(1.8),
                   fontWeight: 'bold',
                   fontFamily:fontFamily.robotoBold
@@ -371,23 +371,23 @@ const SessionProgramm = (props) => {
                 flex: 0.33,
                 borderRadius: hp(5),
                 borderWidth: 1.5,
-                borderColor: '#832D8E',
+                borderColor: '#2CC2E4',
                 height: hp(5),
                 justifyContent: 'center',
                 alignItems: 'center',
                 marginHorizontal: hp(1),
-                backgroundColor: speaker ? '#832D8E' : '#EBEEF2',
+                backgroundColor: speaker ? '#2CC2E4' : '#EBEEF2',
               }}>
               <Text
                 style={{
-                  color: speaker ? '#fff' : '#832D8E',
+                  color: speaker ? '#fff' : '#2CC2E4',
                   fontSize: hp(1.8),
                   fontWeight: 'bold',
                   fontFamily:fontFamily.robotoBold
                 }}>
                 Speakers
               </Text>
-              {/* <Text style={{color:'#832D8E',fontSize:hp(1.3),fontWeight:'300'}}>8th, Nov 2022</Text> */}
+              {/* <Text style={{color:'#2CC2E4',fontSize:hp(1.3),fontWeight:'300'}}>8th, Nov 2022</Text> */}
             </TouchableOpacity>
             <TouchableOpacity
               onPress={resucesHandler}
@@ -395,22 +395,22 @@ const SessionProgramm = (props) => {
                 flex: 0.33,
                 borderRadius: hp(5),
                 borderWidth: 1.5,
-                borderColor: '#832D8E',
+                borderColor: '#2CC2E4',
                 height: hp(5),
                 justifyContent: 'center',
                 alignItems: 'center',
-                backgroundColor: resurces ? '#832D8E' : '#EBEEF2',
+                backgroundColor: resurces ? '#2CC2E4' : '#EBEEF2',
               }}>
               <Text
                 style={{
-                  color: resurces ? '#fff' : '#832D8E',
+                  color: resurces ? '#fff' : '#2CC2E4',
                   fontSize: hp(1.8),
                   fontWeight: 'bold',
                   fontFamily:fontFamily.robotoBold
                 }}>
                 Resources
               </Text>
-              {/* <Text style={{color:'#832D8E',fontSize:hp(1.3),fontWeight:'300'}}>8th, Nov 2022</Text> */}
+              {/* <Text style={{color:'#2CC2E4',fontSize:hp(1.3),fontWeight:'300'}}>8th, Nov 2022</Text> */}
             </TouchableOpacity>
           </View>
           {abstract && (
@@ -423,7 +423,18 @@ const SessionProgramm = (props) => {
                 fontWeight: '600',
                 fontFamily:fontFamily.robotoBold
               }}>
-                {detailData?.user?.response?.detail ? ' About Session':'No Data Available.'}
+                {detailData?.user?.response?.detail ? ' About Session': <Text
+                  style={{
+                    color:colors.grayDescColor,
+                    fontSize: hp(2.5),
+                    fontWeight: '600',
+                    fontFamily:fontFamily.robotoBold,
+                    fontStyle:'italic',
+                    textAlign:'center'
+                  }}>
+                    No data available
+                  
+                </Text>}
              
             </Text>
             </View>
@@ -446,7 +457,7 @@ const SessionProgramm = (props) => {
                     fontWeight: '600',
                     fontFamily:fontFamily.robotoBold
                   }}>
-                  {urlData?.speakers?.length > 0 ? 'Moderator:':<Text style={{color:colors.grayDescColor,fontSize:hp(2)}}>No data available</Text>}  
+                  {urlData?.speakers?.length > 0 ? 'Moderator:':<Text style={{color:colors.grayDescColor,fontSize:hp(2),textAlign:'center'}}>No data available</Text>}  
                   
                 </Text>
               </View>
@@ -462,16 +473,15 @@ const SessionProgramm = (props) => {
           {resurces && (
             <View style={{flex: 0.7, height: hp(34)}}>
               {urlData?.resources?.image_name !=='' && (
-                <View style={{flex:0.2,justifyContent:'center',alignItems:'center'}}>
+                <View style={{flex:0.2,justifyContent:'center'}}>
                 <Text
                   style={{
-                    color:colors.grayDescColor,
+                    color:colors.descBlack,
                     fontSize: hp(2.5),
                     fontWeight: '600',
                     fontFamily:fontFamily.robotoBold,
-                    fontStyle:'italic'
                   }}>
-                    No data available
+                    resources:
                   
                 </Text>
               </View>

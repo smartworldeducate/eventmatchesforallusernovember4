@@ -48,7 +48,7 @@ const NextScreen = props => {
       <Swiper style={styles.wrapper} showsButtons={false} ref={swiperRef} activeDot={<View style={{backgroundColor:'#fff',width:8,height:8,borderRadius:4}}></View>}>
         <View style={styles.slide1}>
           <ImageBackground
-            source={{uri: 'firstbaner'}}
+            source={{uri: 'twobaner'}}
             style={{width: '100%', height: '100%'}}
             resizeMode={'contain'}></ImageBackground>
           <View
@@ -68,7 +68,7 @@ const NextScreen = props => {
                 marginTop: hp(4.5),
                 marginHorizontal: hp(2.5),
               }}>
-              <Text style={styles.text}>Empowering Women, Elevating Business.</Text>
+              <Text style={styles.text}>Bringing Your Events to Life, Virtually Anywhere.</Text>
             </View>
             <View
               style={{
@@ -78,8 +78,7 @@ const NextScreen = props => {
                 marginHorizontal: hp(2.5),
               }}>
               <Text style={{color: '#fff',fontWeight:'400', fontSize: hp(2),fontWeight:'400',fontFamily:fontFamily.robotoMedium,textAlign:'center'}}>
-              Empowering Women, Elevating Business.
-Champions women entrepreneurs, driving growth, success, and impactful opportunities.
+              Revolutionary software that enables attendees to connect and build relationships, before, during, and after an event.
 
               </Text>
               
@@ -103,7 +102,7 @@ Champions women entrepreneurs, driving growth, success, and impactful opportunit
         </View>
         <View style={styles.slide2}>
           <ImageBackground
-            source={{uri: 'banerfore'}}
+            source={{uri: 'threebaner'}}
             style={{width: '100%', height: '100%'}}
             resizeMode={'contain'}></ImageBackground>
           <View
@@ -124,7 +123,7 @@ Champions women entrepreneurs, driving growth, success, and impactful opportunit
                 marginTop: hp(-16),
                 marginHorizontal: hp(2.5),
               }}>
-              <Text style={styles.text}>Driving Opportunity for Women Entrepreneurs.</Text>
+              <Text style={styles.text}>Connect, Engage, Celebrate—Your Events, Reimagined.</Text>
             </View>
             <View
               style={{
@@ -134,8 +133,7 @@ Champions women entrepreneurs, driving growth, success, and impactful opportunit
                 marginHorizontal: hp(2.5),
               }}>
               <Text style={{color: '#fff',fontWeight:'400', fontSize: hp(2),fontFamily:fontFamily.robotoMedium,textAlign:'center'}}>
-              Driving Opportunity for Women Entrepreneurs.
-              Focuses on creating pathways for growth, success, and lasting impact.
+              Easily manage event landing pages, registrations, activities, tickets, packages, and payments.
               </Text>
              
             </View>
@@ -158,7 +156,7 @@ Champions women entrepreneurs, driving growth, success, and impactful opportunit
         </View>
         <View style={styles.slide3}>
           <ImageBackground
-            source={{uri: 'bannerthree'}}
+            source={{uri: 'forebaner'}}
             style={{width: '100%', height: '100%'}}
             resizeMode={'contain'}></ImageBackground>
           <View
@@ -179,7 +177,7 @@ Champions women entrepreneurs, driving growth, success, and impactful opportunit
                 marginTop: hp(-16),
                 marginHorizontal: hp(2.5),
               }}>
-              <Text style={styles.text}>Empower. Connect. Succeed.</Text>
+              <Text style={styles.text}>Where Every Moment Becomes an Unforgettable Experience.</Text>
             </View>
             <View
               style={{
@@ -189,8 +187,7 @@ Champions women entrepreneurs, driving growth, success, and impactful opportunit
                 marginHorizontal: hp(2.5),
               }}>
               <Text style={{color: '#fff',fontWeight:'400', fontSize: hp(2),fontFamily:fontFamily.robotoMedium,textAlign:'center'}}>
-              Empower. Connect. Succeed.
-              Emphasizes empowering women, fostering connections, and driving entrepreneurial success and growth
+              Advanced matchmaking software that connects attendees based on key data points for highly targeted business matches.
               </Text>
              
             </View>

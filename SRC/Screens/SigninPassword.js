@@ -69,7 +69,7 @@ const SigninPassword = props => {
       if (verifyUser?.payload?.response?.success === 1) {
         // console.log("user login screen ssave==",verifyUser?.payload?.response)
         saveData(verifyUser?.payload?.response);
-        props.navigation.navigate('AllEvents');
+        props.navigation.navigate('Admins');
       } else {
         ToastAndroid.showWithGravity(
           verifyUser?.payload?.response?.message,
@@ -151,7 +151,7 @@ const SigninPassword = props => {
               marginTop: hp(-6),
             }}>
             <Image
-              source={{uri: 'splashchange'}}
+              source={{uri: 'splash'}}
               style={{width: wp(46), height: hp(23)}}
               resizeMode={'contain'}
             />
@@ -225,7 +225,7 @@ const SigninPassword = props => {
               style={{
                 width: wp(13.5),
                 height: hp(4.5),
-                backgroundColor: '#832D8E',
+                backgroundColor: '#2CC2E4',
                 borderRadius: hp(1.5),
                 justifyContent: 'center',
                 alignItems: 'center',

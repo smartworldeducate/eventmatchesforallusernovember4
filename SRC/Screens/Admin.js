@@ -14,7 +14,7 @@ import {
 import {useDispatch, useSelector} from 'react-redux';
 const Admins = props => {
   const adminList = useSelector(state => state.adminListState);
-  console.log('adminlist==', adminList?.isLoading);
+  // console.log('adminlist==', adminList?.isLoading);
   const dispatch = useDispatch();
   useFocusEffect(
     useCallback(() => {
@@ -110,7 +110,7 @@ const renderItem = ({item, index}) => {
       
       <View style={{flex: 0.1}}>
         <MainHeader
-          text={'Admins'}
+          text={'Select Your Oganization'}
           onpressBtn={() => props.navigation.goBack()}
         />
       </View>

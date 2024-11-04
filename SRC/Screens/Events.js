@@ -158,7 +158,7 @@ const Events = (props) => {
             type="light"
             name="arrow-down-right"
             size={hp(3)}
-            color="#832D8E"
+            color="#2CC2E4"
           />
         </View>
       </View>

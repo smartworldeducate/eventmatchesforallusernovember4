@@ -60,7 +60,7 @@ const Profile = props => {
         const parsedData = JSON.parse(value);
         setAdminData(parsedData);
         // dispatch(speakerDetailHandler({"user_id":parsedData?.login_id}));
-          dispatch(speakerDetailHandler({"user_id":parsedData?.login_id}));
+          dispatch(speakerDetailHandler({"user_id":parsedData?.event_user_id}));
         
       } 
     } catch (error) {
@@ -158,7 +158,7 @@ const Profile = props => {
               <View style={{ flex: 0.6, flexDirection: 'row' }}>
 
                 <TouchableOpacity onPress={()=>props.navigation.navigate("MapScreen")} style={{ flex: 0.3 }}>
-                  <Icon type="light" name="location-dot" size={hp(2.5)} color="#832D8E" />
+                  <Icon type="light" name="location-dot" size={hp(2.5)} color="#2CC2E4" />
                 </TouchableOpacity>
 
                 <TouchableOpacity style={{ flex: 0.9 }}>
@@ -166,7 +166,7 @@ const Profile = props => {
                 </TouchableOpacity>
               </View>
               <View style={{ flex: 0.1 }}></View>
-              <TouchableOpacity onPress={()=>registerActivityFunction(item)} style={{ justifyContent: 'center', alignItems: 'center', flex: 0.4, borderRadius: hp(0.9), height: hp(5), marginTop: hp(-1.4), marginLeft: hp(-1), backgroundColor:item?.is_registered =='Y' ? '#555555':'#832D8E',height:hp(4),paddingHorizontal:hp(1) }}>
+              <TouchableOpacity onPress={()=>registerActivityFunction(item)} style={{ justifyContent: 'center', alignItems: 'center', flex: 0.4, borderRadius: hp(0.9), height: hp(5), marginTop: hp(-1.4), marginLeft: hp(-1), backgroundColor:item?.is_registered =='Y' ? '#555555':'#2CC2E4',height:hp(4),paddingHorizontal:hp(1) }}>
                 <Text style={{ color: '#fff', fontWeight: '500',fontFamily:fontFamily.robotoLight,fontSize:hp(1.5)}}>{item?.is_registered == 'Y' ? 'Un-Register':'Register'}</Text>
               </TouchableOpacity>
             </View>
@@ -244,7 +244,7 @@ const Profile = props => {
               <View style={{ flex: 0.6, flexDirection: 'row' }}>
 
                 <TouchableOpacity onPress={()=>props.navigation.navigate("MapScreen")} style={{ flex: 0.3 }}>
-                  <Icon type="light" name="location-dot" size={hp(2.5)} color="#832D8E" />
+                  <Icon type="light" name="location-dot" size={hp(2.5)} color="#2CC2E4" />
                 </TouchableOpacity>
 
                 <TouchableOpacity style={{ flex: 0.9 }}>
@@ -252,7 +252,7 @@ const Profile = props => {
                 </TouchableOpacity>
               </View>
               <View style={{ flex: 0.1 }}></View>
-              {/* <TouchableOpacity onPress={()=>registerActivityFunction(item)} style={{ justifyContent: 'center', alignItems: 'center', flex: 0.4, borderRadius: hp(0.9), height: hp(5), marginTop: hp(-1.4), marginLeft: hp(-1), backgroundColor:item?.is_registered =='Y' ? '#555555':'#832D8E',height:hp(4),paddingHorizontal:hp(1) }}>
+              {/* <TouchableOpacity onPress={()=>registerActivityFunction(item)} style={{ justifyContent: 'center', alignItems: 'center', flex: 0.4, borderRadius: hp(0.9), height: hp(5), marginTop: hp(-1.4), marginLeft: hp(-1), backgroundColor:item?.is_registered =='Y' ? '#555555':'#2CC2E4',height:hp(4),paddingHorizontal:hp(1) }}>
                 <Text style={{ color: '#fff', fontWeight: '500',fontFamily:fontFamily.robotoMedium,fontSize:hp(1.5)}}>{item?.is_registered == 'Y' ? 'Un-Register':'Register'}</Text>
               </TouchableOpacity> */}
             </View>
@@ -271,16 +271,16 @@ const Profile = props => {
             paddingHorizontal:wp(4.5),
             borderRadius: hp(5),
             borderWidth: 1.5,
-            borderColor: '#832D8E',
+            borderColor: '#2CC2E4',
             height: hp(5),
             justifyContent: 'center',
             alignItems: 'center',
             marginLeft:hp(1.2),
-            backgroundColor: activeTab === item  ? '#832D8E' : '#EBEEF2',
+            backgroundColor: activeTab === item  ? '#2CC2E4' : '#EBEEF2',
           }}>
           <Text
             style={{
-              color: activeTab === item ? '#fff' : '#832D8E',
+              color: activeTab === item ? '#fff' : '#2CC2E4',
               fontSize: hp(1.8),
               fontWeight: 'bold',
               fontFamily: fontFamily.robotoBold,

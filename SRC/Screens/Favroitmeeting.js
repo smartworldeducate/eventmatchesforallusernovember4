@@ -242,7 +242,7 @@ import { favroitStarHandler } from '../features/favroitmeeting/favroitMeetingSli
                   type={item?.fav_status === 'Y' ? 'solid' : 'regular'}
                   name="star"
                   size={hp(2.5)}
-                  color="#832D8E"
+                  color="#2CC2E4"
                 />
               </TouchableOpacity>
                 {/* <View
@@ -255,7 +255,7 @@ import { favroitStarHandler } from '../features/favroitmeeting/favroitMeetingSli
                     type={item?.fav_status == 'Y' ? 'solid' : 'regular'}
                     name="star"
                     size={hp(2.5)}
-                    color="#832D8E"
+                    color="#2CC2E4"
                   />
                 </View>
                 <View
@@ -363,7 +363,7 @@ import { favroitStarHandler } from '../features/favroitmeeting/favroitMeetingSli
                 }}>
                 {/* <Text
                   style={{
-                    color: '#832D8E',
+                    color: '#2CC2E4',
                     fontSize: hp(1.6),
                     fontWeight: '400',
                     fontFamily: fontFamily.robotoMedium,
@@ -378,7 +378,7 @@ import { favroitStarHandler } from '../features/favroitmeeting/favroitMeetingSli
                 style={{
                   flex: 0.3,
                   flexDirection: 'row',
-                  backgroundColor: '#832D8E',
+                  backgroundColor: '#2CC2E4',
                   paddingHorizontal: 8,
                   paddingVertical: 4,
                   justifyContent: 'center',
@@ -455,7 +455,7 @@ import { favroitStarHandler } from '../features/favroitmeeting/favroitMeetingSli
             <TouchableOpacity
               onPress={() => props.navigation.goBack()}
               style={{flex: 0.15}}>
-              <Icon type="solid" name="arrow-left" size={hp(3)} color="#832D8E" />
+              <Icon type="solid" name="arrow-left" size={hp(3)} color="#2CC2E4" />
             </TouchableOpacity>
             <View style={{flex: 0.4, marginTop: hp(-0.5)}}>
               <Text style={styles.textstyle}>Favorites</Text>
@@ -491,7 +491,7 @@ import { favroitStarHandler } from '../features/favroitmeeting/favroitMeetingSli
                     type="regular"
                     name="filter"
                     size={hp(3)}
-                    color="#832D8E"
+                    color="#2CC2E4"
                   /> */}
                 </View>
               </View>

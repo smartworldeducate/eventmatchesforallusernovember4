@@ -46,7 +46,7 @@ const HeaderTop = ({ onPressIcon,onflterPress }) => {
               </View>
               
             </View>
-          <Icon type="regular" name="bell" size={hp(2.8)} color="#832D8E" />
+          <Icon type="regular" name="bell" size={hp(2.8)} color="#2CC2E4" />
         </TouchableOpacity> */}
       </View>
 
@@ -55,7 +55,7 @@ const HeaderTop = ({ onPressIcon,onflterPress }) => {
           activeOpacity={0.8}
           style={{ alignItems: 'flex-end', marginRight: hp(1) }}
           onPress={()=>{}}>
-            <Icon type="regular" name="filter" size={hp(2.8)} color="#832D8E" />
+            <Icon type="regular" name="filter" size={hp(2.8)} color="#2CC2E4" />
         </TouchableOpacity> */}
       </View>
 

@@ -38,7 +38,7 @@ const Splash = props => {
 
         // console.log('here is splash screen data', parsedData);
         if (parsedData) {
-          props.navigation.dispatch(StackActions.replace('AllEvents'))
+          props.navigation.dispatch(StackActions.replace('Admins'))
         }
         return parsedData;
       } else {
@@ -69,7 +69,7 @@ const Splash = props => {
       <View style={{flex: 0.4}}>
         <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
           <Image
-            source={{uri: 'splashchange'}}
+            source={{uri: 'splash'}}
             style={{width: '70%', height: '70%'}}
             resizeMode={'contain'}
           />
@@ -80,7 +80,7 @@ const Splash = props => {
           style={{width: 50, height: 50}}
           name={'BallSpinFadeLoader'}
           size={60}
-          color={'#832D8E'}
+          color={'#2CC2E4'}
         /> */}
       </View>
     </SafeAreaView>

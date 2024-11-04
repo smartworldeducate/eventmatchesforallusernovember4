@@ -95,7 +95,7 @@ const BottomTabApplication = () => {
           marginTop: 0,
           color:colors.grayDescColor // Optionally, adjust margin between icon and label
         },
-        tabBarActiveTintColor: '#832D8E', 
+        tabBarActiveTintColor: '#2CC2E4', 
         tabBarInactiveTintColor: '#000000',
       }}>
       <Tab.Screen
@@ -103,7 +103,7 @@ const BottomTabApplication = () => {
         component={HomeScreen}
         options={{
           tabBarIcon: ({color, size,focused}) => (
-            <Icon type='light' name="house" size={hp(3)} color={focused ? '#832D8E' : colors.grayDescColor} />
+            <Icon type='light' name="house" size={hp(3)} color={focused ? '#2CC2E4' : colors.grayDescColor} />
           ),
           tabBarLabel: 'Home',
           tabBarLabelStyle: {
@@ -118,7 +118,7 @@ const BottomTabApplication = () => {
         component={SpeakerList}
         options={{
           tabBarIcon: ({color, size,focused}) => (
-            <Icon type='light' name="user-tie" size={hp(2.5)} color={focused ? '#832D8E' : colors.grayDescColor} />
+            <Icon type='light' name="user-tie" size={hp(2.5)} color={focused ? '#2CC2E4' : colors.grayDescColor} />
           ),
           tabBarLabel: 'Speaker',
           tabBarLabelStyle: {
@@ -136,7 +136,7 @@ const BottomTabApplication = () => {
           tabBarIcon: ({color, size,focused}) => (
           <View style={[{
             marginBottom: hp(1),
-            backgroundColor: '#832D8E',
+            backgroundColor: '#2CC2E4',
             width: wp(16),
             height: hp(8),
             justifyContent: 'center',
@@ -172,7 +172,7 @@ const BottomTabApplication = () => {
         component={HomeScreen}
         options={{
           tabBarIcon: ({color, size,focused}) => (
-            <Icon type='light' name="clipboard-list-check" size={hp(2.5)} color={focused ? '#832D8E' : colors.grayDescColor} />
+            <Icon type='light' name="clipboard-list-check" size={hp(2.5)} color={focused ? '#2CC2E4' : colors.grayDescColor} />
           ),
           tabBarLabel: 'My Sessions',
           tabBarLabelStyle: {
@@ -188,7 +188,7 @@ const BottomTabApplication = () => {
         component={FeedBack}
         options={{
           tabBarIcon: ({color, size,focused}) => (
-            <Icon type='light' name="message-smile" size={hp(2.5)} color={focused ? '#832D8E' : colors.grayDescColor}/>
+            <Icon type='light' name="message-smile" size={hp(2.5)} color={focused ? '#2CC2E4' : colors.grayDescColor}/>
           ),
           tabBarLabel: 'Feedback',
           tabBarLabelStyle: {

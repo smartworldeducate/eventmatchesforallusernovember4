@@ -8,9 +8,7 @@ const speakerDetailServices=async(userData)=>{
             "Content-Type": "multipart/form-data"
         },
       })
-    // console.log("userdata==",userData);
     if(response){
-        // console.log("attendee  data response",response?.data?.response?.detail[2]);
         return response.data;
         
     }

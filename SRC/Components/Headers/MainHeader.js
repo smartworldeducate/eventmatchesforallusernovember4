@@ -26,17 +26,18 @@ const MainHeader = ({text, iconName, onpressBtn, rightIcon, textcolor}) => {
         <View style={styles.headerChild}>
           {text =='All Events' || text =='Future Events' || text =='Previous Events' ? (
               <TouchableOpacity
+              onPress={onpressBtn}
               style={{flex:0.15,marginTop:hp(0.3)}}
               >
               
-             <Icon type="regular" name="calendar-star" size={hp(2.5)} color="#832D8E" />
+             <Icon type="regular" name="arrow-left" size={hp(2.5)} color="#2CC2E4" />
             </TouchableOpacity>
           ) : (<TouchableOpacity
             onPress={onpressBtn}
             style={{flex:0.15}}
             >
             
-           {text !=='Admins' ? <Icon type="regular" name="arrow-left" size={hp(3)} color="#832D8E" /> :<Icon type="regular" name="house" size={hp(3)} color="#832D8E" />}
+           {text !=='Select Your Oganization' ? <Icon type="regular" name="arrow-left" size={hp(3)} color="#2CC2E4" /> :<Icon type="regular" name="house" size={hp(3)} color="#2CC2E4" />}
           </TouchableOpacity>)}
           
           <View style={{flex:0.9,marginTop:hp(-0.2)}}>

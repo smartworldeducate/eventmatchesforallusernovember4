@@ -65,7 +65,7 @@ const SigninScreen = props => {
   useEffect(() => {
     const checkForUpdate = async () => {
       const apiVersion = appVersionData?.user?.response?.version;
-      const appVersion = '1.06';
+      const appVersion = '1.08';
 
       if (apiVersion >= appVersion) {
         Alert.alert(
@@ -75,7 +75,7 @@ const SigninScreen = props => {
             {
               text: 'Update Now',
               onPress: () => {
-                VersionCheck.getStoreUrl({ appID: 'com.ccsclientwbec' }).then(url => {
+                VersionCheck.getStoreUrl({ appID: 'com.ccsmatches' }).then(url => {
                   Linking.openURL(url);
                 });
               },
@@ -139,7 +139,7 @@ const SigninScreen = props => {
               marginTop: hp(-6),
             }}>
             <Image
-              source={{uri: 'splashchange'}}
+              source={{uri: 'splash'}}
               style={{width: wp(46), height: hp(23)}}
               resizeMode={'contain'}
             />
@@ -188,7 +188,7 @@ const SigninScreen = props => {
               style={{
                 width: wp(13.5),
                 height: hp(4.5),
-                backgroundColor: '#832D8E',
+                backgroundColor: '#2CC2E4',
                 borderRadius: hp(1.5),
                 justifyContent: 'center',
                 alignItems: 'center',

@@ -30,8 +30,8 @@ import axios from "axios";
 import { APIHEADER } from '../constants/const';
 const AllEvents = props => {
   const dispatch = useDispatch();
-  // const {user_id} = props.route.params;
-  const user_id=6570;
+  const {user_id} = props.route.params;
+  // const user_id=6570;
   // console.log("user id==",user_id);
   const [tbnState, setBtnState] = useState('All Events');
   const [data, setData] = useState(null);
@@ -235,7 +235,7 @@ const AllEvents = props => {
               type="light"
               name="arrow-down-right"
               size={hp(3)}
-              color="#832D8E"
+              color="#2CC2E4"
             />
           </View>
         </View>
@@ -245,7 +245,7 @@ const AllEvents = props => {
 
   return (
     <View style={{flex: 1}}>
-      <StatusBar barStyle={'default'} translucent backgroundColor="#832D8E" />
+      <StatusBar barStyle={'default'} translucent backgroundColor="#2CC2E4" />
       
         <Modal
         visible={allevntsData?.isLoading || pastEventData?.isLoading || futureEventData?.isLoading || activityData?.isLoading}

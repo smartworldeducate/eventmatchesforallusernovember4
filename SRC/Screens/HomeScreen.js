@@ -113,7 +113,7 @@ const appVersionData=useSelector((state)=>state.appVersionState);
  useEffect(() => {
   const checkForUpdate = async () => {
     const apiVersion = appVersionData?.user?.response?.version;
-    const appVersion = '1.06';
+    const appVersion = '1.08';
 
     if (apiVersion >= appVersion) {
       Alert.alert(
@@ -123,7 +123,7 @@ const appVersionData=useSelector((state)=>state.appVersionState);
           {
             text: 'Update Now',
             onPress: () => {
-              VersionCheck.getStoreUrl({ appID: 'com.ccsclientwbec' }).then(url => {
+              VersionCheck.getStoreUrl({ appID: 'com.ccsmatches' }).then(url => {
                 Linking.openURL(url);
               });
             },
@@ -211,7 +211,7 @@ const appVersionData=useSelector((state)=>state.appVersionState);
               <View style={{ flex: 0.6, flexDirection: 'row' }}>
 
                 <TouchableOpacity onPress={()=>props.navigation.navigate("MapScreen")} style={{ flex: 0.3 }}>
-                  <Icon type="light" name="location-dot" size={hp(2.5)} color="#832D8E" />
+                  <Icon type="light" name="location-dot" size={hp(2.5)} color="#2CC2E4" />
                 </TouchableOpacity>
 
                 <TouchableOpacity style={{ flex: 0.9 }}>
@@ -219,7 +219,7 @@ const appVersionData=useSelector((state)=>state.appVersionState);
                 </TouchableOpacity>
               </View>
               <View style={{ flex: 0.1 }}></View>
-              {item?.show_reg_button=='Y'&& ( <TouchableOpacity onPress={()=>registerActivityFunction(item)} style={{ justifyContent: 'center', alignItems: 'center', flex: 0.4, borderRadius: hp(0.9), height: hp(5), marginTop: hp(-1.4), marginLeft: hp(-1), backgroundColor:item?.is_registered =='Y' ? '#555555':'#832D8E',height:hp(4),paddingHorizontal:hp(1) }}>
+              {item?.show_reg_button=='Y'&& ( <TouchableOpacity onPress={()=>registerActivityFunction(item)} style={{ justifyContent: 'center', alignItems: 'center', flex: 0.4, borderRadius: hp(0.9), height: hp(5), marginTop: hp(-1.4), marginLeft: hp(-1), backgroundColor:item?.is_registered =='Y' ? '#555555':'#2CC2E4',height:hp(4),paddingHorizontal:hp(1) }}>
                 <Text style={{ color: '#fff', fontWeight: '500',fontFamily:fontFamily.robotoMedium,fontSize:hp(1.5)}}>{item?.is_registered == 'Y' ? 'Un-Register':'Register'}</Text>
               </TouchableOpacity>)}
              
@@ -271,21 +271,21 @@ const appVersionData=useSelector((state)=>state.appVersionState);
        
         <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
   {activityDate && (
-    <TouchableOpacity onPress={dayOneHandler} style={{ flex: 0.3, borderRadius: hp(5), height: hp(5.3), borderWidth:1, borderColor:dayone ? "#fff":"#832D8E", justifyContent: 'center', alignItems: 'center',backgroundColor:dayone ? "#832D8E":"#EBEEF2", }}>
-      <Text style={{ color:dayone ? "#fff":"#832D8E",fontSize: hp(2), fontWeight: '400',fontFamily:fontFamily.robotoBold }}>DAY 1</Text>
-      <Text style={{ color:dayone ? "#fff":"#832D8E", fontSize: hp(1.3), fontWeight: '300',fontFamily:fontFamily.robotoMedium  }}>{activityDate[0]?.activity_date}</Text>
+    <TouchableOpacity onPress={dayOneHandler} style={{ flex: 0.3, borderRadius: hp(5), height: hp(5.3), borderWidth:1, borderColor:dayone ? "#fff":"#2CC2E4", justifyContent: 'center', alignItems: 'center',backgroundColor:dayone ? "#2CC2E4":"#EBEEF2", }}>
+      <Text style={{ color:dayone ? "#fff":"#2CC2E4",fontSize: hp(2), fontWeight: '400',fontFamily:fontFamily.robotoBold }}>DAY 1</Text>
+      <Text style={{ color:dayone ? "#fff":"#2CC2E4", fontSize: hp(1.3), fontWeight: '300',fontFamily:fontFamily.robotoMedium  }}>{activityDate[0]?.activity_date}</Text>
     </TouchableOpacity>
   )}
   {activitytwo && (
-    <TouchableOpacity onPress={dayTwoHandler} style={{ flex: 0.3, borderRadius: hp(5), height: hp(5.3), borderWidth: 1, borderColor: '#832D8E', justifyContent: 'center', alignItems: 'center', marginHorizontal: hp(1),backgroundColor:daytwo ? "#832D8E":"#EBEEF2", }}>
-      <Text style={{ color:daytwo ? "#fff":"#832D8E", fontSize: hp(2), fontWeight: '400',fontFamily:fontFamily.robotoBold }}>DAY 2</Text>
-      <Text style={{ color:daytwo ? "#fff":"#832D8E", fontSize: hp(1.3), fontWeight: '300',fontFamily:fontFamily.robotoMedium }}>{activitytwo[0]?.activity_date}</Text>
+    <TouchableOpacity onPress={dayTwoHandler} style={{ flex: 0.3, borderRadius: hp(5), height: hp(5.3), borderWidth: 1, borderColor: '#2CC2E4', justifyContent: 'center', alignItems: 'center', marginHorizontal: hp(1),backgroundColor:daytwo ? "#2CC2E4":"#EBEEF2", }}>
+      <Text style={{ color:daytwo ? "#fff":"#2CC2E4", fontSize: hp(2), fontWeight: '400',fontFamily:fontFamily.robotoBold }}>DAY 2</Text>
+      <Text style={{ color:daytwo ? "#fff":"#2CC2E4", fontSize: hp(1.3), fontWeight: '300',fontFamily:fontFamily.robotoMedium }}>{activitytwo[0]?.activity_date}</Text>
     </TouchableOpacity>
   )}
   {activitythree && (
-    <TouchableOpacity onPress={dayThreeHandler} style={{ flex: 0.3, borderRadius: hp(5), height: hp(5.3), borderWidth: 1, borderColor: '#832D8E', justifyContent: 'center', alignItems: 'center',backgroundColor:daythree ? "#832D8E":"#EBEEF2", }}>
-      <Text style={{ color:daythree ? "#fff":"#832D8E", fontSize: hp(2), fontWeight: '400',fontFamily:fontFamily.robotoBold }}>DAY 3</Text>
-      <Text style={{ color:daythree ? "#fff":"#832D8E", fontSize: hp(1.3), fontWeight: '300',fontFamily:fontFamily.robotoMedium }}>{activitythree[0]?.activity_date}</Text>
+    <TouchableOpacity onPress={dayThreeHandler} style={{ flex: 0.3, borderRadius: hp(5), height: hp(5.3), borderWidth: 1, borderColor: '#2CC2E4', justifyContent: 'center', alignItems: 'center',backgroundColor:daythree ? "#2CC2E4":"#EBEEF2", }}>
+      <Text style={{ color:daythree ? "#fff":"#2CC2E4", fontSize: hp(2), fontWeight: '400',fontFamily:fontFamily.robotoBold }}>DAY 3</Text>
+      <Text style={{ color:daythree ? "#fff":"#2CC2E4", fontSize: hp(1.3), fontWeight: '300',fontFamily:fontFamily.robotoMedium }}>{activitythree[0]?.activity_date}</Text>
     </TouchableOpacity>
   )}
 </View>
